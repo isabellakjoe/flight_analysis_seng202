@@ -8,8 +8,6 @@ package seng202.group8;
 public class ModelTest {
     @Test
     public void calculateScoreReturnsCorrectScore() {
-        Airline test = new Airline();
-        assertTrue(test.testNumber == 1);
     }
 
     @Test
