@@ -9,13 +9,13 @@ public class Airport {
     private String name;
     private String city;
     private String country;
-    private int FAA;
+    private String FAA;
     private String IATA;
     private String ICAO;
-    private float latitude;
-    private float longitude;
-    private float altitude;
-    private float timezone;
+    private double latitude;
+    private double longitude;
+    private int altitude;
+    private int timezone;
     private char DST;
 
     public int getAirportID() {
@@ -50,11 +50,11 @@ public class Airport {
         this.country = country;
     }
 
-    public int getFAA() {
+    public String getFAA() {
         return FAA;
     }
 
-    public void setFAA(int FAA) {
+    public void setFAA(String FAA) {
         this.FAA = FAA;
     }
 
@@ -74,35 +74,35 @@ public class Airport {
         this.ICAO = ICAO;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public float getAltitude() {
+    public int getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(float altitude) {
+    public void setAltitude(int altitude) {
         this.altitude = altitude;
     }
 
-    public float getTimezone() {
+    public int getTimezone() {
         return timezone;
     }
 
-    public void setTimezone(float timezone) {
+    public void setTimezone(int timezone) {
         this.timezone = timezone;
     }
 
