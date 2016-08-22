@@ -47,7 +47,6 @@ public class RouteParser {
 
     /* Method to check whether an route is codeshared */
     private void checkCodeshared(Route route, String codeshare) {
-        System.out.println(codeshare);
         if (codeshare.equals("Y")) {
             route.setCodeshare(true);
         } else {
