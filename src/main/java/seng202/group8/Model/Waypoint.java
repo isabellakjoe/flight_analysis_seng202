@@ -7,9 +7,9 @@ public class Waypoint {
 
     private String type;
     private String name;
-    private float altitude;
-    private float latitude;
-    private float longitude;
+    private double altitude;
+    private double latitude;
+    private double longitude;
 
     public String getType() {
         return type;
@@ -27,27 +27,25 @@ public class Waypoint {
         this.name = name;
     }
 
-    public float getAltitude() {
+    public double getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(float altitude) {
-        this.altitude = altitude;
-    }
+    public void setAltitude(double altitude) { this.altitude = altitude; }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 }
