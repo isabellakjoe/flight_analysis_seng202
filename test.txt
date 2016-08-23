@@ -1,3 +1,1 @@
-Test post please ignore
-Angus was here
-Izzy Joe
+2006,"Auckland Intl","Auckland","New Zealand","AKL","NZAA",-37.008056,174.791667,23,12,"Z","Pacific/Auckland"

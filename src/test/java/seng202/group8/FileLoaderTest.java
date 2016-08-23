@@ -22,14 +22,14 @@ public class FileLoaderTest {
     @Test
     public void testGetFile() throws FileNotFoundException {
         FileLoader load = new FileLoader();
-        BufferedReader br = new BufferedReader(new FileReader("C:/Users/Angus Schuler/Documents/UNI/SENG202/test.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("test.txt"));
         assertEquals(br, load.getFile(br));
     }
 
     @Test
     public void testReadData() throws FileNotFoundException {
         FileLoader load = new FileLoader();
-        BufferedReader br = new BufferedReader(new FileReader("C:/Users/Angus Schuler/Documents/UNI/SENG202/test.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("test.txt"));
         load.getFile(br);
         ArrayList<ArrayList<String>> test = load.readData(br);
         assertEquals(auck, test.get(0));
