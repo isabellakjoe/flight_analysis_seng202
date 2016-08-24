@@ -13,7 +13,7 @@ public class AirportParser {
         return new ArrayList<String>(Arrays.asList(inputAirport.split(",")));
     }
 
-    /* Method to parse a string to an integer with error handling*/
+    /* Method to parse a string to an integer with error handaling*/
     private int parseToInt(String inputNum){
         try{
             return Integer.parseInt(inputNum);
