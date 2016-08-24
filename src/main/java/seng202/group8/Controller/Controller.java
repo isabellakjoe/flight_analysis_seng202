@@ -28,7 +28,7 @@ public class Controller {
     @FXML
     private MenuItem addRouteData;
 
-    /* Method to open up a file chooser for the user to select the Airport Data file */
+    /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e){
         try {
             FileChooser fileChooser = new FileChooser();
@@ -37,6 +37,7 @@ public class Controller {
             if (file != null) {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
+                //Use imported methods from FileLoader to process the airport data file
                 load.getFile(br);
                 load.readData(br);
                 load.buildAirports();
@@ -49,7 +50,7 @@ public class Controller {
 
     }
 
-    /* Method to open up a file chooser for the user to select the Airline Data file */
+    /* Method to open up a file chooser for the user to select the Airline Data file with error handling */
     public void addAirlineData(ActionEvent e){
         try {
             FileChooser fileChooser = new FileChooser();
@@ -57,6 +58,7 @@ public class Controller {
             File file = fileChooser.showOpenDialog(new Stage());
             if (file != null) {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
+                //Use imported methods from FileLoader to process the airline data file
                 FileLoader load = new FileLoader(br);
                 load.getFile(br);
                 load.readData(br);
@@ -68,7 +70,7 @@ public class Controller {
 
     }
 
-    /* Method to open up a file chooser for the user to select the Route Data file */
+    /* Method to open up a file chooser for the user to select the Route Data file with error handling */
     public void addRouteData(ActionEvent e) {
         try{
             FileChooser fileChooser = new FileChooser();
@@ -77,6 +79,7 @@ public class Controller {
             if (file != null) {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
+                //Use imported methods from FileLoader to process the route data file
                 load.getFile(br);
                 load.readData(br);
                 load.buildRoute();
