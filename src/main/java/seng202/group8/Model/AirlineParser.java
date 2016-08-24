@@ -32,7 +32,7 @@ public class AirlineParser {
         }
     }
 
-    /* Mehtod to check whether an airline is currently active*/
+    /* Method to check whether an airline is currently active*/
     private void checkActive(Airline airline, String active) {
         if(active.equals("Y")) {
             airline.setActive(true);

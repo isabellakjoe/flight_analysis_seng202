@@ -3,12 +3,19 @@ package seng202.group8.View;/**
  */
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import seng202.group8.Model.Airline;
 
 public class Main extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -16,12 +23,10 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
         /* Set the name of the GUI */
         primaryStage.setTitle("Flight Viewer");
-        primaryStage.setScene(new Scene(root, 1024, 700));
+        primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-}
 
+
+}
