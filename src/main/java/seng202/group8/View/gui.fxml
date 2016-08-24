@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.Controller">
    <left>
       <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -52,11 +52,11 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="View">
+          <Menu mnemonicParsing="false" text="Add">
             <items>
-              <MenuItem fx:id="viewAirportData" mnemonicParsing="false" text="Airport Data" />
-                  <MenuItem mnemonicParsing="false" text="Airline Data" />
-                  <MenuItem mnemonicParsing="false" text="Route Data" />
+              <MenuItem fx:id="addAirportData" mnemonicParsing="false" onAction="#addAirportData" text="Airport Data" />
+                  <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData" text="Airline Data" />
+                  <MenuItem fx:id="addRouteData" mnemonicParsing="false" onAction="#addRouteData" text="Route Data" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Help">
