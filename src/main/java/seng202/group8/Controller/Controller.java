@@ -1,20 +1,16 @@
 package seng202.group8.Controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import seng202.group8.Model.FileLoader;
+import seng202.group8.Model.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,14 +18,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 
-import seng202.group8.Model.Airline;
-import seng202.group8.Model.AirlineParser;
-import seng202.group8.Model.FileLoader;
-
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-//import javafx.scene.control.TextField;
 
 /**
  * Created by esa46 on 19/08/16.
@@ -109,12 +99,15 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Initializing airline column names
+     */
     @FXML
     private TableView<Airline> airlineTable;
     @FXML
-    private TableColumn<Airline, String> ID;
+    private TableColumn<Airline, String> airlineID;
     @FXML
-    private TableColumn<Airline, String> name;
+    private TableColumn<Airline, String> airlineName;
     @FXML
     private TableColumn<Airline, String> alias;
     @FXML
@@ -122,7 +115,7 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Airline, String> ICAO;
     @FXML
-    private TableColumn<Airline, String> callSign;
+    private TableColumn<Airline, String> callsign;
     @FXML
     private TableColumn<Airline, String> country;
     @FXML
@@ -130,25 +123,82 @@ public class Controller implements Initializable {
 
 
     /**
-     * Test Airline to be put in table. Needs to eventually read data already in database
+     * Initializing airport column names
+     */
+    @FXML
+    private TableView<Airport> airportTable;
+    @FXML
+    private TableColumn<Airport, String> airportID;
+    @FXML
+    private TableColumn<Airport, String> airportName;
+    @FXML
+    private TableColumn<Airport, String> city;
+    @FXML
+    private TableColumn<Airport, String> airportCountry;
+    @FXML
+    private TableColumn<Airport, String> FAA;
+    @FXML
+    private TableColumn<Airport, String> airportIATA;
+    @FXML
+    private TableColumn<Airport, String> airportICAO;
+    @FXML
+    private TableColumn<Airport, String> latitude;
+    @FXML
+    private TableColumn<Airport, String> longitude;
+    @FXML
+    private TableColumn<Airport, String> altitude;
+    @FXML
+    private TableColumn<Airport, String> timezone;
+    @FXML
+    private TableColumn<Airport, String> DST;
+
+
+    /**
+     * Test Airline to be put in table. Needs to eventually read airlinedata already in database
      * Could be used as a test case
      */
     private String airlineString = "324,All Nippon Airways,ANA All Nippon Airways,NH,ANA,ALL NIPPON,Japan,Y";
     AirlineParser airlineParser = new AirlineParser();
     Airline airline = airlineParser.createSingleAirline(airlineString);
 
-    //Initialises the controller class. Automatically called after the fxml file has been loaded.
-    //Sets Table Cell values to Airline values
+
+    /**
+     * Test Airport to be put in table. Needs to eventually read airport data already in database
+     * Could be used as a test case
+     */
+    private String airportString = "2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland";
+    AirportParser airportParser = new AirportParser();
+    Airport airport = airportParser.createAirport(airportString);
+
+
+    //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
-        ID.setCellValueFactory(new PropertyValueFactory<Airline, String>("ID"));
-        name.setCellValueFactory(new PropertyValueFactory<Airline, String>("Name"));
+        airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("ID"));
+        airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("Name"));
         alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("Alias"));
         IATA.setCellValueFactory(new PropertyValueFactory<Airline, String>("IATA"));
         ICAO.setCellValueFactory(new PropertyValueFactory<Airline, String>("ICAO"));
-        callSign.setCellValueFactory(new PropertyValueFactory<Airline, String>("Call Sign"));
+        callsign.setCellValueFactory(new PropertyValueFactory<Airline, String>("Call Sign"));
         country.setCellValueFactory(new PropertyValueFactory<Airline, String>("Country"));
         active.setCellValueFactory(new PropertyValueFactory<Airline, String>("Active"));
         airlineTable.getItems().setAll(airline);
+
+
+        airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("ID"));
+        airportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
+        city.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
+        airportCountry.setCellValueFactory(new PropertyValueFactory<Airport, String>("Country"));
+        FAA.setCellValueFactory(new PropertyValueFactory<Airport, String>("FAA"));
+        airportIATA.setCellValueFactory(new PropertyValueFactory<Airport, String>("IATA"));
+        airportICAO.setCellValueFactory(new PropertyValueFactory<Airport, String>("ICAO"));
+        latitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Latitude"));
+        longitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Longitude"));
+        altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
+        timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
+        DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
+        airportTable.getItems().setAll(airport);
     }
+
+
 }

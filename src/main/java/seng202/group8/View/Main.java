@@ -23,7 +23,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
         /* Set the name of the GUI */
         primaryStage.setTitle("Flight Viewer");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 1024, 800));
         primaryStage.show();
     }
 
