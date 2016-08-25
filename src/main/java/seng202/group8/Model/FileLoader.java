@@ -19,6 +19,7 @@ public class FileLoader {
         this.reader = br;
     }
 
+    /*Reads the buffered reader to a local buffered reader.*/
     public BufferedReader getFile(BufferedReader br){
         this.reader = br;
         return br;
@@ -67,7 +68,7 @@ public class FileLoader {
 
 
 
-
+/*Reads a file from a buffered reader and outputs each line as an arraylist of properties.*/
     public ArrayList<ArrayList<String>> readData(BufferedReader br){
         String line;
         try {
