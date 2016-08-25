@@ -6,40 +6,8 @@ import java.util.Arrays;
 /**
  * Created by Sophie on 22/08/16.
  */
-public class AirlineParser {
+public class AirlineParser extends AirlineMethod{
 
-    /* Method to separate an input string based off of comma positioning */
-    private ArrayList<String> splitByComma(String inputRoute) {
-        /* Returns a new ArrayList, containing all of the string elements */
-        return new ArrayList<String>(Arrays.asList(inputRoute.split(",")));
-    }
-
-    /* Method to parse a string to an integer with error handling */
-    private int parseToInt(String inputNum) {
-        try {
-            return Integer.parseInt(inputNum);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
-    }
-
-    /* Method to check whether airline has an alias */
-    private void checkAlias(Airline airline, String alias) {
-        if (alias.equals("\\N")) {
-            airline.setAlias(null);
-        } else {
-            airline.setAlias(alias);
-        }
-    }
-
-    /* Method to check whether an airline is currently active*/
-    private void checkActive(Airline airline, String active) {
-        if(active.equals("Y")) {
-            airline.setActive(true);
-        } else {
-            airline.setActive(false);
-        }
-    }
 
     private Airline createParsedAirline(ArrayList<String> airlineInfo) {
         /* Create the Airline Object */

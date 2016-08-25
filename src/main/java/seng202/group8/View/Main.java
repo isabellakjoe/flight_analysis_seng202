@@ -1,15 +1,14 @@
-package seng202.group8.View;/**
+package seng202.group8.View;
+
+/**
  * Created by Callum on 22/08/16.
  */
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import seng202.group8.Model.Airline;
 
 public class Main extends Application {
 
