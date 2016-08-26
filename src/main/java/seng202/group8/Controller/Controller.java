@@ -13,7 +13,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.group8.Model.*;
 
-
 import java.io.*;
 
 
@@ -149,6 +148,7 @@ public class Controller implements Initializable {
                 FileLoader load = new FileLoader(br);
                 Flight flight = load.buildFlight();
                 flightViewSetUp(flight);
+                //Swap panes from raw data to the flight viewer
                 tableView.setVisible(false);
                 flightView.setVisible(true);
             }
@@ -179,6 +179,7 @@ public class Controller implements Initializable {
      */
     private void flightViewSetUp(Flight flight){
 
+        //Set source airport information
         Airport source = flight.getSourceAirport();
         String sourceName = source.getName();
         int sourceAltitude = source.getAltitude();
@@ -189,6 +190,7 @@ public class Controller implements Initializable {
         aLatitude.setText(Double.toString(sourceLatitude));
         aLongitude.setText(Double.toString(sourceLongitude));
 
+        //Set destination airport information
         Airport destination = flight.getDestinationAirport();
         String destinationName = destination.getName();
         int destinationAltitude = destination.getAltitude();
@@ -199,9 +201,12 @@ public class Controller implements Initializable {
         bLatitude.setText(Double.toString(destinationLatitude));
         bLongitude.setText(Double.toString(destinationLongitude));
 
+        //Create header string
         String headerString = "Flight from " + sourceName + " to " + destinationName;
         System.out.println(headerString);
         titleString.setText(headerString);
+
+        //Iterate through waypoints of the flight, adding them to the table
         ArrayList<Waypoint> waypoints = flight.getWaypoints();
         for(int i = 0; i < waypoints.size(); i++){
             Waypoint waypoint = waypoints.get(i);
