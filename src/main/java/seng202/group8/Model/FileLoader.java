@@ -12,8 +12,8 @@ import java.util.Set;
  */
 public class FileLoader {
 
-    public BufferedReader reader;
-    public ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+    private BufferedReader reader;
+    private ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
     public FileLoader(BufferedReader br){
         this.reader = br;
@@ -64,6 +64,12 @@ public class FileLoader {
             routes.add(route);
         }
         return routes;
+    }
+
+    public Flight buildFlight(){
+        FlightParser parser = new FlightParser(reader);
+        Flight flight = parser.parseFlightFile();
+        return flight;
     }
 
 

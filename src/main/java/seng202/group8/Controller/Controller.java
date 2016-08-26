@@ -2,20 +2,23 @@ package seng202.group8.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+
 import javafx.stage.Stage;
 
 import seng202.group8.Model.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.io.*;
 
 
 import java.net.URL;
@@ -37,6 +40,15 @@ public class Controller implements Initializable {
 
     @FXML
     private MenuItem addRouteData;
+
+    @FXML
+    private MenuItem addFlightData;
+
+    @FXML
+    private Pane tableView;
+
+    @FXML
+    private Pane flightView;
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e){
@@ -97,6 +109,28 @@ public class Controller implements Initializable {
         }
 
     }
+    @FXML
+    /* Method to open up a file chooser for the user to select the Flight Data file  with error handling*/
+    public void addFlightData(ActionEvent e){
+        tableView.setVisible(false);
+        flightView.setVisible(true);
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open flight datafile"); //Text in the window header
+            File file = fileChooser.showOpenDialog(new Stage());
+            if (file != null) {
+                BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
+                FileLoader load = new FileLoader(br);
+                Flight flight = load.buildFlight();
+                tableView.setVisible(false);
+                flightView.setVisible(true);
+            }
+        } catch(FileNotFoundException ex){
+            System.out.println("FILE NOT FOUND");
+        }
+
+    }
+
 
 
     /**
