@@ -6,53 +6,7 @@ import java.util.Arrays;
 /**
  * Created by Callum on 21/08/16.
  */
-public class RouteParser {
-
-    /* Method to separate an input string based off of comma positioning */
-    private ArrayList<String> splitByComma(String inputRoute) {
-        /* Returns a new ArrayList, containing all of the string elements */
-        return new ArrayList<String>(Arrays.asList(inputRoute.split(",")));
-    }
-
-    /* Method to parse a string to an integer with error handling */
-    private int parseToInt(String inputNum) {
-        try {
-            return Integer.parseInt(inputNum);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
-    }
-
-    /* Temporary method to create an airline for a route */
-    private Airline createAirline(String airlineName, int airlineID) {
-        Airline airline = new Airline();
-        airline.setName(airlineName);
-        airline.setAirlineID(airlineID);
-        return airline;
-    }
-
-    /* Temporary method to create an airport for a route */
-    private Airport createAirport(String airportCode, int airportID) {
-        Airport airport = new Airport();
-
-        if (airportCode.length() == 3) {
-            airport.setIATA(airportCode);
-        } else if (airportCode.length() == 4) {
-            airport.setICAO(airportCode);
-        }
-
-        airport.setAirportID(airportID);
-        return airport;
-    }
-
-    /* Method to check whether an route is codeshared */
-    private void checkCodeshared(Route route, String codeshare) {
-        if (codeshare.equals("Y")) {
-            route.setCodeshare(true);
-        } else {
-            route.setCodeshare(false);
-        }
-    }
+public class RouteParser extends RouteMethod {
 
     private Route createParsedRoute(ArrayList<String> routeInfo) {
         /* Create the route object */

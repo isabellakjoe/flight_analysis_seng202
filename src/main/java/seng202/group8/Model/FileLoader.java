@@ -12,13 +12,14 @@ import java.util.Set;
  */
 public class FileLoader {
 
-    public BufferedReader reader;
-    public ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+    private BufferedReader reader;
+    private ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
     public FileLoader(BufferedReader br){
         this.reader = br;
     }
 
+    /*Reads the buffered reader to a local buffered reader.*/
     public BufferedReader getFile(BufferedReader br){
         this.reader = br;
         return br;
@@ -65,9 +66,15 @@ public class FileLoader {
         return routes;
     }
 
+    public Flight buildFlight(){
+        FlightParser parser = new FlightParser(reader);
+        Flight flight = parser.parseFlightFile();
+        return flight;
+    }
 
 
 
+/*Reads a file from a buffered reader and outputs each line as an arraylist of properties.*/
     public ArrayList<ArrayList<String>> readData(BufferedReader br){
         String line;
         try {

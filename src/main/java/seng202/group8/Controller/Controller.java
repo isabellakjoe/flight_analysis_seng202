@@ -7,18 +7,17 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import seng202.group8.Model.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -37,6 +36,44 @@ public class Controller implements Initializable {
 
     @FXML
     private MenuItem addRouteData;
+
+    @FXML
+    private MenuItem addFlightData;
+
+
+    @FXML
+    private Pane tableView;
+
+    @FXML
+    private Pane flightView;
+
+    @FXML
+    private Text titleString;
+
+    @FXML
+    private Text aName;
+
+    @FXML
+    private Text bName;
+
+    @FXML
+    private Text aLatitude;
+
+    @FXML
+    private Text bLatitude;
+
+    @FXML
+    private Text aLongitude;
+
+    @FXML
+    private Text bLongitude;
+
+    @FXML
+    private Text aAltitude;
+
+    @FXML
+    private Text bAltitude;
+
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e){
@@ -94,6 +131,86 @@ public class Controller implements Initializable {
             }
         } catch (FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
+        }
+
+    }
+    @FXML
+    /* Method to open up a file chooser for the user to select the Flight Data file  with error handling*/
+    public void addFlightData(ActionEvent e){
+        tableView.setVisible(false);
+        flightView.setVisible(true);
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open flight datafile"); //Text in the window header
+            File file = fileChooser.showOpenDialog(new Stage());
+            if (file != null) {
+                BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
+                FileLoader load = new FileLoader(br);
+                Flight flight = load.buildFlight();
+                flightViewSetUp(flight);
+                //Swap panes from raw data to the flight viewer
+                tableView.setVisible(false);
+                flightView.setVisible(true);
+            }
+        } catch(FileNotFoundException ex){
+            System.out.println("FILE NOT FOUND");
+        }
+
+    }
+
+    /**
+     * Initializing flight column names
+     */
+    @FXML
+    private TableView<Waypoint> flightTable;
+    @FXML
+    private TableColumn<Waypoint, String> waypointName;
+    @FXML
+    private TableColumn<Waypoint, String> waypointAltitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointLatitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointLongitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointType;
+
+    /**
+     * Populate the flightView table with waypoints
+     */
+    private void flightViewSetUp(Flight flight){
+
+        //Set source airport information
+        Airport source = flight.getSourceAirport();
+        String sourceName = source.getName();
+        int sourceAltitude = source.getAltitude();
+        double sourceLatitude = source.getLatitude();
+        double sourceLongitude = source.getLongitude();
+        aName.setText(sourceName);
+        aAltitude.setText(Integer.toString(sourceAltitude));
+        aLatitude.setText(Double.toString(sourceLatitude));
+        aLongitude.setText(Double.toString(sourceLongitude));
+
+        //Set destination airport information
+        Airport destination = flight.getDestinationAirport();
+        String destinationName = destination.getName();
+        int destinationAltitude = destination.getAltitude();
+        double destinationLatitude = destination.getLatitude();
+        double destinationLongitude = destination.getLongitude();
+        bName.setText(destinationName);
+        bAltitude.setText(Integer.toString(destinationAltitude));
+        bLatitude.setText(Double.toString(destinationLatitude));
+        bLongitude.setText(Double.toString(destinationLongitude));
+
+        //Create header string
+        String headerString = "Flight from " + sourceName + " to " + destinationName;
+        System.out.println(headerString);
+        titleString.setText(headerString);
+
+        //Iterate through waypoints of the flight, adding them to the table
+        ArrayList<Waypoint> waypoints = flight.getWaypoints();
+        for(int i = 0; i < waypoints.size(); i++){
+            Waypoint waypoint = waypoints.get(i);
+            flightTable.getItems().add(waypoint);
         }
 
     }
@@ -198,6 +315,14 @@ public class Controller implements Initializable {
         timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
         airportTable.getItems().setAll(airport);
+
+        waypointName.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("name"));
+        waypointType.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("type"));
+        waypointAltitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("altitude"));
+        waypointLatitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("latitude"));
+        waypointLongitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("longitude"));
+
+
     }
 
 
