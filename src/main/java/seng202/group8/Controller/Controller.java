@@ -85,9 +85,11 @@ public class Controller implements Initializable {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the airport data file
-                load.getFile(br);
-                load.readData(br);
-                load.buildAirports();
+                ArrayList<Airport> airports = load.buildAirports();
+                for(int i = 0; i < airports.size(); i++) {
+                    Airport airport = airports.get(i);
+                    airportTable.getItems().add(airport);
+                }
             }
         } catch(FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
@@ -103,11 +105,13 @@ public class Controller implements Initializable {
             File file = fileChooser.showOpenDialog(new Stage());
             if (file != null) {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
-                //Use imported methods from FileLoader to process the airline data file
                 FileLoader load = new FileLoader(br);
-                load.getFile(br);
-                load.readData(br);
-                load.buildAirlines();
+                //Use imported methods from FileLoader to process the airline data file
+                ArrayList<Airline> airlines = load.buildAirlines();
+                for(int i = 0; i < airlines.size(); i++) {
+                    Airline airline = airlines.get(i);
+                    airlineTable.getItems().add(airline);
+                }
             }
         } catch (FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
@@ -125,9 +129,11 @@ public class Controller implements Initializable {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the route data file
-                load.getFile(br);
-                load.readData(br);
-                load.buildRoute();
+                ArrayList<Route> routes = load.buildRoutes();
+                for(int i = 0; i < routes.size(); i++) {
+                    Route route = routes.get(i);
+                    //routeTable.getItems().add(route); Uncomment once route table has been built
+                }
             }
         } catch (FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
@@ -274,18 +280,18 @@ public class Controller implements Initializable {
      * Test Airline to be put in table. Needs to eventually read airlinedata already in database
      * Could be used as a test case
      */
-    private String airlineString = "324,All Nippon Airways,ANA All Nippon Airways,NH,ANA,ALL NIPPON,Japan,Y";
-    AirlineParser airlineParser = new AirlineParser();
-    Airline airline = airlineParser.createSingleAirline(airlineString);
+    //private String airlineString = "324,All Nippon Airways,ANA All Nippon Airways,NH,ANA,ALL NIPPON,Japan,Y";
+    //AirlineParser airlineParser = new AirlineParser();
+    //Airline airline = airlineParser.createSingleAirline(airlineString);
 
 
     /**
      * Test Airport to be put in table. Needs to eventually read airport data already in database
      * Could be used as a test case
      */
-    private String airportString = "2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland";
-    AirportParser airportParser = new AirportParser();
-    Airport airport = airportParser.createAirport(airportString);
+    //private String airportString = "2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland";
+    //AirportParser airportParser = new AirportParser();
+    //Airport airport = airportParser.createAirport(airportString);
 
 
     //Sets Table Cells in Airline Table Viewer to Airline attributes
@@ -299,7 +305,7 @@ public class Controller implements Initializable {
         callsign.setCellValueFactory(new PropertyValueFactory<Airline, String>("Call Sign"));
         country.setCellValueFactory(new PropertyValueFactory<Airline, String>("Country"));
         active.setCellValueFactory(new PropertyValueFactory<Airline, String>("Active"));
-        airlineTable.getItems().setAll(airline);
+        //airlineTable.getItems().setAll(airline);
 
 
         airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("ID"));
@@ -314,7 +320,7 @@ public class Controller implements Initializable {
         altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
         timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
-        airportTable.getItems().setAll(airport);
+        //airportTable.getItems().setAll(airport);
 
         waypointName.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("name"));
         waypointType.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("type"));

@@ -25,9 +25,9 @@ public class FileLoader {
         return br;
     }
 
-    public Set<Airport> buildAirports(){
+    public ArrayList<Airport> buildAirports(){
         Scanner textScanner = new Scanner(reader);
-        Set<Airport> airports = new HashSet<Airport>();
+        ArrayList<Airport> airports = new ArrayList<Airport>();
         AirportParser parser = new AirportParser();
 
         String currentString;
@@ -39,9 +39,9 @@ public class FileLoader {
         return airports;
     }
 
-    public Set<Airline> buildAirlines(){
+    public ArrayList<Airline> buildAirlines(){
         Scanner textScanner = new Scanner(reader);
-        Set<Airline> airlines = new HashSet<Airline>();
+        ArrayList<Airline> airlines = new ArrayList<Airline>();
         AirlineParser parser = new AirlineParser();
 
         String currentString;
@@ -53,9 +53,9 @@ public class FileLoader {
         return airlines;
     }
 
-    public Set<Route> buildRoute(){
+    public ArrayList<Route> buildRoutes(){
         Scanner textScanner = new Scanner(reader);
-        Set<Route> routes = new HashSet<Route>();
+        ArrayList<Route> routes = new ArrayList<Route>();
         RouteParser parser = new RouteParser();
         String currentString;
         while(textScanner.hasNextLine()){

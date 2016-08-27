@@ -59,4 +59,27 @@ public class Route {
     public void setEquipment(String equipment) {
         this.equipment = equipment;
     }
+
+    public boolean isEqualTo(Route other) {
+        boolean isEqual = true;
+        if (!this.airline.getName().equals(other.getAirline().getName())) {
+            isEqual = false;
+        }
+        if (this.sourceAirport.getAirportID() != (other.getSourceAirport().getAirportID())) {
+            isEqual = false;
+        }
+        if (this.destinationAirport.getAirportID() != (other.getDestinationAirport().getAirportID())){
+            isEqual = false;
+        }
+        if (this.isCodeshare != other.isCodeshare()) {
+            isEqual = false;
+        }
+        if (this.stops != other.getStops()) {
+            isEqual = false;
+        }
+        if (!this.equipment.equals(other.getEquipment())) {
+            isEqual = false;
+        }
+        return isEqual;
+    }
 }

@@ -17,6 +17,8 @@ public class Airport {
     private int altitude;
     private int timezone;
     private char DST;
+    private String olsonTimezone;
+
 
     public int getAirportID() {
         return airportID;
@@ -122,7 +124,50 @@ public class Airport {
         this.olsonTimezone = olsonTimezone;
     }
 
-    private String olsonTimezone;
+
+    public boolean isEqualTo(Airport other){
+        boolean isEqual = true;
+        if (!this.name.equals(other.getName())) {
+            isEqual = false;
+        }
+        if (this.airportID!=other.getAirportID()) {
+            isEqual = false;
+        }
+        if (this.latitude!=other.getLatitude()){
+            isEqual = false;
+        }
+        if (this.longitude!=other.getLongitude()){
+            isEqual = false;
+        }
+        if (this.altitude!=other.getAltitude()){
+            isEqual = false;
+        }
+        if (!this.city.equals(other.getCity())){
+            isEqual = false;
+        }
+        if (!this.country.equals(other.getCountry())){
+            isEqual = false;
+        }
+        if (this.DST!=other.getDST()) {
+            isEqual = false;
+        }
+        if (this.timezone!=other.getTimezone()){
+            isEqual = false;
+        }
+        if (!this.olsonTimezone.equals(other.getOlsonTimezone())){
+            isEqual = false;
+        }
+        if (this.FAA!=other.getFAA()){
+            isEqual = false;
+        }
+        if (!this.IATA.equals(other.getIATA())){
+            isEqual = false;
+        }
+        if (!this.ICAO.equals(other.getICAO())){
+            isEqual = false;
+        }
+        return isEqual;
+    }
 
 
 
