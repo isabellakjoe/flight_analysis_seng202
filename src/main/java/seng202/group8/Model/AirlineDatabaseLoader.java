@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,9 +36,9 @@ public class AirlineDatabaseLoader extends AirlineMethod {
         }
     }
 
-    public Set<Airline> loadAirlines(Connection conn) {
+    public ArrayList<Airline> loadAirlines(Connection conn) {
 
-        Set<Airline> airlines = new HashSet<Airline>();
+        ArrayList<Airline> airlines = new ArrayList<Airline>();
         try {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("SELECT * FROM airline");

@@ -1,9 +1,8 @@
 package seng202.group8;
 
+import javafx.collections.ObservableList;
 import org.junit.Test;
-import seng202.group8.Model.Airport;
-import seng202.group8.Model.AirportParser;
-import seng202.group8.Model.FileLoader;
+import seng202.group8.Model.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -26,8 +25,71 @@ public class FileLoaderTest {
     @Test
     public void buildAirportsTest() throws FileNotFoundException {
         FileLoader loader = new FileLoader(new BufferedReader(new FileReader("PerfectAirportsOnly.txt")));
-        Set<Airport> airports = loader.buildAirports();
-        assertTrue(airports.size() == 3);
+        ObservableList<Airport> airportsActual = loader.buildAirports();
+        ArrayList<Airport> airportsExpected = new ArrayList<Airport>();
+        AirportParser parser = new AirportParser();
+        Airport airport1 = parser.createAirport("2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
+        Airport airport2 = parser.createAirport("2007,Christchurch Intl,Christchurch,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
+        Airport airport3 = parser.createAirport("2008,Wellington Intl,Wellington,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
+        airportsExpected.add(airport1);
+        airportsExpected.add(airport2);
+        airportsExpected.add(airport3);
+        boolean isEqual = true;
+        for(int i = 0; i < 3; i++){
+            Airport a = airportsExpected.get(i);
+            Airport b = airportsActual.get(i);
+            if (!a.isEqualTo(b)){
+                isEqual = false;
+            }
+        }
+        assertTrue(isEqual);
+    }
+
+    @Test
+    public void buildAirlinesTest() throws FileNotFoundException {
+        FileLoader loader = new FileLoader(new BufferedReader(new FileReader("PerfectAirlinesOnly.txt")));
+        ObservableList<Airline> airlinesActual = loader.buildAirlines();
+        ArrayList<Airline> airlinesExpected = new ArrayList<Airline>();
+        AirlineParser parser = new AirlineParser();
+        Airline airline1 = parser.createSingleAirline("324,All Nippon Airways,ANA All Nippon Airways,NH,ANA,ALL NIPPON,Japan,Y");
+        Airline airline2 = parser.createSingleAirline("345,Air New Zealand,\\N,NZ,ANZ,NEW ZEALAND,New Zealand,Y");
+        Airline airline3 = parser.createSingleAirline("346,Air NZ,\\N,NZ,ANZ,NZ,NZ,Y");
+        airlinesExpected.add(airline1);
+        airlinesExpected.add(airline2);
+        airlinesExpected.add(airline3);
+        boolean isEqual = true;
+        for(int i = 0; i < 3; i++){
+            Airline a = airlinesExpected.get(i);
+            Airline b = airlinesActual.get(i);
+            if (!a.isEqualTo(b)){
+                isEqual = false;
+                System.out.println(i);
+            }
+        }
+        assertTrue(isEqual);
+    }
+
+    @Test
+    public void buildRoutesTest() throws FileNotFoundException {
+        FileLoader loader = new FileLoader(new BufferedReader(new FileReader("PerfectRoutesOnly.txt")));
+        ObservableList<Route> routesActual = loader.buildRoutes();
+        ArrayList<Route> routesExpected = new ArrayList<Route>();
+        RouteParser parser = new RouteParser();
+        Route route1 = parser.createSingleRoute("3B,411,AOR,2865,KUN,2991,Y,11,CR2");
+        Route route2 = parser.createSingleRoute("2B,410,AER,2965,KZN,2990,Y,10,CR2");
+        Route route3 = parser.createSingleRoute("9W,3000,TRVA,3153,BOMV,2997,,0,73H");
+        routesExpected.add(route1);
+        routesExpected.add(route2);
+        routesExpected.add(route3);
+        boolean isEqual = true;
+        for(int i = 0; i < 3; i++){
+            Route a = routesExpected.get(i);
+            Route b = routesActual.get(i);
+            if (!a.isEqualTo(b)){
+                isEqual = false;
+            }
+        }
+        assertTrue(isEqual);
     }
 
     /*Test to see if the test file is loaded properly*/

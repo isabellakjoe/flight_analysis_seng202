@@ -5,6 +5,7 @@ import seng202.group8.Model.RouteDatabaseLoader;
 import seng202.group8.Model.Route;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
@@ -19,7 +20,7 @@ public class RouteDatabaseLoaderTest {
     public void testAllRoutesLoadCorrectly(){
         RouteDatabaseLoader db = new RouteDatabaseLoader();
         Connection conn = db.connect();
-        Set<Route> routes = db.loadRoutes(conn);
+        ArrayList<Route> routes = db.loadRoutes(conn);
         //Currently 7 routes in the database
         assertTrue(7 == routes.size());
         db.disconnect(conn);

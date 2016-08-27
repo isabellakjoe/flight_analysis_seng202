@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,9 +36,9 @@ public class AirportDatabaseLoader extends AirportMethod {
         }
     }
 
-    public Set<Airport> loadAirport(Connection conn) {
+    public ArrayList<Airport> loadAirport(Connection conn) {
 
-        Set<Airport> airports = new HashSet<Airport>();
+        ArrayList<Airport> airports = new ArrayList<Airport>();
         try {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("SELECT * FROM airport");

@@ -5,6 +5,7 @@ import seng202.group8.Model.Airport;
 import seng202.group8.Model.AirportDatabaseLoader;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Set;
 
 import static junit.framework.TestCase.assertTrue;
@@ -18,7 +19,7 @@ public class AirportDatabaseLoaderTest {
     public void testAllRoutesLoadCorrectly(){
         AirportDatabaseLoader db = new AirportDatabaseLoader();
         Connection conn = db.connect();
-        Set<Airport> airports = db.loadAirport(conn);
+        ArrayList<Airport> airports = db.loadAirport(conn);
         //Currently 7 airlines in the database
         assertTrue(9 == airports.size());
         db.disconnect(conn);

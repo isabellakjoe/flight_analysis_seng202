@@ -50,8 +50,10 @@ public abstract class RouteMethod {
     public void checkCodeshared(Route route, String codeshare) {
         if (codeshare.equals("Y")) {
             route.setCodeshare(true);
+            route.setCodeshareString("Yes");
         } else {
             route.setCodeshare(false);
+            route.setCodeshareString("No");
         }
     }
 

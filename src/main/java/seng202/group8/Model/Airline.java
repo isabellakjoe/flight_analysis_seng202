@@ -5,7 +5,7 @@ package seng202.group8.Model;
  */
 public class Airline {
 
-    private int AirlineID;
+    private int airlineID;
     private String name;
     private String alias;
     private String IATA;
@@ -16,11 +16,11 @@ public class Airline {
 
 
     public int getAirlineID() {
-        return AirlineID;
+        return airlineID;
     }
 
     public void setAirlineID(int airlineID) {
-        AirlineID = airlineID;
+        this.airlineID = airlineID;
     }
 
     public String getName() {
@@ -79,4 +79,40 @@ public class Airline {
         isActive = active;
     }
 
+    public boolean hasAlias(){
+        return this.alias!= null;
+    }
+
+    public boolean isEqualTo(Airline other){
+        boolean isEqual = true;
+        if (!this.name.equals(other.getName())) {
+            isEqual = false;
+        }
+        if (this.airlineID!=other.getAirlineID()) {
+            isEqual = false;
+        }
+        if (this.hasAlias()){
+            if (other.hasAlias()) {
+                if (!this.alias.equals(other.getAlias())) {
+                    isEqual = false;
+                }
+            }
+            else {
+                isEqual = false;
+            }
+        }
+        if (!this.IATA.equals(other.getIATA())){
+            isEqual = false;
+        }
+        if (!this.ICAO.equals(other.getICAO())){
+            isEqual = false;
+        }
+        if (!this.callsign.equals(other.getCallsign())){
+            isEqual = false;
+        }
+        if(!this.country.equals(other.getCountry())){
+            isEqual = false;
+        }
+        return isEqual;
+    }
 }

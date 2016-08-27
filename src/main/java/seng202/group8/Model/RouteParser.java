@@ -36,6 +36,13 @@ public class RouteParser extends RouteMethod {
         /* Sets what plane the route uses */
         route.setEquipment(routeInfo.get(8));
 
+        route.setAirlineName(routeInfo.get(0));
+
+        route.setSourceAirportName(routeInfo.get(2));
+
+        route.setDestinationAirportName(routeInfo.get(4));
+
+
         return route;
     }
 

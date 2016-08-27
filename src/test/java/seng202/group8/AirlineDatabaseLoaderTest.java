@@ -6,6 +6,7 @@ import seng202.group8.Model.AirlineDatabaseLoader;
 import seng202.group8.Model.AirlineParser;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
@@ -20,7 +21,7 @@ public class AirlineDatabaseLoaderTest {
     public void testAllRoutesLoadCorrectly(){
         AirlineDatabaseLoader db = new AirlineDatabaseLoader();
         Connection conn = db.connect();
-        Set<Airline> airlines = db.loadAirlines(conn);
+        ArrayList<Airline> airlines = db.loadAirlines(conn);
         //Currently 7 airlines in the database
         assertTrue(7 == airlines.size());
         db.disconnect(conn);
@@ -30,7 +31,7 @@ public class AirlineDatabaseLoaderTest {
     public void testAirlineIDParsesCorrectly() {
         AirlineDatabaseLoader db = new AirlineDatabaseLoader();
         Connection conn = db.connect();
-        Set<Airline> airlines = db.loadAirlines(conn);
+        ArrayList<Airline> airlines = db.loadAirlines(conn);
         Airline testAirline = new Airline();
         //Because we are using a set, have to find where in set airline to test is.
         for (Airline airline: airlines) {

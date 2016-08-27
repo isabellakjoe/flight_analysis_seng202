@@ -1,5 +1,6 @@
 package seng202.group8.Controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -85,9 +86,8 @@ public class Controller implements Initializable {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the airport data file
-                load.getFile(br);
-                load.readData(br);
-                load.buildAirports();
+                ObservableList<Airport> airports = load.buildAirports();
+                airportTable.setItems(airports);
             }
         } catch(FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
@@ -103,11 +103,10 @@ public class Controller implements Initializable {
             File file = fileChooser.showOpenDialog(new Stage());
             if (file != null) {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
-                //Use imported methods from FileLoader to process the airline data file
                 FileLoader load = new FileLoader(br);
-                load.getFile(br);
-                load.readData(br);
-                load.buildAirlines();
+                //Use imported methods from FileLoader to process the airline data file
+                ObservableList<Airline> airlines = load.buildAirlines();
+                airlineTable.setItems(airlines);
             }
         } catch (FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
@@ -125,9 +124,8 @@ public class Controller implements Initializable {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the route data file
-                load.getFile(br);
-                load.readData(br);
-                load.buildRoute();
+                ObservableList<Route> routes = load.buildRoutes();
+                routeTable.setItems(routes);
             }
         } catch (FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
@@ -206,12 +204,8 @@ public class Controller implements Initializable {
         System.out.println(headerString);
         titleString.setText(headerString);
 
-        //Iterate through waypoints of the flight, adding them to the table
-        ArrayList<Waypoint> waypoints = flight.getWaypoints();
-        for(int i = 0; i < waypoints.size(); i++){
-            Waypoint waypoint = waypoints.get(i);
-            flightTable.getItems().add(waypoint);
-        }
+        ObservableList<Waypoint> waypoints = flight.getWaypoints();
+        flightTable.setItems(waypoints);
 
     }
 
@@ -270,39 +264,59 @@ public class Controller implements Initializable {
     private TableColumn<Airport, String> DST;
 
 
+    @FXML
+    private TableView<Route> routeTable;
+    @FXML
+    private TableColumn<Route, String> routeAirlineName;
+    @FXML
+    private TableColumn<Route, String> source;
+    @FXML
+    private TableColumn<Route, String> destination;
+    @FXML
+    private TableColumn<Route, String> codeshare;
+    @FXML
+    private TableColumn<Route, String> stops;
+    @FXML
+    private TableColumn<Route, String> equipment;
+
+
+
+
     /**
      * Test Airline to be put in table. Needs to eventually read airlinedata already in database
      * Could be used as a test case
      */
-    private String airlineString = "324,All Nippon Airways,ANA All Nippon Airways,NH,ANA,ALL NIPPON,Japan,Y";
-    AirlineParser airlineParser = new AirlineParser();
-    Airline airline = airlineParser.createSingleAirline(airlineString);
+    //private String airlineString = "324,All Nippon Airways,ANA All Nippon Airways,NH,ANA,ALL NIPPON,Japan,Y";
+    //AirlineParser airlineParser = new AirlineParser();
+    //Airline airline = airlineParser.createSingleAirline(airlineString);
 
 
     /**
      * Test Airport to be put in table. Needs to eventually read airport data already in database
      * Could be used as a test case
      */
-    private String airportString = "2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland";
-    AirportParser airportParser = new AirportParser();
-    Airport airport = airportParser.createAirport(airportString);
+    //private String airportString = "2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland";
+    //AirportParser airportParser = new AirportParser();
+    //Airport airport = airportParser.createAirport(airportString);
+
+
 
 
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
-        airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("ID"));
-        airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("Name"));
-        alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("Alias"));
+        airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
+        airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
+        alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
         IATA.setCellValueFactory(new PropertyValueFactory<Airline, String>("IATA"));
         ICAO.setCellValueFactory(new PropertyValueFactory<Airline, String>("ICAO"));
-        callsign.setCellValueFactory(new PropertyValueFactory<Airline, String>("Call Sign"));
-        country.setCellValueFactory(new PropertyValueFactory<Airline, String>("Country"));
-        active.setCellValueFactory(new PropertyValueFactory<Airline, String>("Active"));
-        airlineTable.getItems().setAll(airline);
+        callsign.setCellValueFactory(new PropertyValueFactory<Airline, String>("callsign"));
+        country.setCellValueFactory(new PropertyValueFactory<Airline, String>("country"));
+        active.setCellValueFactory(new PropertyValueFactory<Airline, String>("active"));
+        //airlineTable.getItems().setAll(airline);
 
 
-        airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("ID"));
+        airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("airportID"));
         airportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
         city.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
         airportCountry.setCellValueFactory(new PropertyValueFactory<Airport, String>("Country"));
@@ -314,7 +328,15 @@ public class Controller implements Initializable {
         altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
         timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
-        airportTable.getItems().setAll(airport);
+        //airportTable.getItems().setAll(airport);
+
+        routeAirlineName.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
+        source.setCellValueFactory(new PropertyValueFactory<Route, String>("sourceAirportName"));
+        destination.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
+        codeshare.setCellValueFactory(new PropertyValueFactory<Route, String>("codeshareString"));
+        stops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
+        equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
+
 
         waypointName.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("name"));
         waypointType.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("type"));
