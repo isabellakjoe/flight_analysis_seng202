@@ -1,6 +1,7 @@
 package seng202.group8.Model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,9 +34,9 @@ public class RouteDatabaseLoader extends RouteMethod{
         }
     }
 
-    public Set<Route> loadRoutes(Connection conn) {
+    public ArrayList<Route> loadRoutes(Connection conn) {
 
-        Set<Route> routes = new HashSet<Route>();
+        ArrayList<Route> routes = new ArrayList<Route>();
         try {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("SELECT * FROM route");
@@ -63,7 +64,5 @@ public class RouteDatabaseLoader extends RouteMethod{
         return routes;
 
     }
-
-
 
 }
