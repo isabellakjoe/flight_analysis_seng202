@@ -1,5 +1,6 @@
 package seng202.group8;
 
+import javafx.collections.ObservableList;
 import org.junit.Test;
 import seng202.group8.Model.*;
 
@@ -24,7 +25,7 @@ public class FileLoaderTest {
     @Test
     public void buildAirportsTest() throws FileNotFoundException {
         FileLoader loader = new FileLoader(new BufferedReader(new FileReader("PerfectAirportsOnly.txt")));
-        ArrayList<Airport> airportsActual = loader.buildAirports();
+        ObservableList<Airport> airportsActual = loader.buildAirports();
         ArrayList<Airport> airportsExpected = new ArrayList<Airport>();
         AirportParser parser = new AirportParser();
         Airport airport1 = parser.createAirport("2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
@@ -47,7 +48,7 @@ public class FileLoaderTest {
     @Test
     public void buildAirlinesTest() throws FileNotFoundException {
         FileLoader loader = new FileLoader(new BufferedReader(new FileReader("PerfectAirlinesOnly.txt")));
-        ArrayList<Airline> airlinesActual = loader.buildAirlines();
+        ObservableList<Airline> airlinesActual = loader.buildAirlines();
         ArrayList<Airline> airlinesExpected = new ArrayList<Airline>();
         AirlineParser parser = new AirlineParser();
         Airline airline1 = parser.createSingleAirline("324,All Nippon Airways,ANA All Nippon Airways,NH,ANA,ALL NIPPON,Japan,Y");
@@ -71,7 +72,7 @@ public class FileLoaderTest {
     @Test
     public void buildRoutesTest() throws FileNotFoundException {
         FileLoader loader = new FileLoader(new BufferedReader(new FileReader("PerfectRoutesOnly.txt")));
-        ArrayList<Route> routesActual = loader.buildRoutes();
+        ObservableList<Route> routesActual = loader.buildRoutes();
         ArrayList<Route> routesExpected = new ArrayList<Route>();
         RouteParser parser = new RouteParser();
         Route route1 = parser.createSingleRoute("3B,411,AOR,2865,KUN,2991,Y,11,CR2");
@@ -86,7 +87,6 @@ public class FileLoaderTest {
             Route b = routesActual.get(i);
             if (!a.isEqualTo(b)){
                 isEqual = false;
-                System.out.println(i);
             }
         }
         assertTrue(isEqual);

@@ -1,5 +1,8 @@
 package seng202.group8.Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 /**
@@ -9,7 +12,7 @@ public class Flight {
 
     private Airport sourceAirport;
     private Airport destinationAirport;
-    private ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
+    private ObservableList<Waypoint> waypoints = FXCollections.observableArrayList();
 
     public Airport getSourceAirport() {
         return sourceAirport;
@@ -27,11 +30,11 @@ public class Flight {
         this.destinationAirport = destinationAirport;
     }
 
-    public ArrayList<Waypoint> getWaypoints() {
+    public ObservableList<Waypoint> getWaypoints() {
         return waypoints;
     }
 
-    public void setWaypoints(ArrayList<Waypoint> waypoints) {
+    public void setWaypoints(ObservableList<Waypoint> waypoints) {
         this.waypoints = waypoints;
     }
 

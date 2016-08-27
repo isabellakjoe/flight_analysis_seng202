@@ -1,5 +1,8 @@
 package seng202.group8.Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +31,7 @@ public class FlightParser {
 
         //Process waypoints
         nextLine = textScanner.nextLine();
-        ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
+        ObservableList<Waypoint> waypoints = FXCollections.observableArrayList();
         boolean finalWaypointProcessed = false;
         while(!finalWaypointProcessed && textScanner.hasNextLine()){
             Waypoint waypoint = processWaypointDetails(nextLine);

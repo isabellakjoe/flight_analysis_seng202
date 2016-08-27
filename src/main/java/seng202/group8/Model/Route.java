@@ -6,9 +6,13 @@ package seng202.group8.Model;
 public class Route {
 
     private Airline airline;
+    private String airlineName;
     private Airport sourceAirport;
+    private String sourceAirportName;
     private Airport destinationAirport;
+    private String destinationAirportName;
     private boolean isCodeshare;
+    private String codeshareString;
     private int stops;
     private String equipment;
 
@@ -20,6 +24,10 @@ public class Route {
         this.airline = airline;
     }
 
+    public String getAirlineName() { return airlineName; }
+
+    public void setAirlineName(String airlineName) {this.airlineName = airlineName;}
+
     public Airport getSourceAirport() {
         return sourceAirport;
     }
@@ -27,6 +35,14 @@ public class Route {
     public void setSourceAirport(Airport sourceAirport) {
         this.sourceAirport = sourceAirport;
     }
+
+    public String getSourceAirportName() {return sourceAirportName; }
+
+    public void setSourceAirportName(String sourceAirportName) {this.sourceAirportName = sourceAirportName; }
+
+    public String getDestinationAirportName() {return destinationAirportName; }
+
+    public void setDestinationAirportName(String destinationAirportName) {this.destinationAirportName = destinationAirportName; }
 
     public Airport getDestinationAirport() {
         return destinationAirport;
@@ -51,6 +67,10 @@ public class Route {
     public void setStops(int stops) {
         this.stops = stops;
     }
+
+    public String getCodeshareString(){ return codeshareString; }
+
+    public void setCodeshareString(String codeshareString){ this.codeshareString= codeshareString; }
 
     public String getEquipment() {
         return equipment;

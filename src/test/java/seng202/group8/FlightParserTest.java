@@ -5,6 +5,7 @@ package seng202.group8;
  */
 
 
+import javafx.collections.ObservableList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng202.group8.Model.Airport;
@@ -67,7 +68,7 @@ public class FlightParserTest {
 
     @Test
     public void firstWaypointTypeTest(){
-        ArrayList<Waypoint> waypoints = flight.getWaypoints();
+        ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         String type = firstWaypoint.getType();
         assertTrue(type.equals("VOR"));
@@ -75,7 +76,7 @@ public class FlightParserTest {
 
     @Test
     public void firstWaypointNameTest(){
-        ArrayList<Waypoint> waypoints = flight.getWaypoints();
+        ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         String name = firstWaypoint.getName();
         assertTrue(name.equals("CH"));
@@ -83,7 +84,7 @@ public class FlightParserTest {
 
     @Test
     public void firstWaypointAltitudeTest(){
-        ArrayList<Waypoint> waypoints = flight.getWaypoints();
+        ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         double altitude = firstWaypoint.getAltitude();
         assertEquals(400, altitude, 1e-2);
@@ -91,7 +92,7 @@ public class FlightParserTest {
 
     @Test
     public void firstWaypointLatitudeTest(){
-        ArrayList<Waypoint> waypoints = flight.getWaypoints();
+        ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         double latitude = firstWaypoint.getLatitude();
         assertEquals(-43.50411111, latitude, 1e-8);
@@ -99,7 +100,7 @@ public class FlightParserTest {
 
     @Test
     public void firstWaypointLongitudeTest(){
-        ArrayList<Waypoint> waypoints = flight.getWaypoints();
+        ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         double longitude = firstWaypoint.getLongitude();
         assertEquals(172.51463889000001, longitude, 1e-16);
@@ -107,7 +108,7 @@ public class FlightParserTest {
 
     @Test
     public void lastWaypointNameTest(){
-        ArrayList<Waypoint> waypoints = flight.getWaypoints();
+        ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint lastWaypoint = waypoints.get(28);
         String name = lastWaypoint.getName();
         assertTrue(name.equals("TI"));
