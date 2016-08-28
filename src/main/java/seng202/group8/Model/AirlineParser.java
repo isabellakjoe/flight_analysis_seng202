@@ -42,7 +42,11 @@ public class AirlineParser extends AirlineMethod{
 
     /* Public method which is used to create a single airline */
     public Airline createSingleAirline(String input) {
-        ArrayList<String> airlineInfo = splitByComma(input);
-        return createParsedAirline(airlineInfo);
+        ArrayList<String> airlineInfo = refactorData(input);
+        if(airlineInfo != null) {
+            return createParsedAirline(airlineInfo);
+        } else{
+            return null;
+        }
     }
 }

@@ -36,8 +36,10 @@ public class FileLoader {
         String currentString;
         while(textScanner.hasNextLine()){
             currentString = textScanner.nextLine();
-            Airport airport = parser.createAirport(currentString);
-            airports.add(airport);
+            Airport airport = parser.createSingleAirport(currentString);
+            if(airport != null){
+                airports.add(airport);
+            }
         }
         return airports;
     }
@@ -51,7 +53,9 @@ public class FileLoader {
         while(textScanner.hasNextLine()){
             currentString = textScanner.nextLine();
             Airline airline = parser.createSingleAirline(currentString);
-            airlines.add(airline);
+            if(airline != null){
+                airlines.add(airline);
+            }
         }
         return airlines;
     }
@@ -64,7 +68,9 @@ public class FileLoader {
         while(textScanner.hasNextLine()){
             currentString = textScanner.nextLine();
             Route route = parser.createSingleRoute(currentString);
-            routes.add(route);
+            if(route != null){
+                routes.add(route);
+            }
         }
         return routes;
     }

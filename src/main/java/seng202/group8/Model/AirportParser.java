@@ -54,8 +54,12 @@ public class AirportParser extends AirportMethod {
     }
 
     /* Public method which is used to create a single airport */
-    public Airport createAirport(String input){
-        ArrayList<String> airportInfo = splitByComma(input);
-        return createParsedAirport(airportInfo);
+    public Airport createSingleAirport(String input){
+        ArrayList<String> airportInfo = refactorData(input);
+        if(airportInfo != null) {
+            return createParsedAirport(airportInfo);
+        } else{
+            return null;
+        }
     }
 }

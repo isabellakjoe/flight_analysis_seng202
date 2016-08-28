@@ -48,8 +48,12 @@ public class RouteParser extends RouteMethod {
 
     /* Public method which is used to create a single route */
     public Route createSingleRoute(String input) {
-        ArrayList<String> routeInfo = splitByComma(input);
-        return createParsedRoute(routeInfo);
+        ArrayList<String> routeInfo = refactorData(input);
+        if(routeInfo != null) {
+            return createParsedRoute(routeInfo);
+        } else{
+            return null;
+        }
     }
 
 }

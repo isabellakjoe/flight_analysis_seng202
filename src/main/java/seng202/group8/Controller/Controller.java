@@ -1,5 +1,6 @@
 package seng202.group8.Controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,11 @@ import java.util.ResourceBundle;
  * Created by esa46 on 19/08/16.
  */
 public class Controller implements Initializable {
+
+    ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
+    ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
+    ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
+
 
     @FXML
     private MenuItem viewAirportData;
@@ -87,6 +93,7 @@ public class Controller implements Initializable {
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the airport data file
                 ObservableList<Airport> airports = load.buildAirports();
+                currentlyLoadedAirports = airports;
                 airportTable.setItems(airports);
             }
         } catch(FileNotFoundException ex){
@@ -106,6 +113,7 @@ public class Controller implements Initializable {
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the airline data file
                 ObservableList<Airline> airlines = load.buildAirlines();
+                currentlyLoadedAirlines = airlines;
                 airlineTable.setItems(airlines);
             }
         } catch (FileNotFoundException ex){
@@ -125,6 +133,7 @@ public class Controller implements Initializable {
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the route data file
                 ObservableList<Route> routes = load.buildRoutes();
+                currentlyLoadedRoutes = routes;
                 routeTable.setItems(routes);
             }
         } catch (FileNotFoundException ex){
