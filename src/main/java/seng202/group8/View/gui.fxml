@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -17,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.Controller">
    <left>
       <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -30,18 +34,61 @@
                         <TextField layoutX="25.0" layoutY="149.0" prefHeight="25.0" prefWidth="220.0" promptText="airport" />
                         <Button layoutX="183.0" layoutY="218.0" mnemonicParsing="false" text="Search" />
                         <Text layoutX="25.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stop overs" />
+                        <MenuButton layoutX="25.0" layoutY="282.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Filter">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Airline Code" />
+                              <MenuItem mnemonicParsing="false" text="Name" />
+                              <MenuItem mnemonicParsing="false" text="Dest. Airport" />
+                              <MenuItem mnemonicParsing="false" text="Codeshare" />
+                              <MenuItem mnemonicParsing="false" text="Stops" />
+                              <MenuItem mnemonicParsing="false" text="Equipment" />
+                           </items>
+                        </MenuButton>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab text="Airport">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <MenuButton layoutX="29.0" layoutY="38.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Filter">
+                          <items>
+                              <MenuItem mnemonicParsing="false" text="ID" />
+                              <MenuItem mnemonicParsing="false" text="Name" />
+                            <MenuItem mnemonicParsing="false" text="City" />
+                            <MenuItem mnemonicParsing="false" text="Country" />
+                              <MenuItem mnemonicParsing="false" text="FAA" />
+                              <MenuItem mnemonicParsing="false" text="IATA" />
+                              <MenuItem mnemonicParsing="false" text="ICAO" />
+                              <MenuItem mnemonicParsing="false" text="Latitude" />
+                              <MenuItem mnemonicParsing="false" text="Longitude" />
+                              <MenuItem mnemonicParsing="false" text="Altitude" />
+                              <MenuItem mnemonicParsing="false" text="Timezone" />
+                              <MenuItem mnemonicParsing="false" text="DST" />
+                              <MenuItem mnemonicParsing="false" />
+                          </items>
+                        </MenuButton>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Airline">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <MenuButton layoutX="29.0" layoutY="40.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Filter">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="ID" />
+                              <MenuItem mnemonicParsing="false" text="Name" />
+                              <MenuItem mnemonicParsing="false" text="Alias" />
+                              <MenuItem mnemonicParsing="false" text="IATA" />
+                              <MenuItem mnemonicParsing="false" text="ICAO" />
+                              <MenuItem mnemonicParsing="false" text="Call Sign" />
+                              <MenuItem mnemonicParsing="false" text="Country" />
+                              <MenuItem mnemonicParsing="false" text="Active" />
+                           </items>
+                        </MenuButton>
+                     </children></AnchorPane>
                </content>
             </Tab>
         </tabs>

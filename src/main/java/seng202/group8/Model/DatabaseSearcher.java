@@ -1,5 +1,8 @@
 package seng202.group8.Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -87,9 +90,9 @@ public class DatabaseSearcher {
 
     //FOR THESE QUERIES WE CAN JUST USE WHERE f1 LIKE x AND f2 LIKE y AND ...
 
-    public ArrayList<Airport> searchForAirportByOption(Connection conn, String option, String name) {
+    public ObservableList<Airport> searchForAirportByOption(Connection conn, String option, String name) {
 
-        ArrayList<Airport> airports = new ArrayList<Airport>();
+        ObservableList<Airport> airports = FXCollections.observableArrayList();
         try {
             Statement stmt = conn.createStatement();
             String query = "SELECT * FROM AIRPORT WHERE " + option + " LIKE '" + name + "%';";
@@ -120,9 +123,9 @@ public class DatabaseSearcher {
 
     }
 
-    public ArrayList<Airline> searchForAirlinesByOption(Connection conn, String option, String name) {
+    public ObservableList<Airline> searchForAirlinesByOption(Connection conn, String option, String name) {
 
-        ArrayList<Airline> airlines = new ArrayList<Airline>();
+        ObservableList<Airline> airlines = FXCollections.observableArrayList();
         try {
             Statement stmt = conn.createStatement();
             String query = "SELECT * FROM airline WHERE " + option + " LIKE '" + name + "%';";
@@ -149,9 +152,9 @@ public class DatabaseSearcher {
     }
 
 
-    public ArrayList<Route> searchRouteByOption(Connection conn, String option, String name) {
+    public ObservableList<Route> searchRouteByOption(Connection conn, String option, String name) {
 
-        ArrayList<Route> routes = new ArrayList<Route>();
+        ObservableList<Route> routes = FXCollections.observableArrayList();
         try {
             Statement stmt = conn.createStatement();
             String query = "SELECT * FROM route WHERE " + option + " LIKE '" + name + "%';";
