@@ -1,14 +1,20 @@
-package seng202.group8.Model;
+package seng202.group8.Model.Parsers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Flight;
+import seng202.group8.Model.Objects.Route;
+import seng202.group8.Model.Parsers.AirlineParser;
+import seng202.group8.Model.Parsers.AirportParser;
+import seng202.group8.Model.Parsers.FlightParser;
+import seng202.group8.Model.Parsers.RouteParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * Created by asc132 on 22/08/2016.

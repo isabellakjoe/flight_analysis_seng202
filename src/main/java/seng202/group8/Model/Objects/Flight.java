@@ -1,9 +1,7 @@
-package seng202.group8.Model;
+package seng202.group8.Model.Objects;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
 
 /**
  * Created by esa46 on 19/08/16.

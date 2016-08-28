@@ -1,7 +1,10 @@
-package seng202.group8.Model;
+package seng202.group8.Model.Parsers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Flight;
+import seng202.group8.Model.Objects.Waypoint;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;

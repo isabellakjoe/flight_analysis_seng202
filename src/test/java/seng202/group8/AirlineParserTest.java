@@ -1,8 +1,8 @@
 package seng202.group8;
 
 import org.junit.Test;
-import seng202.group8.Model.Airline;
-import seng202.group8.Model.AirlineParser;
+import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Parsers.AirlineParser;
 
 import static junit.framework.TestCase.assertEquals;
 

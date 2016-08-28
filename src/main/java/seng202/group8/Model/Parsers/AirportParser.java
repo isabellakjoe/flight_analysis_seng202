@@ -1,7 +1,9 @@
-package seng202.group8.Model;
+package seng202.group8.Model.Parsers;
+
+import seng202.group8.Model.Objects.AirportMethod;
+import seng202.group8.Model.Objects.Airport;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by ikj11 on 22/08/16.

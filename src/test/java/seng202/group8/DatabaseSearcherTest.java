@@ -2,10 +2,10 @@ package seng202.group8;
 
 import javafx.collections.ObservableList;
 import org.junit.Test;
-import seng202.group8.Model.Airline;
-import seng202.group8.Model.Airport;
-import seng202.group8.Model.DatabaseSearcher;
-import seng202.group8.Model.Route;
+import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
+import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;
 import java.util.ArrayList;

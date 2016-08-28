@@ -1,8 +1,6 @@
 package seng202.group8;
 
 import org.junit.Test;
-import seng202.group8.Model.Airline;
-import seng202.group8.Model.AirlineParser;
 
 /**
  * Created by swa158 on 24/08/16.

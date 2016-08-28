@@ -2,15 +2,19 @@ package seng202.group8;
 
 import javafx.collections.ObservableList;
 import org.junit.Test;
-import seng202.group8.Model.*;
+import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Route;
+import seng202.group8.Model.Parsers.AirlineParser;
+import seng202.group8.Model.Parsers.AirportParser;
+import seng202.group8.Model.Parsers.FileLoader;
+import seng202.group8.Model.Parsers.RouteParser;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;

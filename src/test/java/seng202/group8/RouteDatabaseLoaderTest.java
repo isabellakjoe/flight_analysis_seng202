@@ -1,12 +1,11 @@
 package seng202.group8;
 
 import org.junit.Test;
-import seng202.group8.Model.RouteDatabaseLoader;
-import seng202.group8.Model.Route;
+import seng202.group8.Model.DatabaseMethods.RouteDatabaseLoader;
+import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;

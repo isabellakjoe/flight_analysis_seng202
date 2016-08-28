@@ -1,12 +1,11 @@
 package seng202.group8;
 
 import org.junit.Test;
-import seng202.group8.Model.Airport;
-import seng202.group8.Model.AirportDatabaseLoader;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.DatabaseMethods.AirportDatabaseLoader;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertTrue;
 
