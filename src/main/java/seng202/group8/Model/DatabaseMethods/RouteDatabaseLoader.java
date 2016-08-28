@@ -1,14 +1,17 @@
-package seng202.group8.Model;
+package seng202.group8.Model.DatabaseMethods;
+
+import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Route;
+import seng202.group8.Model.Objects.RouteMethod;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Callum on 25/08/16.
  */
-public class RouteDatabaseLoader extends RouteMethod{
+public class RouteDatabaseLoader extends RouteMethod {
 
 
     public static Connection connect() {

@@ -1,12 +1,14 @@
-package seng202.group8.Model;
+package seng202.group8.Model.Parsers;
+
+import seng202.group8.Model.Objects.AirlineMethod;
+import seng202.group8.Model.Objects.Airline;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Sophie on 22/08/16.
  */
-public class AirlineParser extends AirlineMethod{
+public class AirlineParser extends AirlineMethod {
 
 
     private Airline createParsedAirline(ArrayList<String> airlineInfo) {

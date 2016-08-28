@@ -1,10 +1,10 @@
 package seng202.group8;
 
 import org.junit.Test;
-import seng202.group8.Model.Airline;
-import seng202.group8.Model.Airport;
-import seng202.group8.Model.Route;
-import seng202.group8.Model.RouteParser;
+import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Route;
+import seng202.group8.Model.Parsers.RouteParser;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;

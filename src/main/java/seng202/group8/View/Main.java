@@ -5,16 +5,10 @@ package seng202.group8.View;
  **/
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.group8.Model.Flight;
-
-import java.io.IOException;
 
 public class Main extends Application {
 

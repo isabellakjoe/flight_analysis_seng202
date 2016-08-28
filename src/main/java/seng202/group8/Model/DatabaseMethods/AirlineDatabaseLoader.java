@@ -1,12 +1,13 @@
-package seng202.group8.Model;
+package seng202.group8.Model.DatabaseMethods;
+
+import seng202.group8.Model.Objects.AirlineMethod;
+import seng202.group8.Model.Objects.Airline;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Callum on 25/08/16.

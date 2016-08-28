@@ -12,13 +12,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import seng202.group8.Model.*;
+import seng202.group8.Model.Objects.*;
+import seng202.group8.Model.Parsers.FileLoader;
 
 import java.io.*;
 
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**

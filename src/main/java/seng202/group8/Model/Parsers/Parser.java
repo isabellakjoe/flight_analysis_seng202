@@ -1,4 +1,4 @@
-package seng202.group8.Model;
+package seng202.group8.Model.Parsers;
 
 import java.io.BufferedReader;
 

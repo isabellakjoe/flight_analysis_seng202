@@ -1,4 +1,8 @@
-package seng202.group8.Model;
+package seng202.group8.Model.Objects;
+
+import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Route;
 
 import java.util.ArrayList;
 import java.util.Arrays;

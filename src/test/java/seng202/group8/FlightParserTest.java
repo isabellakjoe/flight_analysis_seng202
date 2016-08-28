@@ -8,15 +8,14 @@ package seng202.group8;
 import javafx.collections.ObservableList;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import seng202.group8.Model.Airport;
-import seng202.group8.Model.Flight;
-import seng202.group8.Model.FlightParser;
-import seng202.group8.Model.Waypoint;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Flight;
+import seng202.group8.Model.Parsers.FlightParser;
+import seng202.group8.Model.Objects.Waypoint;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
