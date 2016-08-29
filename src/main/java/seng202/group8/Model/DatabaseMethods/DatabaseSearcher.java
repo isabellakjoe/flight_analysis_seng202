@@ -166,6 +166,7 @@ public class DatabaseSearcher {
             while (result.next()) {
                 Route loadRoute = new Route();
                 //Create the airline for the route, needs to check in the future
+                loadRoute.setRouteID(result.getInt("routeid"));
                 Airline routeAirline = createAirline(result.getString("airlinecode"), result.getInt("airlineid"));
                 loadRoute.setAirline(routeAirline);
                 Airport sourceAirport = createAirport(result.getString("sourceairport"), result.getInt("sourceid"));

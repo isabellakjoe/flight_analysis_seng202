@@ -5,6 +5,7 @@ package seng202.group8.Model.Objects;
  */
 public class Route {
 
+    private int routeID;
     private Airline airline;
     private String airlineName;
     private Airport sourceAirport;
@@ -15,6 +16,11 @@ public class Route {
     private String codeshareString;
     private int stops;
     private String equipment;
+
+
+    public int getRouteID() { return routeID;}
+
+    public void setRouteID(int routeID) { this.routeID = routeID;}
 
     public Airline getAirline() {
         return airline;
