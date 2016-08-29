@@ -35,7 +35,6 @@ public class DatabaseSearcherTest {
         ObservableList<Airport> airports = db.searchForAirportByOption(conn, "name", "Goro");
         //Only one in database like Goro, so output should be one element
         String airportName = airports.get(0).getName();
-        System.out.println(airportName);
         assertTrue(airportName.equals("Goroka"));
         db.disconnect(conn);
     }
