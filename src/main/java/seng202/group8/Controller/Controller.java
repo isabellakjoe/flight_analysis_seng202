@@ -21,15 +21,16 @@ import seng202.group8.Model.Searchers.RouteSearcher;
 import java.io.*;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
+
 
 
 /**
  * Created by esa46 on 19/08/16.
  */
-public class Controller implements Initializable {
+public class Controller implements Initializable{
 
-    ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
+    static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
     ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
     ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
 
@@ -126,10 +127,6 @@ public class Controller implements Initializable {
         } catch(FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
         }
-
-    }
-
-    private void filterAirportByCountry(){
 
     }
 
@@ -299,6 +296,187 @@ public class Controller implements Initializable {
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
 
         routeTable.setItems(matchingRoutes);
+    }
+
+
+    /* Method to Filter ALREADY loaded airlines by country
+    Need to display an error message if airlines aren't yet loaded
+     */
+    @FXML
+    private void FilterAirlinesByCountry(ActionEvent e) {
+
+        Comparator<Airline> airlineCountryComparator = new Comparator<Airline>() {
+            public int compare(Airline o1, Airline o2) {
+                String airline1 = o1.getCountry();
+                String airline2 = o2.getCountry();
+
+                return airline1.compareTo(airline2);
+            }
+        };
+        ArrayList<Airline> sortedAirlines = new ArrayList<Airline>();
+        Collections.sort(currentlyLoadedAirlines, airlineCountryComparator);
+        for(Airline str: currentlyLoadedAirlines) {
+            sortedAirlines.add(str);
+        }
+        ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
+        airlineTable.setItems(sortedObservableAirlines);
+        tableView.setVisible(true);
+    }
+
+    /* Method to Filter ALREADY loaded airlines by activity
+    Need to display an error message if airlines aren't yet loaded
+    */
+    @FXML
+    private void FilterAirlinesByActivity(ActionEvent e) {
+
+        Comparator<Airline> airlineActivityComparator = new Comparator<Airline>() {
+            public int compare(Airline o1, Airline o2) {
+                boolean airline1 = o1.isActive();
+                boolean airline2 = o2.isActive();
+
+                if (airline1 == !airline2){
+                    return 1;
+                }
+                if (!airline1 == airline2){
+                    return -1;
+                }
+                return 0;
+            }
+        };
+        ArrayList<Airline> sortedAirlines = new ArrayList<Airline>();
+        Collections.sort(currentlyLoadedAirlines, airlineActivityComparator);
+        for(Airline str: currentlyLoadedAirlines) {
+            sortedAirlines.add(str);
+        }
+        ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
+        airlineTable.setItems(sortedObservableAirlines);
+        tableView.setVisible(true);
+    }
+
+    /* Method to Filter ALREADY loaded airports by country
+    Need to display an error message if airports aren't yet loaded
+     */
+    @FXML
+    private void FilterAirportsByCountry(ActionEvent e) {
+
+        Comparator<Airport> airportCountryComparator = new Comparator<Airport>() {
+            public int compare(Airport o1, Airport o2) {
+                String airport1 = o1.getCountry();
+                String airport2 = o2.getCountry();
+
+                return airport1.compareTo(airport2);
+            }
+        };
+        ArrayList<Airport> sortedAirports = new ArrayList<Airport>();
+        Collections.sort(currentlyLoadedAirports, airportCountryComparator);
+        for(Airport str: currentlyLoadedAirports) {
+            sortedAirports.add(str);
+        }
+        ObservableList<Airport> sortedObservableAirports = FXCollections.observableArrayList(sortedAirports);
+        airportTable.setItems(sortedObservableAirports);
+        tableView.setVisible(true);
+    }
+
+
+    /* Method to Filter ALREADY loaded routes by Source Airport
+    Need to display an error message if routes aren't yet loaded
+     */
+    @FXML
+    private void FilterRoutesBySourceAirport(ActionEvent e) {
+
+        Comparator<Route> sourceAirportComparator = new Comparator<Route>() {
+            public int compare(Route o1, Route o2) {
+                String route1 = o1.getSourceAirportName();
+                String route2 = o2.getSourceAirportName();
+
+                return route1.compareTo(route2);
+            }
+        };
+        ArrayList<Route> sortedRoutes = new ArrayList<Route>();
+        Collections.sort(currentlyLoadedRoutes, sourceAirportComparator);
+        for(Route str: currentlyLoadedRoutes) {
+            sortedRoutes.add(str);
+        }
+        ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
+        routeTable.setItems(sortedObservableRoutes);
+        tableView.setVisible(true);
+    }
+
+    /* Method to Filter ALREADY loaded routes by Destination Airport
+    Need to display an error message if routes aren't yet loaded
+     */
+    @FXML
+    private void FilterRoutesByDestinationAirport(ActionEvent e) {
+
+        Comparator<Route> destinationAirportComparator = new Comparator<Route>() {
+            public int compare(Route o1, Route o2) {
+                String route1 = o1.getDestinationAirportName();
+                String route2 = o2.getDestinationAirportName();
+
+                return route1.compareTo(route2);
+            }
+        };
+        ArrayList<Route> sortedRoutes = new ArrayList<Route>();
+        Collections.sort(currentlyLoadedRoutes, destinationAirportComparator);
+        for(Route str: currentlyLoadedRoutes) {
+            sortedRoutes.add(str);
+        }
+        ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
+        routeTable.setItems(sortedObservableRoutes);
+        tableView.setVisible(true);
+    }
+
+    /* Method to Filter ALREADY loaded routes by number of stops
+   Need to display an error message if routes aren't yet loaded
+    */
+    @FXML
+    private void FilterRoutesByStops(ActionEvent e) {
+
+        Comparator<Route> stopsComparator = new Comparator<Route>() {
+            public int compare(Route o1, Route o2) {
+                int route1 = o1.getStops();
+                int route2 = o2.getStops();
+
+                if(route1 < route2){
+                    return -1;
+                }else if(route1 > route2){
+                    return 1;
+                }
+                return 0;
+            }
+        };
+        ArrayList<Route> sortedRoutes = new ArrayList<Route>();
+        Collections.sort(currentlyLoadedRoutes, stopsComparator);
+        for(Route str: currentlyLoadedRoutes) {
+            sortedRoutes.add(str);
+        }
+        ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
+        routeTable.setItems(sortedObservableRoutes);
+        tableView.setVisible(true);
+    }
+
+    /* Method to Filter ALREADY loaded routes by equipment
+    Need to display an error message if routes aren't yet loaded
+     */
+    @FXML
+    private void FilterRoutesByEquipment(ActionEvent e) {
+
+        Comparator<Route> equipmentComparator = new Comparator<Route>() {
+            public int compare(Route o1, Route o2) {
+                String route1 = o1.getEquipment();
+                String route2 = o2.getEquipment();
+
+                return route1.compareTo(route2);
+            }
+        };
+        ArrayList<Route> sortedRoutes = new ArrayList<Route>();
+        Collections.sort(currentlyLoadedRoutes, equipmentComparator);
+        for(Route str: currentlyLoadedRoutes) {
+            sortedRoutes.add(str);
+        }
+        ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
+        routeTable.setItems(sortedObservableRoutes);
+        tableView.setVisible(true);
     }
 
     /**
