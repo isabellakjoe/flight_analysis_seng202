@@ -2,6 +2,7 @@ package seng202.group8.Model.Searchers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import seng202.group8.Model.Objects.Airline;
 
 /**
@@ -20,14 +21,16 @@ public class AirlineSearcher {
     }
 
     public void airlinesOfID(String airlineID) {
-        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
-        int intID = Integer.parseInt(airlineID);
-        for (int i = 0; i < loadedAirlines.size(); i++) {
-            if (loadedAirlines.get(i).getAirlineID() == intID) {
-                matchingAirlines.add(loadedAirlines.get(i));
+            ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+            int intID = Integer.parseInt(airlineID);
+            for (int i = 0; i < loadedAirlines.size(); i++) {
+                if (loadedAirlines.get(i).getAirlineID() == intID) {
+                    matchingAirlines.add(loadedAirlines.get(i));
+                }
             }
-        }
-        loadedAirlines = matchingAirlines;
+            loadedAirlines = matchingAirlines;
+
+
     }
 
     public void airlinesOfName(String name) {

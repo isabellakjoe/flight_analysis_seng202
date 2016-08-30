@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -17,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.Controller">
    <left>
       <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -29,8 +33,18 @@
                         <TextField fx:id="destinationSearch" layoutX="25.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport name)" />
                         <Button fx:id="routeSearch" layoutX="183.0" layoutY="218.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
                         <Button fx:id="resetRouteSearch" layoutX="25.0" layoutY="218.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                        <TextField fx:id="stopoverSearch" layoutX="26.0" layoutY="118.0" prefHeight="25.0" prefWidth="218.0" promptText="number of stops" />
-                        <TextField fx:id="codeshareSearch" layoutX="26.0" layoutY="165.0" prefHeight="25.0" prefWidth="218.0" promptText="codeshare (Y/N)" />
+                        <TextField fx:id="stopoverSearch" layoutX="25.0" layoutY="118.0" prefHeight="25.0" prefWidth="220.0" promptText="number of stops" />
+                        <TextField fx:id="codeshareSearch" layoutX="26.0" layoutY="166.0" prefHeight="25.0" prefWidth="218.0" promptText="codeshare (Y/N)" />
+                        <Text fx:id="stopsErrorMessage" fill="#f20808" layoutX="25.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter an integer number" visible="false">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="codeshareErrorMessage" fill="#f20808" layoutX="25.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter 'Y' or 'N'" visible="false">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
             </content>

@@ -1,4 +1,4 @@
-package seng202.group8;
+package seng202.group8.ParserAndLoaderTests;
 
 /**
  * Created by Erika on 22-Aug-16.

@@ -131,40 +131,6 @@ public class Controller implements Initializable {
     }
 
 
-    @FXML
-    private Text titleString;
-    @FXML
-    private Text aName;
-    @FXML
-    private Text bName;
-    @FXML
-    private Text aLatitude;
-    @FXML
-    private Text bLatitude;
-    @FXML
-    private Text aLongitude;
-    @FXML
-    private Text bLongitude;
-    @FXML
-    private Text aAltitude;
-    @FXML
-    private Text bAltitude;
-    /**
-     * Initializing flight column names
-     */
-    @FXML
-    private TableView<Waypoint> flightTable;
-    @FXML
-    private TableColumn<Waypoint, String> waypointName;
-    @FXML
-    private TableColumn<Waypoint, String> waypointAltitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointLatitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointLongitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointType;
-
     /**
      * Populate the flightView table with waypoints
      */
@@ -201,29 +167,6 @@ public class Controller implements Initializable {
         flightTable.setItems(waypoints);
 
     }
-
-    @FXML
-    private TextField airportIDSearch;
-    @FXML
-    private TextField airportNameSearch;
-    @FXML
-    private TextField airportCitySearch;
-    @FXML
-    private TextField airportCountrySearch;
-    @FXML
-    private TextField airportFAASearch;
-    @FXML
-    private TextField airportIATASearch;
-    @FXML
-    private TextField airportLatitudeSearch;
-    @FXML
-    private TextField airportLongitudeSearch;
-    @FXML
-    private TextField airportAltitudeSearch;
-    @FXML
-    private TextField airportTimezoneSearch;
-    @FXML
-    private TextField airportDSTSearch;
 
 
     @FXML
@@ -278,22 +221,6 @@ public class Controller implements Initializable {
         airportTable.setItems(matchingAirports);
     }
 
-    @FXML
-    private TextField airlineIDSearch;
-    @FXML
-    private TextField airlineNameSearch;
-    @FXML
-    private TextField airlineAliasSearch;
-    @FXML
-    private TextField airlineIATASearch;
-    @FXML
-    private TextField airlineICAOSearch;
-    @FXML
-    private TextField airlineCallsignSearch;
-    @FXML
-    private TextField airlineCountrySearch;
-    @FXML
-    private TextField airlineActiveSearch;
 
     @FXML
     private void airlineSearch(ActionEvent e){
@@ -324,25 +251,20 @@ public class Controller implements Initializable {
 
         if (country.length() > 0){ searcher.airlinesOfCountry(country);}
 
-        if (activeStatus.length() > 0){ searcher.airlinesOfActiveStatus(activeStatus);}
+        if (activeStatus.length() > 0) {searcher.airlinesOfActiveStatus(activeStatus);}
 
         ObservableList<Airline> matchingAirlines = searcher.getLoadedAirlines();
         airlineTable.setItems(matchingAirlines);
     }
 
-    @FXML
-    private TextField sourceSearch;
-    @FXML
-    private TextField destinationSearch;
-    @FXML
-    private TextField stopoverSearch;
-    @FXML
-    private TextField codeshareSearch;
 
     @FXML
     private void routeSearch(ActionEvent e){
         flightView.setVisible(false);
         tableView.setVisible(true);
+        codeshareErrorMessage.setVisible(false);
+        stopsErrorMessage.setVisible(false);
+
         RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
         String sourceAirport = sourceSearch.getText();
         String destinationAirport = destinationSearch.getText();
@@ -353,14 +275,126 @@ public class Controller implements Initializable {
 
         if (destinationAirport.length() > 0){searcher.routesOfDestination(destinationAirport);}
 
-        if (stops.length() > 0 ){searcher.routesOfStops(stops);}
+        if (stops.length() > 0 ) {
+            try {
+                int intStops = Integer.parseInt(stops);
+                searcher.routesOfStops(intStops);
+            }
+            catch (NumberFormatException exception) {
+                stopsErrorMessage.setVisible(true);
+            }
+        }
 
-        if (codeshareStatus.length() > 0){searcher.routesOfCodeshare(codeshareStatus);}
+        if (codeshareStatus.length() > 0) {
+            if (codeshareStatus.equals("Y") || codeshareStatus.equals("N")) {
+                searcher.routesOfCodeshare(codeshareStatus);
+            } else {
+                codeshareErrorMessage.setVisible(true);
+            }
+        }
 
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
 
         routeTable.setItems(matchingRoutes);
     }
+
+    /**
+     * FXML imports for searching
+     */
+
+
+    @FXML
+    private Text stopsErrorMessage;
+    @FXML
+    private Text codeshareErrorMessage;
+
+    @FXML
+    private TextField airportIDSearch;
+    @FXML
+    private TextField airportNameSearch;
+    @FXML
+    private TextField airportCitySearch;
+    @FXML
+    private TextField airportCountrySearch;
+    @FXML
+    private TextField airportFAASearch;
+    @FXML
+    private TextField airportIATASearch;
+    @FXML
+    private TextField airportLatitudeSearch;
+    @FXML
+    private TextField airportLongitudeSearch;
+    @FXML
+    private TextField airportAltitudeSearch;
+    @FXML
+    private TextField airportTimezoneSearch;
+    @FXML
+    private TextField airportDSTSearch;
+
+
+    @FXML
+    private TextField airlineIDSearch;
+    @FXML
+    private TextField airlineNameSearch;
+    @FXML
+    private TextField airlineAliasSearch;
+    @FXML
+    private TextField airlineIATASearch;
+    @FXML
+    private TextField airlineICAOSearch;
+    @FXML
+    private TextField airlineCallsignSearch;
+    @FXML
+    private TextField airlineCountrySearch;
+    @FXML
+    private TextField airlineActiveSearch;
+
+    @FXML
+    private TextField sourceSearch;
+    @FXML
+    private TextField destinationSearch;
+    @FXML
+    private TextField stopoverSearch;
+    @FXML
+    private TextField codeshareSearch;
+
+
+    /**
+     * Setting up for flight table
+     */
+    @FXML
+    private Text titleString;
+    @FXML
+    private Text aName;
+    @FXML
+    private Text bName;
+    @FXML
+    private Text aLatitude;
+    @FXML
+    private Text bLatitude;
+    @FXML
+    private Text aLongitude;
+    @FXML
+    private Text bLongitude;
+    @FXML
+    private Text aAltitude;
+    @FXML
+    private Text bAltitude;
+    /**
+     * Initializing flight column names
+     */
+    @FXML
+    private TableView<Waypoint> flightTable;
+    @FXML
+    private TableColumn<Waypoint, String> waypointName;
+    @FXML
+    private TableColumn<Waypoint, String> waypointAltitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointLatitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointLongitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointType;
 
 
     /**

@@ -41,11 +41,10 @@ public class RouteSearcher {
         loadedRoutes = matchingRoutes;
     }
 
-    public void routesOfStops(String stops){
+    public void routesOfStops(int stops){
         ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        int intStops = parseInt(stops);
         for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getStops() == intStops){
+            if (loadedRoutes.get(i).getStops() == stops){
                 matchingRoutes.add(loadedRoutes.get(i));
             }
         }

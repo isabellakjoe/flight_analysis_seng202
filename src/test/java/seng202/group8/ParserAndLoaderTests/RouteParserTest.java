@@ -1,4 +1,4 @@
-package seng202.group8;
+package seng202.group8.ParserAndLoaderTests;
 
 import org.junit.Test;
 import seng202.group8.Model.Objects.Airline;

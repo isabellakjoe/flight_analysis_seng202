@@ -1,4 +1,4 @@
-package seng202.group8;
+package seng202.group8.DatabaseTests;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
