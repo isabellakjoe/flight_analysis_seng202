@@ -18,6 +18,8 @@ public class RouteParserTest {
     private String routeString = "2B,410,AER,2965,KZN,2990,Y,10,CR2";
     /* String containing ICAO information */
     private String ICAOString = "9W,3000,TRVA,3153,BOMV,2997,,0,73H";
+    /* String containing empty inforamtion */
+    private String emptyString = "4Y,\\N,WNA,\\N,PKA,\\N,,0,CNA";
 
     @Test
     /* Test to see if the airline is added correctly to a route object */
@@ -73,7 +75,7 @@ public class RouteParserTest {
         sourceAirport.setICAO("TRVA");
         sourceAirport.setAirportID(3153);
 
-        assertEquals(route.getSourceAirport().getIATA(), sourceAirport.getIATA());
+        assertEquals(route.getSourceAirport().getICAO(), sourceAirport.getICAO());
         assertTrue(route.getSourceAirport().getAirportID() == sourceAirport.getAirportID());
     }
 
@@ -87,7 +89,7 @@ public class RouteParserTest {
         destinationAirport.setICAO("BOMV");
         destinationAirport.setAirportID(2997);
 
-        assertEquals(route.getDestinationAirport().getIATA(), destinationAirport.getIATA());
+        assertEquals(route.getDestinationAirport().getICAO(), destinationAirport.getICAO());
         assertTrue(route.getDestinationAirport().getAirportID() == destinationAirport.getAirportID());
     }
 
@@ -116,7 +118,53 @@ public class RouteParserTest {
         assertTrue(route.getEquipment().equals("CR2"));
     }
 
+    @Test
+    /* Test to see if the airline is added correctly to a route object when null */
+    public void testEmptyAirlineParsesCorrectly() {
+        RouteParser routeParser = new RouteParser();
+        Route route = routeParser.createSingleRoute(emptyString);
 
+        Airline airline = new Airline();
+        airline.setName("4Y");
+        airline.setAirlineID(-1);
+
+        assertTrue(route.getAirline().getName().equals(airline.getName()));
+        assertTrue(route.getAirline().getAirlineID() == airline.getAirlineID());
+    }
+
+    /* Test to see if source airport is added correctly to a route object when null */
+    @Test
+    public void testEmptySourceAirportParsesCorrectly() {
+        RouteParser routeParser = new RouteParser();
+        Route route = routeParser.createSingleRoute(emptyString);
+
+        Airport sourceAirport = new Airport();
+        sourceAirport.setICAO("WNA");
+        sourceAirport.setAirportID(-1);
+
+        /**
+         * Something wrong here, IATA is the equivalent of ICAO???
+         **/
+        assertEquals(route.getSourceAirport().getICAO(), sourceAirport.getIATA());
+        assertTrue(route.getSourceAirport().getAirportID() == sourceAirport.getAirportID());
+    }
+
+    /* Test to see if destination airport is added correctly to a route object when null */
+    @Test
+    public void testEmptyDestinationAirportParsesCorrectly() {
+        RouteParser routeParser = new RouteParser();
+        Route route = routeParser.createSingleRoute(emptyString);
+
+        Airport destinationAirport = new Airport();
+        destinationAirport.setICAO("WNA");
+        destinationAirport.setAirportID(-1);
+
+        /**
+         * Something wrong here, IATA is the equivalent of ICAO???
+         **/
+        assertEquals(route.getSourceAirport().getICAO(), destinationAirport.getIATA());
+        assertTrue(route.getSourceAirport().getAirportID() == destinationAirport.getAirportID());
+    }
 }
 
 

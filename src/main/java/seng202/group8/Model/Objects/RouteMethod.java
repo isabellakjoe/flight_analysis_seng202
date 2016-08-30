@@ -75,7 +75,7 @@ public abstract class RouteMethod {
         return airport;
     }
 
-    /* Method to check whether an route is codeshared */
+    /* Method to check whether a route is codeshared */
     public void checkCodeshared(Route route, String codeshare) {
         if (codeshare.equals("Y")) {
             route.setCodeshare(true);

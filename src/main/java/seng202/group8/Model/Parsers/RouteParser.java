@@ -19,17 +19,35 @@ public class RouteParser extends RouteMethod {
         /** Creates the airline object, later this needs to check if airline
          * already loaded into the system
          */
-        Airline airline = createAirline(routeInfo.get(0), Integer.parseInt(routeInfo.get(1)));
-        route.setAirline(airline);
+        /* check if airlineID is null, if is sets ID to -1 */
+        if (routeInfo.get(1) == "") {
+            Airline airline = createAirline(routeInfo.get(0), -1);
+            route.setAirline(airline);
+        } else {
+            Airline airline = createAirline(routeInfo.get(0), Integer.parseInt(routeInfo.get(1)));
+            route.setAirline(airline);
+        }
 
         /** Creates the airport objects for the route, later this also needs to check
          * whether 'new' airports are already in the system
+         * Checks if airport is null
          */
-        Airport sourceAirport = createAirport(routeInfo.get(2), parseToInt(routeInfo.get(3)));
-        route.setSourceAirport(sourceAirport);
-
-        Airport destinationAirport = createAirport(routeInfo.get(4), parseToInt(routeInfo.get(5)));
-        route.setDestinationAirport(destinationAirport);
+        /* check if source airportID is null, if is sets ID to -1 */
+        if (routeInfo.get(3) == "") {
+            Airport sourceAirport = createAirport(routeInfo.get(2), -1);
+            route.setSourceAirport(sourceAirport);
+        } else {
+            Airport sourceAirport = createAirport(routeInfo.get(2), parseToInt(routeInfo.get(3)));
+            route.setSourceAirport(sourceAirport);
+        }
+        /* check if destination airportID is null, if is sets ID to -1 */
+        if (routeInfo.get(5) == "") {
+            Airport destinationAirport = createAirport(routeInfo.get(4), -1);
+            route.setDestinationAirport(destinationAirport);
+        } else {
+            Airport destinationAirport = createAirport(routeInfo.get(4), parseToInt(routeInfo.get(5)));
+            route.setDestinationAirport(destinationAirport);
+        }
 
         /* Sets whether the codeshare value is Y */
         checkCodeshared(route, routeInfo.get(6));

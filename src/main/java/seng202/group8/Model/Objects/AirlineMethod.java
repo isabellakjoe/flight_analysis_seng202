@@ -19,7 +19,6 @@ public abstract class AirlineMethod {
         if (size == 8) {
             for (int i = 0; i < size; i++) {
                 refactoredData.add(splitData.get(i).trim().replace("\"", ""));
-
             }
             /* Returns a new ArrayList, containing all of the refactored string elements */
             return refactoredData;
