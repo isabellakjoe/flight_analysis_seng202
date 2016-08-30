@@ -1,8 +1,9 @@
-package seng202.group8;
+package seng202.group8.DatabaseTests;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.Test;
+import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Airline;
@@ -25,6 +26,8 @@ public class DatabaseSaverTest {
     @Test
     public void testAirportSavesCorrectly(){
         //Create Objects to save and load to and from the database
+        Database dbOne = new Database();
+        Database dbTwo = new Database();
         DatabaseSaver dbsave = new DatabaseSaver();
         DatabaseSearcher dbsearch = new DatabaseSearcher();
         AirportParser ap = new AirportParser();
@@ -33,20 +36,20 @@ public class DatabaseSaverTest {
         //Create an array to save the new airport to the database
         ObservableList<Airport> testArray = FXCollections.observableArrayList();
         testArray.add(testAirport);
-        Connection connSave = dbsave.connect();
-        Connection connSearch = dbsearch.connect();
+        Connection connSave = dbOne.testConnect();
+        Connection connSearch = dbTwo.testConnect();
         //Save the aiport to the database here
         dbsave.saveAirports(connSave, testArray);
         //Search for the new saved aiport here
         ObservableList<Airport> airports = dbsearch.searchForAirportByOption(connSearch, "name", "Inuvik Mike Zubko");
         //Close the database queries here
-        dbsave.disconnect(connSave);
-        dbsearch.disconnect(connSearch);
+        dbOne.disconnect(connSave);
+        dbTwo.disconnect(connSearch);
         //Current test database should only return one result
         //Remove the aiport from the database for test repetability.
         //TODO: Implements as a class later
-        DatabaseSaver dbsavetwo = new DatabaseSaver();
-        Connection connDelete = dbsavetwo.connect();
+        Database dbThree = new Database();
+        Connection connDelete = dbThree.testConnect();
         try {
             Statement stmt = connDelete.createStatement();
             String sql = "DELETE FROM airport WHERE name=\'Inuvik Mike Zubko\';";
@@ -56,7 +59,7 @@ public class DatabaseSaverTest {
         } catch (Exception e ) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
-        dbsavetwo.disconnect(connDelete);
+        dbThree.disconnect(connDelete);
         //Check here if correct airline inserted into database
         Airport returnAirport = airports.get(0);
         assertTrue(returnAirport.getName().equals(testAirport.getName()));
@@ -67,6 +70,8 @@ public class DatabaseSaverTest {
     @Test
     public void testAirlineSavesCorrectly() {
         //Create the objects to save and load to and from the database
+        Database dbOne = new Database();
+        Database dbTwo = new Database();
         DatabaseSaver dbsave = new DatabaseSaver();
         DatabaseSearcher dbsearch = new DatabaseSearcher();
         AirlineParser ap = new AirlineParser();
@@ -75,19 +80,19 @@ public class DatabaseSaverTest {
         ObservableList<Airline> testArray = FXCollections.observableArrayList();
         testArray.add(testAirline);
         //Create the connections to the database
-        Connection connSave = dbsave.connect();
-        Connection connSearch = dbsearch.connect();
+        Connection connSave = dbOne.testConnect();
+        Connection connSearch = dbTwo.testConnect();
         //Save the new airline here
         dbsave.saveAirlines(connSave, testArray);
         //Search for the new airline in the database here
         ObservableList<Airline> airlines = dbsearch.searchForAirlinesByOption(connSearch, "name", "Aegean Airlines");
-        dbsave.disconnect(connSave);
-        dbsearch.disconnect(connSearch);
+        dbOne.disconnect(connSave);
+        dbTwo.disconnect(connSearch);
         //Current test database should only return one result
         //Remove the aiport from the database for test repetability.
         //TODO: Implements as a class later
-        DatabaseSaver dbsavetwo = new DatabaseSaver();
-        Connection connDelete = dbsavetwo.connect();
+        Database dbThree = new Database();
+        Connection connDelete = dbThree.testConnect();
         try {
             Statement stmt = connDelete.createStatement();
             String sql = "DELETE FROM airline WHERE name=\'Aegean Airlines\';";
@@ -98,7 +103,7 @@ public class DatabaseSaverTest {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 
-        dbsavetwo.disconnect(connDelete);
+        dbThree.disconnect(connDelete);
         Airline returnAirline = airlines.get(0);
         assertTrue(returnAirline.getAirlineID() == testAirline.getAirlineID());
 
@@ -106,6 +111,8 @@ public class DatabaseSaverTest {
 
     @Test
     public void testRouteSavesCorrectly() {
+        Database dbOne = new Database();
+        Database dbTwo = new Database();
         //Create the objects to save and search the database
         DatabaseSaver dbsave = new DatabaseSaver();
         DatabaseSearcher dbsearch = new DatabaseSearcher();
@@ -116,20 +123,20 @@ public class DatabaseSaverTest {
         ObservableList<Route> testArray = FXCollections.observableArrayList();
         testArray.add(testRoute);
         //Create the connections to the database
-        Connection connSave = dbsave.connect();
-        Connection connSearch = dbsearch.connect();
+        Connection connSave = dbOne.testConnect();
+        Connection connSearch = dbTwo.testConnect();
         //Save the new route here
         dbsave.saveRoutes(connSave, testArray);
         //Search for the new saved route, only one currently in database with id 10
         ObservableList<Route>returnedRoutes = dbsearch.searchRouteByOption(connSearch, "equipment", "SF3");
-        dbsave.disconnect(connSave);
-        dbsearch.disconnect(connSearch);
+        dbOne.disconnect(connSave);
+        dbTwo.disconnect(connSearch);
 
         //Current test database should only return one result
         //Remove the route from the database for test repetability.
         //TODO: Implements as a class later
-        DatabaseSaver dbsavetwo = new DatabaseSaver();
-        Connection connDelete = dbsavetwo.connect();
+        Database dbThree = new Database();
+        Connection connDelete = dbThree.testConnect();
         try {
             Statement stmt = connDelete.createStatement();
             String sql = "DELETE FROM route WHERE routeid=10;";
@@ -139,7 +146,7 @@ public class DatabaseSaverTest {
         } catch (Exception e ) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
-        dbsavetwo.disconnect(connDelete);
+        dbThree.disconnect(connDelete);
         Route testReturnedRoute = returnedRoutes.get(0);
         assertTrue(testReturnedRoute.getRouteID() == testRoute.getRouteID());
 

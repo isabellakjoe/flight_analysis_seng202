@@ -1,4 +1,4 @@
-package seng202.group8;
+package seng202.group8.ParserAndLoaderTests;
 
 import javafx.collections.ObservableList;
 import org.junit.Test;

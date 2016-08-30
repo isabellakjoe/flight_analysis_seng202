@@ -1,6 +1,7 @@
-package seng202.group8;
+package seng202.group8.DatabaseTests;
 
 import org.junit.Test;
+import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.DatabaseMethods.AirportDatabaseLoader;
 
@@ -16,9 +17,10 @@ public class AirportDatabaseLoaderTest {
 
     @Test
     public void testAllRoutesLoadCorrectly(){
-        AirportDatabaseLoader db = new AirportDatabaseLoader();
-        Connection conn = db.connect();
-        ArrayList<Airport> airports = db.loadAirport(conn);
+        Database db = new Database();
+        AirportDatabaseLoader dba = new AirportDatabaseLoader();
+        Connection conn = db.testConnect();
+        ArrayList<Airport> airports = dba.loadAirport(conn);
         //Currently 7 airlines in the database
         assertTrue(9 == airports.size());
         db.disconnect(conn);

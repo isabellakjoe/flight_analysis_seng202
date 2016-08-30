@@ -5,22 +5,24 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seng202.group8.Model.DatabaseMethods.Database;
+import seng202.group8.Model.Searchers.AirlineSearcher;
+import seng202.group8.Model.Searchers.AirportSearcher;
 import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
+import seng202.group8.Model.Searchers.RouteSearcher;
 
 import java.io.*;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 /**
  * Created by esa46 on 19/08/16.
@@ -32,54 +34,11 @@ public class Controller implements Initializable {
     ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
 
 
-    @FXML
-    private MenuItem viewAirportData;
-
-    @FXML
-    private MenuItem addAirportData;
-
-    @FXML
-    private MenuItem addAirlineData;
-
-    @FXML
-    private MenuItem addRouteData;
-
-    @FXML
-    private MenuItem addFlightData;
-
 
     @FXML
     private Pane tableView;
-
     @FXML
     private Pane flightView;
-
-    @FXML
-    private Text titleString;
-
-    @FXML
-    private Text aName;
-
-    @FXML
-    private Text bName;
-
-    @FXML
-    private Text aLatitude;
-
-    @FXML
-    private Text bLatitude;
-
-    @FXML
-    private Text aLongitude;
-
-    @FXML
-    private Text bLongitude;
-
-    @FXML
-    private Text aAltitude;
-
-    @FXML
-    private Text bAltitude;
 
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
@@ -95,6 +54,8 @@ public class Controller implements Initializable {
                 ObservableList<Airport> airports = load.buildAirports();
                 currentlyLoadedAirports = airports;
                 airportTable.setItems(airports);
+                flightView.setVisible(false);
+                tableView.setVisible(true);
             }
         } catch(FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
@@ -115,6 +76,8 @@ public class Controller implements Initializable {
                 ObservableList<Airline> airlines = load.buildAirlines();
                 currentlyLoadedAirlines = airlines;
                 airlineTable.setItems(airlines);
+                flightView.setVisible(false);
+                tableView.setVisible(true);
             }
         } catch (FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
@@ -135,17 +98,18 @@ public class Controller implements Initializable {
                 ObservableList<Route> routes = load.buildRoutes();
                 currentlyLoadedRoutes = routes;
                 routeTable.setItems(routes);
+                flightView.setVisible(false);
+                tableView.setVisible(true);
             }
         } catch (FileNotFoundException ex){
             System.out.println("FILE NOT FOUND");
         }
 
     }
+
     @FXML
     /* Method to open up a file chooser for the user to select the Flight Data file  with error handling*/
     public void addFlightData(ActionEvent e){
-        tableView.setVisible(false);
-        flightView.setVisible(true);
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open flight datafile"); //Text in the window header
@@ -165,21 +129,10 @@ public class Controller implements Initializable {
 
     }
 
-    /**
-     * Initializing flight column names
-     */
-    @FXML
-    private TableView<Waypoint> flightTable;
-    @FXML
-    private TableColumn<Waypoint, String> waypointName;
-    @FXML
-    private TableColumn<Waypoint, String> waypointAltitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointLatitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointLongitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointType;
+    private void filterAirportByCountry(){
+
+    }
+
 
     /**
      * Populate the flightView table with waypoints
@@ -217,6 +170,234 @@ public class Controller implements Initializable {
         flightTable.setItems(waypoints);
 
     }
+
+
+    @FXML
+    public void resetSearch(ActionEvent e){
+        routeTable.setItems(currentlyLoadedRoutes);
+        airlineTable.setItems(currentlyLoadedAirlines);
+        airportTable.setItems(currentlyLoadedAirports);
+        flightView.setVisible(false);
+        tableView.setVisible(true);
+    }
+
+    @FXML
+    private void airportSearch(ActionEvent e){
+        flightView.setVisible(false);
+        tableView.setVisible(true);
+        AirportSearcher searcher = new AirportSearcher(currentlyLoadedAirports);
+        String airportID = airportIDSearch.getText();
+        String name = airportNameSearch.getText();
+        String city = airportCitySearch.getText();
+        String country = airportCountrySearch.getText();
+        String FAA = airportFAASearch.getText();
+        String IATA = airportIATASearch.getText();
+        String latitude = airportLatitudeSearch.getText();
+        String longitude = airportLongitudeSearch.getText();
+        String altitude = airportAltitudeSearch.getText();
+        String timezone = airportTimezoneSearch.getText();
+        String DST = airportDSTSearch.getText();
+
+        if (airportID.length() > 0){ searcher.airportsOfID(airportID); }
+
+        if (name.length() > 0){ searcher.airportsOfName(name); }
+
+        if (city.length() > 0){ searcher.airportsOfCity(city); }
+
+        if (country.length() > 0) {searcher.airportsOfCountry(country); }
+
+        if (FAA.length() > 0) { searcher.airportsOfFAA(FAA); }
+
+        if (IATA.length() > 0) { searcher.airportsOfIATA(IATA); }
+
+        if (latitude.length() > 0) { searcher.airportsOfLatitude(latitude); }
+
+        if (longitude.length() > 0) { searcher.airportsOfLongitude(longitude); }
+
+        if (altitude.length() > 0) { searcher.airportsOfAltitude(altitude); }
+
+        if (timezone.length() > 0) { searcher.airportsOfTimezone(timezone); }
+
+        if (DST.length() > 0) { searcher.airportsOfDST(DST); }
+
+        ObservableList<Airport> matchingAirports = searcher.getLoadedAirports();
+        airportTable.setItems(matchingAirports);
+    }
+
+
+    @FXML
+    private void airlineSearch(ActionEvent e){
+        flightView.setVisible(false);
+        tableView.setVisible(true);
+        AirlineSearcher searcher = new AirlineSearcher(currentlyLoadedAirlines);
+
+        String airlineID = airlineIDSearch.getText();
+        String name = airlineNameSearch.getText();
+        String alias = airlineAliasSearch.getText();
+        String IATA = airlineIATASearch.getText();
+        String ICAO = airlineICAOSearch.getText();
+        String callsign = airlineCallsignSearch.getText();
+        String country = airlineCountrySearch.getText();
+        String activeStatus = airlineActiveSearch.getText();
+
+        if (airlineID.length() > 0){ searcher.airlinesOfID(airlineID);}
+
+        if (name.length() > 0){ searcher.airlinesOfName(name);}
+
+        if (alias.length() > 0){ searcher.airlinesOfAlias(alias);}
+
+        if (IATA.length() > 0){ searcher.airlinesOfIATA(IATA);}
+
+        if (ICAO.length() > 0){ searcher.airlinesOfICAO(ICAO);}
+
+        if (callsign.length() > 0){ searcher.airlinesOfCallsign(callsign);}
+
+        if (country.length() > 0){ searcher.airlinesOfCountry(country);}
+
+        if (activeStatus.length() > 0) {searcher.airlinesOfActiveStatus(activeStatus);}
+
+        ObservableList<Airline> matchingAirlines = searcher.getLoadedAirlines();
+        airlineTable.setItems(matchingAirlines);
+    }
+
+
+    @FXML
+    private void routeSearch(ActionEvent e){
+        flightView.setVisible(false);
+        tableView.setVisible(true);
+        codeshareErrorMessage.setVisible(false);
+        stopsErrorMessage.setVisible(false);
+
+        RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
+        String sourceAirport = sourceSearch.getText();
+        String destinationAirport = destinationSearch.getText();
+        String stops = stopoverSearch.getText();
+        String codeshareStatus = codeshareSearch.getText();
+
+        if (sourceAirport.length() > 0){searcher.routesOfSource(sourceAirport);}
+
+        if (destinationAirport.length() > 0){searcher.routesOfDestination(destinationAirport);}
+
+        if (stops.length() > 0 ) {
+            try {
+                int intStops = Integer.parseInt(stops);
+                searcher.routesOfStops(intStops);
+            }
+            catch (NumberFormatException exception) {
+                stopsErrorMessage.setVisible(true);
+            }
+        }
+
+        if (codeshareStatus.length() > 0) {
+            if (codeshareStatus.equals("Y") || codeshareStatus.equals("N")) {
+                searcher.routesOfCodeshare(codeshareStatus);
+            } else {
+                codeshareErrorMessage.setVisible(true);
+            }
+        }
+
+        ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
+
+        routeTable.setItems(matchingRoutes);
+    }
+
+    /**
+     * FXML imports for searching
+     */
+
+
+    @FXML
+    private Text stopsErrorMessage;
+    @FXML
+    private Text codeshareErrorMessage;
+
+    @FXML
+    private TextField airportIDSearch;
+    @FXML
+    private TextField airportNameSearch;
+    @FXML
+    private TextField airportCitySearch;
+    @FXML
+    private TextField airportCountrySearch;
+    @FXML
+    private TextField airportFAASearch;
+    @FXML
+    private TextField airportIATASearch;
+    @FXML
+    private TextField airportLatitudeSearch;
+    @FXML
+    private TextField airportLongitudeSearch;
+    @FXML
+    private TextField airportAltitudeSearch;
+    @FXML
+    private TextField airportTimezoneSearch;
+    @FXML
+    private TextField airportDSTSearch;
+
+
+    @FXML
+    private TextField airlineIDSearch;
+    @FXML
+    private TextField airlineNameSearch;
+    @FXML
+    private TextField airlineAliasSearch;
+    @FXML
+    private TextField airlineIATASearch;
+    @FXML
+    private TextField airlineICAOSearch;
+    @FXML
+    private TextField airlineCallsignSearch;
+    @FXML
+    private TextField airlineCountrySearch;
+    @FXML
+    private TextField airlineActiveSearch;
+
+    @FXML
+    private TextField sourceSearch;
+    @FXML
+    private TextField destinationSearch;
+    @FXML
+    private TextField stopoverSearch;
+    @FXML
+    private TextField codeshareSearch;
+
+
+    /**
+     * Setting up for flight table
+     */
+    @FXML
+    private Text titleString;
+    @FXML
+    private Text aName;
+    @FXML
+    private Text bName;
+    @FXML
+    private Text aLatitude;
+    @FXML
+    private Text bLatitude;
+    @FXML
+    private Text aLongitude;
+    @FXML
+    private Text bLongitude;
+    @FXML
+    private Text aAltitude;
+    @FXML
+    private Text bAltitude;
+    /**
+     * Initializing flight column names
+     */
+    @FXML
+    private TableView<Waypoint> flightTable;
+    @FXML
+    private TableColumn<Waypoint, String> waypointName;
+    @FXML
+    private TableColumn<Waypoint, String> waypointAltitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointLatitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointLongitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointType;
 
 
     /**

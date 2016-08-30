@@ -1,6 +1,7 @@
-package seng202.group8;
+package seng202.group8.DatabaseTests;
 
 import org.junit.Test;
+import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.DatabaseMethods.AirlineDatabaseLoader;
 
@@ -17,9 +18,10 @@ public class AirlineDatabaseLoaderTest {
 
     @Test
     public void testAllRoutesLoadCorrectly(){
-        AirlineDatabaseLoader db = new AirlineDatabaseLoader();
-        Connection conn = db.connect();
-        ArrayList<Airline> airlines = db.loadAirlines(conn);
+        Database db = new Database();
+        AirlineDatabaseLoader dba = new AirlineDatabaseLoader();
+        Connection conn = db.testConnect();
+        ArrayList<Airline> airlines = dba.loadAirlines(conn);
         //Currently 7 airlines in the database
         assertTrue(7 == airlines.size());
         db.disconnect(conn);
@@ -27,9 +29,10 @@ public class AirlineDatabaseLoaderTest {
 
     @Test
     public void testAirlineIDParsesCorrectly() {
-        AirlineDatabaseLoader db = new AirlineDatabaseLoader();
-        Connection conn = db.connect();
-        ArrayList<Airline> airlines = db.loadAirlines(conn);
+        Database db = new Database();
+        AirlineDatabaseLoader dba = new AirlineDatabaseLoader();
+        Connection conn = db.testConnect();
+        ArrayList<Airline> airlines = dba.loadAirlines(conn);
         Airline testAirline = new Airline();
         //Because we are using a set, have to find where in set airline to test is.
         for (Airline airline: airlines) {
