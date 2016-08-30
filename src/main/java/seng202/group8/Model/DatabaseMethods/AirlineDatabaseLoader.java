@@ -14,28 +14,6 @@ import java.util.ArrayList;
  */
 public class AirlineDatabaseLoader extends AirlineMethod {
 
-    public static Connection connect() {
-        Connection conn = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String url = ("jdbc:sqlite:ApplicationDatabase.db");
-            conn = DriverManager.getConnection(url);
-            conn.setAutoCommit(false);
-
-        } catch (Exception e) {
-            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
-        }
-
-        return conn;
-    }
-
-    public static void disconnect(Connection conn) {
-        try {
-            conn.close();
-        } catch (Exception e) {
-            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
-        }
-    }
 
     public ArrayList<Airline> loadAirlines(Connection conn) {
 
