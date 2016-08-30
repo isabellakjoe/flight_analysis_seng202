@@ -541,7 +541,7 @@ public class Controller implements Initializable {
             //click event handler for double clicking a table cell.
             public void handle(MouseEvent click)
             {
-                //Checks if table is empty then checks for doubleclick
+                //Checks if table is empty then checks for double click
                 if (!airportTable.getItems().isEmpty() && click.getClickCount() >= 2)
                 {
                     System.out.println("Double clicked!");
