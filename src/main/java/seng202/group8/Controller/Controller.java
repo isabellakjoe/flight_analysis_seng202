@@ -21,6 +21,7 @@ import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
 import seng202.group8.Model.Searchers.RouteSearcher;
 
+import javax.swing.*;
 import java.io.*;
 
 import java.net.URL;
@@ -658,7 +659,39 @@ public class Controller implements Initializable{
     private TableColumn<Route, String> equipment;
 
 
+    @FXML
+    private Pane airportPane;
+    @FXML
+    private Text airport_name;
+    @FXML
+    private Text airport_id;
+    @FXML
+    private Text airport_faa;
+    @FXML
+    private Text airport_iata;
+    @FXML
+    private Text airport_icao;
+    @FXML
+    private Text airport_timezone;
+    @FXML
+    private Text airport_dst;
+    @FXML
+    private Text airport_country;
+    @FXML
+    private Text airport_city;
+    @FXML
+    private Text airport_long;
+    @FXML
+    private Text airport_lat;
+    @FXML
+    private Text airport_alt;
 
+
+    //Back button event handler to return to tableview.
+    public void backToAirport(ActionEvent e){
+        airportTable.setVisible(true);
+        airportPane.setVisible(false);
+    }
 
     /**
      * Test Airline to be put in table. Needs to eventually read airlinedata already in database
@@ -727,19 +760,45 @@ public class Controller implements Initializable{
             public void handle(MouseEvent click)
             {
                 //Checks if table is empty then checks for double click
-                if (!airportTable.getItems().isEmpty() && click.getClickCount() >= 2)
-                {
-                    System.out.println("Double clicked!");
-                    TablePosition pos = airportTable.getSelectionModel().getSelectedCells().get(0);
-                    int row = pos.getRow();
-                    int col = pos.getColumn();
-                    TableColumn column = pos.getTableColumn();
-                    String val = column.getCellData(row).toString();
-                    System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);
-                    if ( col == 2 ) {System.out.println("2");}
+                if(!airportTable.getItems().isEmpty()) {
+                    if (click.getClickCount() >= 2) {
+                        //Changes visible pane;
+                        airportTable.setVisible(false);
+                        airportPane.setVisible(true);
+
+                        //Sets all text to corresponding table row item.
+                        airport_name.setText(airportTable.getSelectionModel().getSelectedItem().getName());
+                        airport_id.setText(Integer.toString(airportTable.getSelectionModel().getSelectedItem().getAirportID()));
+                        airport_faa.setText(airportTable.getSelectionModel().getSelectedItem().getFAA());
+                        airport_iata.setText(airportTable.getSelectionModel().getSelectedItem().getIATA());
+                        airport_icao.setText(airportTable.getSelectionModel().getSelectedItem().getICAO());
+                        airport_dst.setText(Integer.toString(airportTable.getSelectionModel().getSelectedItem().getDST()));
+                        airport_timezone.setText(airportTable.getSelectionModel().getSelectedItem().getOlsonTimezone());
+                        airport_country.setText(airportTable.getSelectionModel().getSelectedItem().getCountry());
+                        airport_city.setText(airportTable.getSelectionModel().getSelectedItem().getCity());
+                        airport_lat.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getLatitude()));
+                        airport_long.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getLongitude()));
+                        airport_alt.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getAltitude()));
+
+
+
+
+
+                        /*TablePosition pos = airportTable.getSelectionModel().getSelectedCells().get(0);
+                        int row = pos.getRow();
+                        int col = pos.getColumn();
+                        TableColumn column = pos.getTableColumn();
+                        String val = column.getCellData(row).toString();
+                        System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);*/
+
+
+                    /*if ( col == 2 ) {System.out.println("2");}
                     if ( col == 5 ) {System.out.println("5");}
                     if ( col == 6 ) {System.out.println("6");}
-                    if ( col == 8 ) {System.out.println("8");}
+                    if ( col == 8 ) {System.out.println("8");}*/
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please add data before attempting to select.", "No Data Found!", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -756,10 +815,6 @@ public class Controller implements Initializable{
                     TableColumn column = pos.getTableColumn();
                     String val = column.getCellData(row).toString();
                     System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);
-                    if ( col == 2 ) {System.out.println("2");}
-                    if ( col == 5 ) {System.out.println("5");}
-                    if ( col == 6 ) {System.out.println("6");}
-                    if ( col == 8 ) {System.out.println("8");}
                 }
             }
         });
@@ -776,10 +831,6 @@ public class Controller implements Initializable{
                     TableColumn column = pos.getTableColumn();
                     String val = column.getCellData(row).toString();
                     System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);
-                    if ( col == 2 ) {System.out.println("2");}
-                    if ( col == 5 ) {System.out.println("5");}
-                    if ( col == 6 ) {System.out.println("6");}
-                    if ( col == 8 ) {System.out.println("8");}
                 }
             }
         });

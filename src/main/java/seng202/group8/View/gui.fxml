@@ -178,7 +178,7 @@
                   <Text fx:id="bLongitude" layoutX="350.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
                </children>
             </Pane>
-            <Pane fx:id="tableView" prefHeight="617.0" prefWidth="747.0">
+            <Pane fx:id="tableView" prefHeight="391.0" prefWidth="739.0">
                <children>
                   <TableView fx:id="airlineTable" layoutY="31.0" prefHeight="170.0" prefWidth="745.0">
                     <columns>
@@ -204,16 +204,51 @@
                         <TableColumn fx:id="airportName" prefWidth="75.0" text="Name" />
                         <TableColumn fx:id="city" prefWidth="75.0" text="City" />
                         <TableColumn fx:id="airportCountry" prefWidth="75.0" text="Country" />
-                        <TableColumn fx:id="FAA" prefWidth="75.0" text="FAA" />
-                        <TableColumn fx:id="airportIATA" prefWidth="75.0" text="IATA" />
-                        <TableColumn fx:id="airportICAO" prefWidth="75.0" text="ICAO" />
-                        <TableColumn fx:id="latitude" prefWidth="75.0" text="Latitude" />
-                        <TableColumn fx:id="longitude" prefWidth="75.0" text="Longitude" />
-                        <TableColumn fx:id="altitude" prefWidth="75.0" text="Altitude" />
-                        <TableColumn fx:id="timezone" prefWidth="75.0" text="Timezone" />
-                        <TableColumn fx:id="DST" prefWidth="75.0" text="DST" />
+                        <TableColumn fx:id="FAA" prefWidth="75.0" text="FAA" visible="false" />
+                        <TableColumn fx:id="airportIATA" prefWidth="75.0" text="IATA" visible="false" />
+                        <TableColumn fx:id="airportICAO" prefWidth="75.0" text="ICAO" visible="false" />
+                        <TableColumn fx:id="latitude" prefWidth="75.0" text="Latitude" visible="false" />
+                        <TableColumn fx:id="longitude" prefWidth="75.0" text="Longitude" visible="false" />
+                        <TableColumn fx:id="altitude" prefWidth="75.0" text="Altitude" visible="false" />
+                        <TableColumn fx:id="timezone" prefWidth="75.0" text="Timezone" visible="false" />
+                        <TableColumn fx:id="DST" prefWidth="75.0" text="DST" visible="false" />
                      </columns>
                   </TableView>
+                  <Pane fx:id="airportPane" layoutX="1.0" layoutY="234.0" prefHeight="170.0" prefWidth="745.0" visible="false">
+                     <children>
+                        <Text fx:id="airport_name" layoutX="32.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Name" wrappingWidth="187.638671875" />
+                        <Button fx:id="airport_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirport" text="Back">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Text layoutX="20.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport ID" />
+                        <Text layoutX="386.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City" />
+                        <Text layoutX="375.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" />
+                        <Text layoutX="20.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FAA" />
+                        <Text layoutX="19.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IATA" wrappingWidth="36.9609375" />
+                        <Text layoutX="19.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO" />
+                        <Text layoutX="375.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude" />
+                        <Text layoutX="373.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logitude" />
+                        <Text layoutX="376.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude" />
+                        <Text layoutX="19.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DST" />
+                        <Text layoutX="17.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timezone" />
+                        <Text fx:id="airport_id" layoutX="97.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_faa" layoutX="97.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_iata" layoutX="97.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_icao" layoutX="97.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_timezone" layoutX="97.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_dst" layoutX="97.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_country" layoutX="442.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_city" layoutX="442.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_long" layoutX="442.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_lat" layoutX="442.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                        <Text fx:id="airport_alt" layoutX="442.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                     </children>
+                  </Pane>
                   <TableView fx:id="routeTable" layoutX="1.0" layoutY="438.0" prefHeight="170.0" prefWidth="745.0">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
