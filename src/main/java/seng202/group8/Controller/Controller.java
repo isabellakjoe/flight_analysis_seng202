@@ -3,14 +3,17 @@ package seng202.group8.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.Searchers.AirlineSearcher;
 import seng202.group8.Model.Searchers.AirportSearcher;
@@ -668,8 +671,6 @@ public class Controller implements Initializable{
     //Airport airport = airportParser.createAirport(airportString);
 
 
-
-
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -712,8 +713,68 @@ public class Controller implements Initializable{
         waypointLatitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("latitude"));
         waypointLongitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("longitude"));
 
+        // Allows individual cells to be selected as opposed to rows
+        //airportTable.getSelectionModel().setCellSelectionEnabled(true);
+        airportTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            //click event handler for double clicking a table cell.
+            public void handle(MouseEvent click)
+            {
+                //Checks if table is empty then checks for double click
+                if (!airportTable.getItems().isEmpty() && click.getClickCount() >= 2)
+                {
+                    System.out.println("Double clicked!");
+                    TablePosition pos = airportTable.getSelectionModel().getSelectedCells().get(0);
+                    int row = pos.getRow();
+                    int col = pos.getColumn();
+                    TableColumn column = pos.getTableColumn();
+                    String val = column.getCellData(row).toString();
+                    System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);
+                    if ( col == 2 ) {System.out.println("2");}
+                    if ( col == 5 ) {System.out.println("5");}
+                    if ( col == 6 ) {System.out.println("6");}
+                    if ( col == 8 ) {System.out.println("8");}
+                }
+            }
+        });
 
+        airlineTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            //clickevent handler for doubleclicking a table cell.
+            public void handle(MouseEvent click)
+            {
+                if (!airlineTable.getItems().isEmpty() && click.getClickCount() >= 2)
+                {
+                    TablePosition pos = airlineTable.getSelectionModel().getSelectedCells().get(0);
+                    int row = pos.getRow();
+                    int col = pos.getColumn();
+                    TableColumn column = pos.getTableColumn();
+                    String val = column.getCellData(row).toString();
+                    System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);
+                    if ( col == 2 ) {System.out.println("2");}
+                    if ( col == 5 ) {System.out.println("5");}
+                    if ( col == 6 ) {System.out.println("6");}
+                    if ( col == 8 ) {System.out.println("8");}
+                }
+            }
+        });
+
+        routeTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            //clickevent handler for doubleclicking a table cell.
+            public void handle(MouseEvent click)
+            {
+                if (!routeTable.getItems().isEmpty() && click.getClickCount() >= 2)
+                {
+                    TablePosition pos = routeTable.getSelectionModel().getSelectedCells().get(0);
+                    int row = pos.getRow();
+                    int col = pos.getColumn();
+                    TableColumn column = pos.getTableColumn();
+                    String val = column.getCellData(row).toString();
+                    System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);
+                    if ( col == 2 ) {System.out.println("2");}
+                    if ( col == 5 ) {System.out.println("5");}
+                    if ( col == 6 ) {System.out.println("6");}
+                    if ( col == 8 ) {System.out.println("8");}
+                }
+            }
+        });
     }
-
-
 }
