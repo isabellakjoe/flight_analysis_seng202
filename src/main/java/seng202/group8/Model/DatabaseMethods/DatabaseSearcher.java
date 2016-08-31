@@ -69,14 +69,40 @@ public class DatabaseSearcher {
         }
     }
 
-    //FOR THESE QUERIES WE CAN JUST USE WHERE f1 LIKE x AND f2 LIKE y AND ...
+    public String buildAirportSearch(String option, String name) {
 
-    public ObservableList<Airport> searchForAirportByOption(Connection conn, String option, String name) {
+        String sql = "SELECT DISTINCT * FROM AIRPORT WHERE " + option + " LIKE '" + name + "%'";
+        return sql;
+
+    }
+
+    public String buildAirlineSearch(String option, String name) {
+
+        String sql = "SELECT DISTINCT * FROM airline WHERE " + option + " LIKE '" + name + "%'";
+        return sql;
+
+    }
+
+    public String buildRouteSearch(String option, String name) {
+
+        String sql = "SELECT DISTINCT * FROM route WHERE " + option + " LIKE '" + name + "%'";
+        return sql;
+
+    }
+
+    /* Method to add additional like statements to an sql statement */
+    public String addAdditionalLikeOption(String sql, String table, String option, String name) {
+        String addQuery = " UNION SELECT * FROM " + table + " WHERE " + option + " LIKE '" + name + "%'";
+        return sql + addQuery;
+    }
+
+
+    public ObservableList<Airport> searchForAirportByOption(Connection conn, String sql) {
 
         ObservableList<Airport> airports = FXCollections.observableArrayList();
         try {
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM AIRPORT WHERE " + option + " LIKE '" + name + "%';";
+            String query = sql + ";";
             ResultSet result = stmt.executeQuery(query);
             while (result.next()) {
                 Airport loadAirport = new Airport();
@@ -104,12 +130,12 @@ public class DatabaseSearcher {
 
     }
 
-    public ObservableList<Airline> searchForAirlinesByOption(Connection conn, String option, String name) {
+    public ObservableList<Airline> searchForAirlinesByOption(Connection conn, String sql) {
 
         ObservableList<Airline> airlines = FXCollections.observableArrayList();
         try {
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM airline WHERE " + option + " LIKE '" + name + "%';";
+            String query = sql + ";";
             ResultSet result = stmt.executeQuery(query);
             while (result.next()) {
                 Airline loadedAirline = new Airline();
@@ -133,12 +159,12 @@ public class DatabaseSearcher {
     }
 
 
-    public ObservableList<Route> searchRouteByOption(Connection conn, String option, String name) {
+    public ObservableList<Route> searchRouteByOption(Connection conn, String sql) {
 
         ObservableList<Route> routes = FXCollections.observableArrayList();
         try {
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM route WHERE " + option + " LIKE '" + name + "%';";
+            String query = sql + ";";
             ResultSet result = stmt.executeQuery(query);
             while (result.next()) {
                 Route loadRoute = new Route();
