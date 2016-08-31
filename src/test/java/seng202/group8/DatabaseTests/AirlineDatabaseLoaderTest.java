@@ -1,5 +1,7 @@
 package seng202.group8.DatabaseTests;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.Objects.Airline;
@@ -16,22 +18,31 @@ import static junit.framework.TestCase.assertTrue;
  */
 public class AirlineDatabaseLoaderTest {
 
-    @Test
-    public void testAllRoutesLoadCorrectly(){
-        Database db = new Database();
-        AirlineDatabaseLoader dba = new AirlineDatabaseLoader();
-        Connection conn = db.testConnect();
-        ArrayList<Airline> airlines = dba.loadAirlines(conn);
-        //Currently 7 airlines in the database
-        assertTrue(7 == airlines.size());
+    Database db;
+    Connection conn;
+    AirlineDatabaseLoader dba;
+
+    @Before
+    public void initialise() {
+        db = new Database();
+        conn = db.testConnect();
+        dba = new AirlineDatabaseLoader();
+    }
+
+    @After
+    public void teardown() {
         db.disconnect(conn);
     }
 
     @Test
+    public void testAllRoutesLoadCorrectly(){
+        ArrayList<Airline> airlines = dba.loadAirlines(conn);
+        //Currently 7 airlines in the database
+        assertTrue(7 == airlines.size());
+    }
+
+    @Test
     public void testAirlineIDParsesCorrectly() {
-        Database db = new Database();
-        AirlineDatabaseLoader dba = new AirlineDatabaseLoader();
-        Connection conn = db.testConnect();
         ArrayList<Airline> airlines = dba.loadAirlines(conn);
         Airline testAirline = new Airline();
         //Because we are using a set, have to find where in set airline to test is.
@@ -41,7 +52,6 @@ public class AirlineDatabaseLoaderTest {
             }
         }
         assertTrue(testAirline.getName().equals("Servicios Aereos Del Vaupes"));
-        db.disconnect(conn);
     }
 
 

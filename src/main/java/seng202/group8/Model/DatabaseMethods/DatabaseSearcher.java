@@ -8,10 +8,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 /**
  * Created by Callum on 27/08/16.
@@ -94,6 +92,16 @@ public class DatabaseSearcher {
     public String addAdditionalLikeOption(String sql, String table, String option, String name) {
         String addQuery = " UNION SELECT * FROM " + table + " WHERE " + option + " LIKE '" + name + "%'";
         return sql + addQuery;
+    }
+
+    public String buildSrcRouteQuery(String orderby) {
+        String sql = "SELECT airport.airportid, COUNT(*) from airport INNER JOIN route ON airport.airportid = route.sourceid GROUP BY airport.airportid ORDER BY COUNT(*) " + orderby + " ;";
+        return sql;
+    }
+
+    public String buildDestRouteQuery(String orderby) {
+        String sql = "SELECT airport.airportid, COUNT(*) from airport INNER JOIN route ON airport.airportid = route.destinationid GROUP BY airport.airportid ORDER BY COUNT(*) " + orderby + " ;";
+        return sql;
     }
 
 
@@ -191,6 +199,28 @@ public class DatabaseSearcher {
         return routes;
 
     }
+
+
+
+    public ObservableList<Integer> getNumRoutesOfAirport(Connection conn, String sql) {
+
+        ObservableList<Integer> airportIDs = FXCollections.observableArrayList();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(sql);
+            while (result.next()) {
+                airportIDs.add(result.getInt("airportid"));
+            }
+            result.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+        }
+
+        return airportIDs;
+
+    }
+
 
 
 }
