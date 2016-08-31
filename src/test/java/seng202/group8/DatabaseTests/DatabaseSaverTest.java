@@ -41,7 +41,8 @@ public class DatabaseSaverTest {
         //Save the aiport to the database here
         dbsave.saveAirports(connSave, testArray);
         //Search for the new saved aiport here
-        ObservableList<Airport> airports = dbsearch.searchForAirportByOption(connSearch, "name", "Inuvik Mike Zubko");
+        String sqlStatement = dbsearch.buildAirportSearch("name","Inuvik Mike Zubko");
+        ObservableList<Airport> airports = dbsearch.searchForAirportByOption(connSearch, sqlStatement);
         //Close the database queries here
         dbOne.disconnect(connSave);
         dbTwo.disconnect(connSearch);
@@ -85,7 +86,8 @@ public class DatabaseSaverTest {
         //Save the new airline here
         dbsave.saveAirlines(connSave, testArray);
         //Search for the new airline in the database here
-        ObservableList<Airline> airlines = dbsearch.searchForAirlinesByOption(connSearch, "name", "Aegean Airlines");
+        String sqlStatement = dbsearch.buildAirlineSearch("name", "Aegean Airlines");
+        ObservableList<Airline> airlines = dbsearch.searchForAirlinesByOption(connSearch, sqlStatement);
         dbOne.disconnect(connSave);
         dbTwo.disconnect(connSearch);
         //Current test database should only return one result
@@ -128,7 +130,8 @@ public class DatabaseSaverTest {
         //Save the new route here
         dbsave.saveRoutes(connSave, testArray);
         //Search for the new saved route, only one currently in database with id 10
-        ObservableList<Route>returnedRoutes = dbsearch.searchRouteByOption(connSearch, "equipment", "SF3");
+        String sqlStatement = dbsearch.buildRouteSearch("equipment", "SF3");
+        ObservableList<Route>returnedRoutes = dbsearch.searchRouteByOption(connSearch, sqlStatement);
         dbOne.disconnect(connSave);
         dbTwo.disconnect(connSearch);
 

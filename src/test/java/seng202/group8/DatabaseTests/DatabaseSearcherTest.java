@@ -23,7 +23,8 @@ public class DatabaseSearcherTest {
         Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         Connection conn = db.testConnect();
-        ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, "name", "Goro");
+        String sqlStatement = dbs.buildAirportSearch("name", "Goro");
+        ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, sqlStatement);
         //Only one in database like Goro, so output should be one element
         assertTrue(1 == airports.size());
         db.disconnect(conn);
@@ -34,7 +35,8 @@ public class DatabaseSearcherTest {
         Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         Connection conn = db.testConnect();
-        ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, "name", "Goro");
+        String sqlStatement = dbs.buildAirportSearch("name", "Goro");
+        ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, sqlStatement);
         //Only one in database like Goro, so output should be one element
         String airportName = airports.get(0).getName();
         assertTrue(airportName.equals("Goroka"));
@@ -46,7 +48,8 @@ public class DatabaseSearcherTest {
         Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         Connection conn = db.testConnect();
-        ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, "country", "Papua New");
+        String sqlStatement = dbs.buildAirportSearch("country", "Papua New");
+        ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, sqlStatement);
         //Six elements currently in database with Papua New Guinea as a country
         assertTrue(6 == airports.size());
         db.disconnect(conn);
@@ -57,7 +60,8 @@ public class DatabaseSearcherTest {
         Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         Connection conn = db.testConnect();
-        ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, "name", "Servicios");
+        String sqlStatement = dbs.buildAirlineSearch("name", "Servicios");
+        ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, sqlStatement);
         //Two elements in database like Servicios, so output should be one element
         assertTrue(2 == airlines.size());
         db.disconnect(conn);
@@ -68,7 +72,8 @@ public class DatabaseSearcherTest {
         Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         Connection conn = db.testConnect();
-        ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, "name", "Servicios Aereos Del");
+        String sqlStatement = dbs.buildAirlineSearch("name", "Servicios Aereos Del");
+        ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, sqlStatement);
         //Only one in database like Servicios, so output should be one element
         String airportName = airlines.get(0).getName();
         assertTrue(airportName.equals("Servicios Aereos Del Vaupes"));
@@ -80,7 +85,8 @@ public class DatabaseSearcherTest {
         Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         Connection conn = db.testConnect();
-        ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, "country", "Mex");
+        String sqlStatement = dbs.buildAirlineSearch("country", "Mex");
+        ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, sqlStatement);
         //Two elements currently in database with Mexico as a country
         assertTrue(2 == airlines.size());
         db.disconnect(conn);
@@ -91,10 +97,25 @@ public class DatabaseSearcherTest {
         Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         Connection conn = db.testConnect();
-        ObservableList<Route> routes = dbs.searchRouteByOption(conn, "airlinecode", "2B");
+        String sqlStatement = dbs.buildRouteSearch("airlinecode", "2B");
+        ObservableList<Route> routes = dbs.searchRouteByOption(conn, sqlStatement);
         //Seven elements currently in database with Mexico as a country
         assertTrue(7 == routes.size());
         db.disconnect(conn);
+    }
+
+    @Test
+    public void testUnionStatement() {
+        Database db = new Database();
+        DatabaseSearcher dbs = new DatabaseSearcher();
+        Connection conn = db.testConnect();
+        String sqlStatement = dbs.buildRouteSearch("sourceairport", "ASF");
+        String newStatement = dbs.addAdditionalLikeOption(sqlStatement, "route", "sourceairport", "DME");
+        //There are currently four distinct entities in database which match this query
+        ObservableList<Route> routes = dbs.searchRouteByOption(conn, newStatement);
+        assertTrue(4 == routes.size());
+        db.disconnect(conn);
+
     }
 
 }
