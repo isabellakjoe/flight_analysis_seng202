@@ -23,8 +23,8 @@ public class AirportDatabaseLoaderTest {
         AirportDatabaseLoader dba = new AirportDatabaseLoader();
         Connection conn = db.testConnect();
         ArrayList<Airport> airports = dba.loadAirport(conn);
-        //Currently 7 airlines in the database
-        assertTrue(9 == airports.size());
+        //Currently 14 airlines in the database
+        assertTrue(14 == airports.size());
         db.disconnect(conn);
     }
 

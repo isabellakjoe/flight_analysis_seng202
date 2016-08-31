@@ -22,8 +22,8 @@ public class RouteDatabaseLoaderTest {
         RouteDatabaseLoader dbr = new RouteDatabaseLoader();
         Connection conn = db.testConnect();
         ArrayList<Route> routes = dbr.loadRoutes(conn);
-        //Currently 7 routes in the database
-        assertTrue(7 == routes.size());
+        //Currently 16 routes in the database
+        assertTrue(16 == routes.size());
         db.disconnect(conn);
     }
 
