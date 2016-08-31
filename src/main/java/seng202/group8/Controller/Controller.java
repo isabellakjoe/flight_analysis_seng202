@@ -324,6 +324,7 @@ public class Controller implements Initializable{
         ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
         airlineTable.setItems(sortedObservableAirlines);
         tableView.setVisible(true);
+        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded airlines by activity
@@ -354,6 +355,7 @@ public class Controller implements Initializable{
         ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
         airlineTable.setItems(sortedObservableAirlines);
         tableView.setVisible(true);
+        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded airports by country
@@ -378,6 +380,7 @@ public class Controller implements Initializable{
         ObservableList<Airport> sortedObservableAirports = FXCollections.observableArrayList(sortedAirports);
         airportTable.setItems(sortedObservableAirports);
         tableView.setVisible(true);
+        flightView.setVisible(false);
     }
 
 
@@ -403,6 +406,7 @@ public class Controller implements Initializable{
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
         routeTable.setItems(sortedObservableRoutes);
         tableView.setVisible(true);
+        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded routes by Destination Airport
@@ -427,6 +431,7 @@ public class Controller implements Initializable{
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
         routeTable.setItems(sortedObservableRoutes);
         tableView.setVisible(true);
+        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded routes by number of stops
@@ -456,6 +461,7 @@ public class Controller implements Initializable{
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
         routeTable.setItems(sortedObservableRoutes);
         tableView.setVisible(true);
+        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded routes by equipment
@@ -480,6 +486,7 @@ public class Controller implements Initializable{
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
         routeTable.setItems(sortedObservableRoutes);
         tableView.setVisible(true);
+        flightView.setVisible(false);
     }
 
     /**
