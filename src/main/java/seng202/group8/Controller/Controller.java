@@ -660,6 +660,23 @@ public class Controller implements Initializable{
 
 
     @FXML
+    private Pane airlinePane;
+    @FXML
+    private Text airline_name;
+    @FXML
+    private Text airline_id;
+    @FXML
+    private Text airline_country;
+    @FXML
+    private Text airline_sign;
+    @FXML
+    private Text airline_iata;
+    @FXML
+    private Text airline_icao;
+    @FXML
+    private Text airline_alias;
+
+    @FXML
     private Pane airportPane;
     @FXML
     private Text airport_name;
@@ -686,11 +703,38 @@ public class Controller implements Initializable{
     @FXML
     private Text airport_alt;
 
+    @FXML
+    private Pane routePane;
+    @FXML
+    private Text route_source;
+    @FXML
+    private Text route_dest;
+    @FXML
+    private Text route_stops;
+    @FXML
+    private Text route_airline;
+    @FXML
+    private Text route_equip;
+    @FXML
+    private Text route_share;
 
-    //Back button event handler to return to tableview.
+
+    //Back button event handler to return to airport tableview.
     public void backToAirport(ActionEvent e){
         airportTable.setVisible(true);
         airportPane.setVisible(false);
+    }
+
+    //Back button event handler to return to airline tableview.
+    public void backToAirline(ActionEvent e){
+        airlineTable.setVisible(true);
+        airlinePane.setVisible(false);
+    }
+
+    //Back button event handler to return to route tableview.
+    public void backToRoute(ActionEvent e){
+        routeTable.setVisible(true);
+        routePane.setVisible(false);
     }
 
     /**
@@ -780,17 +824,12 @@ public class Controller implements Initializable{
                         airport_long.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getLongitude()));
                         airport_alt.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getAltitude()));
 
-
-
-
-
                         /*TablePosition pos = airportTable.getSelectionModel().getSelectedCells().get(0);
                         int row = pos.getRow();
                         int col = pos.getColumn();
                         TableColumn column = pos.getTableColumn();
                         String val = column.getCellData(row).toString();
                         System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);*/
-
 
                     /*if ( col == 2 ) {System.out.println("2");}
                     if ( col == 5 ) {System.out.println("5");}
@@ -804,33 +843,52 @@ public class Controller implements Initializable{
         });
 
         airlineTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-            //clickevent handler for doubleclicking a table cell.
+            //click event handler for double clicking a table cell.
             public void handle(MouseEvent click)
             {
-                if (!airlineTable.getItems().isEmpty() && click.getClickCount() >= 2)
-                {
-                    TablePosition pos = airlineTable.getSelectionModel().getSelectedCells().get(0);
-                    int row = pos.getRow();
-                    int col = pos.getColumn();
-                    TableColumn column = pos.getTableColumn();
-                    String val = column.getCellData(row).toString();
-                    System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);
+                //Checks if table is empty then checks for double click
+                if(!airlineTable.getItems().isEmpty()) {
+                    if (click.getClickCount() >= 2) {
+                        //Changes visible pane;
+                        airlineTable.setVisible(false);
+                        airlinePane.setVisible(true);
+
+                        //Sets all text to corresponding table row item.
+                        airline_name.setText(airlineTable.getSelectionModel().getSelectedItem().getName());
+                        airline_id.setText(Integer.toString(airlineTable.getSelectionModel().getSelectedItem().getAirlineID()));
+                        airline_country.setText(airlineTable.getSelectionModel().getSelectedItem().getCountry());
+                        airline_iata.setText(airlineTable.getSelectionModel().getSelectedItem().getIATA());
+                        airline_icao.setText(airlineTable.getSelectionModel().getSelectedItem().getICAO());
+                        airline_sign.setText(airlineTable.getSelectionModel().getSelectedItem().getCallsign());
+                        airline_alias.setText(airlineTable.getSelectionModel().getSelectedItem().getAlias());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please add data before attempting to select.", "No Data Found!", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
         routeTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-            //clickevent handler for doubleclicking a table cell.
+            //click event handler for double clicking a table cell.
             public void handle(MouseEvent click)
             {
-                if (!routeTable.getItems().isEmpty() && click.getClickCount() >= 2)
-                {
-                    TablePosition pos = routeTable.getSelectionModel().getSelectedCells().get(0);
-                    int row = pos.getRow();
-                    int col = pos.getColumn();
-                    TableColumn column = pos.getTableColumn();
-                    String val = column.getCellData(row).toString();
-                    System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);
+                //Checks if table is empty then checks for double click
+                if(!routeTable.getItems().isEmpty()) {
+                    if (click.getClickCount() >= 2) {
+                        //Changes visible pane;
+                        routeTable.setVisible(false);
+                        routePane.setVisible(true);
+
+                        //Sets all text to corresponding table row item.
+                        route_airline.setText(routeTable.getSelectionModel().getSelectedItem().getAirlineName());
+                        route_source.setText(routeTable.getSelectionModel().getSelectedItem().getSourceAirportName());
+                        route_dest.setText(routeTable.getSelectionModel().getSelectedItem().getDestinationAirportName());
+                        route_equip.setText(routeTable.getSelectionModel().getSelectedItem().getEquipment());
+                        route_share.setText(routeTable.getSelectionModel().getSelectedItem().getCodeshareString());
+                        route_stops.setText(Integer.toString(routeTable.getSelectionModel().getSelectedItem().getStops()));
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please add data before attempting to select.", "No Data Found!", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
