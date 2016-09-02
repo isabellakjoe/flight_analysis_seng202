@@ -80,6 +80,16 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
+    public void airportsOfICAO(String ICAO) {
+        ObservableList<Airport> matchingAirports = FXCollections.observableArrayList();
+        for (int i = 0; i < loadedAirports.size(); i++) {
+            if (loadedAirports.get(i).getICAO() != null && loadedAirports.get(i).getICAO().equalsIgnoreCase(ICAO)) {
+                matchingAirports.add(loadedAirports.get(i));
+            }
+        }
+        loadedAirports = matchingAirports;
+    }
+
     public void airportsOfLatitude(String latitude) {
         ObservableList<Airport> matchingAirports = FXCollections.observableArrayList();
         float floatLat = Float.parseFloat(latitude);

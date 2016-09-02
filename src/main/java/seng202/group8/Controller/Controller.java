@@ -15,6 +15,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import seng202.group8.Model.DatabaseMethods.Database;
+import seng202.group8.Model.Parsers.AirlineParser;
+import seng202.group8.Model.Parsers.AirportParser;
+import seng202.group8.Model.Parsers.RouteParser;
 import seng202.group8.Model.Searchers.AirlineSearcher;
 import seng202.group8.Model.Searchers.AirportSearcher;
 import seng202.group8.Model.Objects.*;
@@ -193,6 +196,7 @@ public class Controller implements Initializable{
         String country = airportCountrySearch.getText();
         String FAA = airportFAASearch.getText();
         String IATA = airportIATASearch.getText();
+        String ICAO = airportICAOSearch.getText();
         String latitude = airportLatitudeSearch.getText();
         String longitude = airportLongitudeSearch.getText();
         String altitude = airportAltitudeSearch.getText();
@@ -210,6 +214,8 @@ public class Controller implements Initializable{
         if (FAA.length() > 0) { searcher.airportsOfFAA(FAA); }
 
         if (IATA.length() > 0) { searcher.airportsOfIATA(IATA); }
+
+        if (ICAO.length() > 0) { searcher.airportsOfICAO(ICAO); }
 
         if (latitude.length() > 0) { searcher.airportsOfLatitude(latitude); }
 
@@ -270,14 +276,51 @@ public class Controller implements Initializable{
         stopsErrorMessage.setVisible(false);
 
         RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
+        String airline = airlineSearch.getText();
+        String airlineID = airlineSearchID.getText();
         String sourceAirport = sourceSearch.getText();
+        String sourceID = sourceIDSearch.getText();
         String destinationAirport = destinationSearch.getText();
+        String destinationID = destinationIDSearch.getText();
         String stops = stopoverSearch.getText();
         String codeshareStatus = codeshareSearch.getText();
+        String equipment = equipmentSearch.getText();
+
+        if (airline.length() > 0){searcher.routesOfAirline(airline);}
+
+        if (airlineID.length() > 0 ) {
+            try {
+                int intAirlineID = Integer.parseInt(airlineID);
+                searcher.routesOfAirlineID(intAirlineID);
+            }
+            catch (NumberFormatException exception) {
+                stopsErrorMessage.setVisible(true);
+            }
+        }
 
         if (sourceAirport.length() > 0){searcher.routesOfSource(sourceAirport);}
 
+        if (sourceID.length() > 0 ) {
+            try {
+                int intSourceID = Integer.parseInt(sourceID);
+                searcher.routesOfSourceID(intSourceID);
+            }
+            catch (NumberFormatException exception) {
+                stopsErrorMessage.setVisible(true);
+            }
+        }
+
         if (destinationAirport.length() > 0){searcher.routesOfDestination(destinationAirport);}
+
+        if (destinationID.length() > 0 ) {
+            try {
+                int intDestID = Integer.parseInt(destinationID);
+                searcher.routesOfDestinationID(intDestID);
+            }
+            catch (NumberFormatException exception) {
+                stopsErrorMessage.setVisible(true);
+            }
+        }
 
         if (stops.length() > 0 ) {
             try {
@@ -297,10 +340,91 @@ public class Controller implements Initializable{
             }
         }
 
+        if (equipment.length() > 0){searcher.routesOfEquipment(equipment);}
+
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
 
         routeTable.setItems(matchingRoutes);
     }
+
+    /* Method to add a new airport to the currentlyLoadedAirports from search text fields.
+    Executed when the add button is clicked */
+    @FXML
+    private void airportAdd(ActionEvent e){
+        AirportParser parser = new AirportParser();
+
+        String airportID = airportIDSearch.getText();
+        String name = airportNameSearch.getText();
+        String city = airportCitySearch.getText();
+        String country = airportCountrySearch.getText();
+        String FAA = airportFAASearch.getText();
+        String IATA = airportIATASearch.getText();
+        String ICAO = airportICAOSearch.getText();
+        String latitude = airportLatitudeSearch.getText();
+        String longitude = airportLongitudeSearch.getText();
+        String altitude = airportAltitudeSearch.getText();
+        String timezone = airportTimezoneSearch.getText();
+        String DST = airportDSTSearch.getText();
+
+        String data = (airportID +","+ name +","+ city +","+ country +","+ FAA +","+ IATA +","+ ICAO +","+ latitude +","+ longitude +","+ altitude +","+ timezone +","+ DST);
+        Airport newAirport = parser.createSingleAirport(data);
+        if(newAirport != null){
+            currentlyLoadedAirports.add(newAirport);
+        }
+        airportTable.setItems(currentlyLoadedAirports);
+
+        }
+
+    /* Method to add a new route to the currentlyLoadedRoutes from search text fields.
+    Executed when the add button is clicked */
+    @FXML
+    private void routeAdd(ActionEvent e){
+        RouteParser parser = new RouteParser();
+
+        String airline = airlineSearch.getText();
+        String airlineID = airlineSearchID.getText();
+        String sourceAirport = sourceSearch.getText();
+        String sourceID = sourceIDSearch.getText();
+        String destinationAirport = destinationSearch.getText();
+        String destinationID = destinationIDSearch.getText();
+        String stops = stopoverSearch.getText();
+        String codeshareStatus = codeshareSearch.getText();
+        String equipment = equipmentSearch.getText();
+
+        String data = (airline +","+ airlineID +","+ sourceAirport +","+ sourceID +","+ destinationAirport +","+ destinationID +","+ stops +","+ codeshareStatus +","+ equipment);
+        Route newRoute = parser.createSingleRoute(data);
+        if(newRoute != null){
+            currentlyLoadedRoutes.add(newRoute);
+        }
+        routeTable.setItems(currentlyLoadedRoutes);
+    }
+
+    /* Method to add a new airline to the currentlyLoadedAirlines from search text fields.
+    Executed when the add button is clicked */
+    @FXML
+    private void airlineAdd(ActionEvent e){
+        AirlineParser parser = new AirlineParser();
+
+        String airlineID = airlineIDSearch.getText();
+        String name = airlineNameSearch.getText();
+        String alias = airlineAliasSearch.getText();
+        String IATA = airlineIATASearch.getText();
+        String ICAO = airlineICAOSearch.getText();
+        String callsign = airlineCallsignSearch.getText();
+        String country = airlineCountrySearch.getText();
+        String activeStatus = airlineActiveSearch.getText();
+
+        String data = (airlineID +","+ name +","+ alias +","+ IATA +","+ ICAO +","+ callsign +","+ country +","+ activeStatus);
+        Airline newAirline = parser.createSingleAirline(data);
+        if(newAirline != null){
+            currentlyLoadedAirlines.add(newAirline);
+        }
+        airlineTable.setItems(currentlyLoadedAirlines);
+    }
+
+
+
+
 
 
     /* Method to Filter ALREADY loaded airlines by country
@@ -513,6 +637,8 @@ public class Controller implements Initializable{
     @FXML
     private TextField airportIATASearch;
     @FXML
+    private TextField airportICAOSearch;
+    @FXML
     private TextField airportLatitudeSearch;
     @FXML
     private TextField airportLongitudeSearch;
@@ -542,13 +668,23 @@ public class Controller implements Initializable{
     private TextField airlineActiveSearch;
 
     @FXML
+    private TextField airlineSearch;
+    @FXML
+    private TextField airlineSearchID;
+    @FXML
     private TextField sourceSearch;
     @FXML
+    private TextField sourceIDSearch;
+    @FXML
     private TextField destinationSearch;
+    @FXML
+    private TextField destinationIDSearch;
     @FXML
     private TextField stopoverSearch;
     @FXML
     private TextField codeshareSearch;
+    @FXML
+    private TextField equipmentSearch;
 
 
     /**

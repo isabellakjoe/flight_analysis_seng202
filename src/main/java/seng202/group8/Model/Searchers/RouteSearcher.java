@@ -21,10 +21,38 @@ public class RouteSearcher {
         return loadedRoutes;
     }
 
-    public void routesOfSource(String sourceAirport){
+    public void routesOfAirline(String airline){
         ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
         for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getSourceAirportName().equalsIgnoreCase(sourceAirport)){
+            if (loadedRoutes.get(i).getAirlineName().equals(airline)){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
+        loadedRoutes = matchingRoutes;
+    }
+    public void routesOfAirlineID(int airlineID){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).getAirline().equals(airlineID)){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
+        loadedRoutes = matchingRoutes;
+    }
+
+    public void routesOfSource(String sourceAirportName){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).getSourceAirportName().equalsIgnoreCase(sourceAirportName)){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
+        loadedRoutes = matchingRoutes;
+    }
+    public void routesOfSourceID(int sourceAirportID){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).getSourceAirport().equals(sourceAirportID)){
                 matchingRoutes.add(loadedRoutes.get(i));
             }
         }
@@ -35,6 +63,16 @@ public class RouteSearcher {
         ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
         for (int i = 0; i < loadedRoutes.size(); i++){
             if (loadedRoutes.get(i).getDestinationAirportName().equalsIgnoreCase(destinationAirport)){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
+        loadedRoutes = matchingRoutes;
+    }
+
+    public void routesOfDestinationID(int destinationAirportID){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).getDestinationAirport().equals(destinationAirportID)){
                 matchingRoutes.add(loadedRoutes.get(i));
             }
         }
@@ -56,6 +94,16 @@ public class RouteSearcher {
         boolean isCodeshare = codeshareStatus.equals("Y");
         for (int i = 0; i < loadedRoutes.size(); i++){
             if (loadedRoutes.get(i).isCodeshare() == isCodeshare){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
+        loadedRoutes = matchingRoutes;
+    }
+
+    public void routesOfEquipment(String equipment){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).getEquipment().equalsIgnoreCase(equipment)){
                 matchingRoutes.add(loadedRoutes.get(i));
             }
         }
