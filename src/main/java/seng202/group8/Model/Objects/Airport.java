@@ -125,6 +125,23 @@ public class Airport {
     }
 
 
+    /* Returns distance (in km, rounded to nearest 100km) to second airport */
+    public double calculateDistanceTo(Airport airport){
+
+        double distanceKm;
+        double earthRadiusKm = 6371;
+        double latDiff = Math.toRadians(airport.getLatitude()-this.getLatitude());
+        double longDiff = Math.toRadians(airport.getLongitude()-this.getLongitude());
+        double a = Math.sin(latDiff/2) * Math.sin(latDiff/2) + Math.cos(Math.toRadians(this.getLatitude()))
+                * Math.cos(Math.toRadians(airport.getLatitude())) * Math.sin(longDiff/2) * Math.sin(longDiff/2);
+        double b = Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        distanceKm = (earthRadiusKm * b * 2);
+
+        distanceKm = (Math.round(distanceKm * 0.01) / 0.01);
+        return distanceKm;
+    }
+
+
     public boolean isEqualTo(Airport other){
         boolean isEqual = true;
         if (!this.name.equals(other.getName())) {
