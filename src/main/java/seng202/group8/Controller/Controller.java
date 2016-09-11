@@ -890,20 +890,20 @@ public class Controller implements Initializable{
         }
         if (editActiveField.getText().equals("Yes")){
             currentAirline.setActive(true);
-            airline_active.setText("Yes");
+            airlineActiveDisplay.setText("Yes");
         }
         else if (editActiveField.getText().equals("No")){
             currentAirline.setActive(false);
-            airline_active.setText("No");
+            airlineActiveDisplay.setText("No");
         }
         currentAirline.setCountry(editAirlineCountryField.getText());
 
-        airline_id.setText(Integer.toString(currentAirline.getAirlineID()));
-        airline_sign.setText(currentAirline.getCallsign());
-        airline_iata.setText(currentAirline.getIATA());
-        airline_icao.setText(currentAirline.getICAO());
-        airline_alias.setText(currentAirline.getAlias());
-        airline_country.setText(currentAirline.getCountry());
+        airlineIDDisplay.setText(Integer.toString(currentAirline.getAirlineID()));
+        airlineCallsignDisplay.setText(currentAirline.getCallsign());
+        airlineIATADisplay.setText(currentAirline.getIATA());
+        airlineICAODisplay.setText(currentAirline.getICAO());
+        airlineAliasDisplay.setText(currentAirline.getAlias());
+        airlineCountryDisplay.setText(currentAirline.getCountry());
 
         editAirlineIDField.setVisible(false);
         editCallsignField.setVisible(false);
@@ -1010,17 +1010,17 @@ public class Controller implements Initializable{
         currentAirport.setLatitude(Double.parseDouble(editLatitudeField.getText()));
         currentAirport.setAltitude(Double.parseDouble(editAltitudeField.getText()));
 
-        airport_id.setText(Integer.toString(currentAirport.getAirportID()));
-        airport_faa.setText(currentAirport.getFAA());
-        airport_iata.setText(currentAirport.getIATA());
-        airport_icao.setText(currentAirport.getICAO());
-        airport_timezone.setText(Integer.toString(currentAirport.getTimezone()));
-        airport_dst.setText(Character.toString(currentAirport.getDST()));
-        airport_country.setText(currentAirport.getCountry());
-        airport_city.setText(currentAirport.getCity());
-        airport_long.setText(Double.toString(currentAirport.getLongitude()));
-        airport_lat.setText(Double.toString(currentAirport.getLatitude()));
-        airport_alt.setText(Double.toString(currentAirport.getAltitude()));
+        airportIDDisplay.setText(Integer.toString(currentAirport.getAirportID()));
+        airportFAADisplay.setText(currentAirport.getFAA());
+        airportIATADisplay.setText(currentAirport.getIATA());
+        airportICAODisplay.setText(currentAirport.getICAO());
+        airportTimezoneDisplay.setText(Integer.toString(currentAirport.getTimezone()));
+        airportDSTDisplay.setText(Character.toString(currentAirport.getDST()));
+        airportCountryDisplay.setText(currentAirport.getCountry());
+        airportCityDisplay.setText(currentAirport.getCity());
+        airportLongitudeDisplay.setText(Double.toString(currentAirport.getLongitude()));
+        airportLatitudeDisplay.setText(Double.toString(currentAirport.getLatitude()));
+        airportAltitudeDisplay.setText(Double.toString(currentAirport.getAltitude()));
 
         editAirportIDField.setVisible(false);
         editFAAField.setVisible(false);
@@ -1102,18 +1102,18 @@ public class Controller implements Initializable{
         }
         if (editCodeshareField.getText().equals("Yes")){
             currentRoute.setCodeshare(true);
-            route_share.setText("Yes");
+            routeShareDisplay.setText("Yes");
         }
         else if (editCodeshareField.getText().equals("No")){
             currentRoute.setCodeshare(false);
-            route_share.setText("No");
+            routeShareDisplay.setText("No");
         }
 
 
-        route_source.setText(currentRoute.getSourceAirportName());
-        route_dest.setText(currentRoute.getDestinationAirportName());
-        route_stops.setText(Integer.toString(currentRoute.getStops()));
-        route_equip.setText(currentRoute.getEquipment());
+        routeSourceDisplay.setText(currentRoute.getSourceAirportName());
+        routeDestinationDisplay.setText(currentRoute.getDestinationAirportName());
+        routeStopsDisplay.setText(Integer.toString(currentRoute.getStops()));
+        routeEquipmentDisplay.setText(currentRoute.getEquipment());
 
         editSourceField.setVisible(false);
         editDestinationField.setVisible(false);
@@ -1414,63 +1414,63 @@ public class Controller implements Initializable{
     @FXML
     private Pane airlinePane;
     @FXML
-    private Text airline_name;
+    private Text airlineNameDisplay;
     @FXML
-    private Text airline_id;
+    private Text airlineIDDisplay;
     @FXML
-    private Text airline_country;
+    private Text airlineCountryDisplay;
     @FXML
-    private Text airline_sign;
+    private Text airlineCallsignDisplay;
     @FXML
-    private Text airline_iata;
+    private Text airlineIATADisplay;
     @FXML
-    private Text airline_icao;
+    private Text airlineICAODisplay;
     @FXML
-    private Text airline_alias;
+    private Text airlineAliasDisplay;
     @FXML
-    private Text airline_active;
+    private Text airlineActiveDisplay;
 
     @FXML
     private Pane airportPane;
     @FXML
-    private Text airport_name;
+    private Text airportNameDisplay;
     @FXML
-    private Text airport_id;
+    private Text airportIDDisplay;
     @FXML
-    private Text airport_faa;
+    private Text airportFAADisplay;
     @FXML
-    private Text airport_iata;
+    private Text airportIATADisplay;
     @FXML
-    private Text airport_icao;
+    private Text airportICAODisplay;
     @FXML
-    private Text airport_timezone;
+    private Text airportTimezoneDisplay;
     @FXML
-    private Text airport_dst;
+    private Text airportDSTDisplay;
     @FXML
-    private Text airport_country;
+    private Text airportCountryDisplay;
     @FXML
-    private Text airport_city;
+    private Text airportCityDisplay;
     @FXML
-    private Text airport_long;
+    private Text airportLongitudeDisplay;
     @FXML
-    private Text airport_lat;
+    private Text airportLatitudeDisplay;
     @FXML
-    private Text airport_alt;
+    private Text airportAltitudeDisplay;
 
     @FXML
     private Pane routePane;
     @FXML
-    private Text route_source;
+    private Text routeSourceDisplay;
     @FXML
-    private Text route_dest;
+    private Text routeDestinationDisplay;
     @FXML
-    private Text route_stops;
+    private Text routeStopsDisplay;
     @FXML
-    private Text route_airline;
+    private Text routeAirlineDisplay;
     @FXML
-    private Text route_equip;
+    private Text routeEquipmentDisplay;
     @FXML
-    private Text route_share;
+    private Text routeShareDisplay;
 
     @FXML
     private Pane tableView;
@@ -1593,18 +1593,18 @@ public class Controller implements Initializable{
                         airportPane.setVisible(true);
 
                         //Sets all text to corresponding table row item.
-                        airport_name.setText(airportTable.getSelectionModel().getSelectedItem().getName());
-                        airport_id.setText(Integer.toString(airportTable.getSelectionModel().getSelectedItem().getAirportID()));
-                        airport_faa.setText(airportTable.getSelectionModel().getSelectedItem().getFAA());
-                        airport_iata.setText(airportTable.getSelectionModel().getSelectedItem().getIATA());
-                        airport_icao.setText(airportTable.getSelectionModel().getSelectedItem().getICAO());
-                        airport_dst.setText(Integer.toString(airportTable.getSelectionModel().getSelectedItem().getDST()));
-                        airport_timezone.setText(airportTable.getSelectionModel().getSelectedItem().getOlsonTimezone());
-                        airport_country.setText(airportTable.getSelectionModel().getSelectedItem().getCountry());
-                        airport_city.setText(airportTable.getSelectionModel().getSelectedItem().getCity());
-                        airport_lat.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getLatitude()));
-                        airport_long.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getLongitude()));
-                        airport_alt.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getAltitude()));
+                        airportNameDisplay.setText(airportTable.getSelectionModel().getSelectedItem().getName());
+                        airportIDDisplay.setText(Integer.toString(airportTable.getSelectionModel().getSelectedItem().getAirportID()));
+                        airportFAADisplay.setText(airportTable.getSelectionModel().getSelectedItem().getFAA());
+                        airportIATADisplay.setText(airportTable.getSelectionModel().getSelectedItem().getIATA());
+                        airportICAODisplay.setText(airportTable.getSelectionModel().getSelectedItem().getICAO());
+                        airportDSTDisplay.setText(Integer.toString(airportTable.getSelectionModel().getSelectedItem().getDST()));
+                        airportTimezoneDisplay.setText(airportTable.getSelectionModel().getSelectedItem().getOlsonTimezone());
+                        airportCountryDisplay.setText(airportTable.getSelectionModel().getSelectedItem().getCountry());
+                        airportCityDisplay.setText(airportTable.getSelectionModel().getSelectedItem().getCity());
+                        airportLatitudeDisplay.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getLatitude()));
+                        airportLongitudeDisplay.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getLongitude()));
+                        airportAltitudeDisplay.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getAltitude()));
 
                         /*TablePosition pos = airportTable.getSelectionModel().getSelectedCells().get(0);
                         int row = pos.getRow();
@@ -1636,18 +1636,18 @@ public class Controller implements Initializable{
                         airlinePane.setVisible(true);
 
                         //Sets all text to corresponding table row item.
-                        airline_name.setText(airlineTable.getSelectionModel().getSelectedItem().getName());
-                        airline_id.setText(Integer.toString(airlineTable.getSelectionModel().getSelectedItem().getAirlineID()));
-                        airline_country.setText(airlineTable.getSelectionModel().getSelectedItem().getCountry());
-                        airline_iata.setText(airlineTable.getSelectionModel().getSelectedItem().getIATA());
-                        airline_icao.setText(airlineTable.getSelectionModel().getSelectedItem().getICAO());
-                        airline_sign.setText(airlineTable.getSelectionModel().getSelectedItem().getCallsign());
-                        airline_alias.setText(airlineTable.getSelectionModel().getSelectedItem().getAlias());
+                        airlineNameDisplay.setText(airlineTable.getSelectionModel().getSelectedItem().getName());
+                        airlineIDDisplay.setText(Integer.toString(airlineTable.getSelectionModel().getSelectedItem().getAirlineID()));
+                        airlineCountryDisplay.setText(airlineTable.getSelectionModel().getSelectedItem().getCountry());
+                        airlineIATADisplay.setText(airlineTable.getSelectionModel().getSelectedItem().getIATA());
+                        airlineICAODisplay.setText(airlineTable.getSelectionModel().getSelectedItem().getICAO());
+                        airlineCallsignDisplay.setText(airlineTable.getSelectionModel().getSelectedItem().getCallsign());
+                        airlineAliasDisplay.setText(airlineTable.getSelectionModel().getSelectedItem().getAlias());
                         if (airlineTable.getSelectionModel().getSelectedItem().isActive()) {
-                            airline_active.setText("Yes");
+                            airlineActiveDisplay.setText("Yes");
                         }
                         else{
-                            airline_active.setText("No");
+                            airlineActiveDisplay.setText("No");
                         }
                     }
                 } else {
@@ -1668,12 +1668,12 @@ public class Controller implements Initializable{
                         routePane.setVisible(true);
 
                         //Sets all text to corresponding table row item.
-                        route_airline.setText(routeTable.getSelectionModel().getSelectedItem().getAirlineName());
-                        route_source.setText(routeTable.getSelectionModel().getSelectedItem().getSourceAirportName());
-                        route_dest.setText(routeTable.getSelectionModel().getSelectedItem().getDestinationAirportName());
-                        route_equip.setText(routeTable.getSelectionModel().getSelectedItem().getEquipment());
-                        route_share.setText(routeTable.getSelectionModel().getSelectedItem().getCodeshareString());
-                        route_stops.setText(Integer.toString(routeTable.getSelectionModel().getSelectedItem().getStops()));
+                        routeAirlineDisplay.setText(routeTable.getSelectionModel().getSelectedItem().getAirlineName());
+                        routeSourceDisplay.setText(routeTable.getSelectionModel().getSelectedItem().getSourceAirportName());
+                        routeDestinationDisplay.setText(routeTable.getSelectionModel().getSelectedItem().getDestinationAirportName());
+                        routeEquipmentDisplay.setText(routeTable.getSelectionModel().getSelectedItem().getEquipment());
+                        routeShareDisplay.setText(routeTable.getSelectionModel().getSelectedItem().getCodeshareString());
+                        routeStopsDisplay.setText(Integer.toString(routeTable.getSelectionModel().getSelectedItem().getStops()));
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Please add data before attempting to select.", "No Data Found!", JOptionPane.ERROR_MESSAGE);

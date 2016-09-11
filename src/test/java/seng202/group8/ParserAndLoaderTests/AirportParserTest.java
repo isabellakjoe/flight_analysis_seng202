@@ -27,6 +27,7 @@ public class AirportParserTest {
         assertTrue(airportTest.getAirportID() == 2006);
 
     }
+
     @Test
     /* Test to see if the Airport name is correctly added to an airport object */
     public void testAirportName() {
