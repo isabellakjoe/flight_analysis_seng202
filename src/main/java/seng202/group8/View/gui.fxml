@@ -156,38 +156,38 @@
                                 </TableView>
                             </content>
                         </ScrollPane>
-                        <Text layoutX="100.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start:">
+                        <Text layoutX="94.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start:">
                             <font>
                                 <Font size="15.0" />
                             </font>
                         </Text>
-                        <Text layoutX="100.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End:">
+                        <Text layoutX="394.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End:">
                             <font>
                                 <Font size="15.0" />
                             </font>
                         </Text>
-                        <Text fx:id="aName" layoutX="350.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport A">
+                        <Text fx:id="aName" layoutX="244.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport A">
                             <font>
                                 <Font size="15.0" />
                             </font>
                         </Text>
-                        <Text layoutX="100.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
-                        <Text layoutX="100.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
-                        <Text layoutX="100.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
-                        <Text layoutX="100.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
-                        <Text layoutX="100.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
-                        <Text layoutX="100.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
-                        <Text fx:id="aAltitude" layoutX="350.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="216.46875" />
-                        <Text fx:id="aLatitude" layoutX="350.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
-                        <Text fx:id="aLongitude" layoutX="350.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
-                        <Text fx:id="bName" layoutX="350.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport B" wrappingWidth="274.1357421875">
+                        <Text layoutX="94.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
+                        <Text layoutX="94.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
+                        <Text layoutX="94.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
+                        <Text layoutX="394.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
+                        <Text layoutX="394.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
+                        <Text layoutX="394.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
+                        <Text fx:id="aAltitude" layoutX="244.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="150.0" />
+                        <Text fx:id="aLatitude" layoutX="244.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="150.0" />
+                        <Text fx:id="aLongitude" layoutX="244.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="150.0" />
+                        <Text fx:id="bName" layoutX="544.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport B">
                             <font>
                                 <Font size="15.0" />
                             </font>
                         </Text>
-                        <Text fx:id="bAltitude" layoutX="350.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="216.46875" />
-                        <Text fx:id="bLatitude" layoutX="350.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
-                        <Text fx:id="bLongitude" layoutX="350.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
+                        <Text fx:id="bAltitude" layoutX="544.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="150.0" />
+                        <Text fx:id="bLatitude" layoutX="544.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="150.0" />
+                        <Text fx:id="bLongitude" layoutX="544.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="150.0" />
                     </children>
                 </Pane>
                 <Pane fx:id="tableView" prefHeight="391.0" prefWidth="739.0">
