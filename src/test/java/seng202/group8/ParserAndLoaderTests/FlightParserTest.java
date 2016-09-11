@@ -41,8 +41,8 @@ public class FlightParserTest {
     @Test
     public void sourceAirportAltitudeTest() {
         Airport sourceAirport = flight.getSourceAirport();
-        int altitude = sourceAirport.getAltitude();
-        assertTrue((altitude == 0));
+        double altitude = sourceAirport.getAltitude();
+        assertEquals(altitude, 0, 1e-8);
     }
 
     @Test
@@ -116,8 +116,8 @@ public class FlightParserTest {
     @Test
     public void destinationAirportAltitudeTest() {
         Airport destinationAirport = flight.getDestinationAirport();
-        int altitude = destinationAirport.getAltitude();
-        assertTrue((altitude == 0));
+        double altitude = destinationAirport.getAltitude();
+        assertEquals(altitude, 0, 1e-8);
     }
 
     @Test

@@ -88,7 +88,7 @@ public class AirportParserTest {
         AirportParser airportParser = new AirportParser();
         Airport airportTest = airportParser.createSingleAirport(IATAString);
 
-        assertEquals(airportTest.getAltitude(), 23);
+        assertEquals(airportTest.getAltitude(), 23, 1e-8);
     }
 
     @Test

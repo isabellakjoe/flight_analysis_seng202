@@ -14,7 +14,7 @@ public class Airport {
     private String ICAO;
     private double latitude;
     private double longitude;
-    private int altitude;
+    private double altitude;
     private int timezone;
     private char DST;
     private String olsonTimezone;
@@ -92,11 +92,11 @@ public class Airport {
         this.longitude = longitude;
     }
 
-    public int getAltitude() {
+    public double getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(int altitude) {
+    public void setAltitude(double altitude) {
         this.altitude = altitude;
     }
 

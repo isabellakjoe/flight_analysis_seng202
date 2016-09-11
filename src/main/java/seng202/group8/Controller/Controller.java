@@ -229,22 +229,22 @@ public class Controller implements Initializable{
         //Set source airport information
         Airport source = flight.getSourceAirport();
         String sourceName = source.getName();
-        int sourceAltitude = source.getAltitude();
+        double sourceAltitude = source.getAltitude();
         double sourceLatitude = source.getLatitude();
         double sourceLongitude = source.getLongitude();
         aName.setText(sourceName);
-        aAltitude.setText(Integer.toString(sourceAltitude));
+        aAltitude.setText(Double.toString(sourceAltitude));
         aLatitude.setText(Double.toString(sourceLatitude));
         aLongitude.setText(Double.toString(sourceLongitude));
 
         //Set destination airport information
         Airport destination = flight.getDestinationAirport();
         String destinationName = destination.getName();
-        int destinationAltitude = destination.getAltitude();
+        double destinationAltitude = destination.getAltitude();
         double destinationLatitude = destination.getLatitude();
         double destinationLongitude = destination.getLongitude();
         bName.setText(destinationName);
-        bAltitude.setText(Integer.toString(destinationAltitude));
+        bAltitude.setText(Double.toString(destinationAltitude));
         bLatitude.setText(Double.toString(destinationLatitude));
         bLongitude.setText(Double.toString(destinationLongitude));
 
@@ -921,10 +921,266 @@ public class Controller implements Initializable{
         setAirlineComboBoxes();
     }
 
+    @FXML
+    public void editAirportData(ActionEvent e){
+        Airport currentAirport = airportTable.getSelectionModel().getSelectedItem();
+        editAirportIDField.setVisible(true);
+        editFAAField.setVisible(true);
+        editAirportIATAField.setVisible(true);
+        editAirportICAOField.setVisible(true);
+        editTimezoneField.setVisible(true);
+        editDSTField.setVisible(true);
+        editAirportCountryField.setVisible(true);
+        editAirportCityField.setVisible(true);
+        editLatitudeField.setVisible(true);
+        editLongitudeField.setVisible(true);
+        editAltitudeField.setVisible(true);
+
+        saveAirportChangesButton.setVisible(true);
+        cancelAirportChangesButton.setVisible(true);
+
+        editAirportIDField.setText(Integer.toString(currentAirport.getAirportID()));
+        editAirportCountryField.setText(currentAirport.getCountry());
+        if (currentAirport.getFAA() != null){
+            editFAAField.setText(currentAirport.getFAA());
+        }
+        else{
+            editFAAField.setText("None");
+        }
+        if (currentAirport.getIATA() != null){
+            editAirportIATAField.setText(currentAirport.getIATA());
+        }
+        else{
+            editAirportIATAField.setText("None");
+        }
+        if (currentAirport.getICAO() != null){
+            editAirportICAOField.setText(currentAirport.getICAO());
+        }
+        else{
+            editAirportICAOField.setText("None");
+        }
+        editTimezoneField.setText(Integer.toString(currentAirport.getTimezone()));
+        editDSTField.setText(Character.toString(currentAirport.getDST()));
+        editAirportCountryField.setText(currentAirport.getCountry());
+        editAirportCityField.setText(currentAirport.getCity());
+        editLatitudeField.setText(Double.toString(currentAirport.getLatitude()));
+        editLongitudeField.setText(Double.toString(currentAirport.getLongitude()));
+        editAltitudeField.setText(Double.toString(currentAirport.getAltitude()));
+    }
+
+    @FXML
+    public void cancelAirportChanges(ActionEvent e){
+
+        saveAirportChangesButton.setVisible(false);
+        cancelAirportChangesButton.setVisible(false);
+        editAirportIDField.setVisible(false);
+        editFAAField.setVisible(false);
+        editAirportIATAField.setVisible(false);
+        editAirportICAOField.setVisible(false);
+        editTimezoneField.setVisible(false);
+        editDSTField.setVisible(false);
+        editAirportCountryField.setVisible(false);
+        editAirportCityField.setVisible(false);
+        editLatitudeField.setVisible(false);
+        editLongitudeField.setVisible(false);
+        editAltitudeField.setVisible(false);
+    }
+
+    @FXML
+    public void saveAirportChanges(ActionEvent e){
+        Airport currentAirport = airportTable.getSelectionModel().getSelectedItem();
+
+        currentAirport.setAirportID(Integer.parseInt(editAirportIDField.getText()));
+
+        if (!editFAAField.getText().equals("None")) {
+            currentAirport.setFAA(editFAAField.getText());
+        }
+        if (!editAirportIATAField.getText().equals("None")) {
+            currentAirport.setIATA(editAirportIATAField.getText());
+        }
+        if (!editAirportICAOField.getText().equals("None")) {
+            currentAirport.setICAO(editAirportICAOField.getText());
+        }
+
+        currentAirport.setTimezone(Integer.parseInt(editTimezoneField.getText()));
+        currentAirport.setDST(editDSTField.getText().charAt(0));
+        currentAirport.setCountry(editAirportCountryField.getText());
+        currentAirport.setCity(editAirportCityField.getText());
+        currentAirport.setLongitude(Double.parseDouble(editLongitudeField.getText()));
+        currentAirport.setLatitude(Double.parseDouble(editLatitudeField.getText()));
+        currentAirport.setAltitude(Double.parseDouble(editAltitudeField.getText()));
+
+        airport_id.setText(Integer.toString(currentAirport.getAirportID()));
+        airport_faa.setText(currentAirport.getFAA());
+        airport_iata.setText(currentAirport.getIATA());
+        airport_icao.setText(currentAirport.getICAO());
+        airport_timezone.setText(Integer.toString(currentAirport.getTimezone()));
+        airport_dst.setText(Character.toString(currentAirport.getDST()));
+        airport_country.setText(currentAirport.getCountry());
+        airport_city.setText(currentAirport.getCity());
+        airport_long.setText(Double.toString(currentAirport.getLongitude()));
+        airport_lat.setText(Double.toString(currentAirport.getLatitude()));
+        airport_alt.setText(Double.toString(currentAirport.getAltitude()));
+
+        editAirportIDField.setVisible(false);
+        editFAAField.setVisible(false);
+        editAirportIATAField.setVisible(false);
+        editAirportICAOField.setVisible(false);
+        editTimezoneField.setVisible(false);
+        editDSTField.setVisible(false);
+        editAirportCountryField.setVisible(false);
+        editAirportCityField.setVisible(false);
+        editLatitudeField.setVisible(false);
+        editLongitudeField.setVisible(false);
+        editAltitudeField.setVisible(false);;
+
+        saveAirportChangesButton.setVisible(false);
+        cancelAirportChangesButton.setVisible(false);
+
+        System.out.print(currentlyLoadedAirports.get(0).getCountry());
+
+        setAirportComboBoxes();
+    }
+
+
+    @FXML
+    public void editRouteData(ActionEvent e){
+        Route currentRoute = routeTable.getSelectionModel().getSelectedItem();
+        editSourceField.setVisible(true);
+        editDestinationField.setVisible(true);
+        editStopsField.setVisible(true);
+        editEquipmentField.setVisible(true);
+        editCodeshareField.setVisible(true);
+
+
+        saveRouteChangesButton.setVisible(true);
+        cancelRouteChangesButton.setVisible(true);
+
+        editSourceField.setText(currentRoute.getSourceAirportName());
+        editDestinationField.setText(currentRoute.getDestinationAirportName());
+        editStopsField.setText(Integer.toString(currentRoute.getStops()));
+        if (currentRoute.getEquipment() != null){
+            editEquipmentField.setText(currentRoute.getEquipment());
+        }
+        else{
+            editEquipmentField.setText("None");
+        }
+        if (currentRoute.isCodeshare() == true){
+            editCodeshareField.setText("Yes");
+        }
+        else{
+            editCodeshareField.setText("No");
+        }
+
+
+    }
+
+    @FXML
+    public void cancelRouteChanges(ActionEvent e){
+
+        saveRouteChangesButton.setVisible(false);
+        cancelRouteChangesButton.setVisible(false);
+        editSourceField.setVisible(false);
+        editDestinationField.setVisible(false);
+        editStopsField.setVisible(false);
+        editEquipmentField.setVisible(false);
+        editCodeshareField.setVisible(false);;
+
+    }
+
+    @FXML
+    public void saveRouteChanges(ActionEvent e){
+        Route currentRoute = routeTable.getSelectionModel().getSelectedItem();
+
+        currentRoute.setSourceAirportName(editSourceField.getText());
+        currentRoute.setDestinationAirportName(editDestinationField.getText());
+        //Add methods to find airports as well
+        currentRoute.setStops(Integer.parseInt(editStopsField.getText()));
+
+        if (!editEquipmentField.getText().equals("None")) {
+            currentRoute.setEquipment(editEquipmentField.getText());
+        }
+        if (editCodeshareField.getText().equals("Yes")){
+            currentRoute.setCodeshare(true);
+            route_share.setText("Yes");
+        }
+        else if (editCodeshareField.getText().equals("No")){
+            currentRoute.setCodeshare(false);
+            route_share.setText("No");
+        }
+
+
+        route_source.setText(currentRoute.getSourceAirportName());
+        route_dest.setText(currentRoute.getDestinationAirportName());
+        route_stops.setText(Integer.toString(currentRoute.getStops()));
+        route_equip.setText(currentRoute.getEquipment());
+
+        editSourceField.setVisible(false);
+        editDestinationField.setVisible(false);
+        editStopsField.setVisible(false);
+        editEquipmentField.setVisible(false);
+        editCodeshareField.setVisible(false);;
+
+        saveRouteChangesButton.setVisible(false);
+        cancelRouteChangesButton.setVisible(false);
+
+        setRouteComboBoxes();
+    }
 
     /**
      * FXML imports for searching
      */
+
+
+    @FXML
+    private TextField editSourceField;
+    @FXML
+    private TextField editDestinationField;
+    @FXML
+    private TextField editStopsField;
+    @FXML
+    private TextField editEquipmentField;
+    @FXML
+    private TextField editCodeshareField;
+    @FXML
+    private Button saveRouteChangesButton;
+    @FXML
+    private Button cancelRouteChangesButton;
+    @FXML
+    private Button editRouteDataDutton;
+
+
+
+    @FXML
+    private TextField editAirportIDField;
+    @FXML
+    private TextField editFAAField;
+    @FXML
+    private TextField editAirportIATAField;
+    @FXML
+    private TextField editAirportICAOField;
+    @FXML
+    private TextField editTimezoneField;
+    @FXML
+    private TextField editDSTField;
+    @FXML
+    private TextField editAirportCountryField;
+    @FXML
+    private TextField editLatitudeField;
+    @FXML
+    private TextField editAirportCityField;
+    @FXML
+    private TextField editLongitudeField;
+    @FXML
+    private TextField editAltitudeField;
+    @FXML
+    private Button saveAirportChangesButton;
+    @FXML
+    private Button cancelAirportChangesButton;
+    @FXML
+    private Button editAirportDataDutton;
+
+
 
 
     @FXML
@@ -1226,6 +1482,22 @@ public class Controller implements Initializable{
 
     //Back button event handler to return to airport tableview.
     public void backToAirport(ActionEvent e){
+        airportTable.getColumns().clear();
+        airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("airportID"));
+        airportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
+        city.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
+        airportCountry.setCellValueFactory(new PropertyValueFactory<Airport, String>("Country"));
+        FAA.setCellValueFactory(new PropertyValueFactory<Airport, String>("FAA"));
+        airportIATA.setCellValueFactory(new PropertyValueFactory<Airport, String>("IATA"));
+        airportICAO.setCellValueFactory(new PropertyValueFactory<Airport, String>("ICAO"));
+        latitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Latitude"));
+        longitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Longitude"));
+        altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
+        timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
+        DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
+
+        airportTable.getColumns().addAll(airportName, city, airportCountry);
+        airportTable.setItems(currentlyLoadedAirports);
         airportTable.setVisible(true);
         airportPane.setVisible(false);
     }
@@ -1244,12 +1516,23 @@ public class Controller implements Initializable{
         active.setCellValueFactory(new PropertyValueFactory<Airline, String>("active"));
         airlineTable.getColumns().addAll(airlineName, alias, country, active);
         airlineTable.setItems(currentlyLoadedAirlines);
+
         airlineTable.setVisible(true);
         airlinePane.setVisible(false);
     }
 
     //Back button event handler to return to route tableview.
     public void backToRoute(ActionEvent e){
+        routeTable.getColumns().clear();
+
+        routeAirlineName.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
+        source.setCellValueFactory(new PropertyValueFactory<Route, String>("sourceAirportName"));
+        destination.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
+        codeshare.setCellValueFactory(new PropertyValueFactory<Route, String>("codeshareString"));
+        stops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
+        equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
+        routeTable.getColumns().addAll(routeAirlineName, source, destination);
+        routeTable.setItems(currentlyLoadedRoutes);
         routeTable.setVisible(true);
         routePane.setVisible(false);
     }

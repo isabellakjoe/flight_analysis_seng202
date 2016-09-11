@@ -67,8 +67,8 @@ public class DatabaseSaver {
         String stringLat = convertDoubleToString(latitude);
         double longitude = airportToSave.getLongitude();
         String stringLong = convertDoubleToString(longitude);
-        int altitude = airportToSave.getAltitude();
-        String stringAlt = convertIntToString(altitude);
+        double altitude = airportToSave.getAltitude();
+        String stringAlt = Double.toString(altitude);
         int timezone = airportToSave.getTimezone();
         String stringTime = convertIntToString(timezone);
         char dst = airportToSave.getDST();
