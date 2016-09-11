@@ -209,8 +209,8 @@
                         </TableView>
                         <Pane fx:id="airlinePane" layoutY="31.0" prefHeight="170.0" prefWidth="745.0" visible="false">
                             <children>
-                                <Text fx:id="airline_name" layoutX="245.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Name" wrappingWidth="187.638671875" />
-                                <Button fx:id="airline_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirline" text="Back">
+                                <Text fx:id="airlineNameDisplay" layoutX="245.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Name" wrappingWidth="187.638671875" />
+                                <Button fx:id="individualAirlineBackButton" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirline" text="Back">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
@@ -225,13 +225,13 @@
                                 <Text layoutX="25.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IATA:" wrappingWidth="36.9609375" />
                                 <Text layoutX="25.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO:" />
                                 <Text layoutX="350.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active:" />
-                                <Text fx:id="airline_id" layoutX="110.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airline_sign" layoutX="110.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airline_iata" layoutX="110.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airline_icao" layoutX="110.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airline_country" layoutX="450.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airline_alias" layoutX="450.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airline_active" layoutX="450.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airlineIDDisplay" layoutX="110.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airlineCallsignDisplay" layoutX="110.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airlineIATADisplay" layoutX="110.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airlineICAODisplay" layoutX="110.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airlineCountryDisplay" layoutX="450.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airlineAliasDisplay" layoutX="450.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airlineActiveDisplay" layoutX="450.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
                                 <Button fx:id="editAirlineDataButton" layoutX="683.0" layoutY="126.0" mnemonicParsing="false" onAction="#editAirlineData" text="Edit" />
                                 <TextField fx:id="editAirlineIDField" layoutX="110.0" layoutY="43.0" text=" ID Field" visible="false" />
                                 <Button fx:id="saveAirlineChangesButton" layoutX="676.0" layoutY="125.0" mnemonicParsing="false" onAction="#saveAirlineChanges" text="Save" visible="false" />
@@ -265,8 +265,8 @@
                         </TableView>
                         <Pane fx:id="airportPane" layoutX="1.0" layoutY="234.0" prefHeight="170.0" prefWidth="745.0" visible="false">
                             <children>
-                                <Text fx:id="airport_name" layoutX="90.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Name" wrappingWidth="187.638671875" />
-                                <Button fx:id="airport_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirport" text="Back">
+                                <Text fx:id="airportNameDisplay" layoutX="90.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Name" wrappingWidth="187.638671875" />
+                                <Button fx:id="individualAirportBackButton" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirport" text="Back">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
@@ -285,17 +285,17 @@
                                 <Text layoutX="350.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
                                 <Text layoutX="350.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DST:" />
                                 <Text layoutX="25.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timezone:" />
-                                <Text fx:id="airport_id" layoutX="125.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_faa" layoutX="125.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_iata" layoutX="125.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_icao" layoutX="125.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_timezone" layoutX="125.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_dst" layoutX="450.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_country" layoutX="450.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_city" layoutX="450.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_long" layoutX="450.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_lat" layoutX="450.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="airport_alt" layoutX="450.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportIDDisplay" layoutX="125.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportFAADisplay" layoutX="125.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportIATADisplay" layoutX="125.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportICAODisplay" layoutX="125.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportTimezoneDisplay" layoutX="125.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportDSTDisplay" layoutX="450.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportCountryDisplay" layoutX="450.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportCityDisplay" layoutX="450.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportLongitudeDisplay" layoutX="450.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportLatitudeDisplay" layoutX="450.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airportAltitudeDisplay" layoutX="450.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
                         <TextField fx:id="editAirportIDField" layoutX="125.0" layoutY="38.0" visible="false" />
                         <TextField fx:id="editFAAField" layoutX="125.0" layoutY="63.0" visible="false" />
                         <TextField fx:id="editAirportIATAField" layoutX="125.0" layoutY="88.0" visible="false" />
@@ -327,7 +327,7 @@
                         </TableView>
                         <Pane fx:id="routePane" layoutX="1.0" layoutY="438.0" prefHeight="170.0" prefWidth="745.0" visible="false">
                             <children>
-                                <Text fx:id="route_airline" layoutX="199.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline" wrappingWidth="187.638671875" />
+                                <Text fx:id="routeAirlineDisplay" layoutX="199.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline" wrappingWidth="187.638671875" />
                                 <Button fx:id="route_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToRoute" text="Back">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -341,11 +341,11 @@
                                 <Text layoutX="25.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stops:" wrappingWidth="60.9609375" />
                                 <Text layoutX="350.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Equipment:" />
                                 <Text layoutX="350.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codeshare:" />
-                                <Text fx:id="route_source" layoutX="125.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="route_dest" layoutX="125.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="route_stops" layoutX="125.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" wrappingWidth="62.822265625" />
-                                <Text fx:id="route_equip" layoutX="450.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                                <Text fx:id="route_share" layoutX="450.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="routeSourceDisplay" layoutX="125.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="routeDestinationDisplay" layoutX="125.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="routeStopsDisplay" layoutX="125.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" wrappingWidth="62.822265625" />
+                                <Text fx:id="routeEquipmentDisplay" layoutX="450.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="routeShareDisplay" layoutX="450.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
                         <TextField fx:id="editSourceField" layoutX="125.0" layoutY="48.0" visible="false" />
                         <TextField fx:id="editDestinationField" layoutX="125.0" layoutY="83.0" visible="false" />
                         <TextField fx:id="editStopsField" layoutX="125.0" layoutY="118.0" visible="false" />
@@ -353,7 +353,7 @@
                         <TextField fx:id="editCodeshareField" layoutX="450.0" layoutY="100.0" visible="false" />
                         <Button fx:id="editRouteDataDutton" layoutX="684.0" layoutY="131.0" mnemonicParsing="false" onAction="#editRouteData" text="Edit" />
                         <Button fx:id="saveRouteChangesButton" layoutX="681.0" layoutY="131.0" mnemonicParsing="false" onAction="#saveRouteChanges" text="Save" visible="false" />
-                        <Button fx:id="cancelRouteChangesButton" layoutX="665.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancelRouteChanges" text="Cancel" />
+                        <Button fx:id="cancelRouteChangesButton" layoutX="665.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancelRouteChanges" text="Cancel" visible="false" />
                             </children>
                         </Pane>
                         <Text layoutX="1.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Table Viewer" />
@@ -390,7 +390,6 @@
                                 <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
                             </padding>
                         </MenuButton>
-                  <TextField />
                     </children>
                 </Pane>
             </children>
