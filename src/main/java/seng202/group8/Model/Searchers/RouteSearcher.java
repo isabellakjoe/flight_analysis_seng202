@@ -91,7 +91,7 @@ public class RouteSearcher {
 
     public void routesOfCodeshare(String codeshareStatus){
         ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        boolean isCodeshare = codeshareStatus.equals("Y");
+        boolean isCodeshare = codeshareStatus.equals("Codeshare");
         for (int i = 0; i < loadedRoutes.size(); i++){
             if (loadedRoutes.get(i).isCodeshare() == isCodeshare){
                 matchingRoutes.add(loadedRoutes.get(i));

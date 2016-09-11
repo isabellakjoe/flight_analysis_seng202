@@ -95,7 +95,7 @@ public class AirlineSearcher {
 
     public void airlinesOfActiveStatus(String activeStatus){
         ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
-        boolean isActive = activeStatus.equals("Y");
+        boolean isActive = activeStatus.equals("Active");
         for (int i = 0; i < loadedAirlines.size(); i++){
             if (loadedAirlines.get(i).isActive() == isActive){
                 matchingAirlines.add(loadedAirlines.get(i));

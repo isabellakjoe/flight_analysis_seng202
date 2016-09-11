@@ -46,7 +46,7 @@ public class SearcherTest {
         searcher.airlinesOfICAO("AAV");
         searcher.airlinesOfCallsign("ASTRO-PHIL");
         searcher.airlinesOfCountry("United States");
-        searcher.airlinesOfActiveStatus("Y");
+        searcher.airlinesOfActiveStatus("Active");
         Airline returnedAirline = searcher.getLoadedAirlines().get(0);
         Airline expectedAirline = airlines.get(0);
         assertEquals(returnedAirline, expectedAirline);
@@ -90,7 +90,7 @@ public class SearcherTest {
         RouteSearcher searcher = new RouteSearcher(routes);
         searcher.routesOfSource("AOR");
         searcher.routesOfDestination("KUN");
-        searcher.routesOfCodeshare("Y");
+        searcher.routesOfCodeshare("Codeshare");
         searcher.routesOfStops(11);
         Route returnedRoute = searcher.getLoadedRoutes().get(0);
         Route expectedRoute = routes.get(0);
