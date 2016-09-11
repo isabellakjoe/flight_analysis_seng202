@@ -36,7 +36,7 @@
                             <children>
                                 <Button fx:id="routeSearch" layoutX="188.0" layoutY="251.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
                                 <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="251.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <Button fx:id="routeAdd" layoutX="6.0" layoutY="600.0" mnemonicParsing="false" onAction="#routeAdd" text="Add" />
+                                <Button fx:id="routeAdd" layoutX="74.0" layoutY="382.0" mnemonicParsing="false" onAction="#routeAdd" text="Add New Route" />
                                 <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="63.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
                                 <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
                                 <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
@@ -70,7 +70,7 @@
                                 <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="468.0" prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false" />
                                 <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="508.0" prefHeight="25.0" prefWidth="220.0" promptText="DST" visible="false" />
                                 <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="183.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <Button fx:id="airportAdd" layoutY="600.0" mnemonicParsing="false" onAction="#airportAdd" text="Add" />
+                                <Button fx:id="airportAdd" layoutX="76.0" layoutY="342.0" mnemonicParsing="false" onAction="#switchToAddAirport" text="Add New Airport" />
                                 <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="303.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
                                 <Button fx:id="airportAdvancedButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
                                 <Button fx:id="airportBackButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#airportSearchBack" text="Back" visible="false" />
@@ -93,7 +93,7 @@
                                 <TextField fx:id="airlineCallsignSearch" layoutX="29.0" layoutY="357.0" prefHeight="25.0" prefWidth="220.0" promptText="call sign" visible="false" />
                                 <Button fx:id="resetAirlineSearch" layoutX="30.0" layoutY="235.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
                                 <ComboBox fx:id="airlineCountrySearch" layoutX="29.0" layoutY="141.0" prefWidth="150.0" promptText="Country" />
-                                <Button fx:id="airlineAdd" layoutX="14.0" layoutY="587.0" mnemonicParsing="false" onAction="#airlineAdd" text="Add" />
+                                <Button fx:id="airlineAdd" layoutX="78.0" layoutY="370.0" mnemonicParsing="false" text="Add New Airline" />
                                 <ComboBox fx:id="airlineActiveSearch" layoutX="29.0" layoutY="179.0" prefWidth="150.0" promptText="Active/Inactive" />
                                 <Button fx:id="airlineBackButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#airlineSearchBack" text="Back" visible="false" />
                             </children></AnchorPane>
@@ -392,6 +392,41 @@
                         </MenuButton>
                     </children>
                 </Pane>
+            <Pane fx:id="addAirportView" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <Text layoutX="281.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Airport">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="80.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport ID:" />
+                  <Text layoutX="80.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                  <Text layoutX="80.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City:" />
+                  <Text layoutX="80.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" />
+                  <Text layoutX="80.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IATA/FAA:" />
+                  <Text layoutX="80.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO:" />
+                  <Text layoutX="425.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
+                  <Text layoutX="425.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
+                  <Text layoutX="425.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
+                  <Text layoutX="425.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timezone:" />
+                  <Text layoutX="425.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DST:" />
+                  <Text layoutX="425.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Olsen TZ:" />
+                  <TextField fx:id="addedAirportID" layoutX="165.0" layoutY="113.0" />
+                  <TextField fx:id="addedAirportName" layoutX="165.0" layoutY="193.0" />
+                  <TextField fx:id="addedAirportCity" layoutX="165.0" layoutY="273.0" />
+                  <TextField fx:id="addedAirportCountry" layoutX="165.0" layoutY="353.0" />
+                  <TextField fx:id="addedAirportCode" layoutX="165.0" layoutY="433.0" />
+                  <TextField fx:id="addedAirportICAO" layoutX="165.0" layoutY="513.0" />
+                  <TextField fx:id="addedAirportLatitude" layoutX="505.0" layoutY="113.0" />
+                  <TextField fx:id="addedAirportLongitude" layoutX="505.0" layoutY="193.0" />
+                  <TextField fx:id="addedAirportAltitude" layoutX="505.0" layoutY="273.0" />
+                  <TextField fx:id="addedAirportTimezone" layoutX="505.0" layoutY="353.0" />
+                  <TextField fx:id="addedAirportDST" layoutX="505.0" layoutY="433.0" />
+                  <TextField fx:id="addedAirportOlsen" layoutX="505.0" layoutY="513.0" />
+                  <Button fx:id="addedAirlineCancelButton" layoutX="474.0" layoutY="576.0" mnemonicParsing="false" onAction="#cancelAddedAirport" text="Cancel" />
+                  <Button fx:id="addedAirlineSaveButton" layoutX="619.0" layoutY="576.0" mnemonicParsing="false" onAction="#saveAddedAirport" text="Save" />
+               </children>
+            </Pane>
             </children>
         </StackPane>
     </center>

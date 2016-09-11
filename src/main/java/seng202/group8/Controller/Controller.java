@@ -40,8 +40,8 @@ import java.util.*;
 public class Controller implements Initializable{
 
     static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
-    ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
-    ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
+    static ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
+    static ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
   //  Database mainDataBase = new Database();
     // Connection mainConn = mainDataBase.testConnect();
 
@@ -99,6 +99,7 @@ public class Controller implements Initializable{
                 airlineTable.setItems(airlines);
                 setAirlineComboBoxes();
                 flightView.setVisible(false);
+                addAirportView.setVisible(false);
                 tableView.setVisible(true);
             }
         } catch (FileNotFoundException ex){
@@ -403,13 +404,8 @@ public class Controller implements Initializable{
         }
 
         if (stops != null && ! stops.equals("ALL") ) {
-            try {
-                int intStops = Integer.parseInt(stops);
-                searcher.routesOfStops(intStops);
-            }
-            catch (NumberFormatException exception) {
-                stopsErrorMessage.setVisible(true);
-            }
+            int intStops = Integer.parseInt(stops);
+            searcher.routesOfStops(intStops);
         }
 
         if (codeshareStatus != null && ! codeshareStatus.equals("ALL")) {searcher.routesOfCodeshare(codeshareStatus);}
@@ -420,34 +416,6 @@ public class Controller implements Initializable{
 
         routeTable.setItems(matchingRoutes);
     }
-
-    /* Method to add a new airport to the currentlyLoadedAirports from search text fields.
-    Executed when the add button is clicked */
-    @FXML
-    private void airportAdd(ActionEvent e){
-        AirportParser parser = new AirportParser();
-
-        String airportID = airportIDSearch.getText();
-        String name = airportNameSearch.getText();
-        String city = airportCitySearch.getText();
-        String country = "hey";
-        String FAA = airportFAASearch.getText();
-        String IATA = airportIATASearch.getText();
-        String ICAO = airportICAOSearch.getText();
-        String latitude = airportLatitudeSearch.getText();
-        String longitude = airportLongitudeSearch.getText();
-        String altitude = airportAltitudeSearch.getText();
-        String timezone = airportTimezoneSearch.getText();
-        String DST = airportDSTSearch.getText();
-
-        String data = (airportID +","+ name +","+ city +","+ country +","+ FAA +","+ IATA +","+ ICAO +","+ latitude +","+ longitude +","+ altitude +","+ timezone +","+ DST);
-        Airport newAirport = parser.createSingleAirport(data);
-        if(newAirport != null){
-            currentlyLoadedAirports.add(newAirport);
-        }
-        airportTable.setItems(currentlyLoadedAirports);
-
-        }
 
     /* Method to add a new route to the currentlyLoadedRoutes from search text fields.
     Executed when the add button is clicked */
@@ -476,24 +444,58 @@ public class Controller implements Initializable{
     /* Method to add a new airline to the currentlyLoadedAirlines from search text fields.
     Executed when the add button is clicked */
     @FXML
-    private void airlineAdd(ActionEvent e){
-        AirlineParser parser = new AirlineParser();
+    private void switchToAddAirport(ActionEvent e){
+        tableView.setVisible(false);
+        addAirportView.setVisible(true);
+    }
 
-        String airlineID = airlineIDSearch.getText();
-        String name = airlineNameSearch.getText();
-        String alias = airlineAliasSearch.getText();
-        String IATA = airlineIATASearch.getText();
-        String ICAO = airlineICAOSearch.getText();
-        String callsign = airlineCallsignSearch.getText();
-        String country = "hey";
-        String activeStatus = (String) airlineActiveSearch.getValue();
+    @FXML
+    private void cancelAddedAirport(ActionEvent e){
+        tableView.setVisible(true);
+        addAirportView.setVisible(false);
+        addedAirportName.clear();
+        addedAirportID.clear();
+        addedAirportCountry.clear();
+        addedAirportCity.clear();
+        addedAirportCode.clear();
+        addedAirportICAO.clear();
+        addedAirportLatitude.clear();
+        addedAirportLongitude.clear();
+        addedAirportAltitude.clear();
+        addedAirportTimezone.clear();
+        addedAirportDST.clear();
+        addedAirportOlsen.clear();
+    }
 
-        String data = (airlineID +","+ name +","+ alias +","+ IATA +","+ ICAO +","+ callsign +","+ country +","+ activeStatus);
-        Airline newAirline = parser.createSingleAirline(data);
-        if(newAirline != null){
-            currentlyLoadedAirlines.add(newAirline);
+    @FXML
+    private void saveAddedAirport(ActionEvent e){
+
+        AirportParser parser = new AirportParser();
+
+        String airportID = addedAirportID.getText();
+        String name = addedAirportName.getText();
+        String city = addedAirportCity.getText();
+        String country = addedAirportCountry.getText();
+        String code = addedAirportCode.getText();
+        String ICAO = addedAirportICAO.getText();
+        String latitude = addedAirportLatitude.getText();
+        String longitude = addedAirportLongitude.getText();
+        String altitude = addedAirportAltitude.getText();
+        String timezone = addedAirportTimezone.getText();
+        String DST = addedAirportDST.getText();
+        String olsen = addedAirportOlsen.getText();
+
+        String data = (airportID +","+ name +","+ city +","+ country +","+ code +","+ ICAO +","+ latitude +","+ longitude +","+ altitude +","+ timezone +","+ DST + "," + olsen);
+        Airport newAirport = parser.createSingleAirport(data);
+        if(newAirport != null){
+            currentlyLoadedAirports.add(newAirport);
         }
-        airlineTable.setItems(currentlyLoadedAirlines);
+        airportTable.setItems(currentlyLoadedAirports);
+        tableView.setVisible(true);
+        addAirportView.setVisible(false);
+
+
+
     }
 
 
@@ -804,6 +806,8 @@ public class Controller implements Initializable{
         tableView.setVisible(true);
         flightView.setVisible(false);
     }
+
+
 
 
     @FXML
@@ -1191,7 +1195,6 @@ public class Controller implements Initializable{
     private Button resetRouteSearch;
     @FXML
     private Button routeBackButton;
-
     @FXML
     private TextField editCallsignField;
     @FXML
@@ -1204,11 +1207,6 @@ public class Controller implements Initializable{
     private TextField editActiveField;
     @FXML
     private TextField editAirlineCountryField;
-
-
-
-
-
     @FXML
     private Button airlineAdvancedButton;
     @FXML
@@ -1217,19 +1215,12 @@ public class Controller implements Initializable{
     private Button resetAirlineSearch;
     @FXML
     private Button airlineBackButton;
-
-    @FXML
-    private Button editAirlineDataButton;
-
     @FXML
     private Button saveAirlineChangesButton;
-
     @FXML
     private TextField editAirlineIDField;
-
     @FXML
     private Button cancelAirlineChangesButton;
-
     @FXML
     private Button resetAirportSearch;
     @FXML
@@ -1476,6 +1467,35 @@ public class Controller implements Initializable{
     private Pane tableView;
     @FXML
     private Pane flightView;
+    @FXML
+    private Pane addAirportView;
+
+    @FXML
+    private TextField addedAirportID;
+    @FXML
+    private TextField addedAirportName;
+    @FXML
+    private TextField addedAirportCity;
+    @FXML
+    private TextField addedAirportCountry;
+    @FXML
+    private TextField addedAirportCode;
+    @FXML
+    private TextField addedAirportICAO;
+    @FXML
+    private TextField addedAirportLatitude;
+    @FXML
+    private TextField addedAirportLongitude;
+    @FXML
+    private TextField addedAirportAltitude;
+    @FXML
+    private TextField addedAirportTimezone;
+    @FXML
+    private TextField addedAirportDST;
+    @FXML
+    private TextField addedAirportOlsen;
+
+
 
 
 
