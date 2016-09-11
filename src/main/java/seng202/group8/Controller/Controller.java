@@ -258,8 +258,9 @@ public class Controller implements Initializable{
 
     }
 
+
     @FXML
-    public void resetSearch(ActionEvent e){
+    private void resetSearch(ActionEvent e){
         routeTable.setItems(currentlyLoadedRoutes);
         airlineTable.setItems(currentlyLoadedAirlines);
         airportTable.setItems(currentlyLoadedAirports);
@@ -497,9 +498,9 @@ public class Controller implements Initializable{
 
 
     @FXML
-    private void airportBack(ActionEvent e){
+    private void airportSearchBack(ActionEvent e){
         airportAdvancedButton.setVisible(true);
-        airportBack.setVisible(false);
+        airportBackButton.setVisible(false);
         airportCitySearch.setVisible(false);
         airportFAASearch.setVisible(false);
         airportIATASearch.setVisible(false);
@@ -518,7 +519,7 @@ public class Controller implements Initializable{
     @FXML
     private void showAirportSearch(ActionEvent e){
         airportAdvancedButton.setVisible(false);
-        airportBack.setVisible(true);
+        airportBackButton.setVisible(true);
         airportCitySearch.setVisible(true);
         airportFAASearch.setVisible(true);
         airportIATASearch.setVisible(true);
@@ -536,9 +537,9 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void routeBack(ActionEvent e){
+    private void routeSearchBack(ActionEvent e){
         routeAdvancedButton.setVisible(true);
-        routeBack.setVisible(false);
+        routeBackButton.setVisible(false);
         equipmentSearch.setVisible(false);
         codeshareSearch.setVisible(false);
         airlineSearchID.setVisible(false);
@@ -552,7 +553,7 @@ public class Controller implements Initializable{
     @FXML
     private void showRouteSearch(ActionEvent e) {
         routeAdvancedButton.setVisible(false);
-        routeBack.setVisible(true);
+        routeBackButton.setVisible(true);
         equipmentSearch.setVisible(true);
         codeshareSearch.setVisible(true);
         airlineSearchID.setVisible(true);
@@ -569,7 +570,7 @@ public class Controller implements Initializable{
     @FXML
     private void showAirlineSearch(ActionEvent e){
         airlineAdvancedButton.setVisible(false);
-        airlineBack.setVisible(true);
+        airlineBackButton.setVisible(true);
         airlineAliasSearch.setVisible(true);
         airlineIATASearch.setVisible(true);
         airlineICAOSearch.setVisible(true);
@@ -581,9 +582,9 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void airlineBack(ActionEvent e){
+    private void airlineSearchBack(ActionEvent e){
         airlineAdvancedButton.setVisible(true);
-        airlineBack.setVisible(false);
+        airlineBackButton.setVisible(false);
         airlineAliasSearch.setVisible(false);
         airlineIATASearch.setVisible(false);
         airlineSearchID.setVisible(false);
@@ -596,24 +597,26 @@ public class Controller implements Initializable{
     }
 
 
-    @FXML
-    private Button routeAdvancedButton;
-    @FXML
-    private Button routeSearch;
-    @FXML
-    private Button resetRouteSearch;
-    @FXML
-    private Button routeBack;
+    private void filterAirlinesByName(ActionEvent e) {
 
-    @FXML
-    private Button airlineAdvancedButton;
-    @FXML
-    private Button airlineSearchButton;
-    @FXML
-    private Button resetAirlineSearch;
-    @FXML
-    private Button airlineBack;
+        Comparator<Airline> airlineNameComparator = new Comparator<Airline>() {
+            public int compare(Airline o1, Airline o2) {
+                String airline1 = o1.getName();
+                String airline2 = o2.getName();
 
+                return airline1.compareTo(airline2);
+            }
+        };
+        ArrayList<Airline> sortedAirlines = new ArrayList<Airline>();
+        Collections.sort(currentlyLoadedAirlines, airlineNameComparator);
+        for(Airline str: currentlyLoadedAirlines) {
+            sortedAirlines.add(str);
+        }
+        ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
+        airlineTable.setItems(sortedObservableAirlines);
+        tableView.setVisible(true);
+        flightView.setVisible(false);
+    }
 
     /* Method to Filter ALREADY loaded airlines by country
     Need to display an error message if airlines aren't yet loaded
@@ -802,18 +805,181 @@ public class Controller implements Initializable{
         flightView.setVisible(false);
     }
 
+
+    @FXML
+    public void editAirlineData(ActionEvent e){
+        Airline currentAirline = airlineTable.getSelectionModel().getSelectedItem();
+        editAirlineIDField.setVisible(true);
+        editCallsignField.setVisible(true);
+        editAirlineIATAField.setVisible(true);
+        editAirlineICAOField.setVisible(true);
+        editAliasField.setVisible(true);
+        editActiveField.setVisible(true);
+        editAirlineCountryField.setVisible(true);
+
+        saveAirlineChangesButton.setVisible(true);
+        cancelAirlineChangesButton.setVisible(true);
+
+        editAirlineIDField.setText(Integer.toString(currentAirline.getAirlineID()));
+        editAirlineCountryField.setText(currentAirline.getCountry());
+        if (currentAirline.getCallsign() != null){
+            editCallsignField.setText(currentAirline.getCallsign());
+        }
+        else{
+            editCallsignField.setText("None");
+        }
+        if (currentAirline.getIATA() != null){
+            editAirlineIATAField.setText(currentAirline.getIATA());
+        }
+        else{
+            editAirlineIATAField.setText("None");
+        }
+        if (currentAirline.getICAO() != null){
+            editAirlineICAOField.setText(currentAirline.getICAO());
+        }
+        else{
+            editAirlineICAOField.setText("None");
+        }
+        if (currentAirline.getAlias() != null){
+            editAliasField.setText(currentAirline.getAlias());
+        }
+        else{
+            editAliasField.setText("None");
+        }
+        if (currentAirline.isActive() == true){
+            editActiveField.setText("Yes");
+        }
+        else{
+            editActiveField.setText("No");
+        }
+
+
+    }
+
+    @FXML
+    public void cancelAirlineChanges(ActionEvent e){
+
+        saveAirlineChangesButton.setVisible(false);
+        cancelAirlineChangesButton.setVisible(false);
+        editAirlineIDField.setVisible(false);
+        editCallsignField.setVisible(false);
+        editAirlineIATAField.setVisible(false);
+        editAirlineICAOField.setVisible(false);
+        editAliasField.setVisible(false);
+        editActiveField.setVisible(false);
+        editAirlineCountryField.setVisible(false);
+
+    }
+
+    @FXML
+    public void saveAirlineChanges(ActionEvent e){
+        Airline currentAirline = airlineTable.getSelectionModel().getSelectedItem();
+
+        currentAirline.setAirlineID(Integer.parseInt(editAirlineIDField.getText()));
+        if (!editCallsignField.getText().equals("None")) {
+            currentAirline.setCallsign(editCallsignField.getText());
+        }
+        if (!editAirlineIATAField.getText().equals("None")) {
+            currentAirline.setIATA(editAirlineIATAField.getText());
+        }
+        if (!editAirlineICAOField.getText().equals("None")) {
+            currentAirline.setICAO(editAirlineICAOField.getText());
+        }
+        if (!editAliasField.getText().equals("None")) {
+            currentAirline.setAlias(editAliasField.getText());
+        }
+        if (editActiveField.getText().equals("Yes")){
+            currentAirline.setActive(true);
+            airline_active.setText("Yes");
+        }
+        else if (editActiveField.getText().equals("No")){
+            currentAirline.setActive(false);
+            airline_active.setText("No");
+        }
+        currentAirline.setCountry(editAirlineCountryField.getText());
+
+        airline_id.setText(Integer.toString(currentAirline.getAirlineID()));
+        airline_sign.setText(currentAirline.getCallsign());
+        airline_iata.setText(currentAirline.getIATA());
+        airline_icao.setText(currentAirline.getICAO());
+        airline_alias.setText(currentAirline.getAlias());
+        airline_country.setText(currentAirline.getCountry());
+
+        editAirlineIDField.setVisible(false);
+        editCallsignField.setVisible(false);
+        editAirlineIATAField.setVisible(false);
+        editAirlineICAOField.setVisible(false);
+        editAliasField.setVisible(false);
+        editActiveField.setVisible(false);
+        editAirlineCountryField.setVisible(false);
+
+        saveAirlineChangesButton.setVisible(false);
+        cancelAirlineChangesButton.setVisible(false);
+
+        System.out.print(currentlyLoadedAirlines.get(0).getCountry());
+
+        setAirlineComboBoxes();
+    }
+
+
     /**
      * FXML imports for searching
      */
 
 
+    @FXML
+    private Button routeAdvancedButton;
+    @FXML
+    private Button routeSearch;
+    @FXML
+    private Button resetRouteSearch;
+    @FXML
+    private Button routeBackButton;
+
+    @FXML
+    private TextField editCallsignField;
+    @FXML
+    private TextField editAirlineIATAField;
+    @FXML
+    private TextField editAirlineICAOField;
+    @FXML
+    private TextField editAliasField;
+    @FXML
+    private TextField editActiveField;
+    @FXML
+    private TextField editAirlineCountryField;
+
+
+
+
+
+    @FXML
+    private Button airlineAdvancedButton;
+    @FXML
+    private Button airlineSearchButton;
+    @FXML
+    private Button resetAirlineSearch;
+    @FXML
+    private Button airlineBackButton;
+
+    @FXML
+    private Button editAirlineDataButton;
+
+    @FXML
+    private Button saveAirlineChangesButton;
+
+    @FXML
+    private TextField editAirlineIDField;
+
+    @FXML
+    private Button cancelAirlineChangesButton;
 
     @FXML
     private Button resetAirportSearch;
     @FXML
     private Button airportSearchButton;
     @FXML
-    private Button airportBack;
+    private Button airportBackButton;
     @FXML
     private Button airportAdvancedButton;
     @FXML
@@ -1005,6 +1171,8 @@ public class Controller implements Initializable{
     private Text airline_icao;
     @FXML
     private Text airline_alias;
+    @FXML
+    private Text airline_active;
 
     @FXML
     private Pane airportPane;
@@ -1064,6 +1232,18 @@ public class Controller implements Initializable{
 
     //Back button event handler to return to airline tableview.
     public void backToAirline(ActionEvent e){
+
+        airlineTable.getColumns().clear();
+        airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
+        airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
+        alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
+        IATA.setCellValueFactory(new PropertyValueFactory<Airline, String>("IATA"));
+        ICAO.setCellValueFactory(new PropertyValueFactory<Airline, String>("ICAO"));
+        callsign.setCellValueFactory(new PropertyValueFactory<Airline, String>("callsign"));
+        country.setCellValueFactory(new PropertyValueFactory<Airline, String>("country"));
+        active.setCellValueFactory(new PropertyValueFactory<Airline, String>("active"));
+        airlineTable.getColumns().addAll(airlineName, alias, country, active);
+        airlineTable.setItems(currentlyLoadedAirlines);
         airlineTable.setVisible(true);
         airlinePane.setVisible(false);
     }
@@ -1180,6 +1360,12 @@ public class Controller implements Initializable{
                         airline_icao.setText(airlineTable.getSelectionModel().getSelectedItem().getICAO());
                         airline_sign.setText(airlineTable.getSelectionModel().getSelectedItem().getCallsign());
                         airline_alias.setText(airlineTable.getSelectionModel().getSelectedItem().getAlias());
+                        if (airlineTable.getSelectionModel().getSelectedItem().isActive()) {
+                            airline_active.setText("Yes");
+                        }
+                        else{
+                            airline_active.setText("No");
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Please add data before attempting to select.", "No Data Found!", JOptionPane.ERROR_MESSAGE);

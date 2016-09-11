@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
@@ -21,341 +26,351 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.Controller">
-   <left>
-      <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Route">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="routeSearch" layoutX="188.0" layoutY="251.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
-                        <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="251.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                        <Button fx:id="routeAdd" layoutX="6.0" layoutY="600.0" mnemonicParsing="false" onAction="#routeAdd" text="Add" />
-                        <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="63.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
-                        <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
-                        <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
-                        <TextField fx:id="sourceIDSearch" layoutX="29.0" layoutY="369.0" prefHeight="25.0" prefWidth="220.0" promptText="from (airport ID)" visible="false" />
-                        <ComboBox fx:id="sourceSearch" layoutX="29.0" layoutY="106.0" prefWidth="150.0" promptText="Source " />
-                        <Text layoutX="29.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " />
-                        <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="151.0" prefWidth="150.0" promptText="Destination" />
-                        <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="195.0" prefWidth="150.0" promptText="Stops" />
-                        <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="238.0" prefWidth="150.0" promptText="Equipment" visible="false" />
-                        <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="280.0" prefWidth="150.0" promptText="Codeshare" visible="false" />
-                        <Button fx:id="routeAdvancedButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced" />
-                        <Button fx:id="routeBack" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#routeBack" text="Back" visible="false" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Airport">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="airportIDSearch" layoutX="29.0" layoutY="57.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
-                        <Button fx:id="airportSearchButton" layoutX="182.0" layoutY="183.0" mnemonicParsing="false" onAction="#airportSearch" text="Search" />
-                        <Text layoutX="29.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " />
-                        <TextField fx:id="airportNameSearch" layoutX="29.0" layoutY="94.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
-                        <TextField fx:id="airportCitySearch" layoutX="29.0" layoutY="175.0" prefHeight="25.0" prefWidth="220.0" promptText="city" visible="false" />
-                        <TextField fx:id="airportFAASearch" layoutX="29.0" layoutY="221.0" prefHeight="25.0" prefWidth="220.0" promptText="FAA" visible="false" />
-                        <TextField fx:id="airportIATASearch" layoutX="29.0" layoutY="263.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
-                        <TextField fx:id="airportLongitudeSearch" layoutX="29.0" layoutY="342.0" prefHeight="25.0" prefWidth="220.0" promptText="longitude" visible="false" />
-                        <TextField fx:id="airportLatitudeSearch" layoutX="29.0" layoutY="383.0" prefHeight="25.0" prefWidth="220.0" promptText="latitude" visible="false" />
-                        <TextField fx:id="airportAltitudeSearch" layoutX="29.0" layoutY="425.0" prefHeight="25.0" prefWidth="220.0" promptText="altitude" visible="false" />
-                        <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="468.0" prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false" />
-                        <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="508.0" prefHeight="25.0" prefWidth="220.0" promptText="DST" visible="false" />
-                        <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="183.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                        <Button fx:id="airportAdd" layoutY="600.0" mnemonicParsing="false" onAction="#airportAdd" text="Add" />
-                        <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="303.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
-                        <Button fx:id="airportAdvancedButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
-                        <Button fx:id="airportBack" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#airportBack" text="Back" visible="false" />
-                        <ComboBox fx:id="airportCountrySearch" layoutX="29.0" layoutY="134.0" prefWidth="150.0" promptText="Country" />
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Airline">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="airlineIDSearch" layoutX="29.0" layoutY="57.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
-                        <Button fx:id="airlineSearchButton" layoutX="186.0" layoutY="235.0" mnemonicParsing="false" onAction="#airlineSearch" text="Search" />
-                        <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Search" />
-                        <Button fx:id="airlineAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirlineSearch" text="Advanced" />
-                        <TextField fx:id="airlineNameSearch" layoutX="29.0" layoutY="98.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
-                        <TextField fx:id="airlineAliasSearch" layoutX="29.0" layoutY="222.0" prefHeight="25.0" prefWidth="220.0" promptText="alias" visible="false" />
-                        <TextField fx:id="airlineIATASearch" layoutX="29.0" layoutY="266.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
-                        <TextField fx:id="airlineICAOSearch" layoutX="29.0" layoutY="313.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
-                        <TextField fx:id="airlineCallsignSearch" layoutX="29.0" layoutY="357.0" prefHeight="25.0" prefWidth="220.0" promptText="call sign" visible="false" />
-                        <Button fx:id="resetAirlineSearch" layoutX="30.0" layoutY="235.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                        <ComboBox fx:id="airlineCountrySearch" layoutX="29.0" layoutY="141.0" prefWidth="150.0" promptText="Country" />
-                        <Button fx:id="airlineAdd" layoutX="14.0" layoutY="587.0" mnemonicParsing="false" onAction="#airlineAdd" text="Add" />
-                        <ComboBox fx:id="airlineActiveSearch" layoutX="29.0" layoutY="179.0" prefWidth="150.0" promptText="Active/Inactive" />
-                        <Button fx:id="airlineBack" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#airlineBack" text="Back" visible="false" />
-                     </children></AnchorPane>
-               </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-   </left>
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-                  <MenuItem mnemonicParsing="false" text="Login" />
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-                  <MenuItem mnemonicParsing="false" text="Add " />
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Add">
-            <items>
-                  <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData" text="Airline Data" />
-              <MenuItem fx:id="addAirportData" mnemonicParsing="false" onAction="#addAirportData" text="Airport Data" />
-                  <MenuItem fx:id="addRouteData" mnemonicParsing="false" onAction="#addRouteData" text="Route Data" />
-                  <MenuItem fx:id="addFlightData" mnemonicParsing="false" onAction="#addFlightData" text="Flight Data" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-              <items>
-                <MenuItem mnemonicParsing="false" text="About" />
-              </items>
-            </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <center>
-      <StackPane>
-         <children>
-            <Pane fx:id="flightView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
-               <children>
-                  <Text fx:id="titleString" layoutX="92.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flight from A to B" textAlignment="CENTER" wrappingWidth="557.1927490234375">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Text>
-                  <ScrollPane layoutX="91.0" layoutY="260.0" prefHeight="296.0" prefWidth="572.0">
-                     <content>
-                        <TableView fx:id="flightTable" prefHeight="352.0" prefWidth="570.0">
-                          <columns>
-                            <TableColumn fx:id="waypointName" prefWidth="130.0" text="Waypoint" />
-                            <TableColumn fx:id="waypointAltitude" prefWidth="142.0" text="Altitude" />
-                              <TableColumn fx:id="waypointLatitude" prefWidth="107.0" text="Latitude" />
-                              <TableColumn fx:id="waypointLongitude" prefWidth="97.0" text="Longitude" />
-                              <TableColumn fx:id="waypointType" prefWidth="101.0" text="Type" />
-                          </columns>
-                        </TableView>
-                     </content>
-                  </ScrollPane>
-                  <Text layoutX="100.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start:">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="100.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End:">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="aName" layoutX="350.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport A">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="100.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
-                  <Text layoutX="100.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
-                  <Text layoutX="100.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
-                  <Text layoutX="100.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
-                  <Text layoutX="100.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
-                  <Text layoutX="100.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
-                  <Text fx:id="aAltitude" layoutX="350.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="216.46875" />
-                  <Text fx:id="aLatitude" layoutX="350.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
-                  <Text fx:id="aLongitude" layoutX="350.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
-                  <Text fx:id="bName" layoutX="350.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport B" wrappingWidth="274.1357421875">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="bAltitude" layoutX="350.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="216.46875" />
-                  <Text fx:id="bLatitude" layoutX="350.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
-                  <Text fx:id="bLongitude" layoutX="350.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
-               </children>
-            </Pane>
-            <Pane fx:id="tableView" prefHeight="391.0" prefWidth="739.0">
-               <children>
-                  <TableView fx:id="airlineTable" layoutY="31.0" prefHeight="170.0" prefWidth="745.0">
-                    <columns>
-                      <TableColumn fx:id="airlineID" prefWidth="75.0" text="ID" visible="false" />
-                      <TableColumn fx:id="airlineName" prefWidth="75.0" text="Name" />
-                        <TableColumn fx:id="alias" prefWidth="75.0" text="Alias" />
-                        <TableColumn fx:id="IATA" prefWidth="75.0" text="IATA" visible="false" />
-                        <TableColumn fx:id="ICAO" prefWidth="75.0" text="ICAO" visible="false" />
-                        <TableColumn fx:id="callsign" prefWidth="75.0" text="Call Sign" visible="false" />
-                        <TableColumn fx:id="country" prefWidth="75.0" text="Country" />
-                        <TableColumn fx:id="active" prefWidth="75.0" text="Active" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  <Pane fx:id="airlinePane" layoutY="31.0" prefHeight="170.0" prefWidth="745.0" visible="false">
-                     <children>
-                        <Text fx:id="airline_name" layoutX="32.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Name" wrappingWidth="187.638671875" />
-                        <Button fx:id="airline_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirline" text="Back">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </Button>
-                        <Text layoutX="20.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline ID" />
-                        <Text layoutX="373.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alias" />
-                        <Text layoutX="16.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" />
-                        <Text layoutX="20.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Call Sign" />
-                        <Text layoutX="24.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IATA" wrappingWidth="36.9609375" />
-                        <Text layoutX="23.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO" />
-                        <Text layoutX="369.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active" />
-                        <Text fx:id="airline_id" layoutX="97.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airline_sign" layoutX="97.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airline_iata" layoutX="97.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airline_icao" layoutX="97.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airline_country" layoutX="97.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airline_alias" layoutX="442.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airline_active" layoutX="442.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                     </children>
-                  </Pane>
-                  <TableView fx:id="airportTable" layoutX="1.0" layoutY="234.0" prefHeight="170.0" prefWidth="745.0">
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                     <columns>
-                        <TableColumn fx:id="airportID" prefWidth="75.0" text="ID" visible="false" />
-                        <TableColumn fx:id="airportName" prefWidth="75.0" text="Name" />
-                        <TableColumn fx:id="city" prefWidth="75.0" text="City" />
-                        <TableColumn fx:id="airportCountry" prefWidth="75.0" text="Country" />
-                        <TableColumn fx:id="FAA" prefWidth="75.0" text="FAA" visible="false" />
-                        <TableColumn fx:id="airportIATA" prefWidth="75.0" text="IATA" visible="false" />
-                        <TableColumn fx:id="airportICAO" prefWidth="75.0" text="ICAO" visible="false" />
-                        <TableColumn fx:id="latitude" prefWidth="75.0" text="Latitude" visible="false" />
-                        <TableColumn fx:id="longitude" prefWidth="75.0" text="Longitude" visible="false" />
-                        <TableColumn fx:id="altitude" prefWidth="75.0" text="Altitude" visible="false" />
-                        <TableColumn fx:id="timezone" prefWidth="75.0" text="Timezone" visible="false" />
-                        <TableColumn fx:id="DST" prefWidth="75.0" text="DST" visible="false" />
-                     </columns>
-                  </TableView>
-                  <Pane fx:id="airportPane" layoutX="1.0" layoutY="234.0" prefHeight="170.0" prefWidth="745.0" visible="false">
-                     <children>
-                        <Text fx:id="airport_name" layoutX="32.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Name" wrappingWidth="187.638671875" />
-                        <Button fx:id="airport_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirport" text="Back">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </Button>
-                        <Text layoutX="20.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport ID" />
-                        <Text layoutX="386.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City" />
-                        <Text layoutX="375.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" />
-                        <Text layoutX="20.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FAA" />
-                        <Text layoutX="19.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IATA" wrappingWidth="36.9609375" />
-                        <Text layoutX="19.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO" />
-                        <Text layoutX="375.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude" />
-                        <Text layoutX="373.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logitude" />
-                        <Text layoutX="376.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude" />
-                        <Text layoutX="19.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DST" />
-                        <Text layoutX="17.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timezone" />
-                        <Text fx:id="airport_id" layoutX="97.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_faa" layoutX="97.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_iata" layoutX="97.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_icao" layoutX="97.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_timezone" layoutX="97.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_dst" layoutX="97.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_country" layoutX="442.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_city" layoutX="442.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_long" layoutX="442.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_lat" layoutX="442.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="airport_alt" layoutX="442.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                     </children>
-                  </Pane>
-                  <TableView fx:id="routeTable" layoutX="1.0" layoutY="438.0" prefHeight="170.0" prefWidth="745.0">
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                     <columns>
-                        <TableColumn fx:id="routeAirlineName" prefWidth="75.0" text="Airline" />
-                        <TableColumn fx:id="source" prefWidth="75.0" text="Source Airport" />
-                        <TableColumn fx:id="destination" prefWidth="75.0" text="Dest. Airport" />
-                        <TableColumn fx:id="codeshare" prefWidth="75.0" text="Codeshare" visible="false" />
-                        <TableColumn fx:id="stops" prefWidth="75.0" text="Stops" visible="false" />
-                        <TableColumn fx:id="equipment" prefWidth="75.0" text="Equipment" visible="false" />
-                     </columns>
-                  </TableView>
-                  <Pane fx:id="routePane" layoutX="1.0" layoutY="438.0" prefHeight="170.0" prefWidth="745.0" visible="false">
-                     <children>
-                        <Text fx:id="route_airline" layoutX="279.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline" wrappingWidth="187.638671875" />
-                        <Button fx:id="route_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToRoute" text="Back">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </Button>
-                        <Text layoutX="28.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Source Airport" />
-                        <Text layoutX="28.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination Airport" />
-                        <Text layoutX="28.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stops" wrappingWidth="36.9609375" />
-                        <Text layoutX="414.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Equipment" />
-                        <Text layoutX="411.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codeshare" />
-                        <Text fx:id="route_source" layoutX="158.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="route_dest" layoutX="158.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="route_stops" layoutX="158.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" wrappingWidth="28.822265625" />
-                        <Text fx:id="route_equip" layoutX="493.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                        <Text fx:id="route_share" layoutX="493.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
-                     </children>
-                  </Pane>
-                  <Text layoutX="1.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Table Viewer" />
-                  <Text layoutX="-1.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Table Viewer" />
-                  <Text layoutX="2.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route Table Viewer" />
-                  <MenuButton alignment="TOP_LEFT" contentDisplay="TOP" graphicTextGap="1.0" layoutX="172.0" layoutY="4.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="69.0" text="Filter">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.Controller">
+    <left>
+        <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab text="Route">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Button fx:id="routeSearch" layoutX="188.0" layoutY="251.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
+                                <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="251.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
+                                <Button fx:id="routeAdd" layoutX="6.0" layoutY="600.0" mnemonicParsing="false" onAction="#routeAdd" text="Add" />
+                                <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="63.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
+                                <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
+                                <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
+                                <TextField fx:id="sourceIDSearch" layoutX="29.0" layoutY="369.0" prefHeight="25.0" prefWidth="220.0" promptText="from (airport ID)" visible="false" />
+                                <ComboBox fx:id="sourceSearch" layoutX="29.0" layoutY="106.0" prefWidth="150.0" promptText="Source " />
+                                <Text layoutX="29.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " />
+                                <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="151.0" prefWidth="150.0" promptText="Destination" />
+                                <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="195.0" prefWidth="150.0" promptText="Stops" />
+                                <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="238.0" prefWidth="150.0" promptText="Equipment" visible="false" />
+                                <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="280.0" prefWidth="150.0" promptText="Codeshare" visible="false" />
+                                <Button fx:id="routeAdvancedButton" layoutX="178.0" layoutY="14.0" mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced" />
+                                <Button fx:id="routeBackButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#routeSearchBack" text="Back" visible="false" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Airport">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TextField fx:id="airportIDSearch" layoutX="29.0" layoutY="57.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
+                                <Button fx:id="airportSearchButton" layoutX="182.0" layoutY="183.0" mnemonicParsing="false" onAction="#airportSearch" text="Search" />
+                                <Text layoutX="29.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " />
+                                <TextField fx:id="airportNameSearch" layoutX="29.0" layoutY="94.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
+                                <TextField fx:id="airportCitySearch" layoutX="29.0" layoutY="175.0" prefHeight="25.0" prefWidth="220.0" promptText="city" visible="false" />
+                                <TextField fx:id="airportFAASearch" layoutX="29.0" layoutY="221.0" prefHeight="25.0" prefWidth="220.0" promptText="FAA" visible="false" />
+                                <TextField fx:id="airportIATASearch" layoutX="29.0" layoutY="263.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
+                                <TextField fx:id="airportLongitudeSearch" layoutX="29.0" layoutY="342.0" prefHeight="25.0" prefWidth="220.0" promptText="longitude" visible="false" />
+                                <TextField fx:id="airportLatitudeSearch" layoutX="29.0" layoutY="383.0" prefHeight="25.0" prefWidth="220.0" promptText="latitude" visible="false" />
+                                <TextField fx:id="airportAltitudeSearch" layoutX="29.0" layoutY="425.0" prefHeight="25.0" prefWidth="220.0" promptText="altitude" visible="false" />
+                                <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="468.0" prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false" />
+                                <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="508.0" prefHeight="25.0" prefWidth="220.0" promptText="DST" visible="false" />
+                                <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="183.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
+                                <Button fx:id="airportAdd" layoutY="600.0" mnemonicParsing="false" onAction="#airportAdd" text="Add" />
+                                <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="303.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
+                                <Button fx:id="airportAdvancedButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
+                                <Button fx:id="airportBackButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#airportSearchBack" text="Back" visible="false" />
+                                <ComboBox fx:id="airportCountrySearch" layoutX="29.0" layoutY="134.0" prefWidth="150.0" promptText="Country" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Airline">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TextField fx:id="airlineIDSearch" layoutX="29.0" layoutY="57.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
+                                <Button fx:id="airlineSearchButton" layoutX="186.0" layoutY="235.0" mnemonicParsing="false" onAction="#airlineSearch" text="Search" />
+                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Search" />
+                                <Button fx:id="airlineAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirlineSearch" text="Advanced" />
+                                <TextField fx:id="airlineNameSearch" layoutX="29.0" layoutY="98.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
+                                <TextField fx:id="airlineAliasSearch" layoutX="29.0" layoutY="222.0" prefHeight="25.0" prefWidth="220.0" promptText="alias" visible="false" />
+                                <TextField fx:id="airlineIATASearch" layoutX="29.0" layoutY="266.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
+                                <TextField fx:id="airlineICAOSearch" layoutX="29.0" layoutY="313.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
+                                <TextField fx:id="airlineCallsignSearch" layoutX="29.0" layoutY="357.0" prefHeight="25.0" prefWidth="220.0" promptText="call sign" visible="false" />
+                                <Button fx:id="resetAirlineSearch" layoutX="30.0" layoutY="235.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
+                                <ComboBox fx:id="airlineCountrySearch" layoutX="29.0" layoutY="141.0" prefWidth="150.0" promptText="Country" />
+                                <Button fx:id="airlineAdd" layoutX="14.0" layoutY="587.0" mnemonicParsing="false" onAction="#airlineAdd" text="Add" />
+                                <ComboBox fx:id="airlineActiveSearch" layoutX="29.0" layoutY="179.0" prefWidth="150.0" promptText="Active/Inactive" />
+                                <Button fx:id="airlineBackButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#airlineSearchBack" text="Back" visible="false" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </left>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
                     <items>
-                      <MenuItem fx:id="FilterAirlinesByCountry" mnemonicParsing="false" onAction="#FilterAirlinesByCountry" text="Country" />
-                        <MenuItem fx:id="FilterAirlinesByActivity" mnemonicParsing="false" onAction="#FilterAirlinesByActivity" text="Active" />
+                        <MenuItem mnemonicParsing="false" text="Login" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
                     </items>
-                     <rotationAxis>
-                        <Point3D />
-                     </rotationAxis>
-                     <padding>
-                        <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
-                     </padding>
-                  </MenuButton>
-                  <MenuButton alignment="TOP_LEFT" contentDisplay="TOP" graphicTextGap="1.0" layoutX="168.0" layoutY="208.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="69.0" text="Filter">
-                     <items>
-                        <MenuItem fx:id="FilterAirportsByCountry" mnemonicParsing="false" onAction="#FilterAirportsByCountry" text="Country" />
-                     </items>
-                     <padding>
-                        <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
-                     </padding>
-                  </MenuButton>
-                  <MenuButton alignment="TOP_LEFT" contentDisplay="TOP" graphicTextGap="1.0" layoutX="160.0" layoutY="413.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="69.0" text="Filter">
-                     <items>
-                        <MenuItem fx:id="FilterRoutesBySourceAirport" mnemonicParsing="false" onAction="#FilterRoutesBySourceAirport" text="Source Airport" />
-                        <MenuItem fx:id="FilterRoutesByDestinationAirport" mnemonicParsing="false" onAction="#FilterRoutesByDestinationAirport" text="Destination Airport" />
-                        <MenuItem fx:id="FilterRoutesByStops" mnemonicParsing="false" onAction="#FilterRoutesByStops" text="Stops" />
-                        <MenuItem fx:id="FilterRoutesByEquipment" mnemonicParsing="false" onAction="#FilterRoutesByEquipment" text="Equipment" />
-                     </items>
-                     <padding>
-                        <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
-                     </padding>
-                  </MenuButton>
-               </children>
-            </Pane>
-         </children>
-      </StackPane>
-   </center>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Add " />
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Add">
+                    <items>
+                        <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData" text="Airline Data" />
+                        <MenuItem fx:id="addAirportData" mnemonicParsing="false" onAction="#addAirportData" text="Airport Data" />
+                        <MenuItem fx:id="addRouteData" mnemonicParsing="false" onAction="#addRouteData" text="Route Data" />
+                        <MenuItem fx:id="addFlightData" mnemonicParsing="false" onAction="#addFlightData" text="Flight Data" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <StackPane>
+            <children>
+                <Pane fx:id="flightView" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+                    <children>
+                        <Text fx:id="titleString" layoutX="92.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flight from A to B" textAlignment="CENTER" wrappingWidth="557.1927490234375">
+                            <font>
+                                <Font size="28.0" />
+                            </font>
+                        </Text>
+                        <ScrollPane layoutX="91.0" layoutY="260.0" prefHeight="296.0" prefWidth="572.0">
+                            <content>
+                                <TableView fx:id="flightTable" prefHeight="352.0" prefWidth="570.0">
+                                    <columns>
+                                        <TableColumn fx:id="waypointName" prefWidth="130.0" text="Waypoint" />
+                                        <TableColumn fx:id="waypointAltitude" prefWidth="142.0" text="Altitude" />
+                                        <TableColumn fx:id="waypointLatitude" prefWidth="107.0" text="Latitude" />
+                                        <TableColumn fx:id="waypointLongitude" prefWidth="97.0" text="Longitude" />
+                                        <TableColumn fx:id="waypointType" prefWidth="101.0" text="Type" />
+                                    </columns>
+                                </TableView>
+                            </content>
+                        </ScrollPane>
+                        <Text layoutX="100.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start:">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End:">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="aName" layoutX="350.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport A">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
+                        <Text layoutX="100.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
+                        <Text layoutX="100.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
+                        <Text layoutX="100.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" />
+                        <Text layoutX="100.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" />
+                        <Text layoutX="100.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" />
+                        <Text fx:id="aAltitude" layoutX="350.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="216.46875" />
+                        <Text fx:id="aLatitude" layoutX="350.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
+                        <Text fx:id="aLongitude" layoutX="350.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
+                        <Text fx:id="bName" layoutX="350.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport B" wrappingWidth="274.1357421875">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="bAltitude" layoutX="350.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="216.46875" />
+                        <Text fx:id="bLatitude" layoutX="350.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
+                        <Text fx:id="bLongitude" layoutX="350.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="326.46875" />
+                    </children>
+                </Pane>
+                <Pane fx:id="tableView" prefHeight="391.0" prefWidth="739.0">
+                    <children>
+                        <TableView fx:id="airlineTable" layoutY="31.0" prefHeight="170.0" prefWidth="745.0">
+                            <columns>
+                                <TableColumn fx:id="airlineID" prefWidth="75.0" text="ID" visible="false" />
+                                <TableColumn fx:id="airlineName" prefWidth="75.0" text="Name" />
+                                <TableColumn fx:id="alias" prefWidth="75.0" text="Alias" />
+                                <TableColumn fx:id="IATA" prefWidth="75.0" text="IATA" visible="false" />
+                                <TableColumn fx:id="ICAO" prefWidth="75.0" text="ICAO" visible="false" />
+                                <TableColumn fx:id="callsign" prefWidth="75.0" text="Call Sign" visible="false" />
+                                <TableColumn fx:id="country" prefWidth="75.0" text="Country" />
+                                <TableColumn fx:id="active" prefWidth="75.0" text="Active" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        <Pane fx:id="airlinePane" layoutY="31.0" prefHeight="170.0" prefWidth="745.0" visible="false">
+                            <children>
+                                <Text fx:id="airline_name" layoutX="245.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Name" wrappingWidth="187.638671875" />
+                                <Button fx:id="airline_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirline" text="Back">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </Button>
+                                <Text layoutX="25.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline ID:" />
+                                <Text layoutX="350.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alias:" />
+                                <Text layoutX="350.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" />
+                                <Text layoutX="25.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Call Sign:" />
+                                <Text layoutX="25.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IATA:" wrappingWidth="36.9609375" />
+                                <Text layoutX="25.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO:" />
+                                <Text layoutX="350.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active:" />
+                                <Text fx:id="airline_id" layoutX="110.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airline_sign" layoutX="110.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airline_iata" layoutX="110.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airline_icao" layoutX="110.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airline_country" layoutX="450.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airline_alias" layoutX="450.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airline_active" layoutX="450.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Button fx:id="editAirlineDataButton" layoutX="683.0" layoutY="126.0" mnemonicParsing="false" onAction="#editAirlineData" text="Edit" />
+                                <TextField fx:id="editAirlineIDField" layoutX="110.0" layoutY="43.0" text=" ID Field" visible="false" />
+                                <Button fx:id="saveAirlineChangesButton" layoutX="676.0" layoutY="125.0" mnemonicParsing="false" onAction="#saveAirlineChanges" text="Save" visible="false" />
+                                <Button fx:id="cancelAirlineChangesButton" layoutX="664.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancelAirlineChanges" text="Cancel" visible="false" />
+                        <TextField fx:id="editCallsignField" layoutX="110.0" layoutY="73.0" text="Callsign field" visible="false" />
+                        <TextField fx:id="editAirlineIATAField" layoutX="110.0" layoutY="103.0" text="IATA field" visible="false" />
+                        <TextField fx:id="editAirlineICAOField" layoutX="110.0" layoutY="133.0" text="ICAO field" visible="false" />
+                        <TextField fx:id="editAliasField" layoutX="450.0" layoutY="73.0" text="Alias field" visible="false" />
+                        <TextField fx:id="editActiveField" layoutX="450.0" layoutY="103.0" text="Active field" visible="false" />
+                        <TextField fx:id="editAirlineCountryField" layoutX="450.0" layoutY="133.0" text="Country Field" visible="false" />
+                            </children>
+                        </Pane>
+                        <TableView fx:id="airportTable" layoutX="1.0" layoutY="234.0" prefHeight="170.0" prefWidth="745.0">
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                            <columns>
+                                <TableColumn fx:id="airportID" prefWidth="75.0" text="ID" visible="false" />
+                                <TableColumn fx:id="airportName" prefWidth="75.0" text="Name" />
+                                <TableColumn fx:id="city" prefWidth="75.0" text="City" />
+                                <TableColumn fx:id="airportCountry" prefWidth="75.0" text="Country" />
+                                <TableColumn fx:id="FAA" prefWidth="75.0" text="FAA" visible="false" />
+                                <TableColumn fx:id="airportIATA" prefWidth="75.0" text="IATA" visible="false" />
+                                <TableColumn fx:id="airportICAO" prefWidth="75.0" text="ICAO" visible="false" />
+                                <TableColumn fx:id="latitude" prefWidth="75.0" text="Latitude" visible="false" />
+                                <TableColumn fx:id="longitude" prefWidth="75.0" text="Longitude" visible="false" />
+                                <TableColumn fx:id="altitude" prefWidth="75.0" text="Altitude" visible="false" />
+                                <TableColumn fx:id="timezone" prefWidth="75.0" text="Timezone" visible="false" />
+                                <TableColumn fx:id="DST" prefWidth="75.0" text="DST" visible="false" />
+                            </columns>
+                        </TableView>
+                        <Pane fx:id="airportPane" layoutX="1.0" layoutY="234.0" prefHeight="170.0" prefWidth="745.0" visible="false">
+                            <children>
+                                <Text fx:id="airport_name" layoutX="32.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Name" wrappingWidth="187.638671875" />
+                                <Button fx:id="airport_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToAirport" text="Back">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </Button>
+                                <Text layoutX="20.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport ID" />
+                                <Text layoutX="386.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City" />
+                                <Text layoutX="375.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" />
+                                <Text layoutX="20.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FAA" />
+                                <Text layoutX="19.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IATA" wrappingWidth="36.9609375" />
+                                <Text layoutX="19.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO" />
+                                <Text layoutX="375.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude" />
+                                <Text layoutX="373.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logitude" />
+                                <Text layoutX="376.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude" />
+                                <Text layoutX="19.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DST" />
+                                <Text layoutX="17.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timezone" />
+                                <Text fx:id="airport_id" layoutX="97.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_faa" layoutX="97.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_iata" layoutX="97.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_icao" layoutX="97.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_timezone" layoutX="97.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_dst" layoutX="97.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_country" layoutX="442.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_city" layoutX="442.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_long" layoutX="442.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_lat" layoutX="442.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="airport_alt" layoutX="442.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                            </children>
+                        </Pane>
+                        <TableView fx:id="routeTable" layoutX="1.0" layoutY="438.0" prefHeight="170.0" prefWidth="745.0">
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                            <columns>
+                                <TableColumn fx:id="routeAirlineName" prefWidth="75.0" text="Airline" />
+                                <TableColumn fx:id="source" prefWidth="75.0" text="Source Airport" />
+                                <TableColumn fx:id="destination" prefWidth="75.0" text="Dest. Airport" />
+                                <TableColumn fx:id="codeshare" prefWidth="75.0" text="Codeshare" visible="false" />
+                                <TableColumn fx:id="stops" prefWidth="75.0" text="Stops" visible="false" />
+                                <TableColumn fx:id="equipment" prefWidth="75.0" text="Equipment" visible="false" />
+                            </columns>
+                        </TableView>
+                        <Pane fx:id="routePane" layoutX="1.0" layoutY="438.0" prefHeight="170.0" prefWidth="745.0" visible="false">
+                            <children>
+                                <Text fx:id="route_airline" layoutX="279.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline" wrappingWidth="187.638671875" />
+                                <Button fx:id="route_back" layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToRoute" text="Back">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </Button>
+                                <Text layoutX="28.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Source Airport" />
+                                <Text layoutX="28.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination Airport" />
+                                <Text layoutX="28.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stops" wrappingWidth="36.9609375" />
+                                <Text layoutX="414.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Equipment" />
+                                <Text layoutX="411.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codeshare" />
+                                <Text fx:id="route_source" layoutX="158.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="route_dest" layoutX="158.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="route_stops" layoutX="158.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" wrappingWidth="28.822265625" />
+                                <Text fx:id="route_equip" layoutX="493.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                                <Text fx:id="route_share" layoutX="493.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" />
+                            </children>
+                        </Pane>
+                        <Text layoutX="1.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Table Viewer" />
+                        <Text layoutX="-1.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Table Viewer" />
+                        <Text layoutX="2.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route Table Viewer" />
+                        <MenuButton alignment="TOP_LEFT" contentDisplay="TOP" graphicTextGap="1.0" layoutX="172.0" layoutY="4.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="69.0" text="Filter">
+                            <items>
+                                <MenuItem fx:id="FilterAirlinesByCountry" mnemonicParsing="false" onAction="#FilterAirlinesByCountry" text="Country" />
+                                <MenuItem fx:id="FilterAirlinesByActivity" mnemonicParsing="false" onAction="#FilterAirlinesByActivity" text="Active" />
+                            </items>
+                            <rotationAxis>
+                                <Point3D />
+                            </rotationAxis>
+                            <padding>
+                                <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
+                            </padding>
+                        </MenuButton>
+                        <MenuButton alignment="TOP_LEFT" contentDisplay="TOP" graphicTextGap="1.0" layoutX="168.0" layoutY="208.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="69.0" text="Filter">
+                            <items>
+                                <MenuItem fx:id="FilterAirportsByCountry" mnemonicParsing="false" onAction="#FilterAirportsByCountry" text="Country" />
+                            </items>
+                            <padding>
+                                <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
+                            </padding>
+                        </MenuButton>
+                        <MenuButton alignment="TOP_LEFT" contentDisplay="TOP" graphicTextGap="1.0" layoutX="160.0" layoutY="413.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="69.0" text="Filter">
+                            <items>
+                                <MenuItem fx:id="FilterRoutesBySourceAirport" mnemonicParsing="false" onAction="#FilterRoutesBySourceAirport" text="Source Airport" />
+                                <MenuItem fx:id="FilterRoutesByDestinationAirport" mnemonicParsing="false" onAction="#FilterRoutesByDestinationAirport" text="Destination Airport" />
+                                <MenuItem fx:id="FilterRoutesByStops" mnemonicParsing="false" onAction="#FilterRoutesByStops" text="Stops" />
+                                <MenuItem fx:id="FilterRoutesByEquipment" mnemonicParsing="false" onAction="#FilterRoutesByEquipment" text="Equipment" />
+                            </items>
+                            <padding>
+                                <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
+                            </padding>
+                        </MenuButton>
+                    </children>
+                </Pane>
+            </children>
+        </StackPane>
+    </center>
 </BorderPane>
