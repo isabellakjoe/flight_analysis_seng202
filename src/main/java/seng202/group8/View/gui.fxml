@@ -36,7 +36,7 @@
                             <children>
                                 <Button fx:id="routeSearch" layoutX="188.0" layoutY="251.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
                                 <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="251.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <Button fx:id="routeAdd" layoutX="74.0" layoutY="382.0" mnemonicParsing="false" onAction="#routeAdd" text="Add New Route" />
+                                <Button fx:id="addRouteButton" layoutX="74.0" layoutY="382.0" mnemonicParsing="false" onAction="#switchToAddRoute" text="Add New Route" />
                                 <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="63.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
                                 <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
                                 <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
@@ -70,7 +70,7 @@
                                 <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="468.0" prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false" />
                                 <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="508.0" prefHeight="25.0" prefWidth="220.0" promptText="DST" visible="false" />
                                 <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="183.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <Button fx:id="airportAddButton" layoutX="76.0" layoutY="342.0" mnemonicParsing="false" onAction="#switchToAddAirport" text="Add New Airport" />
+                                <Button fx:id="airportAddButton" layoutX="75.0" layoutY="350.0" mnemonicParsing="false" onAction="#switchToAddAirport" text="Add New Airport" />
                                 <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="303.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
                                 <Button fx:id="airportAdvancedButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
                                 <Button fx:id="airportBackButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#airportSearchBack" text="Back" visible="false" />
@@ -95,7 +95,7 @@
                                 <ComboBox fx:id="airlineCountrySearch" layoutX="29.0" layoutY="141.0" prefWidth="150.0" promptText="Country" />
                                 <ComboBox fx:id="airlineActiveSearch" layoutX="29.0" layoutY="179.0" prefWidth="150.0" promptText="Active/Inactive" />
                                 <Button fx:id="airlineBackButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#airlineSearchBack" text="Back" visible="false" />
-                        <Button layoutX="78.0" layoutY="338.0" mnemonicParsing="false" onAction="#switchToAddAirline" text="Add New Airline" />
+                        <Button fx:id="airlineAddButton" layoutX="78.0" layoutY="338.0" mnemonicParsing="false" onAction="#switchToAddAirline" text="Add New Airline" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
@@ -454,6 +454,72 @@
                         <CheckBox fx:id="addedAirlineActive" layoutX="505.0" layoutY="197.0" mnemonicParsing="false" />
                     </children>
                 </Pane>
+            <GridPane fx:id="addRouteView" visible="false">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Route">
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <ComboBox fx:id="addedRouteAirline" prefWidth="150.0" promptText="Airline" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="addedRouteSource" layoutX="110.0" layoutY="194.0" prefWidth="150.0" promptText="Source" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="addedRouteDestination" layoutX="110.0" layoutY="194.0" prefWidth="150.0" promptText="Destination" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </ComboBox>
+                  <TextField fx:id="addedRouteEquipment" maxWidth="-Infinity" prefHeight="25.0" prefWidth="212.0" promptText="Equipment" text="Equipment" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="75.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <CheckBox fx:id="addedRouteCodeshare" mnemonicParsing="false" text="Codeshare " GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="120.0" />
+                     </GridPane.margin>
+                  </CheckBox>
+                  <Button fx:id="addedRouteCancelButton" mnemonicParsing="false" onAction="#cancelAddedRoute" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="75.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="addedRouteSaveButton" mnemonicParsing="false" onAction="#saveAddedRoute" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="230.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <TextField fx:id="addedRouteStops" layoutX="459.0" layoutY="194.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="212.0" promptText="Stops" text="Stops" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="75.0" />
+                     </GridPane.margin>
+                  </TextField>
+               </children>
+            </GridPane>
             </children>
         </StackPane>
     </center>
