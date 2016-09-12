@@ -136,4 +136,10 @@ public class DatabaseSearcherTest {
         assertTrue(airportIDs.get(0) == 2962);
     }
 
+    @Test
+    public void testNumRoutesComputesProperly() {
+        ObservableList<Integer> routelessAirports = dbs.findAirportsWithNoRoutes(conn);
+        assertTrue(routelessAirports.size() == 10);
+    }
+
 }

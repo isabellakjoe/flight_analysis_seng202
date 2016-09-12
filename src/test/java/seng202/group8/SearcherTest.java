@@ -32,7 +32,7 @@ public class SearcherTest {
         searcher.airlinesOfID("7");
         Airline returnedAirline = searcher.getLoadedAirlines().get(0);
         Airline expectedAirline = airlines.get(0);
-        assertEquals(returnedAirline, expectedAirline);
+        assertEquals(returnedAirline.getAirlineID(), expectedAirline.getAirlineID());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class SearcherTest {
         searcher.airlinesOfActiveStatus("Active");
         Airline returnedAirline = searcher.getLoadedAirlines().get(0);
         Airline expectedAirline = airlines.get(0);
-        assertEquals(returnedAirline, expectedAirline);
+        assertEquals(returnedAirline.getName(), expectedAirline.getName());
     }
 
     @Test
