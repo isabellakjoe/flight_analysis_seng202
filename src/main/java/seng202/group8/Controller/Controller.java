@@ -71,6 +71,9 @@ public class Controller implements Initializable{
                 currentlyLoadedAirports = airports;
                 setAirportComboBoxes();
                 airportTable.setItems(airports);
+                addRouteView.setVisible(false);
+                addAirlineView.setVisible(false);
+                addAirportView.setVisible(false);
                 flightView.setVisible(false);
                 tableView.setVisible(true);
             }
@@ -135,6 +138,9 @@ public class Controller implements Initializable{
                 airlineTable.setItems(airlines);
                 setAirlineComboBoxes();
                 flightView.setVisible(false);
+                addAirportView.setVisible(false);
+                addRouteView.setVisible(false);
+                addAirlineView.setVisible(false);
                 addAirportView.setVisible(false);
                 tableView.setVisible(true);
             }
@@ -204,6 +210,9 @@ public class Controller implements Initializable{
                 routeTable.setItems(routes);
                 setRouteComboBoxes();
                 flightView.setVisible(false);
+                addRouteView.setVisible(false);
+                addAirlineView.setVisible(false);
+                addAirportView.setVisible(false);
                 tableView.setVisible(true);
             }
         } catch (FileNotFoundException ex){
@@ -286,6 +295,9 @@ public class Controller implements Initializable{
                 flightViewSetUp(flight);
                 //Swap panes from raw data to the flight viewer
                 tableView.setVisible(false);
+                addRouteView.setVisible(false);
+                addAirlineView.setVisible(false);
+                addAirportView.setVisible(false);
                 flightView.setVisible(true);
             }
         } catch(FileNotFoundException ex){
@@ -495,58 +507,6 @@ public class Controller implements Initializable{
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
 
         routeTable.setItems(matchingRoutes);
-    }
-
-    /* Method to add a new airport to the currentlyLoadedAirports from search text fields.
-    Executed when the add button is clicked */
-    @FXML
-    private void airportAdd(ActionEvent e){
-        AirportParser parser = new AirportParser();
-
-        String airportID = airportIDSearch.getText();
-        String name = airportNameSearch.getText();
-        String city = airportCitySearch.getText();
-        String country = "hey";
-        String FAA = airportFAASearch.getText();
-        String IATA = airportIATASearch.getText();
-        String ICAO = airportICAOSearch.getText();
-        String latitude = airportLatitudeSearch.getText();
-        String longitude = airportLongitudeSearch.getText();
-        String altitude = airportAltitudeSearch.getText();
-        String timezone = airportTimezoneSearch.getText();
-        String DST = airportDSTSearch.getText();
-
-        String data = (airportID +","+ name +","+ city +","+ country +","+ FAA +","+ IATA +","+ ICAO +","+ latitude +","+ longitude +","+ altitude +","+ timezone +","+ DST);
-        Airport newAirport = parser.createSingleAirport(data);
-        if(newAirport != null){
-            currentlyLoadedAirports.add(newAirport);
-        }
-        airportTable.setItems(currentlyLoadedAirports);
-
-        }
-
-    /* Method to add a new route to the currentlyLoadedRoutes from search text fields.
-    Executed when the add button is clicked */
-    @FXML
-    private void routeAdd(ActionEvent e){
-        RouteParser parser = new RouteParser();
-
-        String airline = airlineSearch.getText();
-        String airlineID = airlineSearchID.getText();
-        String sourceAirport = "Hey";
-        String sourceID = sourceIDSearch.getText();
-        String destinationAirport = "Hey";
-        String destinationID = destinationIDSearch.getText();
-        String stops = "Hey";
-        String codeshareStatus = "Hey";
-        String equipment = "Hey";
-
-        String data = (airline +","+ airlineID +","+ sourceAirport +","+ sourceID +","+ destinationAirport +","+ destinationID +","+ stops +","+ codeshareStatus +","+ equipment);
-        Route newRoute = parser.createSingleRoute(data);
-        if(newRoute != null){
-            currentlyLoadedRoutes.add(newRoute);
-        }
-        routeTable.setItems(currentlyLoadedRoutes);
     }
 
     /* Method to add a new airline to the currentlyLoadedAirlines from search text fields.
