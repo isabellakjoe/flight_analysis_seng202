@@ -1,7 +1,10 @@
 package seng202.group8.Model.DatabaseMethods;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seng202.group8.Model.Objects.AirlineMethod;
 import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.Airport;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,9 +18,9 @@ import java.util.ArrayList;
 public class AirlineDatabaseLoader extends AirlineMethod {
 
 
-    public ArrayList<Airline> loadAirlines(Connection conn) {
+    public ObservableList<Airline> loadAirlines(Connection conn) {
 
-        ArrayList<Airline> airlines = new ArrayList<Airline>();
+        ObservableList<Airline> airlines = FXCollections.observableArrayList();
         try {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("SELECT * FROM airline");

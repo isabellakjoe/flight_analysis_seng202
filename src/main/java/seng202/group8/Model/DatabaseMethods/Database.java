@@ -55,18 +55,18 @@ public class Database {
         File f = new File("Database.db");
         if (f.exists()) {
             f.delete();
-        } else {
-            Connection conn;
-            Statement stmtAirport;
-            Statement stmtAirline;
-            Statement stmtRoute;
-            try {
-                Class.forName("org.sqlite.JDBC");
-                String url = ("jdbc:sqlite:Database.db");
-                conn = DriverManager.getConnection(url);
+        }
+        Connection conn;
+        Statement stmtAirport;
+        Statement stmtAirline;
+        Statement stmtRoute;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String url = ("jdbc:sqlite:Database.db");
+            conn = DriverManager.getConnection(url);
 
-                stmtAirport = conn.createStatement();
-                String sql = "CREATE TABLE airport (" +
+            stmtAirport = conn.createStatement();
+            String sql = "CREATE TABLE airport (" +
                         "airportid int primary key," +
                         "name varchar(50) not null," +
                         "city varchar(50) not null," +
@@ -80,11 +80,11 @@ public class Database {
                         "dst char(1) not null," +
                         "tz varchar(50) not null" +
                         ");";
-                stmtAirport.executeUpdate(sql);
-                stmtAirport.close();
+            stmtAirport.executeUpdate(sql);
+            stmtAirport.close();
 
-                stmtAirline = conn.createStatement();
-                sql = "CREATE TABLE airline (" +
+            stmtAirline = conn.createStatement();
+            sql = "CREATE TABLE airline (" +
                         "airlineid int primary key," +
                         "name varchar(50) not null," +
                         "alias varchar(50) not null," +
@@ -94,11 +94,11 @@ public class Database {
                         "country varchar(46) not null," +
                         "active char(1)" +
                         ");";
-                stmtAirline.executeUpdate(sql);
-                stmtAirline.close();
+            stmtAirline.executeUpdate(sql);
+            stmtAirline.close();
 
-                stmtRoute = conn.createStatement();
-                sql = "CREATE TABLE route (" +
+            stmtRoute = conn.createStatement();
+            sql = "CREATE TABLE route (" +
                         "routeid int primary key," +
                         "airlinecode varchar(4) not null," +
                         "airlineid int not null," +
@@ -110,14 +110,13 @@ public class Database {
                         "stops int not null," +
                         "equipment char(3) not null" +
                         ");";
-                stmtRoute.executeUpdate(sql);
-                stmtRoute.close();
+            stmtRoute.executeUpdate(sql);
+            stmtRoute.close();
 
-                conn.close();
+            conn.close();
 
-            } catch (Exception e){
-                System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
-            }
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
     }
 

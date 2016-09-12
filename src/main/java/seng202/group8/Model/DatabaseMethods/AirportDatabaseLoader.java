@@ -1,5 +1,7 @@
 package seng202.group8.Model.DatabaseMethods;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seng202.group8.Model.Objects.AirportMethod;
 import seng202.group8.Model.Objects.Airport;
 
@@ -14,9 +16,9 @@ import java.util.ArrayList;
  */
 public class AirportDatabaseLoader extends AirportMethod {
 
-    public ArrayList<Airport> loadAirport(Connection conn) {
+    public ObservableList<Airport> loadAirport(Connection conn) {
 
-        ArrayList<Airport> airports = new ArrayList<Airport>();
+        ObservableList<Airport> airports = FXCollections.observableArrayList();
         try {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("SELECT * FROM airport");

@@ -16,6 +16,7 @@ public class RouteParser extends RouteMethod {
         /* Create the route object */
         Route route = new Route();
 
+
         /** Creates the airline object, later this needs to check if airline
          * already loaded into the system
          */
@@ -57,6 +58,10 @@ public class RouteParser extends RouteMethod {
 
         /* Sets what plane the route uses */
         route.setEquipment(routeInfo.get(8));
+
+        /*Assign a unique route ID to the database*/
+        //TODO This needs to be dynamically created from the database (or by the application)
+        route.setRouteID(parseToInt(routeInfo.get(9)));
 
         route.setAirlineName(routeInfo.get(0));
 

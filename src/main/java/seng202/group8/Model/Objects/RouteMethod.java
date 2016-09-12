@@ -27,7 +27,7 @@ public abstract class RouteMethod {
         ArrayList<String> splitData = new ArrayList<String>(Arrays.asList(inputAirport.split(",")));
         int size = splitData.size();
         ArrayList<String> refactoredData = new ArrayList<String>();
-        if (size == 9) {
+        if (size == 10) {
             for (int i = 0; i < size; i++) {
                 String checkedString = checkNull(splitData.get(i));
                 if(checkedString != null) {

@@ -79,9 +79,9 @@ public class FileLoaderTest {
         ObservableList<Route> routesActual = loader.buildRoutes();
         ArrayList<Route> routesExpected = new ArrayList<Route>();
         RouteParser parser = new RouteParser();
-        Route route1 = parser.createSingleRoute("3B,411,AOR,2865,KUN,2991,Y,11,CR2");
-        Route route2 = parser.createSingleRoute("2B,410,AER,2965,KZN,2990,Y,10,CR2");
-        Route route3 = parser.createSingleRoute("9W,3000,TRVA,3153,BOMV,2997,,0,73H");
+        Route route1 = parser.createSingleRoute("3B,411,AOR,2865,KUN,2991,Y,11,CR2,111");
+        Route route2 = parser.createSingleRoute("2B,410,AER,2965,KZN,2990,Y,10,CR2,222");
+        Route route3 = parser.createSingleRoute("9W,3000,TRVA,3153,BOMV,2997,,0,73H,333");
         routesExpected.add(route1);
         routesExpected.add(route2);
         routesExpected.add(route3);
