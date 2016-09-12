@@ -1,5 +1,6 @@
 package seng202.group8.DatabaseTests;
 
+import javafx.collections.ObservableList;
 import org.junit.Test;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.RouteDatabaseLoader;
@@ -21,7 +22,7 @@ public class RouteDatabaseLoaderTest {
         Database db = new Database();
         RouteDatabaseLoader dbr = new RouteDatabaseLoader();
         Connection conn = db.testConnect();
-        ArrayList<Route> routes = dbr.loadRoutes(conn);
+        ObservableList<Route> routes = dbr.loadRoutes(conn);
         //Currently 16 routes in the database
         assertTrue(16 == routes.size());
         db.disconnect(conn);

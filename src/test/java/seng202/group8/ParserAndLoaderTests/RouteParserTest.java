@@ -15,11 +15,11 @@ import static junit.framework.TestCase.assertTrue;
 public class RouteParserTest {
 
     /* String containing IATA information */
-    private String routeString = "2B,410,AER,2965,KZN,2990,Y,10,CR2";
+    private String routeString = "2B,410,AER,2965,KZN,2990,Y,10,CR2,9921";
     /* String containing ICAO information */
-    private String ICAOString = "9W,3000,TRVA,3153,BOMV,2997,,0,73H";
+    private String ICAOString = "9W,3000,TRVA,3153,BOMV,2997,,0,73H,2112";
     /* String containing empty inforamtion */
-    private String emptyString = "4Y,\\N,WNA,\\N,PKA,\\N,,0,CNA";
+    private String emptyString = "4Y,\\N,WNA,\\N,PKA,\\N,,0,CNA,1010";
 
     @Test
     /* Test to see if the airline is added correctly to a route object */

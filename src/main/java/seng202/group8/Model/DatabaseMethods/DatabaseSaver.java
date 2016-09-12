@@ -114,11 +114,21 @@ public class DatabaseSaver {
         int airlineID = routeToSave.getAirline().getAirlineID();
         String stringAirlineID = convertIntToString(airlineID);
         //Get the name and ID of the source airport
-        String sourceAirportCode = routeToSave.getSourceAirport().getICAO();
+        String sourceAirportCode;
+        if (routeToSave.getSourceAirport().getIATA() == null) {
+            sourceAirportCode = routeToSave.getSourceAirport().getICAO();
+        } else {
+            sourceAirportCode = routeToSave.getSourceAirport().getIATA();
+        }
         int sourceAirportID = routeToSave.getSourceAirport().getAirportID();
         String stringSourceID = convertIntToString(sourceAirportID);
         //Get the name and ID of the destination airport
-        String destinationAirportCode = routeToSave.getDestinationAirport().getICAO();
+        String destinationAirportCode;
+        if (routeToSave.getDestinationAirport().getIATA() == null) {
+            destinationAirportCode = routeToSave.getDestinationAirport().getICAO();
+        } else {
+            destinationAirportCode = routeToSave.getDestinationAirport().getIATA();
+        }
         int destinationAirportID = routeToSave.getDestinationAirport().getAirportID();
         String stringDestinationID = convertIntToString(destinationAirportID);
         //Get whether the route is codeshared

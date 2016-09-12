@@ -1,5 +1,6 @@
 package seng202.group8.DatabaseTests;
 
+import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,14 +37,14 @@ public class AirlineDatabaseLoaderTest {
 
     @Test
     public void testAllRoutesLoadCorrectly(){
-        ArrayList<Airline> airlines = dba.loadAirlines(conn);
+        ObservableList<Airline> airlines = dba.loadAirlines(conn);
         //Currently 7 airlines in the database
         assertTrue(7 == airlines.size());
     }
 
     @Test
     public void testAirlineIDParsesCorrectly() {
-        ArrayList<Airline> airlines = dba.loadAirlines(conn);
+        ObservableList<Airline> airlines = dba.loadAirlines(conn);
         Airline testAirline = new Airline();
         //Because we are using a set, have to find where in set airline to test is.
         for (Airline airline: airlines) {

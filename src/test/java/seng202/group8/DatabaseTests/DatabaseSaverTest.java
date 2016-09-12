@@ -125,7 +125,7 @@ public class DatabaseSaverTest {
     public void testRouteSavesCorrectly() {
         RouteParser rp = new RouteParser();
         //Make a route to test and add it to an array
-        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP");
+        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP, 1001");
         testRoute.setRouteID(10);
         ObservableList<Route> testArray = FXCollections.observableArrayList();
         testArray.add(testRoute);

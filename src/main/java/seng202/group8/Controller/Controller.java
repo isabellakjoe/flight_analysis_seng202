@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import seng202.group8.Model.DatabaseMethods.Database;
+import seng202.group8.Model.DatabaseMethods.*;
 import seng202.group8.Model.Parsers.AirlineParser;
 import seng202.group8.Model.Parsers.AirportParser;
 import seng202.group8.Model.Parsers.RouteParser;
@@ -54,7 +54,20 @@ public class Controller implements Initializable{
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the airport data file
-                ObservableList<Airport> airports = load.buildAirports();
+                //ObservableList<Airport> airports = load.buildAirports();
+                //Create the database objects and connections here
+                Database dbOne = new Database();
+                Database dbTwo = new Database();
+                DatabaseSaver dbsave = new DatabaseSaver();
+                AirportDatabaseLoader adl = new AirportDatabaseLoader();
+                Connection connOne = dbOne.connect();
+                Connection connTwo = dbTwo.connect();
+                //Save all of the loaded files to the database here
+                dbsave.saveAirports(connOne, load.buildAirports());
+                dbOne.disconnect(connOne);
+                //Load all of the content from the database here
+                ObservableList<Airport> airports = adl.loadAirport(connTwo);
+                dbTwo.disconnect(connTwo);
                 currentlyLoadedAirports = airports;
                 setAirportComboBoxes();
                 airportTable.setItems(airports);
@@ -102,7 +115,22 @@ public class Controller implements Initializable{
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the airline data file
-                ObservableList<Airline> airlines = load.buildAirlines();
+                //ObservableList<Airline> airlines = load.buildAirlines();
+
+                Database dbOne = new Database();
+                Database dbTwo = new Database();
+                DatabaseSaver dbsave = new DatabaseSaver();
+                AirlineDatabaseLoader adl = new AirlineDatabaseLoader();
+
+                Connection connOne = dbOne.connect();
+                Connection connTwo = dbTwo.connect();
+
+                dbsave.saveAirlines(connOne, load.buildAirlines());
+                dbOne.disconnect(connOne);
+
+                ObservableList<Airline> airlines = adl.loadAirlines(connTwo);
+                dbTwo.disconnect(connTwo);
+
                 currentlyLoadedAirlines = airlines;
                 airlineTable.setItems(airlines);
                 setAirlineComboBoxes();
@@ -156,7 +184,22 @@ public class Controller implements Initializable{
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the route data file
-                ObservableList<Route> routes = load.buildRoutes();
+                //ObservableList<Route> routes = load.buildRoutes();
+
+                Database dbOne = new Database();
+                Database dbTwo = new Database();
+                DatabaseSaver dbsave = new DatabaseSaver();
+                RouteDatabaseLoader rdl = new RouteDatabaseLoader();
+
+                Connection connOne = dbOne.connect();
+                Connection connTwo = dbTwo.connect();
+
+                dbsave.saveRoutes(connOne, load.buildRoutes());
+                dbOne.disconnect(connOne);
+
+                ObservableList<Route> routes = rdl.loadRoutes(connTwo);
+                dbTwo.disconnect(connTwo);
+
                 currentlyLoadedRoutes = routes;
                 routeTable.setItems(routes);
                 setRouteComboBoxes();
@@ -183,8 +226,16 @@ public class Controller implements Initializable{
 
         int stops = 0;
         for(int i = 0; i < currentlyLoadedRoutes.size(); i++){
-            sources.add(currentlyLoadedRoutes.get(i).getSourceAirportName());
-            destinations.add(currentlyLoadedRoutes.get(i).getDestinationAirportName());
+            if (currentlyLoadedRoutes.get(i).getSourceAirport().getIATA() != null) {
+                sources.add(currentlyLoadedRoutes.get(i).getSourceAirport().getIATA());
+            } else {
+                sources.add(currentlyLoadedRoutes.get(i).getSourceAirport().getICAO());
+            }
+            if (currentlyLoadedRoutes.get(i).getDestinationAirport().getIATA() != null) {
+                destinations.add(currentlyLoadedRoutes.get(i).getDestinationAirport().getIATA());
+            } else {
+                destinations.add(currentlyLoadedRoutes.get(i).getDestinationAirport().getICAO());
+            }
             equipment.add(currentlyLoadedRoutes.get(i).getEquipment());
             if (currentlyLoadedRoutes.get(i).getStops() > stops){
                 stops = currentlyLoadedRoutes.get(i).getStops();
@@ -255,7 +306,8 @@ public class Controller implements Initializable{
         double sourceLatitude = source.getLatitude();
         double sourceLongitude = source.getLongitude();
         aName.setText(sourceName);
-        aAltitude.setText(Double.toString(sourceAltitude));
+        int srcAltitudeInt = ((int) Math.ceil(sourceAltitude));
+        aAltitude.setText(Integer.toString(srcAltitudeInt));
         aLatitude.setText(Double.toString(sourceLatitude));
         aLongitude.setText(Double.toString(sourceLongitude));
 
@@ -266,7 +318,8 @@ public class Controller implements Initializable{
         double destinationLatitude = destination.getLatitude();
         double destinationLongitude = destination.getLongitude();
         bName.setText(destinationName);
-        bAltitude.setText(Double.toString(destinationAltitude));
+        int destAltitudeInt = ((int) Math.ceil(destinationAltitude));
+        bAltitude.setText(Integer.toString(destAltitudeInt));
         bLatitude.setText(Double.toString(destinationLatitude));
         bLongitude.setText(Double.toString(destinationLongitude));
 
@@ -426,8 +479,13 @@ public class Controller implements Initializable{
         }
 
         if (stops != null && ! stops.equals("ALL") ) {
-            int intStops = Integer.parseInt(stops);
-            searcher.routesOfStops(intStops);
+            try {
+                int intStops = Integer.parseInt(stops);
+                searcher.routesOfStops(intStops);
+            }
+            catch (NumberFormatException exception) {
+                stopsErrorMessage.setVisible(true);
+            }
         }
 
         if (codeshareStatus != null && ! codeshareStatus.equals("ALL")) {searcher.routesOfCodeshare(codeshareStatus);}
@@ -438,6 +496,34 @@ public class Controller implements Initializable{
 
         routeTable.setItems(matchingRoutes);
     }
+
+    /* Method to add a new airport to the currentlyLoadedAirports from search text fields.
+    Executed when the add button is clicked */
+    @FXML
+    private void airportAdd(ActionEvent e){
+        AirportParser parser = new AirportParser();
+
+        String airportID = airportIDSearch.getText();
+        String name = airportNameSearch.getText();
+        String city = airportCitySearch.getText();
+        String country = "hey";
+        String FAA = airportFAASearch.getText();
+        String IATA = airportIATASearch.getText();
+        String ICAO = airportICAOSearch.getText();
+        String latitude = airportLatitudeSearch.getText();
+        String longitude = airportLongitudeSearch.getText();
+        String altitude = airportAltitudeSearch.getText();
+        String timezone = airportTimezoneSearch.getText();
+        String DST = airportDSTSearch.getText();
+
+        String data = (airportID +","+ name +","+ city +","+ country +","+ FAA +","+ IATA +","+ ICAO +","+ latitude +","+ longitude +","+ altitude +","+ timezone +","+ DST);
+        Airport newAirport = parser.createSingleAirport(data);
+        if(newAirport != null){
+            currentlyLoadedAirports.add(newAirport);
+        }
+        airportTable.setItems(currentlyLoadedAirports);
+
+        }
 
     /* Method to add a new route to the currentlyLoadedRoutes from search text fields.
     Executed when the add button is clicked */
