@@ -346,6 +346,7 @@ public class Controller implements Initializable{
 
         if (activeStatus != null && ! activeStatus.equals("ACTIVE OR INACTIVE")) {searcher.airlinesOfActiveStatus(activeStatus);}
 
+
         ObservableList<Airline> matchingAirlines = searcher.getLoadedAirlines();
         airlineTable.setItems(matchingAirlines);
     }
@@ -493,10 +494,51 @@ public class Controller implements Initializable{
         airportTable.setItems(currentlyLoadedAirports);
         tableView.setVisible(true);
         addAirportView.setVisible(false);
-
-
-
     }
+//
+    @FXML
+    private void switchToAddAirline(ActionEvent e){
+        tableView.setVisible(false);
+        addAirlineView.setVisible(true);
+    }
+//
+    @FXML
+    private void cancelAddedAirline(ActionEvent e){
+        addedAirlineName.clear();
+        addedAirlineID.clear();
+        addedAirlineCountry.clear();
+        addedAirlineAlias.clear();
+        addedAirlineIATA.clear();
+        addedAirlineICAO.clear();
+        addedAirlineCallsign.clear();
+        addedAirlineActive.setSelected(false);
+        addAirlineView.setVisible(false);
+        tableView.setVisible(true);
+    }
+//
+    @FXML
+    private void saveAddedAirline(ActionEvent e){
+        AirlineParser parser = new AirlineParser();
+        String airlineID = addedAirlineID.getText();
+        String name = addedAirlineName.getText();
+        String alias = addedAirlineAlias.getText();
+        String IATA = addedAirlineIATA.getText();
+        String ICAO = addedAirlineICAO.getText();
+        String callsign = addedAirlineCallsign.getText();
+        String country = addedAirlineCountry.getText();
+        String isActive = "N";
+        if (addedAirlineActive.isSelected() == true){
+            isActive = "Y";
+        }
+
+        String data = airlineID + ',' + name + ',' + alias + ',' + IATA + ',' + ICAO + '+' + callsign + ',' + country + ',' + isActive;
+        Airline newAirline = parser.createSingleAirline(data);
+        currentlyLoadedAirlines.add(newAirline);
+        airlineTable.setItems(currentlyLoadedAirlines);
+        tableView.setVisible(true);
+        addAirlineView.setVisible(false);
+
+ }
 
 
     @FXML
@@ -920,8 +962,6 @@ public class Controller implements Initializable{
         saveAirlineChangesButton.setVisible(false);
         cancelAirlineChangesButton.setVisible(false);
 
-        System.out.print(currentlyLoadedAirlines.get(0).getCountry());
-
         setAirlineComboBoxes();
     }
 
@@ -1040,8 +1080,6 @@ public class Controller implements Initializable{
 
         saveAirportChangesButton.setVisible(false);
         cancelAirportChangesButton.setVisible(false);
-
-        System.out.print(currentlyLoadedAirports.get(0).getCountry());
 
         setAirportComboBoxes();
     }
@@ -1469,6 +1507,8 @@ public class Controller implements Initializable{
     private Pane flightView;
     @FXML
     private Pane addAirportView;
+    @FXML
+    private Pane addAirlineView;
 
     @FXML
     private TextField addedAirportID;
@@ -1495,13 +1535,27 @@ public class Controller implements Initializable{
     @FXML
     private TextField addedAirportOlsen;
 
+    @FXML
+    private TextField addedAirlineID;
+    @FXML
+    private TextField addedAirlineName;
+    @FXML
+    private TextField addedAirlineAlias;
+    @FXML
+    private TextField addedAirlineCountry;
+    @FXML
+    private TextField addedAirlineIATA;
+    @FXML
+    private TextField addedAirlineICAO;
+    @FXML
+    private TextField addedAirlineCallsign;
+    @FXML
+    private CheckBox addedAirlineActive;
 
 
 
 
-
-    //Back button event handler to return to airport tableview.
-    public void backToAirport(ActionEvent e){
+    private void resetTables(){
         airportTable.getColumns().clear();
         airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("airportID"));
         airportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
@@ -1518,12 +1572,6 @@ public class Controller implements Initializable{
 
         airportTable.getColumns().addAll(airportName, city, airportCountry);
         airportTable.setItems(currentlyLoadedAirports);
-        airportTable.setVisible(true);
-        airportPane.setVisible(false);
-    }
-
-    //Back button event handler to return to airline tableview.
-    public void backToAirline(ActionEvent e){
 
         airlineTable.getColumns().clear();
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
@@ -1537,12 +1585,6 @@ public class Controller implements Initializable{
         airlineTable.getColumns().addAll(airlineName, alias, country, active);
         airlineTable.setItems(currentlyLoadedAirlines);
 
-        airlineTable.setVisible(true);
-        airlinePane.setVisible(false);
-    }
-
-    //Back button event handler to return to route tableview.
-    public void backToRoute(ActionEvent e){
         routeTable.getColumns().clear();
 
         routeAirlineName.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
@@ -1553,9 +1595,22 @@ public class Controller implements Initializable{
         equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
         routeTable.getColumns().addAll(routeAirlineName, source, destination);
         routeTable.setItems(currentlyLoadedRoutes);
-        routeTable.setVisible(true);
-        routePane.setVisible(false);
+
     }
+
+
+    public void backToTableView(ActionEvent e){
+        resetTables();
+        addAirportView.setVisible(false);
+        airportPane.setVisible(false);
+        airlinePane.setVisible(false);
+        routePane.setVisible(false);
+        airportTable.setVisible(true);
+        airlineTable.setVisible(true);
+        routeTable.setVisible(true);
+        tableView.setVisible(true);
+    }
+
 
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
