@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -36,16 +38,16 @@ import java.util.*;
  * Created by esa46 on 19/08/16.
  */
 
-public class Controller implements Initializable{
+public class Controller implements Initializable {
 
     static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
     static ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
     static ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
-  //  Database mainDataBase = new Database();
+    //  Database mainDataBase = new Database();
     // Connection mainConn = mainDataBase.testConnect();
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
-    public void addAirportData(ActionEvent e){
+    public void addAirportData(ActionEvent e) {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Airport datafile"); //Text in the window header
@@ -77,7 +79,7 @@ public class Controller implements Initializable{
                 flightView.setVisible(false);
                 tableView.setVisible(true);
             }
-        } catch(FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
 
@@ -88,7 +90,7 @@ public class Controller implements Initializable{
         HashSet<String> countries = new HashSet<String>();
         HashSet<String> names = new HashSet<String>();
 
-        for(int i = 0; i < currentlyLoadedAirports.size(); i++){
+        for (int i = 0; i < currentlyLoadedAirports.size(); i++) {
             countries.add(currentlyLoadedAirports.get(i).getCountry());
             names.add(currentlyLoadedAirports.get(i).getName());
         }
@@ -109,7 +111,7 @@ public class Controller implements Initializable{
     }
 
     /* Method to open up a file chooser for the user to select the Airline Data file with error handling */
-    public void addAirlineData(ActionEvent e){
+    public void addAirlineData(ActionEvent e) {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Airline datafile");
@@ -144,13 +146,13 @@ public class Controller implements Initializable{
                 addAirportView.setVisible(false);
                 tableView.setVisible(true);
             }
-        } catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
 
     }
 
-    private void setAirlineComboBoxes(){
+    private void setAirlineComboBoxes() {
         ArrayList<String> activeStatuses = new ArrayList<String>();
         activeStatuses.add("ACTIVE OR INACTIVE");
         activeStatuses.add("Active");
@@ -160,7 +162,7 @@ public class Controller implements Initializable{
 
         HashSet<String> names = new HashSet<String>();
         HashSet<String> countries = new HashSet<String>();
-        for(int i = 0; i < currentlyLoadedAirlines.size(); i++){
+        for (int i = 0; i < currentlyLoadedAirlines.size(); i++) {
             countries.add(currentlyLoadedAirlines.get(i).getCountry());
             names.add(currentlyLoadedAirlines.get(i).getName());
         }
@@ -182,7 +184,7 @@ public class Controller implements Initializable{
 
     /* Method to open up a file chooser for the user to select the Route Data file with error handling */
     public void addRouteData(ActionEvent e) {
-        try{
+        try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Route datafile");
             File file = fileChooser.showOpenDialog(new Stage());
@@ -215,13 +217,13 @@ public class Controller implements Initializable{
                 addAirportView.setVisible(false);
                 tableView.setVisible(true);
             }
-        } catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
 
     }
 
-    private void setRouteComboBoxes(){
+    private void setRouteComboBoxes() {
         ArrayList<String> codeshareStatuses = new ArrayList<String>();
         codeshareStatuses.add("ALL");
         codeshareStatuses.add("Codeshare");
@@ -234,7 +236,7 @@ public class Controller implements Initializable{
         HashSet<String> equipment = new HashSet<String>();
 
         int stops = 0;
-        for(int i = 0; i < currentlyLoadedRoutes.size(); i++){
+        for (int i = 0; i < currentlyLoadedRoutes.size(); i++) {
             if (currentlyLoadedRoutes.get(i).getSourceAirport().getIATA() != null) {
                 sources.add(currentlyLoadedRoutes.get(i).getSourceAirport().getIATA());
             } else {
@@ -246,7 +248,7 @@ public class Controller implements Initializable{
                 destinations.add(currentlyLoadedRoutes.get(i).getDestinationAirport().getICAO());
             }
             equipment.add(currentlyLoadedRoutes.get(i).getEquipment());
-            if (currentlyLoadedRoutes.get(i).getStops() > stops){
+            if (currentlyLoadedRoutes.get(i).getStops() > stops) {
                 stops = currentlyLoadedRoutes.get(i).getStops();
             }
         }
@@ -254,7 +256,7 @@ public class Controller implements Initializable{
         ArrayList<String> stopsList = new ArrayList<String>();
         stopsList.add("ALL");
 
-        for (int i = 0; i <= stops; i++){
+        for (int i = 0; i <= stops; i++) {
             stopsList.add(Integer.toString(i));
         }
 
@@ -283,7 +285,7 @@ public class Controller implements Initializable{
 
     @FXML
     /* Method to open up a file chooser for the user to select the Flight Data file  with error handling*/
-    public void addFlightData(ActionEvent e){
+    public void addFlightData(ActionEvent e) {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open flight datafile"); //Text in the window header
@@ -300,7 +302,7 @@ public class Controller implements Initializable{
                 addAirportView.setVisible(false);
                 flightView.setVisible(true);
             }
-        } catch(FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
 
@@ -309,7 +311,7 @@ public class Controller implements Initializable{
     /*
      * Populate the flightView table with waypoints
      */
-    private void flightViewSetUp(Flight flight){
+    private void flightViewSetUp(Flight flight) {
 
         //Set source airport information
         Airport source = flight.getSourceAirport();
@@ -347,7 +349,7 @@ public class Controller implements Initializable{
 
 
     @FXML
-    private void resetSearch(ActionEvent e){
+    private void resetSearch(ActionEvent e) {
         routeTable.setItems(currentlyLoadedRoutes);
         airlineTable.setItems(currentlyLoadedAirlines);
         airportTable.setItems(currentlyLoadedAirports);
@@ -356,7 +358,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void airportSearch(ActionEvent e){
+    private void airportSearch(ActionEvent e) {
         flightView.setVisible(false);
         tableView.setVisible(true);
         AirportSearcher searcher = new AirportSearcher(currentlyLoadedAirports);
@@ -373,36 +375,60 @@ public class Controller implements Initializable{
         String timezone = airportTimezoneSearch.getText();
         String DST = airportDSTSearch.getText();
 
-        if (airportID.length() > 0){ searcher.airportsOfID(airportID); }
+        if (airportID.length() > 0) {
+            searcher.airportsOfID(airportID);
+        }
 
-        if (name.length() > 0){ searcher.airportsOfName(name); }
+        if (name.length() > 0) {
+            searcher.airportsOfName(name);
+        }
 
-        if (city.length() > 0){ searcher.airportsOfCity(city); }
+        if (city.length() > 0) {
+            searcher.airportsOfCity(city);
+        }
 
-        if (country != null && ! country.equals("ALL COUNTRIES")) {searcher.airportsOfCountry(country); }
+        if (country != null && !country.equals("ALL COUNTRIES")) {
+            searcher.airportsOfCountry(country);
+        }
 
-        if (FAA.length() > 0) { searcher.airportsOfFAA(FAA); }
+        if (FAA.length() > 0) {
+            searcher.airportsOfFAA(FAA);
+        }
 
-        if (IATA.length() > 0) { searcher.airportsOfIATA(IATA); }
+        if (IATA.length() > 0) {
+            searcher.airportsOfIATA(IATA);
+        }
 
-        if (ICAO.length() > 0) { searcher.airportsOfICAO(ICAO); }
+        if (ICAO.length() > 0) {
+            searcher.airportsOfICAO(ICAO);
+        }
 
-        if (latitude.length() > 0) { searcher.airportsOfLatitude(latitude); }
+        if (latitude.length() > 0) {
+            searcher.airportsOfLatitude(latitude);
+        }
 
-        if (longitude.length() > 0) { searcher.airportsOfLongitude(longitude); }
+        if (longitude.length() > 0) {
+            searcher.airportsOfLongitude(longitude);
+        }
 
-        if (altitude.length() > 0) { searcher.airportsOfAltitude(altitude); }
+        if (altitude.length() > 0) {
+            searcher.airportsOfAltitude(altitude);
+        }
 
-        if (timezone.length() > 0) { searcher.airportsOfTimezone(timezone); }
+        if (timezone.length() > 0) {
+            searcher.airportsOfTimezone(timezone);
+        }
 
-        if (DST.length() > 0) { searcher.airportsOfDST(DST); }
+        if (DST.length() > 0) {
+            searcher.airportsOfDST(DST);
+        }
 
         ObservableList<Airport> matchingAirports = searcher.getLoadedAirports();
         airportTable.setItems(matchingAirports);
     }
 
     @FXML
-    private void airlineSearch(ActionEvent e){
+    private void airlineSearch(ActionEvent e) {
         flightView.setVisible(false);
         tableView.setVisible(true);
         AirlineSearcher searcher = new AirlineSearcher(currentlyLoadedAirlines);
@@ -416,21 +442,37 @@ public class Controller implements Initializable{
         String country = (String) airlineCountrySearch.getValue();
         String activeStatus = (String) airlineActiveSearch.getValue();
 
-        if (airlineID.length() > 0){ searcher.airlinesOfID(airlineID);}
+        if (airlineID.length() > 0) {
+            searcher.airlinesOfID(airlineID);
+        }
 
-        if (name.length() > 0){ searcher.airlinesOfName(name);}
+        if (name.length() > 0) {
+            searcher.airlinesOfName(name);
+        }
 
-        if (alias.length() > 0){ searcher.airlinesOfAlias(alias);}
+        if (alias.length() > 0) {
+            searcher.airlinesOfAlias(alias);
+        }
 
-        if (IATA.length() > 0){ searcher.airlinesOfIATA(IATA);}
+        if (IATA.length() > 0) {
+            searcher.airlinesOfIATA(IATA);
+        }
 
-        if (ICAO.length() > 0){ searcher.airlinesOfICAO(ICAO);}
+        if (ICAO.length() > 0) {
+            searcher.airlinesOfICAO(ICAO);
+        }
 
-        if (callsign.length() > 0){ searcher.airlinesOfCallsign(callsign);}
+        if (callsign.length() > 0) {
+            searcher.airlinesOfCallsign(callsign);
+        }
 
-        if (country != null && ! country.equals("ALL COUNTRIES")){ searcher.airlinesOfCountry(country);}
+        if (country != null && !country.equals("ALL COUNTRIES")) {
+            searcher.airlinesOfCountry(country);
+        }
 
-        if (activeStatus != null && ! activeStatus.equals("ACTIVE OR INACTIVE")) {searcher.airlinesOfActiveStatus(activeStatus);}
+        if (activeStatus != null && !activeStatus.equals("ACTIVE OR INACTIVE")) {
+            searcher.airlinesOfActiveStatus(activeStatus);
+        }
 
 
         ObservableList<Airline> matchingAirlines = searcher.getLoadedAirlines();
@@ -438,7 +480,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void routeSearch(ActionEvent e){
+    private void routeSearch(ActionEvent e) {
         flightView.setVisible(false);
         tableView.setVisible(true);
 
@@ -446,63 +488,69 @@ public class Controller implements Initializable{
         RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
         String airline = airlineSearch.getText();
         String airlineID = airlineSearchID.getText();
-        String sourceAirport = (String)sourceSearch.getValue();
+        String sourceAirport = (String) sourceSearch.getValue();
         String sourceID = sourceIDSearch.getText();
         String destinationAirport = (String) destinationSearch.getValue();
         String destinationID = destinationIDSearch.getText();
-        String stops =  (String) stopoverSearch.getValue();
+        String stops = (String) stopoverSearch.getValue();
         String codeshareStatus = (String) codeshareSearch.getValue();
         String equipment = (String) equipmentSearch.getValue();
 
-        if (airline.length() > 0){searcher.routesOfAirline(airline);}
+        if (airline.length() > 0) {
+            searcher.routesOfAirline(airline);
+        }
 
-        if (airlineID.length() > 0 ) {
+        if (airlineID.length() > 0) {
             try {
                 int intAirlineID = Integer.parseInt(airlineID);
                 searcher.routesOfAirlineID(intAirlineID);
-            }
-            catch (NumberFormatException exception) {
+            } catch (NumberFormatException exception) {
                 stopsErrorMessage.setVisible(true);
             }
         }
 
-        if (sourceAirport != null && ! sourceAirport.equals("ALL")){searcher.routesOfSource(sourceAirport);}
+        if (sourceAirport != null && !sourceAirport.equals("ALL")) {
+            searcher.routesOfSource(sourceAirport);
+        }
 
-        if (sourceID.length() > 0 ) {
+        if (sourceID.length() > 0) {
             try {
                 int intSourceID = Integer.parseInt(sourceID);
                 searcher.routesOfSourceID(intSourceID);
-            }
-            catch (NumberFormatException exception) {
+            } catch (NumberFormatException exception) {
                 stopsErrorMessage.setVisible(true);
             }
         }
 
-        if (destinationAirport != null && ! destinationAirport.equals("ALL")){searcher.routesOfDestination(destinationAirport);}
+        if (destinationAirport != null && !destinationAirport.equals("ALL")) {
+            searcher.routesOfDestination(destinationAirport);
+        }
 
-        if (destinationID.length() > 0 ) {
+        if (destinationID.length() > 0) {
             try {
                 int intDestID = Integer.parseInt(destinationID);
                 searcher.routesOfDestinationID(intDestID);
-            }
-            catch (NumberFormatException exception) {
+            } catch (NumberFormatException exception) {
                 stopsErrorMessage.setVisible(true);
             }
         }
 
-        if (stops != null && ! stops.equals("ALL") ) {
+        if (stops != null && !stops.equals("ALL")) {
             try {
                 int intStops = Integer.parseInt(stops);
                 searcher.routesOfStops(intStops);
-            }
-            catch (NumberFormatException exception) {
+            } catch (NumberFormatException exception) {
                 stopsErrorMessage.setVisible(true);
             }
         }
 
-        if (codeshareStatus != null && ! codeshareStatus.equals("ALL")) {searcher.routesOfCodeshare(codeshareStatus);}
+        if (codeshareStatus != null && !codeshareStatus.equals("ALL")) {
+            searcher.routesOfCodeshare(codeshareStatus);
+        }
 
-        if (equipment != null && ! equipment.equals("ALL")){searcher.routesOfEquipment(equipment);}
+        if (equipment != null && !equipment.equals("ALL")) {
+            searcher.routesOfEquipment(equipment);
+        }
 
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
 
@@ -512,13 +560,13 @@ public class Controller implements Initializable{
     /* Method to add a new airline to the currentlyLoadedAirlines from search text fields.
     Executed when the add button is clicked */
     @FXML
-    private void switchToAddAirport(ActionEvent e){
+    private void switchToAddAirport(ActionEvent e) {
         tableView.setVisible(false);
         addAirportView.setVisible(true);
     }
 
     @FXML
-    private void cancelAddedAirport(ActionEvent e){
+    private void cancelAddedAirport(ActionEvent e) {
         tableView.setVisible(true);
         addAirportView.setVisible(false);
         addedAirportName.clear();
@@ -536,7 +584,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void saveAddedAirport(ActionEvent e){
+    private void saveAddedAirport(ActionEvent e) {
 
         AirportParser parser = new AirportParser();
 
@@ -553,24 +601,26 @@ public class Controller implements Initializable{
         String DST = addedAirportDST.getText();
         String olsen = addedAirportOlsen.getText();
 
-        String data = (airportID +","+ name +","+ city +","+ country +","+ code +","+ ICAO +","+ latitude +","+ longitude +","+ altitude +","+ timezone +","+ DST + "," + olsen);
+        String data = (airportID + "," + name + "," + city + "," + country + "," + code + "," + ICAO + "," + latitude + "," + longitude + "," + altitude + "," + timezone + "," + DST + "," + olsen);
         Airport newAirport = parser.createSingleAirport(data);
-        if(newAirport != null){
+        if (newAirport != null) {
             currentlyLoadedAirports.add(newAirport);
         }
         airportTable.setItems(currentlyLoadedAirports);
         tableView.setVisible(true);
         addAirportView.setVisible(false);
     }
-//
+
+    //
     @FXML
-    private void switchToAddAirline(ActionEvent e){
+    private void switchToAddAirline(ActionEvent e) {
         tableView.setVisible(false);
         addAirlineView.setVisible(true);
     }
-//
+
+    //
     @FXML
-    private void cancelAddedAirline(ActionEvent e){
+    private void cancelAddedAirline(ActionEvent e) {
         addedAirlineName.clear();
         addedAirlineID.clear();
         addedAirlineCountry.clear();
@@ -582,9 +632,10 @@ public class Controller implements Initializable{
         addAirlineView.setVisible(false);
         tableView.setVisible(true);
     }
-//
+
+    //
     @FXML
-    private void saveAddedAirline(ActionEvent e){
+    private void saveAddedAirline(ActionEvent e) {
         AirlineParser parser = new AirlineParser();
         String airlineID = addedAirlineID.getText();
         String name = addedAirlineName.getText();
@@ -594,7 +645,7 @@ public class Controller implements Initializable{
         String callsign = addedAirlineCallsign.getText();
         String country = addedAirlineCountry.getText();
         String isActive = "N";
-        if (addedAirlineActive.isSelected() == true){
+        if (addedAirlineActive.isSelected() == true) {
             isActive = "Y";
         }
 
@@ -605,16 +656,16 @@ public class Controller implements Initializable{
         tableView.setVisible(true);
         addAirlineView.setVisible(false);
 
- }
+    }
 
     @FXML
-    private void switchToAddRoute(ActionEvent e){
+    private void switchToAddRoute(ActionEvent e) {
         tableView.setVisible(false);
         addRouteView.setVisible(true);
     }
 
     @FXML
-    private void cancelAddedRoute(ActionEvent e){
+    private void cancelAddedRoute(ActionEvent e) {
 
         addedRouteAirline.setValue(null);
         addedRouteSource.setValue(null);
@@ -626,13 +677,14 @@ public class Controller implements Initializable{
         tableView.setVisible(true);
 
     }
+
     @FXML
-    private void saveAddedRoute(ActionEvent e){
+    private void saveAddedRoute(ActionEvent e) {
         Route newRoute = new Route();
 
         newRoute.setStops(Integer.parseInt(addedRouteStops.getText()));
         newRoute.setEquipment(addedRouteEquipment.getText());
-        newRoute.setAirlineName((String)addedRouteAirline.getValue());
+        newRoute.setAirlineName((String) addedRouteAirline.getValue());
         newRoute.setSourceAirportName((String) addedRouteSource.getValue());
         newRoute.setDestinationAirportName((String) addedRouteDestination.getValue());
 
@@ -657,9 +709,8 @@ public class Controller implements Initializable{
     }
 
 
-
     @FXML
-    private void airportSearchBack(ActionEvent e){
+    private void airportSearchBack(ActionEvent e) {
         airportAdvancedButton.setVisible(true);
         airportBackButton.setVisible(false);
         airportCitySearch.setVisible(false);
@@ -678,7 +729,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void showAirportSearch(ActionEvent e){
+    private void showAirportSearch(ActionEvent e) {
         airportAdvancedButton.setVisible(false);
         airportBackButton.setVisible(true);
         airportCitySearch.setVisible(true);
@@ -697,7 +748,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void routeSearchBack(ActionEvent e){
+    private void routeSearchBack(ActionEvent e) {
         routeAdvancedButton.setVisible(true);
         routeBackButton.setVisible(false);
         equipmentSearch.setVisible(false);
@@ -711,6 +762,7 @@ public class Controller implements Initializable{
         resetRouteSearch.setLayoutY(251);
         routeAddButton.setVisible(true);
     }
+
     @FXML
     private void showRouteSearch(ActionEvent e) {
         routeAdvancedButton.setVisible(false);
@@ -728,7 +780,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void showAirlineSearch(ActionEvent e){
+    private void showAirlineSearch(ActionEvent e) {
         airlineAdvancedButton.setVisible(false);
         airlineBackButton.setVisible(true);
         airlineAliasSearch.setVisible(true);
@@ -743,7 +795,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void airlineSearchBack(ActionEvent e){
+    private void airlineSearchBack(ActionEvent e) {
         airlineAdvancedButton.setVisible(true);
         airlineBackButton.setVisible(false);
         airlineAliasSearch.setVisible(false);
@@ -771,7 +823,7 @@ public class Controller implements Initializable{
         };
         ArrayList<Airline> sortedAirlines = new ArrayList<Airline>();
         Collections.sort(currentlyLoadedAirlines, airlineNameComparator);
-        for(Airline str: currentlyLoadedAirlines) {
+        for (Airline str : currentlyLoadedAirlines) {
             sortedAirlines.add(str);
         }
         ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
@@ -796,7 +848,7 @@ public class Controller implements Initializable{
         };
         ArrayList<Airline> sortedAirlines = new ArrayList<Airline>();
         Collections.sort(currentlyLoadedAirlines, airlineCountryComparator);
-        for(Airline str: currentlyLoadedAirlines) {
+        for (Airline str : currentlyLoadedAirlines) {
             sortedAirlines.add(str);
         }
         ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
@@ -816,10 +868,10 @@ public class Controller implements Initializable{
                 boolean airline1 = o1.isActive();
                 boolean airline2 = o2.isActive();
 
-                if (airline1 == !airline2){
+                if (airline1 == !airline2) {
                     return 1;
                 }
-                if (!airline1 == airline2){
+                if (!airline1 == airline2) {
                     return -1;
                 }
                 return 0;
@@ -827,7 +879,7 @@ public class Controller implements Initializable{
         };
         ArrayList<Airline> sortedAirlines = new ArrayList<Airline>();
         Collections.sort(currentlyLoadedAirlines, airlineActivityComparator);
-        for(Airline str: currentlyLoadedAirlines) {
+        for (Airline str : currentlyLoadedAirlines) {
             sortedAirlines.add(str);
         }
         ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
@@ -852,7 +904,7 @@ public class Controller implements Initializable{
         };
         ArrayList<Airport> sortedAirports = new ArrayList<Airport>();
         Collections.sort(currentlyLoadedAirports, airportCountryComparator);
-        for(Airport str: currentlyLoadedAirports) {
+        for (Airport str : currentlyLoadedAirports) {
             sortedAirports.add(str);
         }
         ObservableList<Airport> sortedObservableAirports = FXCollections.observableArrayList(sortedAirports);
@@ -878,7 +930,7 @@ public class Controller implements Initializable{
         };
         ArrayList<Route> sortedRoutes = new ArrayList<Route>();
         Collections.sort(currentlyLoadedRoutes, sourceAirportComparator);
-        for(Route str: currentlyLoadedRoutes) {
+        for (Route str : currentlyLoadedRoutes) {
             sortedRoutes.add(str);
         }
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
@@ -903,7 +955,7 @@ public class Controller implements Initializable{
         };
         ArrayList<Route> sortedRoutes = new ArrayList<Route>();
         Collections.sort(currentlyLoadedRoutes, destinationAirportComparator);
-        for(Route str: currentlyLoadedRoutes) {
+        for (Route str : currentlyLoadedRoutes) {
             sortedRoutes.add(str);
         }
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
@@ -923,9 +975,9 @@ public class Controller implements Initializable{
                 int route1 = o1.getStops();
                 int route2 = o2.getStops();
 
-                if(route1 < route2){
+                if (route1 < route2) {
                     return -1;
-                }else if(route1 > route2){
+                } else if (route1 > route2) {
                     return 1;
                 }
                 return 0;
@@ -933,7 +985,7 @@ public class Controller implements Initializable{
         };
         ArrayList<Route> sortedRoutes = new ArrayList<Route>();
         Collections.sort(currentlyLoadedRoutes, stopsComparator);
-        for(Route str: currentlyLoadedRoutes) {
+        for (Route str : currentlyLoadedRoutes) {
             sortedRoutes.add(str);
         }
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
@@ -958,7 +1010,7 @@ public class Controller implements Initializable{
         };
         ArrayList<Route> sortedRoutes = new ArrayList<Route>();
         Collections.sort(currentlyLoadedRoutes, equipmentComparator);
-        for(Route str: currentlyLoadedRoutes) {
+        for (Route str : currentlyLoadedRoutes) {
             sortedRoutes.add(str);
         }
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
@@ -968,10 +1020,8 @@ public class Controller implements Initializable{
     }
 
 
-
-
     @FXML
-    public void editAirlineData(ActionEvent e){
+    public void editAirlineData(ActionEvent e) {
         Airline currentAirline = airlineTable.getSelectionModel().getSelectedItem();
         editAirlineIDField.setVisible(true);
         editCallsignField.setVisible(true);
@@ -986,34 +1036,29 @@ public class Controller implements Initializable{
 
         editAirlineIDField.setText(Integer.toString(currentAirline.getAirlineID()));
         editAirlineCountryField.setText(currentAirline.getCountry());
-        if (currentAirline.getCallsign() != null){
+        if (currentAirline.getCallsign() != null) {
             editCallsignField.setText(currentAirline.getCallsign());
-        }
-        else{
+        } else {
             editCallsignField.setText("None");
         }
-        if (currentAirline.getIATA() != null){
+        if (currentAirline.getIATA() != null) {
             editAirlineIATAField.setText(currentAirline.getIATA());
-        }
-        else{
+        } else {
             editAirlineIATAField.setText("None");
         }
-        if (currentAirline.getICAO() != null){
+        if (currentAirline.getICAO() != null) {
             editAirlineICAOField.setText(currentAirline.getICAO());
-        }
-        else{
+        } else {
             editAirlineICAOField.setText("None");
         }
-        if (currentAirline.getAlias() != null){
+        if (currentAirline.getAlias() != null) {
             editAliasField.setText(currentAirline.getAlias());
-        }
-        else{
+        } else {
             editAliasField.setText("None");
         }
-        if (currentAirline.isActive() == true){
+        if (currentAirline.isActive() == true) {
             editActiveField.setText("Yes");
-        }
-        else{
+        } else {
             editActiveField.setText("No");
         }
 
@@ -1021,7 +1066,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void cancelAirlineChanges(ActionEvent e){
+    public void cancelAirlineChanges(ActionEvent e) {
 
         saveAirlineChangesButton.setVisible(false);
         cancelAirlineChangesButton.setVisible(false);
@@ -1036,7 +1081,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void saveAirlineChanges(ActionEvent e){
+    public void saveAirlineChanges(ActionEvent e) {
         Airline currentAirline = airlineTable.getSelectionModel().getSelectedItem();
 
         currentAirline.setAirlineID(Integer.parseInt(editAirlineIDField.getText()));
@@ -1052,11 +1097,10 @@ public class Controller implements Initializable{
         if (!editAliasField.getText().equals("None")) {
             currentAirline.setAlias(editAliasField.getText());
         }
-        if (editActiveField.getText().equals("Yes")){
+        if (editActiveField.getText().equals("Yes")) {
             currentAirline.setActive(true);
             airlineActiveDisplay.setText("Yes");
-        }
-        else if (editActiveField.getText().equals("No")){
+        } else if (editActiveField.getText().equals("No")) {
             currentAirline.setActive(false);
             airlineActiveDisplay.setText("No");
         }
@@ -1084,7 +1128,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void editAirportData(ActionEvent e){
+    public void editAirportData(ActionEvent e) {
         Airport currentAirport = airportTable.getSelectionModel().getSelectedItem();
         editAirportIDField.setVisible(true);
         editFAAField.setVisible(true);
@@ -1103,22 +1147,19 @@ public class Controller implements Initializable{
 
         editAirportIDField.setText(Integer.toString(currentAirport.getAirportID()));
         editAirportCountryField.setText(currentAirport.getCountry());
-        if (currentAirport.getFAA() != null){
+        if (currentAirport.getFAA() != null) {
             editFAAField.setText(currentAirport.getFAA());
-        }
-        else{
+        } else {
             editFAAField.setText("None");
         }
-        if (currentAirport.getIATA() != null){
+        if (currentAirport.getIATA() != null) {
             editAirportIATAField.setText(currentAirport.getIATA());
-        }
-        else{
+        } else {
             editAirportIATAField.setText("None");
         }
-        if (currentAirport.getICAO() != null){
+        if (currentAirport.getICAO() != null) {
             editAirportICAOField.setText(currentAirport.getICAO());
-        }
-        else{
+        } else {
             editAirportICAOField.setText("None");
         }
         editTimezoneField.setText(Integer.toString(currentAirport.getTimezone()));
@@ -1131,7 +1172,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void cancelAirportChanges(ActionEvent e){
+    public void cancelAirportChanges(ActionEvent e) {
 
         saveAirportChangesButton.setVisible(false);
         cancelAirportChangesButton.setVisible(false);
@@ -1149,7 +1190,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void saveAirportChanges(ActionEvent e){
+    public void saveAirportChanges(ActionEvent e) {
         Airport currentAirport = airportTable.getSelectionModel().getSelectedItem();
 
         currentAirport.setAirportID(Integer.parseInt(editAirportIDField.getText()));
@@ -1194,7 +1235,8 @@ public class Controller implements Initializable{
         editAirportCityField.setVisible(false);
         editLatitudeField.setVisible(false);
         editLongitudeField.setVisible(false);
-        editAltitudeField.setVisible(false);;
+        editAltitudeField.setVisible(false);
+        ;
 
         saveAirportChangesButton.setVisible(false);
         cancelAirportChangesButton.setVisible(false);
@@ -1204,7 +1246,7 @@ public class Controller implements Initializable{
 
 
     @FXML
-    public void editRouteData(ActionEvent e){
+    public void editRouteData(ActionEvent e) {
         Route currentRoute = routeTable.getSelectionModel().getSelectedItem();
         editSourceField.setVisible(true);
         editDestinationField.setVisible(true);
@@ -1219,16 +1261,14 @@ public class Controller implements Initializable{
         editSourceField.setText(currentRoute.getSourceAirportName());
         editDestinationField.setText(currentRoute.getDestinationAirportName());
         editStopsField.setText(Integer.toString(currentRoute.getStops()));
-        if (currentRoute.getEquipment() != null){
+        if (currentRoute.getEquipment() != null) {
             editEquipmentField.setText(currentRoute.getEquipment());
-        }
-        else{
+        } else {
             editEquipmentField.setText("None");
         }
-        if (currentRoute.isCodeshare() == true){
+        if (currentRoute.isCodeshare() == true) {
             editCodeshareField.setText("Yes");
-        }
-        else{
+        } else {
             editCodeshareField.setText("No");
         }
 
@@ -1236,7 +1276,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void cancelRouteChanges(ActionEvent e){
+    public void cancelRouteChanges(ActionEvent e) {
 
         saveRouteChangesButton.setVisible(false);
         cancelRouteChangesButton.setVisible(false);
@@ -1244,12 +1284,13 @@ public class Controller implements Initializable{
         editDestinationField.setVisible(false);
         editStopsField.setVisible(false);
         editEquipmentField.setVisible(false);
-        editCodeshareField.setVisible(false);;
+        editCodeshareField.setVisible(false);
+        ;
 
     }
 
     @FXML
-    public void saveRouteChanges(ActionEvent e){
+    public void saveRouteChanges(ActionEvent e) {
         Route currentRoute = routeTable.getSelectionModel().getSelectedItem();
 
         currentRoute.setSourceAirportName(editSourceField.getText());
@@ -1260,11 +1301,10 @@ public class Controller implements Initializable{
         if (!editEquipmentField.getText().equals("None")) {
             currentRoute.setEquipment(editEquipmentField.getText());
         }
-        if (editCodeshareField.getText().equals("Yes")){
+        if (editCodeshareField.getText().equals("Yes")) {
             currentRoute.setCodeshare(true);
             routeShareDisplay.setText("Yes");
-        }
-        else if (editCodeshareField.getText().equals("No")){
+        } else if (editCodeshareField.getText().equals("No")) {
             currentRoute.setCodeshare(false);
             routeShareDisplay.setText("No");
         }
@@ -1279,7 +1319,8 @@ public class Controller implements Initializable{
         editDestinationField.setVisible(false);
         editStopsField.setVisible(false);
         editEquipmentField.setVisible(false);
-        editCodeshareField.setVisible(false);;
+        editCodeshareField.setVisible(false);
+        ;
 
         saveRouteChangesButton.setVisible(false);
         cancelRouteChangesButton.setVisible(false);
@@ -1345,8 +1386,6 @@ public class Controller implements Initializable{
     private Button cancelAirportChangesButton;
     @FXML
     private Button editAirportDataDutton;
-
-
 
 
     @FXML
@@ -1693,9 +1732,7 @@ public class Controller implements Initializable{
     private CheckBox addedRouteCodeshare;
 
 
-
-
-    private void resetTables(){
+    private void resetTables() {
         airportTable.getColumns().clear();
         airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("airportID"));
         airportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
@@ -1739,7 +1776,7 @@ public class Controller implements Initializable{
     }
 
 
-    public void backToTableView(ActionEvent e){
+    public void backToTableView(ActionEvent e) {
         resetTables();
         addAirportView.setVisible(false);
         airportPane.setVisible(false);
@@ -1798,10 +1835,9 @@ public class Controller implements Initializable{
         //airportTable.getSelectionModel().setCellSelectionEnabled(true);
         airportTable.setOnMousePressed(new EventHandler<MouseEvent>() {
             //click event handler for double clicking a table cell.
-            public void handle(MouseEvent click)
-            {
+            public void handle(MouseEvent click) {
                 //Checks if table is empty then checks for double click
-                if(!airportTable.getItems().isEmpty()) {
+                if (!airportTable.getItems().isEmpty()) {
                     if (click.getClickCount() >= 2) {
                         //Changes visible pane;
                         airportTable.setVisible(false);
@@ -1841,10 +1877,9 @@ public class Controller implements Initializable{
 
         airlineTable.setOnMousePressed(new EventHandler<MouseEvent>() {
             //click event handler for double clicking a table cell.
-            public void handle(MouseEvent click)
-            {
+            public void handle(MouseEvent click) {
                 //Checks if table is empty then checks for double click
-                if(!airlineTable.getItems().isEmpty()) {
+                if (!airlineTable.getItems().isEmpty()) {
                     if (click.getClickCount() >= 2) {
                         //Changes visible pane;
                         airlineTable.setVisible(false);
@@ -1860,8 +1895,7 @@ public class Controller implements Initializable{
                         airlineAliasDisplay.setText(airlineTable.getSelectionModel().getSelectedItem().getAlias());
                         if (airlineTable.getSelectionModel().getSelectedItem().isActive()) {
                             airlineActiveDisplay.setText("Yes");
-                        }
-                        else{
+                        } else {
                             airlineActiveDisplay.setText("No");
                         }
                     }
@@ -1873,10 +1907,9 @@ public class Controller implements Initializable{
 
         routeTable.setOnMousePressed(new EventHandler<MouseEvent>() {
             //click event handler for double clicking a table cell.
-            public void handle(MouseEvent click)
-            {
+            public void handle(MouseEvent click) {
                 //Checks if table is empty then checks for double click
-                if(!routeTable.getItems().isEmpty()) {
+                if (!routeTable.getItems().isEmpty()) {
                     if (click.getClickCount() >= 2) {
                         //Changes visible pane;
                         routeTable.setVisible(false);
@@ -1895,5 +1928,19 @@ public class Controller implements Initializable{
                 }
             }
         });
+
+        initMap();
+    }
+
+    //Google Maps initialization
+    @FXML
+    private WebView webView;
+
+    private WebEngine webEngine = new WebEngine();
+
+    private void initMap() {
+//        webView = new WebView();
+//        webEngine = webView.getEngine();
+//        webEngine.load(getClass().getResource("maps.html").toExternalForm());
     }
 }

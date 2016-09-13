@@ -1,1 +1,4 @@
 2006,"Auckland Intl","Auckland","New Zealand","AKL","NZAA",-37.008056,174.791667,23,12,"Z","Pacific/Auckland"
+2006,"Auckland Intl","Auckland","UK","AKL","NZAA",-37.008056,174.791667,23,12,"Z","Pacific/Auckland"
+2006,"Auckland Intl","Auckland","USA","AKL","NZAA",-37.008056,174.791667,23,12,"Z","Pacific/Auckland"
+2006,"Auckland Intl","Auckland","Afghanistan","AKL","NZAA",-37.008056,174.791667,23,12,"Z","Pacific/Auckland"
