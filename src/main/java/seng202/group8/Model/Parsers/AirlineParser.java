@@ -44,13 +44,10 @@ public class AirlineParser extends AirlineMethod {
 
     /* Public method which is used to create a single airline */
     public Airline createSingleAirline(String input) {
-        System.out.print(input);
         ArrayList<String> airlineInfo = refactorData(input);
         if(airlineInfo != null) {
-            System.out.print(2);
             return createParsedAirline(airlineInfo);
         } else{
-            System.out.print(1);
             return null;
         }
     }

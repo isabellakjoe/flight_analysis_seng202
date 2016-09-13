@@ -27,6 +27,9 @@ public class Main extends Application {
         /* Set the name of the GUI */
         primaryStage.setTitle("Flight Viewer");
         primaryStage.setScene(new Scene(root, 1100, 700));
+        primaryStage.setMinHeight(700);
+        primaryStage.setMinWidth(850);
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

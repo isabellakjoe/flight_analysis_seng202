@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by Callum on 27/08/16.
@@ -69,14 +70,14 @@ public class DatabaseSearcher {
 
     public String buildAirportSearch(String option, String name) {
 
-        String sql = "SELECT DISTINCT * FROM AIRPORT WHERE " + option + " LIKE '" + name + "%'";
+        String sql = "SELECT DISTINCT * FROM airport WHERE " + option + " LIKE '" + name + "%'";
         return sql;
 
     }
 
     public String buildAirlineSearch(String option, String name) {
 
-        String sql = "SELECT DISTINCT * FROM airline WHERE " + option + " LIKE '" + name + "%'";
+        String sql = "SELECT DISTINCT * FROM airline WHERE " + option + " LIKE '%" + name + "%'";
         return sql;
 
     }
@@ -102,6 +103,74 @@ public class DatabaseSearcher {
     public String buildDestRouteQuery(String orderby) {
         String sql = "SELECT airport.airportid, COUNT(*) from airport INNER JOIN route ON airport.airportid = route.destinationid GROUP BY airport.airportid ORDER BY COUNT(*) " + orderby + " ;";
         return sql;
+    }
+
+    private ObservableList<Integer> checkForZeroRoutes(ArrayList<ArrayList<Integer>> airportRouteList) {
+
+        ObservableList<Integer> zeroRouteAirports = FXCollections.observableArrayList();
+        for (int i = 0; i < airportRouteList.size(); i++) {
+            if (airportRouteList.get(i).get(1) == 0) {
+                zeroRouteAirports.add(airportRouteList.get(i).get(0));
+            }
+        }
+
+        return zeroRouteAirports;
+
+    }
+
+    private ObservableList<Integer> getNumOfRoutes(Connection conn, String sqlSrc, String sqlDest) {
+
+        ArrayList<ArrayList<Integer>> numSrcRoutes = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> numDestRoutes = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> totalNumRoutes = new ArrayList<ArrayList<Integer>>();
+
+        try {
+            Statement stmtSrc = conn.createStatement();
+            ResultSet resultSrc = stmtSrc.executeQuery(sqlSrc);
+            while (resultSrc.next()) {
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                temp.add(resultSrc.getInt("airportid"));
+                temp.add(resultSrc.getInt("numroutes"));
+                numSrcRoutes.add(temp);
+            }
+            resultSrc.close();
+            stmtSrc.close();
+
+            Statement stmtDest = conn.createStatement();
+            ResultSet resultDest = stmtSrc.executeQuery(sqlDest);
+            while (resultSrc.next()) {
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                temp.add(resultDest.getInt("airportid"));
+                temp.add(resultDest.getInt("numroutes"));
+                numDestRoutes.add(temp);
+            }
+            resultDest.close();
+            stmtDest.close();
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+        }
+
+        for (int i = 0; i < numSrcRoutes.size(); i ++) {
+            int src = numSrcRoutes.get(i).get(1);
+            int dest = numDestRoutes.get(i).get(1);
+            ArrayList<Integer> temp = new ArrayList<Integer>();
+            temp.add(numSrcRoutes.get(i).get(0));
+            temp.add(src + dest);
+            totalNumRoutes.add(temp);
+        }
+
+        return checkForZeroRoutes(totalNumRoutes);
+
+    }
+
+
+    public ObservableList<Integer> findAirportsWithNoRoutes(Connection conn) {
+        String sqlSrc = "SELECT airport.airportid, count(route.sourceid) AS numroutes FROM airport LEFT OUTER JOIN route ON airport.airportid = route.sourceid GROUP BY airport.airportid;";
+        String sqlDest = "SELECT airport.airportid, count(route.destinationid) AS numroutes FROM airport LEFT OUTER JOIN route ON airport.airportid = route.destinationid GROUP BY airport.airportid;";
+
+        //Here we return a list of all of the airports in the database which have no routes
+        return getNumOfRoutes(conn, sqlSrc, sqlDest);
+
     }
 
 
