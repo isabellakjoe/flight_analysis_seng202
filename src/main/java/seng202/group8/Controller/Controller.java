@@ -67,10 +67,11 @@ public class Controller implements Initializable{
                 dbOne.disconnect(connOne);
                 //Load all of the content from the database here
                 ObservableList<Airport> airports = adl.loadAirport(connTwo);
+                System.out.println(airports);
                 dbTwo.disconnect(connTwo);
                 currentlyLoadedAirports = airports;
-                setAirportComboBoxes();
                 airportTable.setItems(airports);
+                setAirportComboBoxes();
                 addRouteView.setVisible(false);
                 addAirlineView.setVisible(false);
                 addAirportView.setVisible(false);

@@ -37,6 +37,7 @@ public class AirlineSearcher {
 
     public void airlinesOfID(String airlineID) {
         ObservableList<Airline> matchingAirlines = generateSearchList("airlineid", airlineID);
+        System.out.println(matchingAirlines);
         loadedAirlines = matchingAirlines;
     }
 

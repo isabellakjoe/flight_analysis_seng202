@@ -2,7 +2,11 @@ package seng202.group8.Model.Searchers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seng202.group8.Model.DatabaseMethods.Database;
+import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Route;
+
+import java.sql.Connection;
 
 import static java.lang.Integer.parseInt;
 
@@ -21,92 +25,58 @@ public class RouteSearcher {
         return loadedRoutes;
     }
 
+    private ObservableList<Route> generateSearchList(String paramID, String searchParam) {
+
+        Database db = new Database();
+        DatabaseSearcher dbs = new DatabaseSearcher();
+        String sql = dbs.buildRouteSearch(paramID, searchParam);
+        Connection conn = db.connect();
+        ObservableList<Route> routes = dbs.searchRouteByOption(conn, sql);
+        db.disconnect(conn);
+
+        return routes;
+    }
+
     public void routesOfAirline(String airline){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getAirlineName().equals(airline)){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(airlinecode)", airline);
         loadedRoutes = matchingRoutes;
     }
     public void routesOfAirlineID(int airlineID){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getAirline().equals(airlineID)){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("airlineid", Integer.toString(airlineID));
         loadedRoutes = matchingRoutes;
     }
 
     public void routesOfSource(String sourceAirportName){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getSourceAirportName().equalsIgnoreCase(sourceAirportName)){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(sourceairport)", sourceAirportName);
         loadedRoutes = matchingRoutes;
     }
     public void routesOfSourceID(int sourceAirportID){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getSourceAirport().equals(sourceAirportID)){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("sourceid", Integer.toString(sourceAirportID));
         loadedRoutes = matchingRoutes;
     }
 
     public void routesOfDestination(String destinationAirport){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getDestinationAirportName().equalsIgnoreCase(destinationAirport)){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(destinationairport)", destinationAirport);
         loadedRoutes = matchingRoutes;
     }
 
     public void routesOfDestinationID(int destinationAirportID){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getDestinationAirport().equals(destinationAirportID)){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("destinationid", Integer.toString(destinationAirportID));
         loadedRoutes = matchingRoutes;
     }
 
     public void routesOfStops(int stops){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getStops() == stops){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("stops", Integer.toString(stops));
         loadedRoutes = matchingRoutes;
     }
 
     public void routesOfCodeshare(String codeshareStatus){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        boolean isCodeshare = codeshareStatus.equals("Codeshare");
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).isCodeshare() == isCodeshare){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(codeshare)", codeshareStatus);
         loadedRoutes = matchingRoutes;
     }
 
     public void routesOfEquipment(String equipment){
-        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getEquipment().equalsIgnoreCase(equipment)){
-                matchingRoutes.add(loadedRoutes.get(i));
-            }
-        }
+        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(equipment)", equipment);
         loadedRoutes = matchingRoutes;
     }
 

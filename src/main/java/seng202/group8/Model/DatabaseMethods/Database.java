@@ -15,7 +15,7 @@ public class Database {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = ("jdbc:sqlite:ApplicationDatabase.db");
+            String url = ("jdbc:sqlite:src/main/database/static/testing.db");
             conn = DriverManager.getConnection(url);
             conn.setAutoCommit(false);
 
@@ -31,7 +31,7 @@ public class Database {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = ("jdbc:sqlite:Database.db");
+            String url = ("jdbc:sqlite:src/main/database/dynamic/Database.db");
             conn = DriverManager.getConnection(url);
             conn.setAutoCommit(false);
 
@@ -52,7 +52,7 @@ public class Database {
 
     public static void createDatabase() {
 
-        File f = new File("Database.db");
+        File f = new File("src/main/database/dynamic/Database.db");
         if (f.exists()) {
             f.delete();
         }
@@ -62,7 +62,7 @@ public class Database {
         Statement stmtRoute;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = ("jdbc:sqlite:Database.db");
+            String url = ("jdbc:sqlite:src/main/database/dynamic/Database.db");
             conn = DriverManager.getConnection(url);
 
             stmtAirport = conn.createStatement();

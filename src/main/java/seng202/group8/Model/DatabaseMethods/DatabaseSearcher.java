@@ -70,7 +70,7 @@ public class DatabaseSearcher {
 
     public String buildAirportSearch(String option, String name) {
 
-        String sql = "SELECT DISTINCT * FROM AIRPORT WHERE " + option + " LIKE '" + name + "%'";
+        String sql = "SELECT DISTINCT * FROM airport WHERE " + option + " LIKE '" + name + "%'";
         return sql;
 
     }
