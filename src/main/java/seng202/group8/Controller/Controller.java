@@ -16,11 +16,9 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import seng202.group8.Model.DatabaseMethods.*;
 import seng202.group8.Model.Parsers.AirlineParser;
 import seng202.group8.Model.Parsers.AirportParser;
-import seng202.group8.Model.Parsers.RouteParser;
 import seng202.group8.Model.Searchers.AirlineSearcher;
 import seng202.group8.Model.Searchers.AirportSearcher;
 import seng202.group8.Model.Objects.*;
@@ -1935,12 +1933,10 @@ public class Controller implements Initializable {
     //Google Maps initialization
     @FXML
     private WebView webView;
-
-    private WebEngine webEngine = new WebEngine();
+    private WebEngine webEngine;
 
     private void initMap() {
-//        webView = new WebView();
-//        webEngine = webView.getEngine();
-//        webEngine.load(getClass().getResource("maps.html").toExternalForm());
+       webEngine = webView.getEngine();
+       webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
     }
 }
