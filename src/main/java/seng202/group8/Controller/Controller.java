@@ -570,7 +570,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void setAirportErrorsFalse(){
+    private void clearAirportErrors(){
         addAirportIDErrorEmpty.setVisible(false);
         addAirportNameErrorEmpty.setVisible(false);
         addAirportCityErrorEmpty.setVisible(false);
@@ -599,7 +599,7 @@ public class Controller implements Initializable {
         int size = input.size();
         List<Integer> ints = Arrays.asList(0,8,9);
         List<Integer> doubles = Arrays.asList(6,7);
-        System.out.println(ints);
+
 
         int count = 0;
         for (int i = 0; i < size; i++) {
@@ -644,7 +644,7 @@ public class Controller implements Initializable {
             }
 
             if(ints.contains(i) && !(current.equals(""))) {
-                System.out.println("working");
+
                     try {
                         Integer.parseInt(input.get(i));
                         count += 1;
@@ -685,7 +685,7 @@ public class Controller implements Initializable {
 
             }
 
-        System.out.println(count);
+
         if(count == 18) {
             filled = true;
         }
@@ -695,7 +695,7 @@ public class Controller implements Initializable {
 
     @FXML
     private void saveAddedAirport(ActionEvent e) {
-        setAirportErrorsFalse();
+        clearAirportErrors();
         AirportParser parser = new AirportParser();
 
         String airportID = addedAirportID.getText();
@@ -712,11 +712,11 @@ public class Controller implements Initializable {
         String olsen = addedAirportOlsen.getText();
 
 
-        List<String> list = Arrays.asList(airportID, name, city, country, code, ICAO, latitude, longitude, altitude, timezone, DST, olsen);
+        List<String> airportDataList = Arrays.asList(airportID, name, city, country, code, ICAO, latitude, longitude, altitude, timezone, DST, olsen);
 
         String data = (airportID + "," + name + "," + city + "," + country + "," + code + "," + ICAO + "," + latitude + "," + longitude + "," + altitude + "," + timezone + "," + DST + "," + olsen);
 
-        boolean noErrors = addAirportError(list);
+        boolean noErrors = addAirportError(airportDataList);
         if(noErrors){
             Airport newAirport = parser.createSingleAirport(data);
             ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -762,9 +762,69 @@ public class Controller implements Initializable {
         tableView.setVisible(true);
     }
 
-    //
+    @FXML
+    private boolean addAirlineError(List<String> input){
+
+        boolean filled = false;
+        int size = input.size();
+
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            String current = input.get(i);
+            if (current.equals("")) {
+                count -= 1;
+                switch (i) {
+                    case 0:
+                        addAirlineIDErrorEmpty.setVisible(true);
+                        break;
+                    case 1:
+                        addAirlineNameErrorEmpty.setVisible(true);
+                        break;
+                    case 2:
+                        addAirlineAliasErrorEmpty.setVisible(true);
+                        break;
+                    case 3:
+                        addAirlineCountryErrorEmpty.setVisible(true);
+                        break;
+                }
+            }else{
+                count += 1;
+            }
+
+            if((i == 0) && !(current.equals(""))) {
+
+                try {
+                    Integer.parseInt(input.get(i));
+                    count += 1;
+
+                } catch (NumberFormatException e) {
+                    addAirlineIDErrorType.setVisible(true);
+                    }
+                }
+            }
+
+
+
+        if(count == 5) {
+            filled = true;
+        }
+        return filled;
+
+    }
+    @FXML
+    private void clearAirlineErrors(){
+        addAirlineIDErrorEmpty.setVisible(false);
+        addAirlineNameErrorEmpty.setVisible(false);
+        addAirlineAliasErrorEmpty.setVisible(false);
+        addAirlineCountryErrorEmpty.setVisible(false);
+        addAirlineIDErrorType.setVisible(false);
+    }
+
     @FXML
     private void saveAddedAirline(ActionEvent e) {
+        clearAirlineErrors();
+        boolean noErrors = false;
         AirlineParser parser = new AirlineParser();
         String airlineID = addedAirlineID.getText();
         String name = addedAirlineName.getText();
@@ -779,24 +839,30 @@ public class Controller implements Initializable {
         }
 
         String data = airlineID + ',' + name + ',' + alias + ',' + IATA + ',' + ICAO + ',' + callsign + ',' + country + ',' + isActive;
-        ObservableList<Airline> airlines = FXCollections.observableArrayList();
-        Airline newAirline = parser.createSingleAirline(data);
-        if (newAirline != null) {
-            //Add the new airport to the database here
-            Database db = new Database();
-            DatabaseSaver dbSave = new DatabaseSaver();
-            DatabaseSearcher dbSearch = new DatabaseSearcher();
-            Connection connSave = db.connect();
-            Connection connSearch = db.connect();
-            dbSave.saveAirlines(connSave, airlines);
-            db.disconnect(connSave);
-            String sql = dbSearch.buildAirlineSearch("airlineid", airlineID);
-            ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
-            currentlyLoadedAirlines.add(addedAirline.get(0));
+        List<String> notNullData = Arrays.asList(airlineID, name, alias,country);
+
+        noErrors = addAirlineError(notNullData);
+
+        if(noErrors) {
+            ObservableList<Airline> airlines = FXCollections.observableArrayList();
+            Airline newAirline = parser.createSingleAirline(data);
+            if (newAirline != null) {
+                //Add the new airport to the database here
+                Database db = new Database();
+                DatabaseSaver dbSave = new DatabaseSaver();
+                DatabaseSearcher dbSearch = new DatabaseSearcher();
+                Connection connSave = db.connect();
+                Connection connSearch = db.connect();
+                dbSave.saveAirlines(connSave, airlines);
+                db.disconnect(connSave);
+                String sql = dbSearch.buildAirlineSearch("airlineid", airlineID);
+                ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
+                currentlyLoadedAirlines.add(addedAirline.get(0));
+            }
+            airlineTable.setItems(currentlyLoadedAirlines);
+            resetView();
+            tableView.setVisible(true);
         }
-        airlineTable.setItems(currentlyLoadedAirlines);
-        resetView();
-        tableView.setVisible(true);
     }
 
     @FXML
@@ -1580,6 +1646,16 @@ public class Controller implements Initializable {
     @FXML
     private Text addAirportDSTErrorType;
 
+    @FXML
+    private Text addAirlineIDErrorEmpty;
+    @FXML
+    private Text addAirlineNameErrorEmpty;
+    @FXML
+    private Text addAirlineAliasErrorEmpty;
+    @FXML
+    private Text addAirlineCountryErrorEmpty;
+    @FXML
+    private Text addAirlineIDErrorType;
 
 
     @FXML
