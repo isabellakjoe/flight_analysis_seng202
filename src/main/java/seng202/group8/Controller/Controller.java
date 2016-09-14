@@ -589,8 +589,20 @@ public class Controller implements Initializable {
 
         String data = (airportID + "," + name + "," + city + "," + country + "," + code + "," + ICAO + "," + latitude + "," + longitude + "," + altitude + "," + timezone + "," + DST + "," + olsen);
         Airport newAirport = parser.createSingleAirport(data);
+        ObservableList<Airport> airports = FXCollections.observableArrayList();
         if (newAirport != null) {
-            currentlyLoadedAirports.add(newAirport);
+            //Add the new airport to the database here
+            Database db = new Database();
+            DatabaseSaver dbSave = new DatabaseSaver();
+            DatabaseSearcher dbSearch = new DatabaseSearcher();
+            Connection connSave = db.connect();
+            Connection connSearch = db.connect();
+            dbSave.saveAirports(connSave, airports);
+            db.disconnect(connSave);
+            String sql = dbSearch.buildAirportSearch("airportid", airportID);
+            ObservableList<Airport> addedAirport = dbSearch.searchForAirportByOption(connSearch, sql);
+            System.out.println(addedAirport.get(0).getAirportID());
+            currentlyLoadedAirports.add(addedAirport.get(0));
         }
         airportTable.setItems(currentlyLoadedAirports);
         resetView();
@@ -636,8 +648,21 @@ public class Controller implements Initializable {
         }
 
         String data = airlineID + ',' + name + ',' + alias + ',' + IATA + ',' + ICAO + ',' + callsign + ',' + country + ',' + isActive;
+        ObservableList<Airline> airlines = FXCollections.observableArrayList();
         Airline newAirline = parser.createSingleAirline(data);
-        currentlyLoadedAirlines.add(newAirline);
+        if (newAirline != null) {
+            //Add the new airport to the database here
+            Database db = new Database();
+            DatabaseSaver dbSave = new DatabaseSaver();
+            DatabaseSearcher dbSearch = new DatabaseSearcher();
+            Connection connSave = db.connect();
+            Connection connSearch = db.connect();
+            dbSave.saveAirlines(connSave, airlines);
+            db.disconnect(connSave);
+            String sql = dbSearch.buildAirlineSearch("airlineid", airlineID);
+            ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
+            currentlyLoadedAirlines.add(addedAirline.get(0));
+        }
         airlineTable.setItems(currentlyLoadedAirlines);
         resetView();
         tableView.setVisible(true);
@@ -685,6 +710,24 @@ public class Controller implements Initializable {
         newRoute.setSourceAirport(sourceSearcher.getLoadedAirports().get(0));
         newRoute.setDestinationAirport(destinationSearcher.getLoadedAirports().get(0));
         newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
+
+        //Need a way to get the route ID Number
+        //newRoute.setRouteID();
+
+        ObservableList<Route> routes = FXCollections.observableArrayList();
+        routes.add(newRoute);
+
+
+        //Add the new airport to the database here
+        Database db = new Database();
+        DatabaseSaver dbSave = new DatabaseSaver();
+        DatabaseSearcher dbSearch = new DatabaseSearcher();
+        Connection connSave = db.connect();
+        Connection connSearch = db.connect();
+        dbSave.saveRoutes(connSave, routes);
+        db.disconnect(connSave);
+        //String sql = dbSearch.buildAirlineSearch("routeid", airlineID);
+        //ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
 
         currentlyLoadedRoutes.add(newRoute);
         routeTable.setItems(currentlyLoadedRoutes);
