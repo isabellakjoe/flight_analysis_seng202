@@ -605,7 +605,7 @@ public class Controller implements Initializable {
         for (int i = 0; i < size; i++) {
             String current = input.get(i);
             if (current.equals("")) {
-                count -= 1;
+
                 switch (i) {
 
                     case 0:
@@ -773,7 +773,6 @@ public class Controller implements Initializable {
         for (int i = 0; i < size; i++) {
             String current = input.get(i);
             if (current.equals("")) {
-                count -= 1;
                 switch (i) {
                     case 0:
                         addAirlineIDErrorEmpty.setVisible(true);
@@ -824,7 +823,6 @@ public class Controller implements Initializable {
     @FXML
     private void saveAddedAirline(ActionEvent e) {
         clearAirlineErrors();
-        boolean noErrors = false;
         AirlineParser parser = new AirlineParser();
         String airlineID = addedAirlineID.getText();
         String name = addedAirlineName.getText();
@@ -841,7 +839,7 @@ public class Controller implements Initializable {
         String data = airlineID + ',' + name + ',' + alias + ',' + IATA + ',' + ICAO + ',' + callsign + ',' + country + ',' + isActive;
         List<String> notNullData = Arrays.asList(airlineID, name, alias,country);
 
-        noErrors = addAirlineError(notNullData);
+        boolean noErrors = addAirlineError(notNullData);
 
         if(noErrors) {
             ObservableList<Airline> airlines = FXCollections.observableArrayList();
@@ -886,50 +884,131 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    private boolean addRouteError(List<String> input){
+
+        boolean filled = false;
+        int size = input.size();
+
+
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            String current = input.get(i);
+            if (current.equals(null) || current.equals("")) {
+
+                switch (i) {
+                    case 0:
+                        addRouteStopsErrorEmpty.setVisible(true);
+                        break;
+                    case 1:
+                        addRouteEquipErrorEmpty.setVisible(true);
+                        break;
+                    case 2:
+                        addRouteAirlineErrorEmpty.setVisible(true);
+                        break;
+                    case 3:
+                        addRouteSourceErrorEmpty.setVisible(true);
+                        break;
+                    case 4:
+                        addRouteDestErrorEmpty.setVisible(true);
+                        break;
+                }
+            } else {
+                count += 1;
+            }
+
+            if((i == 0) && !(current.equals(""))) {
+
+                try {
+                    Integer.parseInt(input.get(i));
+                    count += 1;
+
+                } catch (NumberFormatException e) {
+                    addRouteStopsErrorType.setVisible(true);
+                }
+            }
+        }
+
+
+
+        if(count == 6) {
+            filled = true;
+        }
+        return filled;
+
+    }
+
+    @FXML
+    private void clearRouteErrors(){
+
+        addRouteStopsErrorEmpty.setVisible(false);
+        addRouteEquipErrorEmpty.setVisible(false);
+        addRouteAirlineErrorEmpty.setVisible(false);
+        addRouteSourceErrorEmpty.setVisible(false);
+        addRouteDestErrorEmpty.setVisible(false);
+        addRouteStopsErrorType.setVisible(false);
+
+    }
+
+    @FXML
     private void saveAddedRoute(ActionEvent e) {
+        clearRouteErrors();
+
         Route newRoute = new Route();
 
-        newRoute.setStops(Integer.parseInt(addedRouteStops.getText()));
-        newRoute.setEquipment(addedRouteEquipment.getText());
-        newRoute.setAirlineName((String) addedRouteAirline.getValue());
-        newRoute.setSourceAirportName((String) addedRouteSource.getValue());
-        newRoute.setDestinationAirportName((String) addedRouteDestination.getValue());
+        String stops = addedRouteStops.getText();
+        String equipment = addedRouteEquipment.getText();
+        String airline = (String) addedRouteAirline.getValue();
+        String source = (String) addedRouteSource.getValue();
+        String destination = (String) addedRouteDestination.getValue();
 
-        AirportSearcher sourceSearcher = new AirportSearcher(currentlyLoadedAirports);
-        sourceSearcher.airportsOfName(newRoute.getSourceAirportName());
+        List<String> routeDataList = Arrays.asList(stops, equipment, airline, source, destination);
+        System.out.println(routeDataList);
+        boolean noErrors = addRouteError(routeDataList);
 
-        AirportSearcher destinationSearcher = new AirportSearcher(currentlyLoadedAirports);
-        destinationSearcher.airportsOfName(newRoute.getDestinationAirportName());
+        if(noErrors){
+            newRoute.setStops(Integer.parseInt(stops));
+            newRoute.setEquipment(equipment);
+            newRoute.setAirlineName(airline);
+            newRoute.setSourceAirportName(source);
+            newRoute.setDestinationAirportName(destination);
 
-        AirlineSearcher airlineSearcher = new AirlineSearcher(currentlyLoadedAirlines);
-        airlineSearcher.airlinesOfName(newRoute.getAirlineName());
+            AirportSearcher sourceSearcher = new AirportSearcher(currentlyLoadedAirports);
+            sourceSearcher.airportsOfName(newRoute.getSourceAirportName());
 
-        newRoute.setSourceAirport(sourceSearcher.getLoadedAirports().get(0));
-        newRoute.setDestinationAirport(destinationSearcher.getLoadedAirports().get(0));
-        newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
+            AirportSearcher destinationSearcher = new AirportSearcher(currentlyLoadedAirports);
+            destinationSearcher.airportsOfName(newRoute.getDestinationAirportName());
 
-        //Need a way to get the route ID Number
-        //newRoute.setRouteID();
+            AirlineSearcher airlineSearcher = new AirlineSearcher(currentlyLoadedAirlines);
+            airlineSearcher.airlinesOfName(newRoute.getAirlineName());
 
-        ObservableList<Route> routes = FXCollections.observableArrayList();
-        routes.add(newRoute);
+            newRoute.setSourceAirport(sourceSearcher.getLoadedAirports().get(0));
+            newRoute.setDestinationAirport(destinationSearcher.getLoadedAirports().get(0));
+            newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
+
+            //Need a way to get the route ID Number
+            //newRoute.setRouteID();
+
+            ObservableList<Route> routes = FXCollections.observableArrayList();
+            routes.add(newRoute);
 
 
-        //Add the new airport to the database here
-        Database db = new Database();
-        DatabaseSaver dbSave = new DatabaseSaver();
-        DatabaseSearcher dbSearch = new DatabaseSearcher();
-        Connection connSave = db.connect();
-        Connection connSearch = db.connect();
-        dbSave.saveRoutes(connSave, routes);
-        db.disconnect(connSave);
-        //String sql = dbSearch.buildAirlineSearch("routeid", airlineID);
-        //ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
+            //Add the new airport to the database here
+            Database db = new Database();
+            DatabaseSaver dbSave = new DatabaseSaver();
+            DatabaseSearcher dbSearch = new DatabaseSearcher();
+            Connection connSave = db.connect();
+            Connection connSearch = db.connect();
+            dbSave.saveRoutes(connSave, routes);
+            db.disconnect(connSave);
+            //String sql = dbSearch.buildAirlineSearch("routeid", airlineID);
+            //ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
 
-        currentlyLoadedRoutes.add(newRoute);
-        routeTable.setItems(currentlyLoadedRoutes);
-        resetView();
-        tableView.setVisible(true);
+            currentlyLoadedRoutes.add(newRoute);
+            routeTable.setItems(currentlyLoadedRoutes);
+            resetView();
+            tableView.setVisible(true);
+        }
     }
 
 
@@ -1656,6 +1735,19 @@ public class Controller implements Initializable {
     private Text addAirlineCountryErrorEmpty;
     @FXML
     private Text addAirlineIDErrorType;
+
+    @FXML
+    private Text addRouteAirlineErrorEmpty;
+    @FXML
+    private Text addRouteSourceErrorEmpty;
+    @FXML
+    private Text addRouteDestErrorEmpty;
+    @FXML
+    private Text addRouteEquipErrorEmpty;
+    @FXML
+    private Text addRouteStopsErrorEmpty;
+    @FXML
+    private Text addRouteStopsErrorType;
 
 
     @FXML

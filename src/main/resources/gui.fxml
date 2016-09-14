@@ -887,7 +887,7 @@
                                       </TableView>
                            </children>
                         </GridPane>
-                            <GridPane fx:id="addRouteView" visible="false">
+                            <GridPane fx:id="addRouteView">
                                 <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="30.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="217.0" />
@@ -927,7 +927,7 @@
                                             <Insets left="100.0" />
                                         </GridPane.margin>
                                     </ComboBox>
-                                    <TextField fx:id="addedRouteEquipment" maxWidth="-Infinity" prefHeight="25.0" prefWidth="212.0" promptText="Equipment" text="Equipment" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                    <TextField fx:id="addedRouteEquipment" maxWidth="-Infinity" prefHeight="25.0" prefWidth="212.0" promptText="Equipment (seperate by spaces)" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                         <GridPane.margin>
                                             <Insets left="75.0" />
                                         </GridPane.margin>
@@ -950,11 +950,59 @@
                                             <Insets left="200.0" />
                                         </GridPane.margin>
                                     </Button>
-                                    <TextField fx:id="addedRouteStops" layoutX="459.0" layoutY="194.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="212.0" promptText="Stops" text="Stops" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                    <TextField fx:id="addedRouteStops" layoutX="459.0" layoutY="194.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="212.0" promptText="Stops (0 for direct)" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                         <GridPane.margin>
                                             <Insets left="75.0" />
                                         </GridPane.margin>
                                     </TextField>
+                              <Text fx:id="addRouteAirlineErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select an airline." visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text fx:id="addRouteSourceErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select a source." visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text fx:id="addRouteDestErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select a destination." visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text fx:id="addRouteEquipErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter equipment codes." visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text fx:id="addRouteStopsErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter stops." visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text fx:id="addRouteStopsErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Number of stops must be an integer." visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </Text>
                                 </children>
                             </GridPane>
                         <GridPane fx:id="addAirportView" visible="false">
@@ -1258,7 +1306,7 @@
                               </Text>
                            </children>
                         </GridPane>
-<GridPane fx:id="addAirlineView" layoutX="10.0" layoutY="10.0">
+<GridPane fx:id="addAirlineView" layoutX="10.0" layoutY="10.0" visible="false">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Airline ID:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <GridPane.margin>
