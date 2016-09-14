@@ -144,7 +144,7 @@
                <content>
                     <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="450.0" prefHeight="650.0" prefWidth="750.0">
                         <children>
-                        <GridPane fx:id="tableView" visible="false">
+                        <GridPane fx:id="tableView">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                           </columnConstraints>
@@ -331,11 +331,11 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                            <TextField fx:id="editActiveField" text="Active field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                            <CheckBox fx:id="editActiveField" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
-                                    </TextField>
+                                    </CheckBox>
                                             <TextField fx:id="editAirlineCountryField" text="Country Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -752,6 +752,12 @@
                                  </GridPane.margin>
                               </GridPane>
                            </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="15.0" right="15.0" />
+                           </padding>
                         </GridPane>
                         <GridPane fx:id="flightView" visible="false">
                           <columnConstraints>
@@ -886,8 +892,11 @@
                                  </columnResizePolicy>
                                       </TableView>
                            </children>
+                           <padding>
+                              <Insets bottom="15.0" right="15.0" />
+                           </padding>
                         </GridPane>
-                            <GridPane fx:id="addRouteView">
+                            <GridPane fx:id="addRouteView" visible="false">
                                 <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="30.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="217.0" />
@@ -1442,6 +1451,9 @@
                      <children>
                         <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
+                     <padding>
+                        <Insets bottom="15.0" right="15.0" top="15.0" />
+                     </padding>
                   </AnchorPane>
               </content>
             </Tab>

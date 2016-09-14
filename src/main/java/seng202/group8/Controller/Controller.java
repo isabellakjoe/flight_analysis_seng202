@@ -346,6 +346,8 @@ public class Controller implements Initializable {
     private void airportSearch(ActionEvent e) {
         resetView();
         tableView.setVisible(true);
+        airportTable.setVisible(true);
+        airportPane.setVisible(false);
         AirportSearcher searcher = new AirportSearcher(currentlyLoadedAirports);
         String airportID = airportIDSearch.getText();
         String name = airportNameSearch.getText();
@@ -416,6 +418,8 @@ public class Controller implements Initializable {
     private void airlineSearch(ActionEvent e) {
         resetView();
         tableView.setVisible(true);
+        airlineTable.setVisible(true);
+        airlinePane.setVisible(false);
         AirlineSearcher searcher = new AirlineSearcher(currentlyLoadedAirlines);
 
         String airlineID = airlineIDSearch.getText();
@@ -468,6 +472,8 @@ public class Controller implements Initializable {
     private void routeSearch(ActionEvent e) {
         resetView();
         tableView.setVisible(true);
+        routeTable.setVisible(true);
+        routePane.setVisible(false);
 
 
         RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
@@ -1326,6 +1332,8 @@ public class Controller implements Initializable {
         editActiveField.setVisible(true);
         editAirlineCountryField.setVisible(true);
 
+        airlineActiveDisplay.setVisible(false);
+
         editAirlineDataButton.setVisible(false);
         individualAirlineBackButton.setVisible(false);
         saveAirlineChangesButton.setVisible(true);
@@ -1354,9 +1362,9 @@ public class Controller implements Initializable {
             editAliasField.setText("None");
         }
         if (currentAirline.isActive() == true) {
-            editActiveField.setText("Yes");
+            editActiveField.setSelected(true);
         } else {
-            editActiveField.setText("No");
+            editActiveField.setSelected(false);
         }
 
 
@@ -1396,10 +1404,10 @@ public class Controller implements Initializable {
         if (!editAliasField.getText().equals("None")) {
             currentAirline.setAlias(editAliasField.getText());
         }
-        if (editActiveField.getText().equals("Yes")) {
+        if (editActiveField.isSelected()) {
             currentAirline.setActive(true);
             airlineActiveDisplay.setText("Yes");
-        } else if (editActiveField.getText().equals("No")) {
+        } else if (!(editActiveField.isSelected())){
             currentAirline.setActive(false);
             airlineActiveDisplay.setText("No");
         }
@@ -1424,6 +1432,7 @@ public class Controller implements Initializable {
         individualAirlineBackButton.setVisible(true);
         saveAirlineChangesButton.setVisible(false);
         cancelAirlineChangesButton.setVisible(false);
+        airlineActiveDisplay.setVisible(true);
 
         setAirlineComboBoxes();
     }
@@ -1799,7 +1808,7 @@ public class Controller implements Initializable {
     @FXML
     private TextField editAliasField;
     @FXML
-    private TextField editActiveField;
+    private CheckBox editActiveField;
     @FXML
     private TextField editAirlineCountryField;
     @FXML
