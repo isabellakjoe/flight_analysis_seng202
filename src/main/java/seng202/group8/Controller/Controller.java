@@ -570,8 +570,132 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void saveAddedAirport(ActionEvent e) {
+    private void setAirportErrorsFalse(){
+        addAirportIDErrorEmpty.setVisible(false);
+        addAirportNameErrorEmpty.setVisible(false);
+        addAirportCityErrorEmpty.setVisible(false);
+        addAirportCountryErrorEmpty.setVisible(false);
+        addAirportLatErrorEmpty.setVisible(false);
+        addAirportLongErrorEmpty.setVisible(false);
+        addAirportAltErrorEmpty.setVisible(false);
+        addAirportTimeErrorEmpty.setVisible(false);
+        addAirportDSTErrorEmpty.setVisible(false);
+        addAirportOlsenErrorEmpty.setVisible(false);
 
+        addAirportIDErrorType.setVisible(false);
+        addAirportCodeErrorType.setVisible(false);
+        addAirportAltErrorType.setVisible(false);
+        addAirportTimeErrorType.setVisible(false);
+        addAirportDSTErrorType.setVisible(false);
+        addAirportLatErrorType.setVisible(false);
+        addAirportLongErrorType.setVisible(false);
+    }
+
+
+    @FXML
+    private boolean addAirportError(List<String> input){
+
+        boolean filled = false;
+        int size = input.size();
+        List<Integer> ints = Arrays.asList(0,8,9);
+        List<Integer> doubles = Arrays.asList(6,7);
+        System.out.println(ints);
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            String current = input.get(i);
+            if (current.equals("")) {
+                count -= 1;
+                switch (i) {
+
+                    case 0:
+                        addAirportIDErrorEmpty.setVisible(true);
+                        break;
+                    case 1:
+                        addAirportNameErrorEmpty.setVisible(true);
+                        break;
+                    case 2:
+                        addAirportCityErrorEmpty.setVisible(true);
+                        break;
+                    case 3:
+                        addAirportCountryErrorEmpty.setVisible(true);
+                        break;
+                    case 6:
+                        addAirportLatErrorEmpty.setVisible(true);
+                        break;
+                    case 7:
+                        addAirportLongErrorEmpty.setVisible(true);
+                        break;
+                    case 8:
+                        addAirportAltErrorEmpty.setVisible(true);
+                        break;
+                    case 9:
+                        addAirportTimeErrorEmpty.setVisible(true);
+                        break;
+                    case 10:
+                        addAirportDSTErrorEmpty.setVisible(true);
+                        break;
+                    case 11:
+                        addAirportOlsenErrorEmpty.setVisible(true);
+                        break;
+                }
+            }else{
+                count += 1;
+            }
+
+            if(ints.contains(i) && !(current.equals(""))) {
+                System.out.println("working");
+                    try {
+                        Integer.parseInt(input.get(i));
+                        count += 1;
+
+                    } catch (NumberFormatException e) {
+
+                        switch (i) {
+                            case 0:
+                                addAirportIDErrorType.setVisible(true);
+                                break;
+                            case 8:
+                                addAirportAltErrorType.setVisible(true);
+                                break;
+                            case 9:
+                                addAirportTimeErrorType.setVisible(true);
+                                break;
+                        }
+                    }
+                }
+            else if(doubles.contains(i) && !(current.equals(""))){
+                    try {
+                        Double.parseDouble(input.get(i));
+
+                        count += 1;
+                    }catch(NumberFormatException e){
+
+                        switch(i){
+                            case 6:
+                                addAirportLatErrorType.setVisible(true);
+                                break;
+                            case 7:
+                                addAirportLongErrorType.setVisible(true);
+                                break;
+
+                        }
+                    }
+                }
+
+            }
+
+        System.out.println(count);
+        if(count == 18) {
+            filled = true;
+        }
+        return filled;
+
+    }
+
+    @FXML
+    private void saveAddedAirport(ActionEvent e) {
+        setAirportErrorsFalse();
         AirportParser parser = new AirportParser();
 
         String airportID = addedAirportID.getText();
@@ -587,26 +711,33 @@ public class Controller implements Initializable {
         String DST = addedAirportDST.getText();
         String olsen = addedAirportOlsen.getText();
 
+
+        List<String> list = Arrays.asList(airportID, name, city, country, code, ICAO, latitude, longitude, altitude, timezone, DST, olsen);
+
         String data = (airportID + "," + name + "," + city + "," + country + "," + code + "," + ICAO + "," + latitude + "," + longitude + "," + altitude + "," + timezone + "," + DST + "," + olsen);
-        Airport newAirport = parser.createSingleAirport(data);
-        ObservableList<Airport> airports = FXCollections.observableArrayList();
-        if (newAirport != null) {
-            //Add the new airport to the database here
-            Database db = new Database();
-            DatabaseSaver dbSave = new DatabaseSaver();
-            DatabaseSearcher dbSearch = new DatabaseSearcher();
-            Connection connSave = db.connect();
-            Connection connSearch = db.connect();
-            dbSave.saveAirports(connSave, airports);
-            db.disconnect(connSave);
-            String sql = dbSearch.buildAirportSearch("airportid", airportID);
-            ObservableList<Airport> addedAirport = dbSearch.searchForAirportByOption(connSearch, sql);
-            System.out.println(addedAirport.get(0).getAirportID());
-            currentlyLoadedAirports.add(addedAirport.get(0));
+
+        boolean noErrors = addAirportError(list);
+        if(noErrors){
+            Airport newAirport = parser.createSingleAirport(data);
+            ObservableList<Airport> airports = FXCollections.observableArrayList();
+            if (newAirport != null) {
+                //Add the new airport to the database here
+                Database db = new Database();
+                DatabaseSaver dbSave = new DatabaseSaver();
+                DatabaseSearcher dbSearch = new DatabaseSearcher();
+                Connection connSave = db.connect();
+                Connection connSearch = db.connect();
+                dbSave.saveAirports(connSave, airports);
+                db.disconnect(connSave);
+                String sql = dbSearch.buildAirportSearch("airportid", airportID);
+                ObservableList<Airport> addedAirport = dbSearch.searchForAirportByOption(connSearch, sql);
+                System.out.println(addedAirport.get(0).getAirportID());
+                currentlyLoadedAirports.add(addedAirport.get(0));
+            }
+            airportTable.setItems(currentlyLoadedAirports);
+            resetView();
+            tableView.setVisible(true);
         }
-        airportTable.setItems(currentlyLoadedAirports);
-        resetView();
-        tableView.setVisible(true);
     }
 
     //
@@ -1411,6 +1542,45 @@ public class Controller implements Initializable {
     private Button airlineAddButton;
     @FXML
     private Button routeAddButton;
+
+
+    @FXML
+    private Text addAirportIDErrorEmpty;
+    @FXML
+    private Text addAirportNameErrorEmpty;
+    @FXML
+    private Text addAirportCityErrorEmpty;
+    @FXML
+    private Text addAirportCountryErrorEmpty;
+    @FXML
+    private Text addAirportLatErrorEmpty;
+    @FXML
+    private Text addAirportLongErrorEmpty;
+    @FXML
+    private Text addAirportAltErrorEmpty;
+    @FXML
+    private Text addAirportTimeErrorEmpty;
+    @FXML
+    private Text addAirportDSTErrorEmpty;
+    @FXML
+    private Text addAirportOlsenErrorEmpty;
+
+    @FXML
+    private Text addAirportIDErrorType;
+    @FXML
+    private Text addAirportCodeErrorType;
+    @FXML
+    private Text addAirportLatErrorType;
+    @FXML
+    private Text addAirportLongErrorType;
+    @FXML
+    private Text addAirportAltErrorType;
+    @FXML
+    private Text addAirportTimeErrorType;
+    @FXML
+    private Text addAirportDSTErrorType;
+
+
 
     @FXML
     private TextField editAirportIDField;
