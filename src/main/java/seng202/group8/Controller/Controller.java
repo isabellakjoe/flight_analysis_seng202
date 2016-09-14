@@ -611,7 +611,6 @@ public class Controller implements Initializable {
         for (int i = 0; i < size; i++) {
             String current = input.get(i);
             if (current.equals("")) {
-
                 switch (i) {
 
                     case 0:
@@ -691,8 +690,7 @@ public class Controller implements Initializable {
 
             }
 
-
-        if(count == 18) {
+        if(count == 17) {
             filled = true;
         }
         return filled;
@@ -723,9 +721,11 @@ public class Controller implements Initializable {
         String data = (airportID + "," + name + "," + city + "," + country + "," + code + "," + ICAO + "," + latitude + "," + longitude + "," + altitude + "," + timezone + "," + DST + "," + olsen);
 
         boolean noErrors = addAirportError(airportDataList);
+
         if(noErrors){
             Airport newAirport = parser.createSingleAirport(data);
             ObservableList<Airport> airports = FXCollections.observableArrayList();
+            airports.add(newAirport);
             if (newAirport != null) {
                 //Add the new airport to the database here
                 Database db = new Database();
@@ -737,11 +737,12 @@ public class Controller implements Initializable {
                 db.disconnect(connSave);
                 String sql = dbSearch.buildAirportSearch("airportid", airportID);
                 ObservableList<Airport> addedAirport = dbSearch.searchForAirportByOption(connSearch, sql);
-                System.out.println(addedAirport.get(0).getAirportID());
+                db.disconnect(connSearch);
                 currentlyLoadedAirports.add(addedAirport.get(0));
             }
             airportTable.setItems(currentlyLoadedAirports);
             resetView();
+            setAirportComboBoxes();
             tableView.setVisible(true);
         }
     }
@@ -850,6 +851,8 @@ public class Controller implements Initializable {
         if(noErrors) {
             ObservableList<Airline> airlines = FXCollections.observableArrayList();
             Airline newAirline = parser.createSingleAirline(data);
+            airlines.add(newAirline);
+            System.out.println(newAirline.getAirlineID());
             if (newAirline != null) {
                 //Add the new airport to the database here
                 Database db = new Database();
@@ -862,9 +865,11 @@ public class Controller implements Initializable {
                 String sql = dbSearch.buildAirlineSearch("airlineid", airlineID);
                 ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
                 currentlyLoadedAirlines.add(addedAirline.get(0));
+                db.disconnect(connSearch);
             }
             airlineTable.setItems(currentlyLoadedAirlines);
             resetView();
+            setAirlineComboBoxes();
             tableView.setVisible(true);
         }
     }
@@ -1007,12 +1012,16 @@ public class Controller implements Initializable {
             Connection connSearch = db.connect();
             dbSave.saveRoutes(connSave, routes);
             db.disconnect(connSave);
+
+            //TODO: Need a way of getting the last max value and using this dynamically
+
             //String sql = dbSearch.buildAirlineSearch("routeid", airlineID);
             //ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
 
             currentlyLoadedRoutes.add(newRoute);
             routeTable.setItems(currentlyLoadedRoutes);
             resetView();
+            setRouteComboBoxes();
             tableView.setVisible(true);
         }
     }
@@ -1391,6 +1400,16 @@ public class Controller implements Initializable {
     public void saveAirlineChanges(ActionEvent e) {
         Airline currentAirline = airlineTable.getSelectionModel().getSelectedItem();
 
+        //TODO: NEED TO CHECK UNIQUE CONSTRAINTS BEFORE ALLOWING DELETION + SAVING
+        //Delete the current airline object from the database
+        Database db = new Database();
+        DatabaseSaver dbSave = new DatabaseSaver();
+        Connection connDelete = db.connect();
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        ids.add(currentAirline.getAirlineID());
+        dbSave.deleteAirlines(connDelete, ids);
+        db.disconnect(connDelete);
+
         currentAirline.setAirlineID(Integer.parseInt(editAirlineIDField.getText()));
         if (!editCallsignField.getText().equals("None")) {
             currentAirline.setCallsign(editCallsignField.getText());
@@ -1433,6 +1452,13 @@ public class Controller implements Initializable {
         saveAirlineChangesButton.setVisible(false);
         cancelAirlineChangesButton.setVisible(false);
         airlineActiveDisplay.setVisible(true);
+
+        //Save the updated airline to the database
+        Connection connSave = db.connect();
+        ObservableList<Airline> newAirlines = FXCollections.observableArrayList();
+        newAirlines.add(currentAirline);
+        dbSave.saveAirlines(connSave, newAirlines);
+        db.disconnect(connDelete);
 
         setAirlineComboBoxes();
     }
@@ -1509,6 +1535,15 @@ public class Controller implements Initializable {
     public void saveAirportChanges(ActionEvent e) {
         Airport currentAirport = airportTable.getSelectionModel().getSelectedItem();
 
+        //Delete the airport to be changed from the database
+        Database db = new Database();
+        DatabaseSaver dbSave = new DatabaseSaver();
+        Connection connDelete = db.connect();
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        ids.add(currentAirport.getAirportID());
+        dbSave.deleteAirport(connDelete, ids);
+        db.disconnect(connDelete);
+
         currentAirport.setAirportID(Integer.parseInt(editAirportIDField.getText()));
 
         if (!editFAAField.getText().equals("None")) {
@@ -1560,6 +1595,13 @@ public class Controller implements Initializable {
 
         saveAirportChangesButton.setVisible(false);
         cancelAirportChangesButton.setVisible(false);
+
+        //Save the updated airline to the database
+        Connection connSave = db.connect();
+        ObservableList<Airport> newAirports = FXCollections.observableArrayList();
+        newAirports.add(currentAirport);
+        dbSave.saveAirports(connSave, newAirports);
+        db.disconnect(connDelete);
 
         setAirportComboBoxes();
     }
@@ -1619,6 +1661,15 @@ public class Controller implements Initializable {
     public void saveRouteChanges(ActionEvent e) {
         Route currentRoute = routeTable.getSelectionModel().getSelectedItem();
 
+        //Delete the route from the database
+        Database db = new Database();
+        DatabaseSaver dbSave = new DatabaseSaver();
+        Connection connDelete = db.connect();
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        ids.add(currentRoute.getRouteID());
+        dbSave.deleteRoutes(connDelete, ids);
+        db.disconnect(connDelete);
+
         currentRoute.setSourceAirportName(editSourceField.getText());
         currentRoute.setDestinationAirportName(editDestinationField.getText());
         //Add methods to find airports as well
@@ -1654,6 +1705,14 @@ public class Controller implements Initializable {
 
         saveRouteChangesButton.setVisible(false);
         cancelRouteChangesButton.setVisible(false);
+
+        //Save the updated route to the database
+        Connection connSave = db.connect();
+        ObservableList<Route> newRoutes = FXCollections.observableArrayList();
+        newRoutes.add(currentRoute);
+        dbSave.saveRoutes(connSave, newRoutes);
+        db.disconnect(connDelete);
+
 
         setRouteComboBoxes();
     }
