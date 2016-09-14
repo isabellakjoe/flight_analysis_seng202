@@ -67,15 +67,12 @@ public class Controller implements Initializable {
                 dbOne.disconnect(connOne);
                 //Load all of the content from the database here
                 ObservableList<Airport> airports = adl.loadAirport(connTwo);
-                System.out.println(airports);
+
                 dbTwo.disconnect(connTwo);
                 currentlyLoadedAirports = airports;
                 airportTable.setItems(airports);
                 setAirportComboBoxes();
-                addRouteView.setVisible(false);
-                addAirlineView.setVisible(false);
-                addAirportView.setVisible(false);
-                flightView.setVisible(false);
+                resetView();
                 tableView.setVisible(true);
             }
         } catch (FileNotFoundException ex) {
@@ -138,11 +135,7 @@ public class Controller implements Initializable {
                 currentlyLoadedAirlines = airlines;
                 airlineTable.setItems(airlines);
                 setAirlineComboBoxes();
-                flightView.setVisible(false);
-                addAirportView.setVisible(false);
-                addRouteView.setVisible(false);
-                addAirlineView.setVisible(false);
-                addAirportView.setVisible(false);
+                resetView();
                 tableView.setVisible(true);
             }
         } catch (FileNotFoundException ex) {
@@ -210,10 +203,7 @@ public class Controller implements Initializable {
                 currentlyLoadedRoutes = routes;
                 routeTable.setItems(routes);
                 setRouteComboBoxes();
-                flightView.setVisible(false);
-                addRouteView.setVisible(false);
-                addAirlineView.setVisible(false);
-                addAirportView.setVisible(false);
+                resetView();
                 tableView.setVisible(true);
             }
         } catch (FileNotFoundException ex) {
@@ -295,10 +285,7 @@ public class Controller implements Initializable {
                 Flight flight = load.buildFlight();
                 flightViewSetUp(flight);
                 //Swap panes from raw data to the flight viewer
-                tableView.setVisible(false);
-                addRouteView.setVisible(false);
-                addAirlineView.setVisible(false);
-                addAirportView.setVisible(false);
+                resetView();
                 flightView.setVisible(true);
             }
         } catch (FileNotFoundException ex) {
@@ -338,7 +325,6 @@ public class Controller implements Initializable {
 
         //Create header string
         String headerString = "Flight from " + sourceName + " to " + destinationName;
-        System.out.println(headerString);
         titleString.setText(headerString);
 
         ObservableList<Waypoint> waypoints = flight.getWaypoints();
@@ -352,13 +338,13 @@ public class Controller implements Initializable {
         routeTable.setItems(currentlyLoadedRoutes);
         airlineTable.setItems(currentlyLoadedAirlines);
         airportTable.setItems(currentlyLoadedAirports);
-        flightView.setVisible(false);
+        resetView();
         tableView.setVisible(true);
     }
 
     @FXML
     private void airportSearch(ActionEvent e) {
-        flightView.setVisible(false);
+        resetView();
         tableView.setVisible(true);
         AirportSearcher searcher = new AirportSearcher(currentlyLoadedAirports);
         String airportID = airportIDSearch.getText();
@@ -428,7 +414,7 @@ public class Controller implements Initializable {
 
     @FXML
     private void airlineSearch(ActionEvent e) {
-        flightView.setVisible(false);
+        resetView();
         tableView.setVisible(true);
         AirlineSearcher searcher = new AirlineSearcher(currentlyLoadedAirlines);
 
@@ -480,7 +466,7 @@ public class Controller implements Initializable {
 
     @FXML
     private void routeSearch(ActionEvent e) {
-        flightView.setVisible(false);
+        resetView();
         tableView.setVisible(true);
 
 
@@ -560,12 +546,13 @@ public class Controller implements Initializable {
     Executed when the add button is clicked */
     @FXML
     private void switchToAddAirport(ActionEvent e) {
-        tableView.setVisible(false);
+        resetView();
         addAirportView.setVisible(true);
     }
 
     @FXML
     private void cancelAddedAirport(ActionEvent e) {
+        resetView();
         tableView.setVisible(true);
         addAirportView.setVisible(false);
         addedAirportName.clear();
@@ -602,18 +589,30 @@ public class Controller implements Initializable {
 
         String data = (airportID + "," + name + "," + city + "," + country + "," + code + "," + ICAO + "," + latitude + "," + longitude + "," + altitude + "," + timezone + "," + DST + "," + olsen);
         Airport newAirport = parser.createSingleAirport(data);
+        ObservableList<Airport> airports = FXCollections.observableArrayList();
         if (newAirport != null) {
-            currentlyLoadedAirports.add(newAirport);
+            //Add the new airport to the database here
+            Database db = new Database();
+            DatabaseSaver dbSave = new DatabaseSaver();
+            DatabaseSearcher dbSearch = new DatabaseSearcher();
+            Connection connSave = db.connect();
+            Connection connSearch = db.connect();
+            dbSave.saveAirports(connSave, airports);
+            db.disconnect(connSave);
+            String sql = dbSearch.buildAirportSearch("airportid", airportID);
+            ObservableList<Airport> addedAirport = dbSearch.searchForAirportByOption(connSearch, sql);
+            System.out.println(addedAirport.get(0).getAirportID());
+            currentlyLoadedAirports.add(addedAirport.get(0));
         }
         airportTable.setItems(currentlyLoadedAirports);
+        resetView();
         tableView.setVisible(true);
-        addAirportView.setVisible(false);
     }
 
     //
     @FXML
     private void switchToAddAirline(ActionEvent e) {
-        tableView.setVisible(false);
+        resetView();
         addAirlineView.setVisible(true);
     }
 
@@ -628,7 +627,7 @@ public class Controller implements Initializable {
         addedAirlineICAO.clear();
         addedAirlineCallsign.clear();
         addedAirlineActive.setSelected(false);
-        addAirlineView.setVisible(false);
+        resetView();
         tableView.setVisible(true);
     }
 
@@ -649,17 +648,29 @@ public class Controller implements Initializable {
         }
 
         String data = airlineID + ',' + name + ',' + alias + ',' + IATA + ',' + ICAO + ',' + callsign + ',' + country + ',' + isActive;
+        ObservableList<Airline> airlines = FXCollections.observableArrayList();
         Airline newAirline = parser.createSingleAirline(data);
-        currentlyLoadedAirlines.add(newAirline);
+        if (newAirline != null) {
+            //Add the new airport to the database here
+            Database db = new Database();
+            DatabaseSaver dbSave = new DatabaseSaver();
+            DatabaseSearcher dbSearch = new DatabaseSearcher();
+            Connection connSave = db.connect();
+            Connection connSearch = db.connect();
+            dbSave.saveAirlines(connSave, airlines);
+            db.disconnect(connSave);
+            String sql = dbSearch.buildAirlineSearch("airlineid", airlineID);
+            ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
+            currentlyLoadedAirlines.add(addedAirline.get(0));
+        }
         airlineTable.setItems(currentlyLoadedAirlines);
+        resetView();
         tableView.setVisible(true);
-        addAirlineView.setVisible(false);
-
     }
 
     @FXML
     private void switchToAddRoute(ActionEvent e) {
-        tableView.setVisible(false);
+        resetView();
         addRouteView.setVisible(true);
     }
 
@@ -672,7 +683,7 @@ public class Controller implements Initializable {
         addedRouteEquipment.clear();
         addedRouteStops.clear();
         addedRouteCodeshare.setSelected(false);
-        addRouteView.setVisible(false);
+        resetView();
         tableView.setVisible(true);
 
     }
@@ -700,11 +711,28 @@ public class Controller implements Initializable {
         newRoute.setDestinationAirport(destinationSearcher.getLoadedAirports().get(0));
         newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
 
+        //Need a way to get the route ID Number
+        //newRoute.setRouteID();
+
+        ObservableList<Route> routes = FXCollections.observableArrayList();
+        routes.add(newRoute);
+
+
+        //Add the new airport to the database here
+        Database db = new Database();
+        DatabaseSaver dbSave = new DatabaseSaver();
+        DatabaseSearcher dbSearch = new DatabaseSearcher();
+        Connection connSave = db.connect();
+        Connection connSearch = db.connect();
+        dbSave.saveRoutes(connSave, routes);
+        db.disconnect(connSave);
+        //String sql = dbSearch.buildAirlineSearch("routeid", airlineID);
+        //ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
+
         currentlyLoadedRoutes.add(newRoute);
         routeTable.setItems(currentlyLoadedRoutes);
+        resetView();
         tableView.setVisible(true);
-        addRouteView.setVisible(false);
-
     }
 
 
@@ -740,10 +768,10 @@ public class Controller implements Initializable {
         airportTimezoneSearch.setVisible(true);
         airportDSTSearch.setVisible(true);
         airportICAOSearch.setVisible(true);
+
         airportSearchButton.setLayoutY(552);
         resetAirportSearch.setLayoutY(552);
         airportAddButton.setVisible(false);
-
     }
 
     @FXML
@@ -755,9 +783,7 @@ public class Controller implements Initializable {
         airlineSearchID.setVisible(false);
         destinationIDSearch.setVisible(false);
         sourceIDSearch.setVisible(false);
-        routeSearch.setLayoutX(197);
         routeSearch.setLayoutY(251);
-        resetRouteSearch.setLayoutX(29);
         resetRouteSearch.setLayoutY(251);
         routeAddButton.setVisible(true);
     }
@@ -771,9 +797,7 @@ public class Controller implements Initializable {
         airlineSearchID.setVisible(true);
         destinationIDSearch.setVisible(true);
         sourceIDSearch.setVisible(true);
-        routeSearch.setLayoutX(197);
         routeSearch.setLayoutY(455);
-        resetRouteSearch.setLayoutX(29);
         resetRouteSearch.setLayoutY(455);
         routeAddButton.setVisible(false);
     }
@@ -786,9 +810,7 @@ public class Controller implements Initializable {
         airlineIATASearch.setVisible(true);
         airlineICAOSearch.setVisible(true);
         airlineCallsignSearch.setVisible(true);
-        airlineSearchButton.setLayoutX(186);
         airlineSearchButton.setLayoutY(401);
-        resetAirlineSearch.setLayoutX(29);
         resetAirlineSearch.setLayoutY(401);
         airlineAddButton.setVisible(false);
     }
@@ -802,9 +824,7 @@ public class Controller implements Initializable {
         airlineSearchID.setVisible(false);
         airlineICAOSearch.setVisible(false);
         airlineCallsignSearch.setVisible(false);
-        airlineSearchButton.setLayoutX(186);
         airlineSearchButton.setLayoutY(235);
-        resetAirlineSearch.setLayoutX(29);
         resetAirlineSearch.setLayoutY(235);
         airlineAddButton.setVisible(true);
     }
@@ -827,8 +847,8 @@ public class Controller implements Initializable {
         }
         ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
         airlineTable.setItems(sortedObservableAirlines);
+        resetView();
         tableView.setVisible(true);
-        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded airlines by country
@@ -852,8 +872,8 @@ public class Controller implements Initializable {
         }
         ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
         airlineTable.setItems(sortedObservableAirlines);
+        resetView();
         tableView.setVisible(true);
-        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded airlines by activity
@@ -883,8 +903,8 @@ public class Controller implements Initializable {
         }
         ObservableList<Airline> sortedObservableAirlines = FXCollections.observableArrayList(sortedAirlines);
         airlineTable.setItems(sortedObservableAirlines);
+        resetView();
         tableView.setVisible(true);
-        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded airports by country
@@ -908,8 +928,8 @@ public class Controller implements Initializable {
         }
         ObservableList<Airport> sortedObservableAirports = FXCollections.observableArrayList(sortedAirports);
         airportTable.setItems(sortedObservableAirports);
+        resetView();
         tableView.setVisible(true);
-        flightView.setVisible(false);
     }
 
 
@@ -934,8 +954,8 @@ public class Controller implements Initializable {
         }
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
         routeTable.setItems(sortedObservableRoutes);
+        resetView();
         tableView.setVisible(true);
-        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded routes by Destination Airport
@@ -959,8 +979,8 @@ public class Controller implements Initializable {
         }
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
         routeTable.setItems(sortedObservableRoutes);
+        resetView();
         tableView.setVisible(true);
-        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded routes by number of stops
@@ -989,8 +1009,8 @@ public class Controller implements Initializable {
         }
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
         routeTable.setItems(sortedObservableRoutes);
+        resetView();
         tableView.setVisible(true);
-        flightView.setVisible(false);
     }
 
     /* Method to Filter ALREADY loaded routes by equipment
@@ -1014,8 +1034,8 @@ public class Controller implements Initializable {
         }
         ObservableList<Route> sortedObservableRoutes = FXCollections.observableArrayList(sortedRoutes);
         routeTable.setItems(sortedObservableRoutes);
+        resetView();
         tableView.setVisible(true);
-        flightView.setVisible(false);
     }
 
 
@@ -1030,6 +1050,8 @@ public class Controller implements Initializable {
         editActiveField.setVisible(true);
         editAirlineCountryField.setVisible(true);
 
+        editAirlineDataButton.setVisible(false);
+        individualAirlineBackButton.setVisible(false);
         saveAirlineChangesButton.setVisible(true);
         cancelAirlineChangesButton.setVisible(true);
 
@@ -1067,6 +1089,8 @@ public class Controller implements Initializable {
     @FXML
     public void cancelAirlineChanges(ActionEvent e) {
 
+        editAirlineDataButton.setVisible(true);
+        individualAirlineBackButton.setVisible(true);
         saveAirlineChangesButton.setVisible(false);
         cancelAirlineChangesButton.setVisible(false);
         editAirlineIDField.setVisible(false);
@@ -1120,6 +1144,8 @@ public class Controller implements Initializable {
         editActiveField.setVisible(false);
         editAirlineCountryField.setVisible(false);
 
+        editAirlineDataButton.setVisible(true);
+        individualAirlineBackButton.setVisible(true);
         saveAirlineChangesButton.setVisible(false);
         cancelAirlineChangesButton.setVisible(false);
 
@@ -1140,6 +1166,9 @@ public class Controller implements Initializable {
         editLatitudeField.setVisible(true);
         editLongitudeField.setVisible(true);
         editAltitudeField.setVisible(true);
+
+        individualAirportBackButton.setVisible(false);
+        editAirportDataButton.setVisible(false);
 
         saveAirportChangesButton.setVisible(true);
         cancelAirportChangesButton.setVisible(true);
@@ -1173,6 +1202,9 @@ public class Controller implements Initializable {
     @FXML
     public void cancelAirportChanges(ActionEvent e) {
 
+
+        individualAirportBackButton.setVisible(true);
+        editAirportDataButton.setVisible(true);
         saveAirportChangesButton.setVisible(false);
         cancelAirportChangesButton.setVisible(false);
         editAirportIDField.setVisible(false);
@@ -1235,7 +1267,11 @@ public class Controller implements Initializable {
         editLatitudeField.setVisible(false);
         editLongitudeField.setVisible(false);
         editAltitudeField.setVisible(false);
-        ;
+
+
+
+        individualAirportBackButton.setVisible(true);
+        editAirportDataButton.setVisible(true);
 
         saveAirportChangesButton.setVisible(false);
         cancelAirportChangesButton.setVisible(false);
@@ -1253,6 +1289,8 @@ public class Controller implements Initializable {
         editEquipmentField.setVisible(true);
         editCodeshareField.setVisible(true);
 
+        individualRouteBackButton.setVisible(false);
+        editRouteDataDutton.setVisible(false);
 
         saveRouteChangesButton.setVisible(true);
         cancelRouteChangesButton.setVisible(true);
@@ -1276,6 +1314,10 @@ public class Controller implements Initializable {
 
     @FXML
     public void cancelRouteChanges(ActionEvent e) {
+
+
+        individualRouteBackButton.setVisible(true);
+        editRouteDataDutton.setVisible(true);
 
         saveRouteChangesButton.setVisible(false);
         cancelRouteChangesButton.setVisible(false);
@@ -1321,10 +1363,23 @@ public class Controller implements Initializable {
         editCodeshareField.setVisible(false);
         ;
 
+
+        individualRouteBackButton.setVisible(true);
+        editRouteDataDutton.setVisible(true);
+
         saveRouteChangesButton.setVisible(false);
         cancelRouteChangesButton.setVisible(false);
 
         setRouteComboBoxes();
+    }
+
+    private void resetView(){
+        tableView.setVisible(false);
+        flightView.setVisible(false);
+        addAirportView.setVisible(false);
+        addAirlineView.setVisible(false);
+        addRouteView.setVisible(false);
+
     }
 
     /**
@@ -1384,7 +1439,9 @@ public class Controller implements Initializable {
     @FXML
     private Button cancelAirportChangesButton;
     @FXML
-    private Button editAirportDataDutton;
+    private Button editAirportDataButton;
+    @FXML
+    private Button editAirlineDataButton;
 
 
     @FXML
@@ -1730,6 +1787,16 @@ public class Controller implements Initializable {
     @FXML
     private CheckBox addedRouteCodeshare;
 
+    @FXML
+    private Button individualAirportBackButton;
+    @FXML
+    private Button individualAirlineBackButton;
+    @FXML
+    private Button individualRouteBackButton;
+    @FXML
+    private Button flightViewBackButton;
+
+
 
     private void resetTables() {
         airportTable.getColumns().clear();
@@ -1781,6 +1848,7 @@ public class Controller implements Initializable {
         airportPane.setVisible(false);
         airlinePane.setVisible(false);
         routePane.setVisible(false);
+        flightView.setVisible(false);
         airportTable.setVisible(true);
         airlineTable.setVisible(true);
         routeTable.setVisible(true);
@@ -1856,17 +1924,6 @@ public class Controller implements Initializable {
                         airportLongitudeDisplay.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getLongitude()));
                         airportAltitudeDisplay.setText(Double.toString(airportTable.getSelectionModel().getSelectedItem().getAltitude()));
 
-                        /*TablePosition pos = airportTable.getSelectionModel().getSelectedCells().get(0);
-                        int row = pos.getRow();
-                        int col = pos.getColumn();
-                        TableColumn column = pos.getTableColumn();
-                        String val = column.getCellData(row).toString();
-                        System.out.println("Selected Value, " + val + ", Column: " + col + ", Row: " + row);*/
-
-                    /*if ( col == 2 ) {System.out.println("2");}
-                    if ( col == 5 ) {System.out.println("5");}
-                    if ( col == 6 ) {System.out.println("6");}
-                    if ( col == 8 ) {System.out.println("8");}*/
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Please add data before attempting to select.", "No Data Found!", JOptionPane.ERROR_MESSAGE);

@@ -8,6 +8,7 @@ import seng202.group8.Model.Objects.Route;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by Callum on 27/08/16.
@@ -191,6 +192,55 @@ public class DatabaseSaver {
             conn.commit();
         } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+        }
+
+    }
+
+    public void deleteRoutes(Connection conn, ArrayList<Integer> ids) {
+
+        for (int i = 0; i < ids.size(); i++) {
+            try {
+                Statement stmt = conn.createStatement();
+                String sql = "DELETE FROM route WHERE routeid='" + Integer.toString(ids.get(i)) + "';";
+                stmt.executeUpdate(sql);
+                conn.commit();
+                stmt.close();
+            } catch (Exception e) {
+                System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+            }
+        }
+
+    }
+
+
+    public void deleteAirlines(Connection conn, ArrayList<Integer> ids) {
+
+        for (int i = 0; i < ids.size(); i++) {
+            try {
+                Statement stmt = conn.createStatement();
+                String sql = "DELETE FROM airline WHERE airlineid='" + Integer.toString(ids.get(i)) + "';";
+                stmt.executeUpdate(sql);
+                conn.commit();
+                stmt.close();
+            } catch (Exception e) {
+                System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+            }
+        }
+
+    }
+
+    public void deleteAirport(Connection conn, ArrayList<Integer> ids) {
+
+        for (int i = 0; i < ids.size(); i++) {
+            try {
+                Statement stmt = conn.createStatement();
+                String sql = "DELETE FROM airport WHERE airportid='" + Integer.toString(ids.get(i)) + "';";
+                stmt.executeUpdate(sql);
+                conn.commit();
+                stmt.close();
+            } catch (Exception e) {
+                System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+            }
         }
 
     }
