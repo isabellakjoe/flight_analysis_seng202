@@ -45,6 +45,455 @@ public class Controller implements Initializable {
     static ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
     //  Database mainDataBase = new Database();
     // Connection mainConn = mainDataBase.testConnect();
+    /**
+     * FXML imports for searching
+     */
+
+
+    @FXML
+    private TextField editSourceField;
+    @FXML
+    private TextField editDestinationField;
+    @FXML
+    private TextField editStopsField;
+    @FXML
+    private TextField editEquipmentField;
+    @FXML
+    private TextField editCodeshareField;
+    @FXML
+    private Button saveRouteChangesButton;
+    @FXML
+    private Button cancelRouteChangesButton;
+    @FXML
+    private Button editRouteDataDutton;
+    @FXML
+    private Button airportAddButton;
+    @FXML
+    private Button airlineAddButton;
+    @FXML
+    private Button routeAddButton;
+    @FXML
+    private Text addAirportIDErrorEmpty;
+    @FXML
+    private Text addAirportNameErrorEmpty;
+    @FXML
+    private Text addAirportCityErrorEmpty;
+    @FXML
+    private Text addAirportCountryErrorEmpty;
+    @FXML
+    private Text addAirportLatErrorEmpty;
+    @FXML
+    private Text addAirportLongErrorEmpty;
+    @FXML
+    private Text addAirportAltErrorEmpty;
+    @FXML
+    private Text addAirportTimeErrorEmpty;
+    @FXML
+    private Text addAirportDSTErrorEmpty;
+    @FXML
+    private Text addAirportOlsenErrorEmpty;
+    @FXML
+    private Text addAirportIDErrorType;
+    @FXML
+    private Text addAirportCodeErrorType;
+    @FXML
+    private Text addAirportLatErrorType;
+    @FXML
+    private Text addAirportLongErrorType;
+    @FXML
+    private Text addAirportAltErrorType;
+    @FXML
+    private Text addAirportTimeErrorType;
+    @FXML
+    private Text addAirportDSTErrorType;
+    @FXML
+    private Text addAirlineIDErrorEmpty;
+    @FXML
+    private Text addAirlineNameErrorEmpty;
+    @FXML
+    private Text addAirlineAliasErrorEmpty;
+    @FXML
+    private Text addAirlineCountryErrorEmpty;
+    @FXML
+    private Text addAirlineIDErrorType;
+    @FXML
+    private Text addRouteAirlineErrorEmpty;
+    @FXML
+    private Text addRouteSourceErrorEmpty;
+    @FXML
+    private Text addRouteDestErrorEmpty;
+    @FXML
+    private Text addRouteEquipErrorEmpty;
+    @FXML
+    private Text addRouteStopsErrorEmpty;
+    @FXML
+    private Text addRouteStopsErrorType;
+    @FXML
+    private TextField editAirportIDField;
+    @FXML
+    private TextField editFAAField;
+    @FXML
+    private TextField editAirportIATAField;
+    @FXML
+    private TextField editAirportICAOField;
+    @FXML
+    private TextField editTimezoneField;
+    @FXML
+    private TextField editDSTField;
+    @FXML
+    private TextField editAirportCountryField;
+    @FXML
+    private TextField editLatitudeField;
+    @FXML
+    private TextField editAirportCityField;
+    @FXML
+    private TextField editLongitudeField;
+    @FXML
+    private TextField editAltitudeField;
+    @FXML
+    private Button saveAirportChangesButton;
+    @FXML
+    private Button cancelAirportChangesButton;
+    @FXML
+    private Button editAirportDataButton;
+    @FXML
+    private Button editAirlineDataButton;
+    @FXML
+    private Button routeAdvancedButton;
+    @FXML
+    private Button routeSearch;
+    @FXML
+    private Button resetRouteSearch;
+    @FXML
+    private Button routeBackButton;
+    @FXML
+    private TextField editCallsignField;
+    @FXML
+    private TextField editAirlineIATAField;
+    @FXML
+    private TextField editAirlineICAOField;
+    @FXML
+    private TextField editAliasField;
+    @FXML
+    private CheckBox editActiveField;
+    @FXML
+    private TextField editAirlineCountryField;
+    @FXML
+    private Button airlineAdvancedButton;
+    @FXML
+    private Button airlineSearchButton;
+    @FXML
+    private Button resetAirlineSearch;
+    @FXML
+    private Button airlineBackButton;
+    @FXML
+    private Button saveAirlineChangesButton;
+    @FXML
+    private TextField editAirlineIDField;
+    @FXML
+    private Button cancelAirlineChangesButton;
+    @FXML
+    private Button resetAirportSearch;
+    @FXML
+    private Button airportSearchButton;
+    @FXML
+    private Button airportBackButton;
+    @FXML
+    private Button airportAdvancedButton;
+    @FXML
+    private Text stopsErrorMessage;
+    @FXML
+    private TextField airportIDSearch;
+    @FXML
+    private TextField airportNameSearch;
+    @FXML
+    private TextField airportCitySearch;
+    @FXML
+    private ComboBox airportCountrySearch;
+    @FXML
+    private TextField airportFAASearch;
+    @FXML
+    private TextField airportIATASearch;
+    @FXML
+    private TextField airportICAOSearch;
+    @FXML
+    private TextField airportLatitudeSearch;
+    @FXML
+    private TextField airportLongitudeSearch;
+    @FXML
+    private TextField airportAltitudeSearch;
+    @FXML
+    private TextField airportTimezoneSearch;
+    @FXML
+    private TextField airportDSTSearch;
+    @FXML
+    private TextField airlineIDSearch;
+    @FXML
+    private TextField airlineNameSearch;
+    @FXML
+    private TextField airlineAliasSearch;
+    @FXML
+    private TextField airlineIATASearch;
+    @FXML
+    private TextField airlineICAOSearch;
+    @FXML
+    private TextField airlineCallsignSearch;
+    @FXML
+    private ComboBox airlineCountrySearch;
+    @FXML
+    private ComboBox airlineActiveSearch;
+    @FXML
+    private TextField airlineSearch;
+    @FXML
+    private TextField airlineSearchID;
+    @FXML
+    private ComboBox sourceSearch;
+    @FXML
+    private TextField sourceIDSearch;
+    @FXML
+    private ComboBox destinationSearch;
+    @FXML
+    private TextField destinationIDSearch;
+    @FXML
+    private ComboBox stopoverSearch;
+    @FXML
+    private ComboBox codeshareSearch;
+    @FXML
+    private ComboBox equipmentSearch;
+    /**
+     * Setting up for flight table
+     */
+    @FXML
+    private Text titleString;
+    @FXML
+    private Text aName;
+    @FXML
+    private Text bName;
+    @FXML
+    private Text aLatitude;
+    @FXML
+    private Text bLatitude;
+    @FXML
+    private Text aLongitude;
+    @FXML
+    private Text bLongitude;
+    @FXML
+    private Text aAltitude;
+    @FXML
+    private Text bAltitude;
+    /**
+     * Initializing flight column names
+     */
+    @FXML
+    private TableView<Waypoint> flightTable;
+    @FXML
+    private TableColumn<Waypoint, String> waypointName;
+    @FXML
+    private TableColumn<Waypoint, String> waypointAltitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointLatitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointLongitude;
+    @FXML
+    private TableColumn<Waypoint, String> waypointType;
+    /**
+     * Initializing airline column names
+     */
+    @FXML
+    private TableView<Airline> airlineTable;
+    @FXML
+    private TableColumn<Airline, String> airlineID;
+    @FXML
+    private TableColumn<Airline, String> airlineName;
+    @FXML
+    private TableColumn<Airline, String> alias;
+    @FXML
+    private TableColumn<Airline, String> IATA;
+    @FXML
+    private TableColumn<Airline, String> ICAO;
+    @FXML
+    private TableColumn<Airline, String> callsign;
+    @FXML
+    private TableColumn<Airline, String> country;
+    @FXML
+    private TableColumn<Airline, String> active;
+    /**
+     * Initializing airport column names
+     */
+    @FXML
+    private TableView<Airport> airportTable;
+    @FXML
+    private TableColumn<Airport, String> airportID;
+    @FXML
+    private TableColumn<Airport, String> airportName;
+    @FXML
+    private TableColumn<Airport, String> city;
+    @FXML
+    private TableColumn<Airport, String> airportCountry;
+    @FXML
+    private TableColumn<Airport, String> FAA;
+    @FXML
+    private TableColumn<Airport, String> airportIATA;
+    @FXML
+    private TableColumn<Airport, String> airportICAO;
+    @FXML
+    private TableColumn<Airport, String> latitude;
+    @FXML
+    private TableColumn<Airport, String> longitude;
+    @FXML
+    private TableColumn<Airport, String> altitude;
+    @FXML
+    private TableColumn<Airport, String> timezone;
+    @FXML
+    private TableColumn<Airport, String> DST;
+    @FXML
+    private TableView<Route> routeTable;
+    @FXML
+    private TableColumn<Route, String> routeAirlineName;
+    @FXML
+    private TableColumn<Route, String> source;
+    @FXML
+    private TableColumn<Route, String> destination;
+    @FXML
+    private TableColumn<Route, String> codeshare;
+    @FXML
+    private TableColumn<Route, String> stops;
+    @FXML
+    private TableColumn<Route, String> equipment;
+    @FXML
+    private Pane airlinePane;
+    @FXML
+    private Text airlineNameDisplay;
+    @FXML
+    private Text airlineIDDisplay;
+    @FXML
+    private Text airlineCountryDisplay;
+    @FXML
+    private Text airlineCallsignDisplay;
+    @FXML
+    private Text airlineIATADisplay;
+    @FXML
+    private Text airlineICAODisplay;
+    @FXML
+    private Text airlineAliasDisplay;
+    @FXML
+    private Text airlineActiveDisplay;
+    @FXML
+    private Pane airportPane;
+    @FXML
+    private Text airportNameDisplay;
+    @FXML
+    private Text airportIDDisplay;
+    @FXML
+    private Text airportFAADisplay;
+    @FXML
+    private Text airportIATADisplay;
+    @FXML
+    private Text airportICAODisplay;
+    @FXML
+    private Text airportTimezoneDisplay;
+    @FXML
+    private Text airportDSTDisplay;
+    @FXML
+    private Text airportCountryDisplay;
+    @FXML
+    private Text airportCityDisplay;
+    @FXML
+    private Text airportLongitudeDisplay;
+    @FXML
+    private Text airportLatitudeDisplay;
+    @FXML
+    private Text airportAltitudeDisplay;
+    @FXML
+    private Pane routePane;
+    @FXML
+    private Text routeSourceDisplay;
+    @FXML
+    private Text routeDestinationDisplay;
+    @FXML
+    private Text routeStopsDisplay;
+    @FXML
+    private Text routeAirlineDisplay;
+    @FXML
+    private Text routeEquipmentDisplay;
+    @FXML
+    private Text routeShareDisplay;
+    @FXML
+    private Pane tableView;
+    @FXML
+    private Pane flightView;
+    @FXML
+    private Pane addAirportView;
+    @FXML
+    private Pane addAirlineView;
+    @FXML
+    private TextField addedAirportID;
+    @FXML
+    private TextField addedAirportName;
+    @FXML
+    private TextField addedAirportCity;
+    @FXML
+    private TextField addedAirportCountry;
+    @FXML
+    private TextField addedAirportCode;
+    @FXML
+    private TextField addedAirportICAO;
+    @FXML
+    private TextField addedAirportLatitude;
+    @FXML
+    private TextField addedAirportLongitude;
+    @FXML
+    private TextField addedAirportAltitude;
+    @FXML
+    private TextField addedAirportTimezone;
+    @FXML
+    private TextField addedAirportDST;
+    @FXML
+    private TextField addedAirportOlsen;
+    @FXML
+    private TextField addedAirlineID;
+    @FXML
+    private TextField addedAirlineName;
+    @FXML
+    private TextField addedAirlineAlias;
+    @FXML
+    private TextField addedAirlineCountry;
+    @FXML
+    private TextField addedAirlineIATA;
+    @FXML
+    private TextField addedAirlineICAO;
+    @FXML
+    private TextField addedAirlineCallsign;
+    @FXML
+    private CheckBox addedAirlineActive;
+    @FXML
+    private GridPane addRouteView;
+    @FXML
+    private ComboBox addedRouteAirline;
+    @FXML
+    private ComboBox addedRouteSource;
+    @FXML
+    private ComboBox addedRouteDestination;
+    @FXML
+    private TextField addedRouteEquipment;
+    @FXML
+    private TextField addedRouteStops;
+    @FXML
+    private CheckBox addedRouteCodeshare;
+    @FXML
+    private Button individualAirportBackButton;
+    @FXML
+    private Button individualAirlineBackButton;
+    @FXML
+    private Button individualRouteBackButton;
+    @FXML
+    private Button flightViewBackButton;
+    //Google Maps initialization
+    @FXML
+    private WebView webView;
+    private WebEngine webEngine;
+    @FXML
+    private MenuItem getDistanceMenu;
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e) {
@@ -334,7 +783,6 @@ public class Controller implements Initializable {
 
     }
 
-
     @FXML
     private void resetSearch(ActionEvent e) {
         routeTable.setItems(currentlyLoadedRoutes);
@@ -578,7 +1026,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void clearAirportErrors(){
+    private void clearAirportErrors() {
         addAirportIDErrorEmpty.setVisible(false);
         addAirportNameErrorEmpty.setVisible(false);
         addAirportCityErrorEmpty.setVisible(false);
@@ -599,14 +1047,13 @@ public class Controller implements Initializable {
         addAirportLongErrorType.setVisible(false);
     }
 
-
     @FXML
-    private boolean addAirportError(List<String> input){
+    private boolean addAirportError(List<String> input) {
 
         boolean filled = false;
         int size = input.size();
-        List<Integer> ints = Arrays.asList(0,8,9);
-        List<Integer> doubles = Arrays.asList(6,7);
+        List<Integer> ints = Arrays.asList(0, 8, 9);
+        List<Integer> doubles = Arrays.asList(6, 7);
 
 
         int count = 0;
@@ -646,53 +1093,52 @@ public class Controller implements Initializable {
                         addAirportOlsenErrorEmpty.setVisible(true);
                         break;
                 }
-            }else{
+            } else {
                 count += 1;
             }
 
-            if(ints.contains(i) && !(current.equals(""))) {
+            if (ints.contains(i) && !(current.equals(""))) {
 
-                    try {
-                        Integer.parseInt(input.get(i));
-                        count += 1;
+                try {
+                    Integer.parseInt(input.get(i));
+                    count += 1;
 
-                    } catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
 
-                        switch (i) {
-                            case 0:
-                                addAirportIDErrorType.setVisible(true);
-                                break;
-                            case 8:
-                                addAirportAltErrorType.setVisible(true);
-                                break;
-                            case 9:
-                                addAirportTimeErrorType.setVisible(true);
-                                break;
-                        }
+                    switch (i) {
+                        case 0:
+                            addAirportIDErrorType.setVisible(true);
+                            break;
+                        case 8:
+                            addAirportAltErrorType.setVisible(true);
+                            break;
+                        case 9:
+                            addAirportTimeErrorType.setVisible(true);
+                            break;
                     }
                 }
-            else if(doubles.contains(i) && !(current.equals(""))){
-                    try {
-                        Double.parseDouble(input.get(i));
+            } else if (doubles.contains(i) && !(current.equals(""))) {
+                try {
+                    Double.parseDouble(input.get(i));
 
-                        count += 1;
-                    }catch(NumberFormatException e){
+                    count += 1;
+                } catch (NumberFormatException e) {
 
-                        switch(i){
-                            case 6:
-                                addAirportLatErrorType.setVisible(true);
-                                break;
-                            case 7:
-                                addAirportLongErrorType.setVisible(true);
-                                break;
+                    switch (i) {
+                        case 6:
+                            addAirportLatErrorType.setVisible(true);
+                            break;
+                        case 7:
+                            addAirportLongErrorType.setVisible(true);
+                            break;
 
-                        }
                     }
                 }
-
             }
 
-        if(count == 17) {
+        }
+
+        if (count == 17) {
             filled = true;
         }
         return filled;
@@ -724,7 +1170,7 @@ public class Controller implements Initializable {
 
         boolean noErrors = addAirportError(airportDataList);
 
-        if(noErrors){
+        if (noErrors) {
             Airport newAirport = parser.createSingleAirport(data);
             ObservableList<Airport> airports = FXCollections.observableArrayList();
             airports.add(newAirport);
@@ -772,7 +1218,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private boolean addAirlineError(List<String> input){
+    private boolean addAirlineError(List<String> input) {
 
         boolean filled = false;
         int size = input.size();
@@ -796,11 +1242,11 @@ public class Controller implements Initializable {
                         addAirlineCountryErrorEmpty.setVisible(true);
                         break;
                 }
-            }else{
+            } else {
                 count += 1;
             }
 
-            if((i == 0) && !(current.equals(""))) {
+            if ((i == 0) && !(current.equals(""))) {
 
                 try {
                     Integer.parseInt(input.get(i));
@@ -808,20 +1254,20 @@ public class Controller implements Initializable {
 
                 } catch (NumberFormatException e) {
                     addAirlineIDErrorType.setVisible(true);
-                    }
                 }
             }
+        }
 
 
-
-        if(count == 5) {
+        if (count == 5) {
             filled = true;
         }
         return filled;
 
     }
+
     @FXML
-    private void clearAirlineErrors(){
+    private void clearAirlineErrors() {
         addAirlineIDErrorEmpty.setVisible(false);
         addAirlineNameErrorEmpty.setVisible(false);
         addAirlineAliasErrorEmpty.setVisible(false);
@@ -846,11 +1292,11 @@ public class Controller implements Initializable {
         }
 
         String data = airlineID + ',' + name + ',' + alias + ',' + IATA + ',' + ICAO + ',' + callsign + ',' + country + ',' + isActive;
-        List<String> notNullData = Arrays.asList(airlineID, name, alias,country);
+        List<String> notNullData = Arrays.asList(airlineID, name, alias, country);
 
         boolean noErrors = addAirlineError(notNullData);
 
-        if(noErrors) {
+        if (noErrors) {
             ObservableList<Airline> airlines = FXCollections.observableArrayList();
             Airline newAirline = parser.createSingleAirline(data);
             airlines.add(newAirline);
@@ -897,11 +1343,10 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private boolean addRouteError(List<String> input){
+    private boolean addRouteError(List<String> input) {
 
         boolean filled = false;
         int size = input.size();
-
 
 
         int count = 0;
@@ -931,7 +1376,7 @@ public class Controller implements Initializable {
                 count += 1;
             }
 
-            if((i == 0) && !(current.equals(""))) {
+            if ((i == 0) && !(current.equals(""))) {
 
                 try {
                     Integer.parseInt(input.get(i));
@@ -944,8 +1389,7 @@ public class Controller implements Initializable {
         }
 
 
-
-        if(count == 6) {
+        if (count == 6) {
             filled = true;
         }
         return filled;
@@ -953,7 +1397,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void clearRouteErrors(){
+    private void clearRouteErrors() {
 
         addRouteStopsErrorEmpty.setVisible(false);
         addRouteEquipErrorEmpty.setVisible(false);
@@ -980,7 +1424,7 @@ public class Controller implements Initializable {
         System.out.println(routeDataList);
         boolean noErrors = addRouteError(routeDataList);
 
-        if(noErrors){
+        if (noErrors) {
             newRoute.setStops(Integer.parseInt(stops));
             newRoute.setEquipment(equipment);
             newRoute.setAirlineName(airline);
@@ -1028,7 +1472,6 @@ public class Controller implements Initializable {
             tableView.setVisible(true);
         }
     }
-
 
     @FXML
     private void airportSearchBack(ActionEvent e) {
@@ -1122,7 +1565,6 @@ public class Controller implements Initializable {
         resetAirlineSearch.setLayoutY(235);
         airlineAddButton.setVisible(true);
     }
-
 
     private void filterAirlinesByName(ActionEvent e) {
 
@@ -1225,7 +1667,6 @@ public class Controller implements Initializable {
         resetView();
         tableView.setVisible(true);
     }
-
 
     /* Method to Filter ALREADY loaded routes by Source Airport
     Need to display an error message if routes aren't yet loaded
@@ -1332,7 +1773,6 @@ public class Controller implements Initializable {
         tableView.setVisible(true);
     }
 
-
     @FXML
     public void editAirlineData(ActionEvent e) {
         Airline currentAirline = airlineTable.getSelectionModel().getSelectedItem();
@@ -1429,7 +1869,7 @@ public class Controller implements Initializable {
         if (editActiveField.isSelected()) {
             currentAirline.setActive(true);
             airlineActiveDisplay.setText("Yes");
-        } else if (!(editActiveField.isSelected())){
+        } else if (!(editActiveField.isSelected())) {
             currentAirline.setActive(false);
             airlineActiveDisplay.setText("No");
         }
@@ -1592,7 +2032,6 @@ public class Controller implements Initializable {
         editAltitudeField.setVisible(false);
 
 
-
         individualAirportBackButton.setVisible(true);
         editAirportDataButton.setVisible(true);
 
@@ -1608,7 +2047,6 @@ public class Controller implements Initializable {
 
         setAirportComboBoxes();
     }
-
 
     @FXML
     public void editRouteData(ActionEvent e) {
@@ -1720,7 +2158,7 @@ public class Controller implements Initializable {
         setRouteComboBoxes();
     }
 
-    private void resetView(){
+    private void resetView() {
         tableView.setVisible(false);
         flightView.setVisible(false);
         addAirportView.setVisible(false);
@@ -1728,486 +2166,6 @@ public class Controller implements Initializable {
         addRouteView.setVisible(false);
 
     }
-
-    /**
-     * FXML imports for searching
-     */
-
-
-    @FXML
-    private TextField editSourceField;
-    @FXML
-    private TextField editDestinationField;
-    @FXML
-    private TextField editStopsField;
-    @FXML
-    private TextField editEquipmentField;
-    @FXML
-    private TextField editCodeshareField;
-    @FXML
-    private Button saveRouteChangesButton;
-    @FXML
-    private Button cancelRouteChangesButton;
-    @FXML
-    private Button editRouteDataDutton;
-
-
-    @FXML
-    private Button airportAddButton;
-    @FXML
-    private Button airlineAddButton;
-    @FXML
-    private Button routeAddButton;
-
-
-    @FXML
-    private Text addAirportIDErrorEmpty;
-    @FXML
-    private Text addAirportNameErrorEmpty;
-    @FXML
-    private Text addAirportCityErrorEmpty;
-    @FXML
-    private Text addAirportCountryErrorEmpty;
-    @FXML
-    private Text addAirportLatErrorEmpty;
-    @FXML
-    private Text addAirportLongErrorEmpty;
-    @FXML
-    private Text addAirportAltErrorEmpty;
-    @FXML
-    private Text addAirportTimeErrorEmpty;
-    @FXML
-    private Text addAirportDSTErrorEmpty;
-    @FXML
-    private Text addAirportOlsenErrorEmpty;
-
-    @FXML
-    private Text addAirportIDErrorType;
-    @FXML
-    private Text addAirportCodeErrorType;
-    @FXML
-    private Text addAirportLatErrorType;
-    @FXML
-    private Text addAirportLongErrorType;
-    @FXML
-    private Text addAirportAltErrorType;
-    @FXML
-    private Text addAirportTimeErrorType;
-    @FXML
-    private Text addAirportDSTErrorType;
-
-    @FXML
-    private Text addAirlineIDErrorEmpty;
-    @FXML
-    private Text addAirlineNameErrorEmpty;
-    @FXML
-    private Text addAirlineAliasErrorEmpty;
-    @FXML
-    private Text addAirlineCountryErrorEmpty;
-    @FXML
-    private Text addAirlineIDErrorType;
-
-    @FXML
-    private Text addRouteAirlineErrorEmpty;
-    @FXML
-    private Text addRouteSourceErrorEmpty;
-    @FXML
-    private Text addRouteDestErrorEmpty;
-    @FXML
-    private Text addRouteEquipErrorEmpty;
-    @FXML
-    private Text addRouteStopsErrorEmpty;
-    @FXML
-    private Text addRouteStopsErrorType;
-
-
-    @FXML
-    private TextField editAirportIDField;
-    @FXML
-    private TextField editFAAField;
-    @FXML
-    private TextField editAirportIATAField;
-    @FXML
-    private TextField editAirportICAOField;
-    @FXML
-    private TextField editTimezoneField;
-    @FXML
-    private TextField editDSTField;
-    @FXML
-    private TextField editAirportCountryField;
-    @FXML
-    private TextField editLatitudeField;
-    @FXML
-    private TextField editAirportCityField;
-    @FXML
-    private TextField editLongitudeField;
-    @FXML
-    private TextField editAltitudeField;
-    @FXML
-    private Button saveAirportChangesButton;
-    @FXML
-    private Button cancelAirportChangesButton;
-    @FXML
-    private Button editAirportDataButton;
-    @FXML
-    private Button editAirlineDataButton;
-
-
-    @FXML
-    private Button routeAdvancedButton;
-    @FXML
-    private Button routeSearch;
-    @FXML
-    private Button resetRouteSearch;
-    @FXML
-    private Button routeBackButton;
-    @FXML
-    private TextField editCallsignField;
-    @FXML
-    private TextField editAirlineIATAField;
-    @FXML
-    private TextField editAirlineICAOField;
-    @FXML
-    private TextField editAliasField;
-    @FXML
-    private CheckBox editActiveField;
-    @FXML
-    private TextField editAirlineCountryField;
-    @FXML
-    private Button airlineAdvancedButton;
-    @FXML
-    private Button airlineSearchButton;
-    @FXML
-    private Button resetAirlineSearch;
-    @FXML
-    private Button airlineBackButton;
-    @FXML
-    private Button saveAirlineChangesButton;
-    @FXML
-    private TextField editAirlineIDField;
-    @FXML
-    private Button cancelAirlineChangesButton;
-    @FXML
-    private Button resetAirportSearch;
-    @FXML
-    private Button airportSearchButton;
-    @FXML
-    private Button airportBackButton;
-    @FXML
-    private Button airportAdvancedButton;
-    @FXML
-    private Text stopsErrorMessage;
-    @FXML
-    private TextField airportIDSearch;
-    @FXML
-    private TextField airportNameSearch;
-    @FXML
-    private TextField airportCitySearch;
-    @FXML
-    private ComboBox airportCountrySearch;
-    @FXML
-    private TextField airportFAASearch;
-    @FXML
-    private TextField airportIATASearch;
-    @FXML
-    private TextField airportICAOSearch;
-    @FXML
-    private TextField airportLatitudeSearch;
-    @FXML
-    private TextField airportLongitudeSearch;
-    @FXML
-    private TextField airportAltitudeSearch;
-    @FXML
-    private TextField airportTimezoneSearch;
-    @FXML
-    private TextField airportDSTSearch;
-
-
-    @FXML
-    private TextField airlineIDSearch;
-    @FXML
-    private TextField airlineNameSearch;
-    @FXML
-    private TextField airlineAliasSearch;
-    @FXML
-    private TextField airlineIATASearch;
-    @FXML
-    private TextField airlineICAOSearch;
-    @FXML
-    private TextField airlineCallsignSearch;
-    @FXML
-    private ComboBox airlineCountrySearch;
-    @FXML
-    private ComboBox airlineActiveSearch;
-
-    @FXML
-    private TextField airlineSearch;
-    @FXML
-    private TextField airlineSearchID;
-    @FXML
-    private ComboBox sourceSearch;
-    @FXML
-    private TextField sourceIDSearch;
-    @FXML
-    private ComboBox destinationSearch;
-    @FXML
-    private TextField destinationIDSearch;
-    @FXML
-    private ComboBox stopoverSearch;
-    @FXML
-    private ComboBox codeshareSearch;
-    @FXML
-    private ComboBox equipmentSearch;
-
-
-    /**
-     * Setting up for flight table
-     */
-    @FXML
-    private Text titleString;
-    @FXML
-    private Text aName;
-    @FXML
-    private Text bName;
-    @FXML
-    private Text aLatitude;
-    @FXML
-    private Text bLatitude;
-    @FXML
-    private Text aLongitude;
-    @FXML
-    private Text bLongitude;
-    @FXML
-    private Text aAltitude;
-    @FXML
-    private Text bAltitude;
-    /**
-     * Initializing flight column names
-     */
-    @FXML
-    private TableView<Waypoint> flightTable;
-    @FXML
-    private TableColumn<Waypoint, String> waypointName;
-    @FXML
-    private TableColumn<Waypoint, String> waypointAltitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointLatitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointLongitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointType;
-
-
-    /**
-     * Initializing airline column names
-     */
-    @FXML
-    private TableView<Airline> airlineTable;
-    @FXML
-    private TableColumn<Airline, String> airlineID;
-    @FXML
-    private TableColumn<Airline, String> airlineName;
-    @FXML
-    private TableColumn<Airline, String> alias;
-    @FXML
-    private TableColumn<Airline, String> IATA;
-    @FXML
-    private TableColumn<Airline, String> ICAO;
-    @FXML
-    private TableColumn<Airline, String> callsign;
-    @FXML
-    private TableColumn<Airline, String> country;
-    @FXML
-    private TableColumn<Airline, String> active;
-
-
-    /**
-     * Initializing airport column names
-     */
-    @FXML
-    private TableView<Airport> airportTable;
-    @FXML
-    private TableColumn<Airport, String> airportID;
-    @FXML
-    private TableColumn<Airport, String> airportName;
-    @FXML
-    private TableColumn<Airport, String> city;
-    @FXML
-    private TableColumn<Airport, String> airportCountry;
-    @FXML
-    private TableColumn<Airport, String> FAA;
-    @FXML
-    private TableColumn<Airport, String> airportIATA;
-    @FXML
-    private TableColumn<Airport, String> airportICAO;
-    @FXML
-    private TableColumn<Airport, String> latitude;
-    @FXML
-    private TableColumn<Airport, String> longitude;
-    @FXML
-    private TableColumn<Airport, String> altitude;
-    @FXML
-    private TableColumn<Airport, String> timezone;
-    @FXML
-    private TableColumn<Airport, String> DST;
-
-
-    @FXML
-    private TableView<Route> routeTable;
-    @FXML
-    private TableColumn<Route, String> routeAirlineName;
-    @FXML
-    private TableColumn<Route, String> source;
-    @FXML
-    private TableColumn<Route, String> destination;
-    @FXML
-    private TableColumn<Route, String> codeshare;
-    @FXML
-    private TableColumn<Route, String> stops;
-    @FXML
-    private TableColumn<Route, String> equipment;
-
-
-    @FXML
-    private Pane airlinePane;
-    @FXML
-    private Text airlineNameDisplay;
-    @FXML
-    private Text airlineIDDisplay;
-    @FXML
-    private Text airlineCountryDisplay;
-    @FXML
-    private Text airlineCallsignDisplay;
-    @FXML
-    private Text airlineIATADisplay;
-    @FXML
-    private Text airlineICAODisplay;
-    @FXML
-    private Text airlineAliasDisplay;
-    @FXML
-    private Text airlineActiveDisplay;
-
-    @FXML
-    private Pane airportPane;
-    @FXML
-    private Text airportNameDisplay;
-    @FXML
-    private Text airportIDDisplay;
-    @FXML
-    private Text airportFAADisplay;
-    @FXML
-    private Text airportIATADisplay;
-    @FXML
-    private Text airportICAODisplay;
-    @FXML
-    private Text airportTimezoneDisplay;
-    @FXML
-    private Text airportDSTDisplay;
-    @FXML
-    private Text airportCountryDisplay;
-    @FXML
-    private Text airportCityDisplay;
-    @FXML
-    private Text airportLongitudeDisplay;
-    @FXML
-    private Text airportLatitudeDisplay;
-    @FXML
-    private Text airportAltitudeDisplay;
-
-    @FXML
-    private Pane routePane;
-    @FXML
-    private Text routeSourceDisplay;
-    @FXML
-    private Text routeDestinationDisplay;
-    @FXML
-    private Text routeStopsDisplay;
-    @FXML
-    private Text routeAirlineDisplay;
-    @FXML
-    private Text routeEquipmentDisplay;
-    @FXML
-    private Text routeShareDisplay;
-
-    @FXML
-    private Pane tableView;
-    @FXML
-    private Pane flightView;
-    @FXML
-    private Pane addAirportView;
-    @FXML
-    private Pane addAirlineView;
-
-    @FXML
-    private TextField addedAirportID;
-    @FXML
-    private TextField addedAirportName;
-    @FXML
-    private TextField addedAirportCity;
-    @FXML
-    private TextField addedAirportCountry;
-    @FXML
-    private TextField addedAirportCode;
-    @FXML
-    private TextField addedAirportICAO;
-    @FXML
-    private TextField addedAirportLatitude;
-    @FXML
-    private TextField addedAirportLongitude;
-    @FXML
-    private TextField addedAirportAltitude;
-    @FXML
-    private TextField addedAirportTimezone;
-    @FXML
-    private TextField addedAirportDST;
-    @FXML
-    private TextField addedAirportOlsen;
-
-    @FXML
-    private TextField addedAirlineID;
-    @FXML
-    private TextField addedAirlineName;
-    @FXML
-    private TextField addedAirlineAlias;
-    @FXML
-    private TextField addedAirlineCountry;
-    @FXML
-    private TextField addedAirlineIATA;
-    @FXML
-    private TextField addedAirlineICAO;
-    @FXML
-    private TextField addedAirlineCallsign;
-    @FXML
-    private CheckBox addedAirlineActive;
-
-
-    @FXML
-    private GridPane addRouteView;
-    @FXML
-    private ComboBox addedRouteAirline;
-    @FXML
-    private ComboBox addedRouteSource;
-    @FXML
-    private ComboBox addedRouteDestination;
-    @FXML
-    private TextField addedRouteEquipment;
-    @FXML
-    private TextField addedRouteStops;
-    @FXML
-    private CheckBox addedRouteCodeshare;
-
-    @FXML
-    private Button individualAirportBackButton;
-    @FXML
-    private Button individualAirlineBackButton;
-    @FXML
-    private Button individualRouteBackButton;
-    @FXML
-    private Button flightViewBackButton;
-    @FXML
-    private ContextMenu distanceMenu;
-
-
 
     private void resetTables() {
         airportTable.getColumns().clear();
@@ -2252,7 +2210,6 @@ public class Controller implements Initializable {
 
     }
 
-
     public void backToTableView(ActionEvent e) {
         resetTables();
         addAirportView.setVisible(false);
@@ -2265,7 +2222,6 @@ public class Controller implements Initializable {
         routeTable.setVisible(true);
         tableView.setVisible(true);
     }
-
 
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
@@ -2430,16 +2386,8 @@ public class Controller implements Initializable {
 
     }
 
-    //Google Maps initialization
-    @FXML
-    private WebView webView;
-    private WebEngine webEngine;
-
-    @FXML
-    private MenuItem getDistanceMenu;
-
     private void initMap() {
-       webEngine = webView.getEngine();
-       webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
+        webEngine = webView.getEngine();
+        webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
     }
 }

@@ -6,7 +6,6 @@ import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 public class DatabaseSaver {
 
     private String checkIATA(Airport airport) {
-
+        //Method to get an airports IATA or FAA depending on specified country
         if (airport.getCountry().equals("United States")) {
             return airport.getFAA();
         } else {
@@ -26,19 +25,19 @@ public class DatabaseSaver {
     }
 
     private String convertIntToString(int toConvert) {
-
+        //Method used to convert a integer to a string
         return Integer.toString(toConvert);
 
     }
 
     private String convertDoubleToString(double toConvert) {
-
+        //Method used to convert a double to a string
         return Double.toString(toConvert);
 
     }
 
-    /* Method to check whether an airline is currently active*/
-    private char checkActive(Boolean isActive) {
+    private char getCharOfBoolean(Boolean isActive) {
+        //Method to return a char based off an input boolean
         if (isActive) {
             return 'Y';
         } else {
@@ -46,17 +45,8 @@ public class DatabaseSaver {
         }
     }
 
-    /* Method to check whether an route is codeshared */
-    private char setCodeshare(boolean codeshare) {
-        if (codeshare) {
-            return 'Y';
-        } else {
-            return 'N';
-        }
-    }
-
     private String createAirportStatement(Airport airportToSave) {
-        //Function to create an sql statement to insert an airport
+       // A method used to create an sql statement used to insert an airport into the database.
         int id = airportToSave.getAirportID();
         String stringID = convertIntToString(id);
         String name = airportToSave.getName();
@@ -84,8 +74,7 @@ public class DatabaseSaver {
     }
 
     private String createAirlineStatement(Airline airlineToSave) {
-        //Function to create airline insert statement
-
+        //A method used to create an sql statement used to insert an airline into the database.
         int id = airlineToSave.getAirlineID();
         String stringID = convertIntToString(id);
         String name = airlineToSave.getName();
@@ -94,7 +83,7 @@ public class DatabaseSaver {
         String icao = airlineToSave.getICAO();
         String callsign = airlineToSave.getCallsign();
         String country = airlineToSave.getCountry();
-        char active = checkActive(airlineToSave.isActive());
+        char active = getCharOfBoolean(airlineToSave.isActive());
 
         String statement = "INSERT INTO airline VALUES (" + stringID + ",\"" + name + "\",\"" + alias + "\",\"" + iata +
                                                         "\",\"" + icao + "\",\"" + callsign + "\",\"" + country + "\",\"" + active + "\");";
@@ -105,8 +94,7 @@ public class DatabaseSaver {
     }
 
     private String createRouteStatement(Route routeToSave) {
-        //Function to create route insert statement
-
+        //A method used to create an sql statement used to insert an route into the database.
         //Get the route's unique ID
         int id = routeToSave.getRouteID();
         String stringID = convertIntToString(id);
@@ -133,7 +121,7 @@ public class DatabaseSaver {
         int destinationAirportID = routeToSave.getDestinationAirport().getAirportID();
         String stringDestinationID = convertIntToString(destinationAirportID);
         //Get whether the route is codeshared
-        char codeshare = setCodeshare(routeToSave.isCodeshare());
+        char codeshare = getCharOfBoolean(routeToSave.isCodeshare());
         //Get the number of stops
         int stops = routeToSave.getStops();
         String stringStops = convertIntToString(stops);
@@ -149,7 +137,11 @@ public class DatabaseSaver {
 
     }
 
-
+    /** A method which takes an sql query and executes an update to the database to add Airport objects
+     *
+     * @param conn a static connection to a database
+     * @param airportList a observable list of airports
+     */
     public void saveAirports(Connection conn, ObservableList<Airport> airportList) {
 
         try {
@@ -165,6 +157,11 @@ public class DatabaseSaver {
         }
     }
 
+    /** A method which takes an sql query and executes an update to the database to add Airline objects
+     *
+     * @param conn a static connection to a database
+     * @param airlineList an observable list of airlines
+     */
     public void saveAirlines(Connection conn, ObservableList<Airline> airlineList) {
 
         try {
@@ -181,6 +178,11 @@ public class DatabaseSaver {
 
     }
 
+    /** A method which takes an sql query and executes an update to the database to add Route objects
+     *
+     * @param conn a static connection to a database
+     * @param routeList an observable list of routes
+     */
     public void saveRoutes(Connection conn, ObservableList<Route> routeList) {
 
         try {
@@ -196,6 +198,11 @@ public class DatabaseSaver {
 
     }
 
+    /** A method which takes a list of route id's and deletes them from the database
+     *
+     * @param conn a static connection to the database
+     * @param ids a list of routes ids which are to be deleted
+     */
     public void deleteRoutes(Connection conn, ArrayList<Integer> ids) {
 
         for (int i = 0; i < ids.size(); i++) {
@@ -212,7 +219,11 @@ public class DatabaseSaver {
 
     }
 
-
+    /** A method which takes a list of airline id's and deletes them from the database
+     *
+     * @param conn a static connection to the database
+     * @param ids a list of airline ids which are to be deleted
+     */
     public void deleteAirlines(Connection conn, ArrayList<Integer> ids) {
 
         for (int i = 0; i < ids.size(); i++) {
@@ -229,6 +240,11 @@ public class DatabaseSaver {
 
     }
 
+    /** A method which takes a list of airport id's and deletes them from the database
+     *
+     * @param conn a static connection to the database
+     * @param ids a list of airport ids which are to be deleted
+     */
     public void deleteAirport(Connection conn, ArrayList<Integer> ids) {
 
         for (int i = 0; i < ids.size(); i++) {

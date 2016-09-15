@@ -2,6 +2,8 @@ package seng202.group8.Model.Objects;
 
 /**
  * Created by esa46 on 19/08/16.
+ *
+ * Route object class.
  */
 public class Route {
 
@@ -86,6 +88,13 @@ public class Route {
         this.equipment = equipment;
     }
 
+    /**
+     * Method to check if Route being added has any parameter equal to another Route already in database.
+     *
+     * @param other (Route) being checked against.
+     * @return true if another Route has same parameter.
+     * @return false otherwise.
+     */
     public boolean isEqualTo(Route other) {
         boolean isEqual = true;
         if (!this.airline.getName().equals(other.getAirline().getName())) {

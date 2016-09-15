@@ -2,6 +2,8 @@ package seng202.group8.Model.Objects;
 
 /**
  * Created by esa46 on 19/08/16.
+ *
+ * Waypoint Object class.
  */
 public class Waypoint {
 

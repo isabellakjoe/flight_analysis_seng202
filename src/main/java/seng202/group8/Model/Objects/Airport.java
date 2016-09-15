@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Created by esa46 on 19/08/16.
+ *
+ * Airline object class.
  */
 public class Airport {
 
@@ -127,7 +129,12 @@ public class Airport {
     }
 
 
-    /* Returns distance (in km, rounded to nearest 100km) to second airport */
+    /**
+     * Method that calculates distance (in km, rounded to nearest 100km) to second airport
+     *
+     * @param airport being measured to
+     * @return distanceKm (double)
+     */
     public double calculateDistanceTo(Airport airport){
         double distanceKm;
         double earthRadiusKm = 6371;
@@ -143,6 +150,12 @@ public class Airport {
     }
 
 
+    /**
+     * Method to check if airport being added has params equal to another airline already in database.
+     *
+     * @param other (Airport) being checked against
+     * @return isEqual (boolean) true if parameter already in database, false otherwise
+     */
     public boolean isEqualTo(Airport other){
         boolean isEqual = true;
         if (!this.name.equals(other.getName())) {

@@ -1,4 +1,4 @@
-package seng202.group8.View;
+package seng202.group8;
 
 /**
  * Created by Callum on 22/08/16.

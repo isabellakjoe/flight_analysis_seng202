@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 
 /**
  * Created by esa46 on 19/08/16.
+ *
+ * Flight Object class.
  */
 public class Flight {
 
@@ -34,10 +36,6 @@ public class Flight {
 
     public void setWaypoints(ObservableList<Waypoint> waypoints) {
         this.waypoints = waypoints;
-    }
-
-    public void addWaypoint(Waypoint waypoint){
-        waypoints.add(waypoint);
     }
 
 }
