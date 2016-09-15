@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -21,7 +20,6 @@ import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Flight;
 import seng202.group8.Model.Objects.Route;
-import seng202.group8.Model.Parsers.AirportParser;
 import seng202.group8.Model.Parsers.FileLoader;
 import seng202.group8.Model.Searchers.AirlineSearcher;
 import seng202.group8.Model.Searchers.AirportSearcher;
@@ -54,6 +52,12 @@ public class MainController implements Initializable {
     @FXML
     private AddAirportViewController addAirportViewController;
     @FXML
+    private AddRouteViewController addRouteViewController;
+
+
+
+
+    @FXML
     private TextField editSourceField;
     @FXML
     private TextField editDestinationField;
@@ -79,62 +83,7 @@ public class MainController implements Initializable {
     private Button airlineAddButton;
     @FXML
     private Button routeAddButton;
-    @FXML
-    private Text addAirlineIDErrorEmpty;
-    @FXML
-    private Text addAirlineNameErrorEmpty;
-    @FXML
-    private Text addAirlineAliasErrorEmpty;
-    @FXML
-    private Text addAirlineCountryErrorEmpty;
-    @FXML
-    private Text addAirlineIDErrorType;
-    @FXML
-    private Text addAirportIDErrorEmpty;
-    @FXML
-    private Text addAirportNameErrorEmpty;
-    @FXML
-    private Text addAirportCityErrorEmpty;
-    @FXML
-    private Text addAirportCountryErrorEmpty;
-    @FXML
-    private Text addAirportLatErrorEmpty;
-    @FXML
-    private Text addAirportLongErrorEmpty;
-    @FXML
-    private Text addAirportAltErrorEmpty;
-    @FXML
-    private Text addAirportTimeErrorEmpty;
-    @FXML
-    private Text addAirportDSTErrorEmpty;
-    @FXML
-    private Text addAirportOlsenErrorEmpty;
-    @FXML
-    private Text addAirportIDErrorType;
-    @FXML
-    private Text addAirportCodeErrorType;
-    @FXML
-    private Text addAirportLatErrorType;
-    @FXML
-    private Text addAirportLongErrorType;
-    @FXML
-    private Text addAirportAltErrorType;
-    @FXML
-    private Text addAirportTimeErrorType;
-    @FXML
-    private Text addAirportDSTErrorType;
-    @FXML
-    private Text addRouteAirlineErrorEmpty;
-    @FXML
-    private Text addRouteSourceErrorEmpty;
-    @FXML
-    private Text addRouteDestErrorEmpty;
-    @FXML
-    private Text addRouteEquipErrorEmpty;
-    @FXML
-    private Text addRouteStopsErrorEmpty;
-    @FXML
-    private Text addRouteStopsErrorType;
+
     @FXML
     private TextField editAirportIDField;
     @FXML
@@ -207,8 +156,6 @@ public class MainController implements Initializable {
     private Button airportBackButton;
     @FXML
     private Button airportAdvancedButton;
-    @FXML
-    private Text stopsErrorMessage;
     @FXML
     private TextField airportIDSearch;
     @FXML
@@ -318,7 +265,7 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn<Airport, String> DST;
     @FXML
-    private TableView<Route> routeTable;
+    public TableView<Route> routeTable;
     @FXML
     private TableColumn<Route, String> routeAirlineName;
     @FXML
@@ -400,62 +347,7 @@ public class MainController implements Initializable {
     private Text routeShareDisplay;
     @FXML
     public Pane tableView;
-    @FXML
-    private Pane addAirlineView;
-    @FXML
-    private TextField addedAirlineID;
-    @FXML
-    private TextField addedAirlineName;
-    @FXML
-    private TextField addedAirlineAlias;
-    @FXML
-    private TextField addedAirlineCountry;
-    @FXML
-    private TextField addedAirlineIATA;
-    @FXML
-    private TextField addedAirlineICAO;
-    @FXML
-    private TextField addedAirlineCallsign;
-    @FXML
-    private CheckBox addedAirlineActive;
-    @FXML
-    private TextField addedAirportID;
-    @FXML
-    private TextField addedAirportName;
-    @FXML
-    private TextField addedAirportCity;
-    @FXML
-    private TextField addedAirportCountry;
-    @FXML
-    private TextField addedAirportCode;
-    @FXML
-    private TextField addedAirportICAO;
-    @FXML
-    private TextField addedAirportLatitude;
-    @FXML
-    private TextField addedAirportLongitude;
-    @FXML
-    private TextField addedAirportAltitude;
-    @FXML
-    private TextField addedAirportTimezone;
-    @FXML
-    private TextField addedAirportDST;
-    @FXML
-    private TextField addedAirportOlsen;
-    @FXML
-    private GridPane addRouteView;
-    @FXML
-    private ComboBox addedRouteAirline;
-    @FXML
-    private ComboBox addedRouteSource;
-    @FXML
-    private ComboBox addedRouteDestination;
-    @FXML
-    private TextField addedRouteEquipment;
-    @FXML
-    private TextField addedRouteStops;
-    @FXML
-    private CheckBox addedRouteCodeshare;
+
     @FXML
     private Button individualAirportBackButton;
     @FXML
@@ -523,10 +415,10 @@ public class MainController implements Initializable {
         airportCountrySearch.getItems().setAll(sortedCountries);
 
 
-        addedRouteSource.getItems().clear();
-        addedRouteSource.getItems().addAll(sortedNames);
-        addedRouteDestination.getItems().clear();
-        addedRouteDestination.getItems().addAll(sortedNames);
+        addRouteViewController.addedRouteSource.getItems().clear();
+        addRouteViewController.addedRouteSource.getItems().addAll(sortedNames);
+        addRouteViewController.addedRouteDestination.getItems().clear();
+        addRouteViewController.addedRouteDestination.getItems().addAll(sortedNames);
     }
 
     /* Method to open up a file chooser for the user to select the Airline Data file with error handling */
@@ -593,8 +485,8 @@ public class MainController implements Initializable {
         airlineCountrySearch.getItems().clear();
         airlineCountrySearch.getItems().setAll(sortedCountries);
 
-        addedRouteAirline.getItems().clear();
-        addedRouteAirline.getItems().addAll(sortedAirlines);
+        addRouteViewController.addedRouteAirline.getItems().clear();
+        addRouteViewController.addedRouteAirline.getItems().addAll(sortedAirlines);
     }
 
     /* Method to open up a file chooser for the user to select the Route Data file with error handling */
@@ -635,7 +527,7 @@ public class MainController implements Initializable {
 
     }
 
-    private void setRouteComboBoxes() {
+    public void setRouteComboBoxes() {
         ArrayList<String> codeshareStatuses = new ArrayList<String>();
         codeshareStatuses.add("ALL");
         codeshareStatuses.add("Codeshare");
@@ -880,7 +772,6 @@ public class MainController implements Initializable {
                 int intAirlineID = Integer.parseInt(airlineID);
                 searcher.routesOfAirlineID(intAirlineID);
             } catch (NumberFormatException exception) {
-                stopsErrorMessage.setVisible(true);
             }
         }
 
@@ -893,7 +784,6 @@ public class MainController implements Initializable {
                 int intSourceID = Integer.parseInt(sourceID);
                 searcher.routesOfSourceID(intSourceID);
             } catch (NumberFormatException exception) {
-                stopsErrorMessage.setVisible(true);
             }
         }
 
@@ -906,7 +796,6 @@ public class MainController implements Initializable {
                 int intDestID = Integer.parseInt(destinationID);
                 searcher.routesOfDestinationID(intDestID);
             } catch (NumberFormatException exception) {
-                stopsErrorMessage.setVisible(true);
             }
         }
 
@@ -915,7 +804,6 @@ public class MainController implements Initializable {
                 int intStops = Integer.parseInt(stops);
                 searcher.routesOfStops(intStops);
             } catch (NumberFormatException exception) {
-                stopsErrorMessage.setVisible(true);
             }
         }
 
@@ -953,153 +841,10 @@ public class MainController implements Initializable {
     @FXML
     private void switchToAddRoute(ActionEvent e) {
         resetView();
-        addRouteView.setVisible(true);
+        addRouteViewController.makeVisible();
     }
 
-    @FXML
-    private void cancelAddedRoute(ActionEvent e) {
 
-        addedRouteAirline.setValue(null);
-        addedRouteSource.setValue(null);
-        addedRouteDestination.setValue(null);
-        addedRouteEquipment.clear();
-        addedRouteStops.clear();
-        addedRouteCodeshare.setSelected(false);
-        resetView();
-        tableView.setVisible(true);
-
-    }
-
-    @FXML
-    private boolean addRouteError(List<String> input) {
-
-        boolean filled = false;
-        int size = input.size();
-
-
-        int count = 0;
-        for (int i = 0; i < size; i++) {
-            String current = input.get(i);
-
-            if (current == null || current.equals("")) {
-
-                switch (i) {
-                    case 0:
-                        addRouteStopsErrorEmpty.setVisible(true);
-                        break;
-                    case 1:
-                        addRouteEquipErrorEmpty.setVisible(true);
-                        break;
-                    case 2:
-                        addRouteAirlineErrorEmpty.setVisible(true);
-                        break;
-                    case 3:
-                        addRouteSourceErrorEmpty.setVisible(true);
-                        break;
-                    case 4:
-                        addRouteDestErrorEmpty.setVisible(true);
-                        break;
-                }
-            } else {
-                count += 1;
-            }
-
-            if ((i == 0) && !(current.equals(""))) {
-
-                try {
-                    Integer.parseInt(input.get(i));
-                    count += 1;
-
-                } catch (NumberFormatException e) {
-                    addRouteStopsErrorType.setVisible(true);
-                }
-            }
-        }
-
-
-        if (count == 6) {
-            filled = true;
-        }
-        return filled;
-
-    }
-
-    @FXML
-    private void clearRouteErrors() {
-
-        addRouteStopsErrorEmpty.setVisible(false);
-        addRouteEquipErrorEmpty.setVisible(false);
-        addRouteAirlineErrorEmpty.setVisible(false);
-        addRouteSourceErrorEmpty.setVisible(false);
-        addRouteDestErrorEmpty.setVisible(false);
-        addRouteStopsErrorType.setVisible(false);
-
-    }
-
-    @FXML
-    private void saveAddedRoute(ActionEvent e) {
-        clearRouteErrors();
-
-        Route newRoute = new Route();
-
-        String stops = addedRouteStops.getText();
-        String equipment = addedRouteEquipment.getText();
-        String airline = (String) addedRouteAirline.getValue();
-        String source = (String) addedRouteSource.getValue();
-        String destination = (String) addedRouteDestination.getValue();
-
-        List<String> routeDataList = Arrays.asList(stops, equipment, airline, source, destination);
-        System.out.println(routeDataList);
-        boolean noErrors = addRouteError(routeDataList);
-
-        if (noErrors) {
-            newRoute.setStops(Integer.parseInt(stops));
-            newRoute.setEquipment(equipment);
-            newRoute.setAirlineName(airline);
-            newRoute.setSourceAirportName(source);
-            newRoute.setDestinationAirportName(destination);
-
-            AirportSearcher sourceSearcher = new AirportSearcher(currentlyLoadedAirports);
-            sourceSearcher.airportsOfName(newRoute.getSourceAirportName());
-
-            AirportSearcher destinationSearcher = new AirportSearcher(currentlyLoadedAirports);
-            destinationSearcher.airportsOfName(newRoute.getDestinationAirportName());
-
-            AirlineSearcher airlineSearcher = new AirlineSearcher(currentlyLoadedAirlines);
-            airlineSearcher.airlinesOfName(newRoute.getAirlineName());
-
-            newRoute.setSourceAirport(sourceSearcher.getLoadedAirports().get(0));
-            newRoute.setDestinationAirport(destinationSearcher.getLoadedAirports().get(0));
-            newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
-
-            //Need a way to get the route ID Number
-            //newRoute.setRouteID();
-
-            ObservableList<Route> routes = FXCollections.observableArrayList();
-            routes.add(newRoute);
-
-
-            //Add the new airport to the database here
-            Database db = new Database();
-            DatabaseSaver dbSave = new DatabaseSaver();
-            DatabaseSearcher dbSearch = new DatabaseSearcher();
-            Connection connSave = db.connect();
-            Connection connSearch = db.connect();
-            dbSave.saveRoutes(connSave, routes);
-            db.disconnect(connSave);
-
-            //TODO: Need a way of getting the last max value and using this dynamically
-
-            //String sql = dbSearch.buildAirlineSearch("routeid", airlineID);
-            //ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
-
-            currentlyLoadedRoutes.add(newRoute);
-            routeTable.setItems(currentlyLoadedRoutes);
-            resetView();
-            setRouteComboBoxes();
-            tableView.setVisible(true);
-        }
-    }
 
     @FXML
     private void airportSearchBack(ActionEvent e) {
@@ -1791,7 +1536,7 @@ public class MainController implements Initializable {
         flightViewController.makeInvisible();
         addAirportViewController.makeInvisible();
         addAirlineViewController.makeInvisible();
-        addRouteView.setVisible(false);
+        addRouteViewController.makeInvisible();
 
     }
 
@@ -1842,7 +1587,7 @@ public class MainController implements Initializable {
         resetTables();
         addAirportViewController.makeInvisible();
         addAirlineViewController.makeInvisible();
-        addRouteView.setVisible(false);
+        addRouteViewController.makeInvisible();
         airportPane.setVisible(false);
         airlinePane.setVisible(false);
         routePane.setVisible(false);
@@ -1857,13 +1602,15 @@ public class MainController implements Initializable {
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
 
-
-
         mapViewController.initMap();
         flightViewController.setMainController(this);
         mapViewController.setMainController(this);
         addAirlineViewController.setMainController(this);
         addAirportViewController.setMainController(this);
+        addRouteViewController.setMainController(this);
+
+
+
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
         alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
