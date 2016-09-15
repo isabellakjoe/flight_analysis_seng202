@@ -10,21 +10,21 @@ import java.util.ArrayList;
 public class DatabaseUpdater {
 
     private String generateSQL(String table, String updateString, String paramID, String searchParam) {
-
+        // Method used to create an sql query to update values in the database
         String sql = "UPDATE " + table + " SET " + updateString + " WHERE " + paramID + " = '" + searchParam + "';";
         return sql;
 
     }
 
     private String createUpdateString(String column, String value) {
-
+        // Method used to add update parameters to an sql string
         String updateString = column + "='" + value + "'";
         return updateString;
 
     }
 
     private String getUpdateCommands(ArrayList<ArrayList<String>> updateParams) {
-
+        // Method used to generate of a string containing values to update
         String sql = "";
 
         if (updateParams.size() == 1) {
@@ -44,6 +44,7 @@ public class DatabaseUpdater {
     }
 
     private void updateTable(Connection conn, String sql) {
+        //Method used to commit an update to the database
         try {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
@@ -53,6 +54,12 @@ public class DatabaseUpdater {
         }
     }
 
+    /** Method used to update an airline in the database
+     *
+     * @param conn a static connection to the database
+     * @param updateParams a list of parameters to be updated
+     * @param key the id of the airline to be updated
+     */
     public void updateAirline(Connection conn, ArrayList<ArrayList<String>> updateParams, String key) {
 
         String updates = getUpdateCommands(updateParams);
@@ -61,6 +68,12 @@ public class DatabaseUpdater {
 
     }
 
+    /** Method used to update an airport in the database
+     *
+     * @param conn a static connection to the database
+     * @param updateParams a list of parameters to be updated
+     * @param key the id of the airport to be updated
+     */
     public void updateAirport(Connection conn, ArrayList<ArrayList<String>> updateParams, String key) {
 
         String updates = getUpdateCommands(updateParams);
@@ -68,6 +81,12 @@ public class DatabaseUpdater {
         updateTable(conn, sql);
     }
 
+    /** Method used to update a route in the database
+     *
+     * @param conn a static connection to the database
+     * @param updateParams a list of parameters to be updated
+     * @param key the id of the airport to be updated
+     */
     public void updateRoute(Connection conn, ArrayList<ArrayList<String>> updateParams, String key) {
         String updates = getUpdateCommands(updateParams);
         String sql = generateSQL("route", updates, "routeid", key);

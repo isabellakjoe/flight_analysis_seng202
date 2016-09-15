@@ -10,11 +10,18 @@ import java.sql.Statement;
  */
 public class Database {
 
+    /** Method used to connect to the test database located in the static database folder
+     *  IMPORTANT: Should only be used for when testing database methods.
+     *
+     * @return a static SQL Connection to the test database
+     */
     public static Connection testConnect() {
         //Method to connect to the test database
         Connection conn = null;
         try {
+            //Specifiy the pathname for jar containing database connection methods
             Class.forName("org.sqlite.JDBC");
+            //Specify the path to the database here
             String url = ("jdbc:sqlite:src/main/database/static/testing.db");
             conn = DriverManager.getConnection(url);
             conn.setAutoCommit(false);
@@ -26,6 +33,10 @@ public class Database {
         return conn;
     }
 
+    /** Method used to connect to the dynamic database used for the operation of the application.
+     *
+     * @return a static SQL Connection to the database
+     */
     public static Connection connect() {
         //Method to connect to the actual database for the application
         Connection conn = null;
@@ -42,6 +53,10 @@ public class Database {
         return conn;
     }
 
+    /** A static method used to close an established connection to the database with error handling
+     *
+     * @param conn an established connection to a database.
+     */
     public static void disconnect(Connection conn) {
         try {
             conn.close();
@@ -50,6 +65,12 @@ public class Database {
         }
     }
 
+
+    /** A method to create the database for the application. Should be run on first launch of the application.
+     *  Tests whether a database already exists in the file system, if so deletes it and creates a new database
+     *  to be used as a form of memory for the application.
+     *
+     */
     public static void createDatabase() {
 
         File f = new File("src/main/database/dynamic/Database.db");

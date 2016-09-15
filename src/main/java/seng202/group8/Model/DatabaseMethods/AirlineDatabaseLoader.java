@@ -4,24 +4,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seng202.group8.Model.Objects.AirlineMethod;
 import seng202.group8.Model.Objects.Airline;
-import seng202.group8.Model.Objects.Airport;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 /**
  * Created by Callum on 25/08/16.
  */
 public class AirlineDatabaseLoader extends AirlineMethod {
 
-
+    /** Function to return an observable list of Airlines which have been loaded from the database
+     *
+     * @param conn a connection to the database
+     * @return an observable list of airports
+     */
     public ObservableList<Airline> loadAirlines(Connection conn) {
 
         ObservableList<Airline> airlines = FXCollections.observableArrayList();
         try {
+            //Create a statement and execute the query to get all airlines from the database
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("SELECT * FROM airline");
             while (result.next()) {

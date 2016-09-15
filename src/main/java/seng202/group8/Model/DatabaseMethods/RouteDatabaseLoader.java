@@ -14,7 +14,11 @@ import java.sql.*;
  */
 public class RouteDatabaseLoader extends RouteMethod {
 
-
+    /** A Method used to load all routes from the database
+     *
+     * @param conn a static connection to the database
+     * @return a observable list of all routes in the database
+     */
     public ObservableList<Route> loadRoutes(Connection conn) {
 
         ObservableList<Route> routes = FXCollections.observableArrayList();
