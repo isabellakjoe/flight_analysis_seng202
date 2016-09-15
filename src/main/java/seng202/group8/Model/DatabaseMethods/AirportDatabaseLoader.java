@@ -2,20 +2,19 @@ package seng202.group8.Model.DatabaseMethods;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seng202.group8.Model.Objects.AirportMethod;
 import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.AirportMethod;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 /**
  * Created by Callum on 26/08/16.
  */
 public class AirportDatabaseLoader extends AirportMethod {
-    /** Method used to get a list of all the airports currently in the database
+    /**
+     * Method used to get a list of all the airports currently in the database
      *
      * @param conn a connection to the database
      * @return an observable list of all the airports currently in the database

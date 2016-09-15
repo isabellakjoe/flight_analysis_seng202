@@ -1,7 +1,7 @@
 package seng202.group8.Model.Parsers;
 
-import seng202.group8.Model.Objects.AirlineMethod;
 import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.AirlineMethod;
 
 import java.util.ArrayList;
 
@@ -41,16 +41,17 @@ public class AirlineParser extends AirlineMethod {
         return airline;
     }
 
-    /** Public method that creates a single Airline Object by calling createParsedAirline().
+    /**
+     * Public method that creates a single Airline Object by calling createParsedAirline().
      *
      * @param input: A string of parameters for an Airline.
      * @return a Airline object or null if the
      */
     public Airline createSingleAirline(String input) {
         ArrayList<String> airlineInfo = refactorData(input);
-        if(airlineInfo != null) {
+        if (airlineInfo != null) {
             return createParsedAirline(airlineInfo);
-        } else{
+        } else {
             return null;
         }
     }

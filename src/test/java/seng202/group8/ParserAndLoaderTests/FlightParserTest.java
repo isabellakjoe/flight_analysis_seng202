@@ -10,8 +10,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Flight;
-import seng202.group8.Model.Parsers.FlightParser;
 import seng202.group8.Model.Objects.Waypoint;
+import seng202.group8.Model.Parsers.FlightParser;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -58,6 +58,7 @@ public class FlightParserTest {
         double longitude = sourceAirport.getLongitude();
         assertEquals(172.53368221, longitude, 1e-8);
     }
+
     @Test
     public void destinationAirportNameTest() {
         Airport destinationAirport = flight.getDestinationAirport();
@@ -66,7 +67,7 @@ public class FlightParserTest {
     }
 
     @Test
-    public void firstWaypointTypeTest(){
+    public void firstWaypointTypeTest() {
         ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         String type = firstWaypoint.getType();
@@ -74,7 +75,7 @@ public class FlightParserTest {
     }
 
     @Test
-    public void firstWaypointNameTest(){
+    public void firstWaypointNameTest() {
         ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         String name = firstWaypoint.getName();
@@ -82,7 +83,7 @@ public class FlightParserTest {
     }
 
     @Test
-    public void firstWaypointAltitudeTest(){
+    public void firstWaypointAltitudeTest() {
         ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         double altitude = firstWaypoint.getAltitude();
@@ -90,7 +91,7 @@ public class FlightParserTest {
     }
 
     @Test
-    public void firstWaypointLatitudeTest(){
+    public void firstWaypointLatitudeTest() {
         ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         double latitude = firstWaypoint.getLatitude();
@@ -98,7 +99,7 @@ public class FlightParserTest {
     }
 
     @Test
-    public void firstWaypointLongitudeTest(){
+    public void firstWaypointLongitudeTest() {
         ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint firstWaypoint = waypoints.get(0);
         double longitude = firstWaypoint.getLongitude();
@@ -106,7 +107,7 @@ public class FlightParserTest {
     }
 
     @Test
-    public void lastWaypointNameTest(){
+    public void lastWaypointNameTest() {
         ObservableList<Waypoint> waypoints = flight.getWaypoints();
         Waypoint lastWaypoint = waypoints.get(28);
         String name = lastWaypoint.getName();

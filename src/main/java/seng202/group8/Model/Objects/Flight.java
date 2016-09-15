@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 
 /**
  * Created by esa46 on 19/08/16.
- *
+ * <p>
  * Flight Object class.
  */
 public class Flight {

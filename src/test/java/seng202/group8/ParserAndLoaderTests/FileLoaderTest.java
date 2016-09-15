@@ -24,7 +24,7 @@ import static junit.framework.TestCase.assertTrue;
  */
 public class FileLoaderTest {
 
-    private ArrayList<String> auck = new ArrayList<String>(Arrays.asList("2006","Auckland Intl","Auckland","New Zealand","AKL","NZAA","-37.008056","174.791667","23","12","Z","Pacific/Auckland"));
+    private ArrayList<String> auck = new ArrayList<String>(Arrays.asList("2006", "Auckland Intl", "Auckland", "New Zealand", "AKL", "NZAA", "-37.008056", "174.791667", "23", "12", "Z", "Pacific/Auckland"));
 
     @Test
     public void buildAirportsTest() throws FileNotFoundException {
@@ -39,10 +39,10 @@ public class FileLoaderTest {
         airportsExpected.add(airport2);
         airportsExpected.add(airport3);
         boolean isEqual = true;
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             Airport a = airportsExpected.get(i);
             Airport b = airportsActual.get(i);
-            if (!a.isEqualTo(b)){
+            if (!a.isEqualTo(b)) {
                 isEqual = false;
             }
         }
@@ -62,10 +62,10 @@ public class FileLoaderTest {
         airlinesExpected.add(airline2);
         airlinesExpected.add(airline3);
         boolean isEqual = true;
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             Airline a = airlinesExpected.get(i);
             Airline b = airlinesActual.get(i);
-            if (!a.isEqualTo(b)){
+            if (!a.isEqualTo(b)) {
                 isEqual = false;
                 System.out.println(i);
             }
@@ -86,10 +86,10 @@ public class FileLoaderTest {
         routesExpected.add(route2);
         routesExpected.add(route3);
         boolean isEqual = true;
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             Route a = routesExpected.get(i);
             Route b = routesActual.get(i);
-            if (!a.isEqualTo(b)){
+            if (!a.isEqualTo(b)) {
                 isEqual = false;
             }
         }

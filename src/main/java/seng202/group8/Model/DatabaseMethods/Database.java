@@ -10,8 +10,9 @@ import java.sql.Statement;
  */
 public class Database {
 
-    /** Method used to connect to the test database located in the static database folder
-     *  IMPORTANT: Should only be used for when testing database methods.
+    /**
+     * Method used to connect to the test database located in the static database folder
+     * IMPORTANT: Should only be used for when testing database methods.
      *
      * @return a static SQL Connection to the test database
      */
@@ -26,14 +27,15 @@ public class Database {
             conn = DriverManager.getConnection(url);
             conn.setAutoCommit(false);
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 
         return conn;
     }
 
-    /** Method used to connect to the dynamic database used for the operation of the application.
+    /**
+     * Method used to connect to the dynamic database used for the operation of the application.
      *
      * @return a static SQL Connection to the database
      */
@@ -46,30 +48,31 @@ public class Database {
             conn = DriverManager.getConnection(url);
             conn.setAutoCommit(false);
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 
         return conn;
     }
 
-    /** A static method used to close an established connection to the database with error handling
+    /**
+     * A static method used to close an established connection to the database with error handling
      *
      * @param conn an established connection to a database.
      */
     public static void disconnect(Connection conn) {
         try {
             conn.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
     }
 
 
-    /** A method to create the database for the application. Should be run on first launch of the application.
-     *  Tests whether a database already exists in the file system, if so deletes it and creates a new database
-     *  to be used as a form of memory for the application.
-     *
+    /**
+     * A method to create the database for the application. Should be run on first launch of the application.
+     * Tests whether a database already exists in the file system, if so deletes it and creates a new database
+     * to be used as a form of memory for the application.
      */
     public static void createDatabase() {
 
@@ -88,49 +91,49 @@ public class Database {
 
             stmtAirport = conn.createStatement();
             String sql = "CREATE TABLE airport (" +
-                        "airportid int primary key," +
-                        "name varchar(50) not null," +
-                        "city varchar(50) not null," +
-                        "country varchar(46) not null," +
-                        "iata char(3)," +
-                        "icao char(4)," +
-                        "latitude decimal(9,6) not null," +
-                        "longitude decimal(9,6) not null," +
-                        "altitude int not null," +
-                        "timezone decimal(4, 2) not null," +
-                        "dst char(1) not null," +
-                        "tz varchar(50) not null" +
-                        ");";
+                    "airportid int primary key," +
+                    "name varchar(50) not null," +
+                    "city varchar(50) not null," +
+                    "country varchar(46) not null," +
+                    "iata char(3)," +
+                    "icao char(4)," +
+                    "latitude decimal(9,6) not null," +
+                    "longitude decimal(9,6) not null," +
+                    "altitude int not null," +
+                    "timezone decimal(4, 2) not null," +
+                    "dst char(1) not null," +
+                    "tz varchar(50) not null" +
+                    ");";
             stmtAirport.executeUpdate(sql);
             stmtAirport.close();
 
             stmtAirline = conn.createStatement();
             sql = "CREATE TABLE airline (" +
-                        "airlineid int primary key," +
-                        "name varchar(50) not null," +
-                        "alias varchar(50) not null," +
-                        "iata char(2)," +
-                        "icao char(3)," +
-                        "callsign varchar(15)," +
-                        "country varchar(46) not null," +
-                        "active char(1)" +
-                        ");";
+                    "airlineid int primary key," +
+                    "name varchar(50) not null," +
+                    "alias varchar(50) not null," +
+                    "iata char(2)," +
+                    "icao char(3)," +
+                    "callsign varchar(15)," +
+                    "country varchar(46) not null," +
+                    "active char(1)" +
+                    ");";
             stmtAirline.executeUpdate(sql);
             stmtAirline.close();
 
             stmtRoute = conn.createStatement();
             sql = "CREATE TABLE route (" +
-                        "routeid int primary key," +
-                        "airlinecode varchar(4) not null," +
-                        "airlineid int not null," +
-                        "sourceairport varchar(4) not null," +
-                        "sourceid int not null," +
-                        "destinationairport varchar(4) not null," +
-                        "destinationid int not null," +
-                        "codeshare char(1)," +
-                        "stops int not null," +
-                        "equipment char(3) not null" +
-                        ");";
+                    "routeid int primary key," +
+                    "airlinecode varchar(4) not null," +
+                    "airlineid int not null," +
+                    "sourceairport varchar(4) not null," +
+                    "sourceid int not null," +
+                    "destinationairport varchar(4) not null," +
+                    "destinationid int not null," +
+                    "codeshare char(1)," +
+                    "stops int not null," +
+                    "equipment char(3) not null" +
+                    ");";
             stmtRoute.executeUpdate(sql);
             stmtRoute.close();
 

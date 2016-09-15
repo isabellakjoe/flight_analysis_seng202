@@ -15,8 +15,6 @@ import seng202.group8.Model.Parsers.AirlineParser;
 import seng202.group8.Model.Parsers.AirportParser;
 import seng202.group8.Model.Parsers.RouteParser;
 
-import javax.jws.Oneway;
-import java.applet.AudioClip;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -84,7 +82,7 @@ public class DatabaseUpdaterTest {
             stmt.executeUpdate(sqlTwo);
             connDelete.commit();
             stmt.close();
-        } catch (Exception e ) {
+        } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 
@@ -122,7 +120,7 @@ public class DatabaseUpdaterTest {
             stmt.executeUpdate(sqlTwo);
             connDelete.commit();
             stmt.close();
-        } catch (Exception e ) {
+        } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 
@@ -163,13 +161,12 @@ public class DatabaseUpdaterTest {
             stmt.executeUpdate(sqlTwo);
             connDelete.commit();
             stmt.close();
-        } catch (Exception e ) {
+        } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 
         assertTrue(resultRoutes.get(0).getStops() == 1);
     }
-
 
 
 }

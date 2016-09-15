@@ -4,12 +4,11 @@ import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import seng202.group8.Model.DatabaseMethods.AirportDatabaseLoader;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.Objects.Airport;
-import seng202.group8.Model.DatabaseMethods.AirportDatabaseLoader;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -45,7 +44,7 @@ public class AirportDatabaseLoaderTest {
     public void testAiportLoads() {
         ObservableList<Airport> airports = dba.loadAirport(conn);
         Airport testAirport = new Airport();
-        for (Airport airport: airports) {
+        for (Airport airport : airports) {
             if (airport.getAirportID() == 2962) {
                 testAirport = airport;
             }

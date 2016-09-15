@@ -54,11 +54,12 @@ public class DatabaseUpdater {
         }
     }
 
-    /** Method used to update an airline in the database
+    /**
+     * Method used to update an airline in the database
      *
-     * @param conn a static connection to the database
+     * @param conn         a static connection to the database
      * @param updateParams a list of parameters to be updated
-     * @param key the id of the airline to be updated
+     * @param key          the id of the airline to be updated
      */
     public void updateAirline(Connection conn, ArrayList<ArrayList<String>> updateParams, String key) {
 
@@ -68,11 +69,12 @@ public class DatabaseUpdater {
 
     }
 
-    /** Method used to update an airport in the database
+    /**
+     * Method used to update an airport in the database
      *
-     * @param conn a static connection to the database
+     * @param conn         a static connection to the database
      * @param updateParams a list of parameters to be updated
-     * @param key the id of the airport to be updated
+     * @param key          the id of the airport to be updated
      */
     public void updateAirport(Connection conn, ArrayList<ArrayList<String>> updateParams, String key) {
 
@@ -81,11 +83,12 @@ public class DatabaseUpdater {
         updateTable(conn, sql);
     }
 
-    /** Method used to update a route in the database
+    /**
+     * Method used to update a route in the database
      *
-     * @param conn a static connection to the database
+     * @param conn         a static connection to the database
      * @param updateParams a list of parameters to be updated
-     * @param key the id of the airport to be updated
+     * @param key          the id of the airport to be updated
      */
     public void updateRoute(Connection conn, ArrayList<ArrayList<String>> updateParams, String key) {
         String updates = getUpdateCommands(updateParams);

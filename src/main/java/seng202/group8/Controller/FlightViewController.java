@@ -58,6 +58,15 @@ public class FlightViewController implements Initializable {
     @FXML
     private Text bAltitude;
 
+
+    public void makeVisible() {
+        flightViewPane.setVisible(true);
+    }
+
+    public void makeInvisible() {
+        flightViewPane.setVisible(false);
+    }
+
     @FXML
     private void exitFlightView(ActionEvent e) {
         flightViewPane.setVisible(false);
@@ -102,7 +111,6 @@ public class FlightViewController implements Initializable {
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("FlightViewController init");
-
         waypointName.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("name"));
         waypointType.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("type"));
         waypointAltitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("altitude"));

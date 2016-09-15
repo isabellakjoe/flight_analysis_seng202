@@ -2,7 +2,7 @@ package seng202.group8.Model.Objects;
 
 /**
  * Created by esa46 on 19/08/16.
- *
+ * <p>
  * Waypoint Object class.
  */
 public class Waypoint {
@@ -33,7 +33,9 @@ public class Waypoint {
         return altitude;
     }
 
-    public void setAltitude(double altitude) { this.altitude = altitude; }
+    public void setAltitude(double altitude) {
+        this.altitude = altitude;
+    }
 
     public double getLatitude() {
         return latitude;

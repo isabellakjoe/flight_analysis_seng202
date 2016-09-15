@@ -76,14 +76,12 @@ public class RouteParser extends RouteMethod {
     /* Public method which is used to create a single route */
     public Route createSingleRoute(String input) {
         ArrayList<String> routeInfo = refactorData(input);
-        if(routeInfo != null) {
+        if (routeInfo != null) {
             return createParsedRoute(routeInfo);
-        } else{
+        } else {
             return null;
         }
     }
-
-
 
 
 }
