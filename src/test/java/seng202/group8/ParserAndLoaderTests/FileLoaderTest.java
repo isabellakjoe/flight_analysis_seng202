@@ -96,20 +96,11 @@ public class FileLoaderTest {
         assertTrue(isEqual);
     }
 
-    /*Test to see if the test file is loaded properly*/
-    @Test
-    public void testGetFile() throws FileNotFoundException {
-        FileLoader load = new FileLoader(new BufferedReader(new FileReader("test.txt")));
-        BufferedReader br = new BufferedReader(new FileReader("test.txt"));
-        assertEquals(br, load.getFile(br));
-    }
-
     /*Test to see if the test file is read and stored properly.*/
     @Test
     public void testReadData() throws FileNotFoundException {
         FileLoader load = new FileLoader(new BufferedReader(new FileReader("test.txt")));
         BufferedReader br = new BufferedReader(new FileReader("test.txt"));
-        load.getFile(br);
         ArrayList<ArrayList<String>> test = load.readData(br);
         assertEquals(auck, test.get(0));
     }
