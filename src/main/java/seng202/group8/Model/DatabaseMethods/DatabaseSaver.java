@@ -46,7 +46,7 @@ public class DatabaseSaver {
     }
 
     private String createAirportStatement(Airport airportToSave) {
-       // A method used to create an sql statement used to insert an airport into the database.
+        // A method used to create an sql statement used to insert an airport into the database.
         int id = airportToSave.getAirportID();
         String stringID = convertIntToString(id);
         String name = airportToSave.getName();
@@ -66,9 +66,9 @@ public class DatabaseSaver {
         String tz = airportToSave.getOlsonTimezone();
 
         String statement = "INSERT INTO airport VALUES (" + stringID + ",\"" + name + "\",\"" + city + "\",\"" + country +
-                                                        "\",\"" + code + "\",\"" + icao + "\"," + stringLat + "," +
-                                                        stringLong + "," + stringAlt + "," + stringTime + ",\"" +
-                                                        dst + "\",\"" + tz + "\");";
+                "\",\"" + code + "\",\"" + icao + "\"," + stringLat + "," +
+                stringLong + "," + stringAlt + "," + stringTime + ",\"" +
+                dst + "\",\"" + tz + "\");";
 
         return statement;
     }
@@ -86,7 +86,7 @@ public class DatabaseSaver {
         char active = getCharOfBoolean(airlineToSave.isActive());
 
         String statement = "INSERT INTO airline VALUES (" + stringID + ",\"" + name + "\",\"" + alias + "\",\"" + iata +
-                                                        "\",\"" + icao + "\",\"" + callsign + "\",\"" + country + "\",\"" + active + "\");";
+                "\",\"" + icao + "\",\"" + callsign + "\",\"" + country + "\",\"" + active + "\");";
 
         return statement;
 
@@ -129,17 +129,18 @@ public class DatabaseSaver {
         String equipment = routeToSave.getEquipment();
 
         String statement = "INSERT INTO route VALUES (" + stringID + ",\"" + code + "\"," + stringAirlineID + ",\"" +
-                                                    sourceAirportCode + "\"," + stringSourceID + ",\"" + destinationAirportCode +
-                                                    "\"," + stringDestinationID + ",\"" + codeshare + "\"," + stringStops + ",\"" +
-                                                    equipment + "\");";
+                sourceAirportCode + "\"," + stringSourceID + ",\"" + destinationAirportCode +
+                "\"," + stringDestinationID + ",\"" + codeshare + "\"," + stringStops + ",\"" +
+                equipment + "\");";
         return statement;
 
 
     }
 
-    /** A method which takes an sql query and executes an update to the database to add Airport objects
+    /**
+     * A method which takes an sql query and executes an update to the database to add Airport objects
      *
-     * @param conn a static connection to a database
+     * @param conn        a static connection to a database
      * @param airportList a observable list of airports
      */
     public void saveAirports(Connection conn, ObservableList<Airport> airportList) {
@@ -157,9 +158,10 @@ public class DatabaseSaver {
         }
     }
 
-    /** A method which takes an sql query and executes an update to the database to add Airline objects
+    /**
+     * A method which takes an sql query and executes an update to the database to add Airline objects
      *
-     * @param conn a static connection to a database
+     * @param conn        a static connection to a database
      * @param airlineList an observable list of airlines
      */
     public void saveAirlines(Connection conn, ObservableList<Airline> airlineList) {
@@ -178,9 +180,10 @@ public class DatabaseSaver {
 
     }
 
-    /** A method which takes an sql query and executes an update to the database to add Route objects
+    /**
+     * A method which takes an sql query and executes an update to the database to add Route objects
      *
-     * @param conn a static connection to a database
+     * @param conn      a static connection to a database
      * @param routeList an observable list of routes
      */
     public void saveRoutes(Connection conn, ObservableList<Route> routeList) {
@@ -198,10 +201,11 @@ public class DatabaseSaver {
 
     }
 
-    /** A method which takes a list of route id's and deletes them from the database
+    /**
+     * A method which takes a list of route id's and deletes them from the database
      *
      * @param conn a static connection to the database
-     * @param ids a list of routes ids which are to be deleted
+     * @param ids  a list of routes ids which are to be deleted
      */
     public void deleteRoutes(Connection conn, ArrayList<Integer> ids) {
 
@@ -219,10 +223,11 @@ public class DatabaseSaver {
 
     }
 
-    /** A method which takes a list of airline id's and deletes them from the database
+    /**
+     * A method which takes a list of airline id's and deletes them from the database
      *
      * @param conn a static connection to the database
-     * @param ids a list of airline ids which are to be deleted
+     * @param ids  a list of airline ids which are to be deleted
      */
     public void deleteAirlines(Connection conn, ArrayList<Integer> ids) {
 
@@ -240,10 +245,11 @@ public class DatabaseSaver {
 
     }
 
-    /** A method which takes a list of airport id's and deletes them from the database
+    /**
+     * A method which takes a list of airport id's and deletes them from the database
      *
      * @param conn a static connection to the database
-     * @param ids a list of airport ids which are to be deleted
+     * @param ids  a list of airport ids which are to be deleted
      */
     public void deleteAirport(Connection conn, ArrayList<Integer> ids) {
 
@@ -260,7 +266,6 @@ public class DatabaseSaver {
         }
 
     }
-
 
 
 }

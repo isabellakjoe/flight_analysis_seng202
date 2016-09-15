@@ -2,8 +2,6 @@ package seng202.group8;
 
 /**
  * Created by Callum on 22/08/16.
- *
- *
  **/
 
 import javafx.application.Application;

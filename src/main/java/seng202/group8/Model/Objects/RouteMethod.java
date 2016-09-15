@@ -1,9 +1,5 @@
 package seng202.group8.Model.Objects;
 
-import seng202.group8.Model.Objects.Airline;
-import seng202.group8.Model.Objects.Airport;
-import seng202.group8.Model.Objects.Route;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +11,7 @@ public abstract class RouteMethod {
 
     /**
      * Method to check whether element in data is "\\N".
+     *
      * @param inputString
      * @return inputString, changes it to null if given String is null
      */
@@ -28,9 +25,10 @@ public abstract class RouteMethod {
 
     /**
      * Method to separate an input string based off of comma positioning and eliminate any extra white space and quote marks
+     *
      * @param inputAirport
      * @return refactoredData, a new arraylist containing all of the refactored string elements, null if  input string
-     *          has too many or not enough elements.
+     * has too many or not enough elements.
      */
     public ArrayList<String> refactorData(String inputAirport) {
 
@@ -40,22 +38,22 @@ public abstract class RouteMethod {
         if (size == 10) {
             for (int i = 0; i < size; i++) {
                 String checkedString = checkNull(splitData.get(i));
-                if(checkedString != null) {
+                if (checkedString != null) {
                     refactoredData.add(splitData.get(i).trim().replace("\"", ""));
-                } else{
+                } else {
                     refactoredData.add("");
                 }
             }
             return refactoredData;
-        } else{
+        } else {
             return null;
         }
     }
 
     /**
      * Method to parse a string to an integer with error handling
+     *
      * @param inputNum
-     * @return string integer parsed to an Integer
      * @return -1 for NumberFormatException
      */
     public int parseToInt(String inputNum) {
@@ -118,7 +116,6 @@ public abstract class RouteMethod {
             route.setCodeshareString("No");
         }
     }
-
 
 
 }

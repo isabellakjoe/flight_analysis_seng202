@@ -1,7 +1,7 @@
 package seng202.group8.Model.Parsers;
 
-import seng202.group8.Model.Objects.AirportMethod;
 import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.AirportMethod;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class AirportParser extends AirportMethod {
 
-    private Airport createParsedAirport(ArrayList<String> airportInfo){
+    private Airport createParsedAirport(ArrayList<String> airportInfo) {
         /* Created new airport object */
         Airport airport = new Airport();
 
@@ -55,16 +55,17 @@ public class AirportParser extends AirportMethod {
         return airport;
     }
 
-    /** Public method that creates a single Airport Object by calling createParsedAirport().
+    /**
+     * Public method that creates a single Airport Object by calling createParsedAirport().
      *
      * @param input: A string of parameters for an Airport.
      * @return an Airport object or null if the input is null.
      */
-    public Airport createSingleAirport(String input){
+    public Airport createSingleAirport(String input) {
         ArrayList<String> airportInfo = refactorData(input);
-        if(airportInfo != null) {
+        if (airportInfo != null) {
             return createParsedAirport(airportInfo);
-        } else{
+        } else {
             return null;
         }
     }

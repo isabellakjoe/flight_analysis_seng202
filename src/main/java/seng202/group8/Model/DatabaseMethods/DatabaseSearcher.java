@@ -1,11 +1,10 @@
 package seng202.group8.Model.DatabaseMethods;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,9 +18,9 @@ public class DatabaseSearcher {
 
 
     /* Method to check whether the airport code is IATA or FAA */
-    private void checkCodeType(Airport airport, String airportCode, String country){
+    private void checkCodeType(Airport airport, String airportCode, String country) {
        /* Airports located in the US have an FAA code. All others have an IATA code. */
-        if(country.equals("United States")) {
+        if (country.equals("United States")) {
             airport.setFAA(airportCode);
         } else {
             airport.setIATA(airportCode);
@@ -30,7 +29,7 @@ public class DatabaseSearcher {
 
     /* Method to check whether an airline is currently active*/
     private void checkActive(Airline airline, String active) {
-        if(active.equals("Y")) {
+        if (active.equals("Y")) {
             airline.setActive(true);
         } else {
             airline.setActive(false);
@@ -68,10 +67,11 @@ public class DatabaseSearcher {
         }
     }
 
-    /** Method used to build an sql statement for searching through airports in the database
+    /**
+     * Method used to build an sql statement for searching through airports in the database
      *
      * @param option string parameter for which table column to search through
-     * @param name string parameter for which table column must match
+     * @param name   string parameter for which table column must match
      * @return a sql statement
      */
     public String buildAirportSearch(String option, String name) {
@@ -81,10 +81,11 @@ public class DatabaseSearcher {
 
     }
 
-    /** Method used to build an sql statement for searching through airlines in the database
+    /**
+     * Method used to build an sql statement for searching through airlines in the database
      *
      * @param option string parameter for which table column to search through
-     * @param name string parameter for which table column must match
+     * @param name   string parameter for which table column must match
      * @return a sql statement
      */
     public String buildAirlineSearch(String option, String name) {
@@ -94,10 +95,11 @@ public class DatabaseSearcher {
 
     }
 
-    /** Method used to build an sql statment for searching through routes in the database
+    /**
+     * Method used to build an sql statment for searching through routes in the database
      *
      * @param option string parameter for which table column to search through
-     * @param name string parameter for which table column must match
+     * @param name   string parameter for which table column must match
      * @return a sql statement
      */
     public String buildRouteSearch(String option, String name) {
@@ -107,12 +109,13 @@ public class DatabaseSearcher {
 
     }
 
-    /** Method to add additional like statements to an sql statement
+    /**
+     * Method to add additional like statements to an sql statement
      *
-     * @param sql an sql statement which needs additional parameters
-     * @param table the table of the database
+     * @param sql    an sql statement which needs additional parameters
+     * @param table  the table of the database
      * @param option the column of the table
-     * @param name the string parameter for which the tables column must match
+     * @param name   the string parameter for which the tables column must match
      * @return
      */
     public String addAdditionalLikeOption(String sql, String table, String option, String name) {
@@ -120,7 +123,8 @@ public class DatabaseSearcher {
         return sql + addQuery;
     }
 
-    /** Method to build a sql query for the number of routes a source airport has
+    /**
+     * Method to build a sql query for the number of routes a source airport has
      *
      * @param orderby string parameter to order the list ASC or DESC
      * @return a sql statement containing airport ids and the number of routes
@@ -130,7 +134,8 @@ public class DatabaseSearcher {
         return sql;
     }
 
-    /** Method to build a sql query for the number of routes a destination airport has
+    /**
+     * Method to build a sql query for the number of routes a destination airport has
      *
      * @param orderby string parameter to order the list ASC or DESC
      * @return a sql statement containing airport ids and the number of routes
@@ -185,7 +190,7 @@ public class DatabaseSearcher {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 
-        for (int i = 0; i < numSrcRoutes.size(); i ++) {
+        for (int i = 0; i < numSrcRoutes.size(); i++) {
             int src = numSrcRoutes.get(i).get(1);
             int dest = numDestRoutes.get(i).get(1);
             ArrayList<Integer> temp = new ArrayList<Integer>();
@@ -198,7 +203,8 @@ public class DatabaseSearcher {
 
     }
 
-    /** A methid used to find all of the airports without routes
+    /**
+     * A methid used to find all of the airports without routes
      *
      * @param conn a static connection to a database
      * @return a list of all of the id's of airports which currently have no routes
@@ -212,10 +218,11 @@ public class DatabaseSearcher {
 
     }
 
-    /** A method used to search the database for airports which match a certain constraints
+    /**
+     * A method used to search the database for airports which match a certain constraints
      *
      * @param conn a static connection to a database
-     * @param sql a sql statement for airports
+     * @param sql  a sql statement for airports
      * @return an observable list of airport objects which match search criteria
      */
     public ObservableList<Airport> searchForAirportByOption(Connection conn, String sql) {
@@ -251,10 +258,11 @@ public class DatabaseSearcher {
 
     }
 
-    /** A method used to search the database for airlines which match a certain constraints
+    /**
+     * A method used to search the database for airlines which match a certain constraints
      *
      * @param conn a static connection to a database
-     * @param sql a sql statement for airlines
+     * @param sql  a sql statement for airlines
      * @return an observable list of airport objects which match search criteria
      */
     public ObservableList<Airline> searchForAirlinesByOption(Connection conn, String sql) {
@@ -285,10 +293,11 @@ public class DatabaseSearcher {
         return airlines;
     }
 
-    /** A method used to search the database for airlines which match a certain constraints
+    /**
+     * A method used to search the database for airlines which match a certain constraints
      *
      * @param conn a static connection to a database
-     * @param sql a sql statement for routes
+     * @param sql  a sql statement for routes
      * @return an observable list of airport objects which match search criteria
      */
     public ObservableList<Route> searchRouteByOption(Connection conn, String sql) {
@@ -325,10 +334,11 @@ public class DatabaseSearcher {
     }
 
 
-    /** A method used to get the number of routes an airport has
+    /**
+     * A method used to get the number of routes an airport has
      *
      * @param conn a static connection to a database
-     * @param sql a sql statement to compute the number of routes
+     * @param sql  a sql statement to compute the number of routes
      * @return an arraylist of airport ids without the number of routes contained
      */
     public ObservableList<Integer> getNumRoutesOfAirport(Connection conn, String sql) {
@@ -349,7 +359,6 @@ public class DatabaseSearcher {
         return airportIDs;
 
     }
-
 
 
 }

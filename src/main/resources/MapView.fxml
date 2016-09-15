@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.web.*?>
-
-
-
-
-<Tab fx:id="mapViewPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MapViewController" closable="false" text="Map View">
+<?import javafx.scene.web.WebView?>
+<Tab fx:id="mapViewPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+     fx:controller="seng202.group8.Controller.MapViewController" closable="false" text="Map View">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <children>
-                <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0"
+                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
             </children>
             <padding>
-                <Insets bottom="15.0" right="15.0" top="15.0" />
+                <Insets bottom="15.0" right="15.0" top="15.0"/>
             </padding>
         </AnchorPane>
     </content>

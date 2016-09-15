@@ -2,8 +2,6 @@ package seng202.group8.DatabaseTests;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import seng202.group8.Model.DatabaseMethods.Database;
@@ -17,7 +15,6 @@ import seng202.group8.Model.Parsers.AirportParser;
 import seng202.group8.Model.Parsers.RouteParser;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertTrue;
@@ -46,7 +43,7 @@ public class DatabaseSaverTest {
     }
 
     @Test
-    public void testAirportSavesCorrectly(){
+    public void testAirportSavesCorrectly() {
         //Create Objects to save and load to and from the database
         AirportParser ap = new AirportParser();
         //Create an airport to save to the database
@@ -58,7 +55,7 @@ public class DatabaseSaverTest {
         dbsave.saveAirports(connSave, testArray);
         dbOne.disconnect(connSave);
         //Search for the new saved aiport here
-        String sqlStatement = dbsearch.buildAirportSearch("name","Inuvik Mike Zubko");
+        String sqlStatement = dbsearch.buildAirportSearch("name", "Inuvik Mike Zubko");
         ObservableList<Airport> airports = dbsearch.searchForAirportByOption(connSearch, sqlStatement);
         dbOne.disconnect(connSearch);
         //Close the database queries here
@@ -99,7 +96,7 @@ public class DatabaseSaverTest {
         dbOne.disconnect(connDelete);
         Airline returnAirline = airlines.get(0);
         assertTrue(returnAirline.getAirlineID() == testAirline.getAirlineID());
-        }
+    }
 
     @Test
     public void testRouteSavesCorrectly() {
@@ -114,7 +111,7 @@ public class DatabaseSaverTest {
         dbsave.saveRoutes(connSave, testArray);
         //Search for the new saved route, only one currently in database with id 10
         String sqlStatement = dbsearch.buildRouteSearch("equipment", "SF3");
-        ObservableList<Route>returnedRoutes = dbsearch.searchRouteByOption(connSearch, sqlStatement);
+        ObservableList<Route> returnedRoutes = dbsearch.searchRouteByOption(connSearch, sqlStatement);
         dbOne.disconnect(connSave);
         dbOne.disconnect(connSearch);
         //Current test database should only return one result
@@ -180,7 +177,7 @@ public class DatabaseSaverTest {
         dbOne.disconnect(connDelete);
 
         //Search for deleted data
-        String sqlStatement = dbsearch.buildAirportSearch("airportid","54");
+        String sqlStatement = dbsearch.buildAirportSearch("airportid", "54");
         ObservableList<Airport> airports = dbsearch.searchForAirportByOption(connSearch, sqlStatement);
         dbOne.disconnect(connSearch);
 
@@ -210,7 +207,7 @@ public class DatabaseSaverTest {
         dbOne.disconnect(connDelete);
 
         //Search for deleted data
-        String sqlStatement = dbsearch.buildAirlineSearch("airlineid","96");
+        String sqlStatement = dbsearch.buildAirlineSearch("airlineid", "96");
         ObservableList<Airline> airlines = dbsearch.searchForAirlinesByOption(connSearch, sqlStatement);
         dbOne.disconnect(connSearch);
 

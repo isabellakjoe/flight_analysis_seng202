@@ -1,7 +1,6 @@
 package seng202.group8.Controller;
 
 
-
 import javafx.fxml.FXML;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;

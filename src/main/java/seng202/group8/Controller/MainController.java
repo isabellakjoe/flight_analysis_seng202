@@ -8,26 +8,30 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.group8.Model.DatabaseMethods.*;
-import seng202.group8.Model.Parsers.AirlineParser;
+import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Flight;
+import seng202.group8.Model.Objects.Route;
 import seng202.group8.Model.Parsers.AirportParser;
+import seng202.group8.Model.Parsers.FileLoader;
 import seng202.group8.Model.Searchers.AirlineSearcher;
 import seng202.group8.Model.Searchers.AirportSearcher;
-import seng202.group8.Model.Objects.*;
-import seng202.group8.Model.Parsers.FileLoader;
 import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
-import java.io.*;
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.*;
@@ -46,8 +50,9 @@ public class MainController implements Initializable {
     @FXML
     private MapViewController mapViewController;
     @FXML
+    private AddAirlineViewController addAirlineViewController;
+    @FXML
     private AddAirportViewController addAirportViewController;
-
     @FXML
     private TextField editSourceField;
     @FXML
@@ -84,6 +89,40 @@ public class MainController implements Initializable {
     private Text addAirlineCountryErrorEmpty;
     @FXML
     private Text addAirlineIDErrorType;
+    @FXML
+    private Text addAirportIDErrorEmpty;
+    @FXML
+    private Text addAirportNameErrorEmpty;
+    @FXML
+    private Text addAirportCityErrorEmpty;
+    @FXML
+    private Text addAirportCountryErrorEmpty;
+    @FXML
+    private Text addAirportLatErrorEmpty;
+    @FXML
+    private Text addAirportLongErrorEmpty;
+    @FXML
+    private Text addAirportAltErrorEmpty;
+    @FXML
+    private Text addAirportTimeErrorEmpty;
+    @FXML
+    private Text addAirportDSTErrorEmpty;
+    @FXML
+    private Text addAirportOlsenErrorEmpty;
+    @FXML
+    private Text addAirportIDErrorType;
+    @FXML
+    private Text addAirportCodeErrorType;
+    @FXML
+    private Text addAirportLatErrorType;
+    @FXML
+    private Text addAirportLongErrorType;
+    @FXML
+    private Text addAirportAltErrorType;
+    @FXML
+    private Text addAirportTimeErrorType;
+    @FXML
+    private Text addAirportDSTErrorType;
     @FXML
     private Text addRouteAirlineErrorEmpty;
     @FXML
@@ -232,7 +271,7 @@ public class MainController implements Initializable {
      * Initializing airline column names
      */
     @FXML
-    private TableView<Airline> airlineTable;
+    public TableView<Airline> airlineTable;
     @FXML
     private TableColumn<Airline, String> airlineID;
     @FXML
@@ -380,6 +419,30 @@ public class MainController implements Initializable {
     @FXML
     private CheckBox addedAirlineActive;
     @FXML
+    private TextField addedAirportID;
+    @FXML
+    private TextField addedAirportName;
+    @FXML
+    private TextField addedAirportCity;
+    @FXML
+    private TextField addedAirportCountry;
+    @FXML
+    private TextField addedAirportCode;
+    @FXML
+    private TextField addedAirportICAO;
+    @FXML
+    private TextField addedAirportLatitude;
+    @FXML
+    private TextField addedAirportLongitude;
+    @FXML
+    private TextField addedAirportAltitude;
+    @FXML
+    private TextField addedAirportTimezone;
+    @FXML
+    private TextField addedAirportDST;
+    @FXML
+    private TextField addedAirportOlsen;
+    @FXML
     private GridPane addRouteView;
     @FXML
     private ComboBox addedRouteAirline;
@@ -399,8 +462,10 @@ public class MainController implements Initializable {
     private Button individualAirlineBackButton;
     @FXML
     private Button individualRouteBackButton;
-
-
+    @FXML
+    private MenuItem getDistanceMenu;
+    @FXML
+    private ContextMenu distanceMenu;
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e) {
@@ -502,7 +567,7 @@ public class MainController implements Initializable {
 
     }
 
-    private void setAirlineComboBoxes() {
+    public void setAirlineComboBoxes() {
         ArrayList<String> activeStatuses = new ArrayList<String>();
         activeStatuses.add("ACTIVE OR INACTIVE");
         activeStatuses.add("Active");
@@ -881,128 +946,9 @@ public class MainController implements Initializable {
     @FXML
     private void switchToAddAirline(ActionEvent e) {
         resetView();
-        addAirlineView.setVisible(true);
+        addAirlineViewController.makeVisible();
     }
 
-    //
-    @FXML
-    private void cancelAddedAirline(ActionEvent e) {
-        addedAirlineName.clear();
-        addedAirlineID.clear();
-        addedAirlineCountry.clear();
-        addedAirlineAlias.clear();
-        addedAirlineIATA.clear();
-        addedAirlineICAO.clear();
-        addedAirlineCallsign.clear();
-        addedAirlineActive.setSelected(false);
-        resetView();
-        tableView.setVisible(true);
-    }
-
-    @FXML
-    private boolean addAirlineError(List<String> input) {
-
-        boolean filled = false;
-        int size = input.size();
-
-
-        int count = 0;
-        for (int i = 0; i < size; i++) {
-            String current = input.get(i);
-            if (current.equals("")) {
-                switch (i) {
-                    case 0:
-                        addAirlineIDErrorEmpty.setVisible(true);
-                        break;
-                    case 1:
-                        addAirlineNameErrorEmpty.setVisible(true);
-                        break;
-                    case 2:
-                        addAirlineAliasErrorEmpty.setVisible(true);
-                        break;
-                    case 3:
-                        addAirlineCountryErrorEmpty.setVisible(true);
-                        break;
-                }
-            } else {
-                count += 1;
-            }
-
-            if ((i == 0) && !(current.equals(""))) {
-
-                try {
-                    Integer.parseInt(input.get(i));
-                    count += 1;
-
-                } catch (NumberFormatException e) {
-                    addAirlineIDErrorType.setVisible(true);
-                }
-            }
-        }
-
-
-        if (count == 5) {
-            filled = true;
-        }
-        return filled;
-
-    }
-
-    @FXML
-    private void clearAirlineErrors() {
-        addAirlineIDErrorEmpty.setVisible(false);
-        addAirlineNameErrorEmpty.setVisible(false);
-        addAirlineAliasErrorEmpty.setVisible(false);
-        addAirlineCountryErrorEmpty.setVisible(false);
-        addAirlineIDErrorType.setVisible(false);
-    }
-
-    @FXML
-    private void saveAddedAirline(ActionEvent e) {
-        clearAirlineErrors();
-        AirlineParser parser = new AirlineParser();
-        String airlineID = addedAirlineID.getText();
-        String name = addedAirlineName.getText();
-        String alias = addedAirlineAlias.getText();
-        String IATA = addedAirlineIATA.getText();
-        String ICAO = addedAirlineICAO.getText();
-        String callsign = addedAirlineCallsign.getText();
-        String country = addedAirlineCountry.getText();
-        String isActive = "N";
-        if (addedAirlineActive.isSelected() == true) {
-            isActive = "Y";
-        }
-
-        String data = airlineID + ',' + name + ',' + alias + ',' + IATA + ',' + ICAO + ',' + callsign + ',' + country + ',' + isActive;
-        List<String> notNullData = Arrays.asList(airlineID, name, alias, country);
-
-        boolean noErrors = addAirlineError(notNullData);
-
-        if (noErrors) {
-            ObservableList<Airline> airlines = FXCollections.observableArrayList();
-            Airline newAirline = parser.createSingleAirline(data);
-            airlines.add(newAirline);
-            System.out.println(newAirline.getAirlineID());
-            if (newAirline != null) {
-                //Add the new airport to the database here
-                Database db = new Database();
-                DatabaseSaver dbSave = new DatabaseSaver();
-                DatabaseSearcher dbSearch = new DatabaseSearcher();
-                Connection connSave = db.connect();
-                Connection connSearch = db.connect();
-                dbSave.saveAirlines(connSave, airlines);
-                db.disconnect(connSave);
-                String sql = dbSearch.buildAirlineSearch("airlineid", airlineID);
-                ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
-                currentlyLoadedAirlines.add(addedAirline.get(0));
-                db.disconnect(connSearch);
-            }
-            airlineTable.setItems(currentlyLoadedAirlines);
-            resetView();
-            setAirlineComboBoxes();
-            tableView.setVisible(true);
-        }
-    }
 
     @FXML
     private void switchToAddRoute(ActionEvent e) {
@@ -1034,7 +980,8 @@ public class MainController implements Initializable {
         int count = 0;
         for (int i = 0; i < size; i++) {
             String current = input.get(i);
-            if (current.equals(null) || current.equals("")) {
+
+            if (current == null || current.equals("")) {
 
                 switch (i) {
                     case 0:
@@ -1841,9 +1788,9 @@ public class MainController implements Initializable {
 
     public void resetView() {
         tableView.setVisible(false);
-        //flightViewContent.setVisible(false);
+        flightViewController.makeInvisible();
         addAirportViewController.makeInvisible();
-        addAirlineView.setVisible(false);
+        addAirlineViewController.makeInvisible();
         addRouteView.setVisible(false);
 
     }
@@ -1893,7 +1840,8 @@ public class MainController implements Initializable {
 
     public void backToTableView(ActionEvent e) {
         resetTables();
-        addAirlineView.setVisible(false);
+        addAirportViewController.makeInvisible();
+        addAirlineViewController.makeInvisible();
         addRouteView.setVisible(false);
         airportPane.setVisible(false);
         airlinePane.setVisible(false);
@@ -1910,6 +1858,12 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
+
+        mapViewController.initMap();
+        flightViewController.setMainController(this);
+        mapViewController.setMainController(this);
+        addAirlineViewController.setMainController(this);
+        addAirportViewController.setMainController(this);
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
         alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
@@ -1941,7 +1895,6 @@ public class MainController implements Initializable {
         codeshare.setCellValueFactory(new PropertyValueFactory<Route, String>("codeshareString"));
         stops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
         equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
-
 
 
         // Allows individual cells to be selected as opposed to rows
@@ -2031,12 +1984,39 @@ public class MainController implements Initializable {
             }
         });
 
-        mapViewController.initMap();
+        airportTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        airportTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+                                                   @Override
+                                                   public void handle(ContextMenuEvent event) {
+                                                       if(airportTable.getSelectionModel().getSelectedItems().size() != 2){
+                                                           getDistanceMenu.setDisable(true);
+                                                       }else{
+                                                           getDistanceMenu.setDisable(false);
+                                                       }
+                                                   }
+                                               }
+        );
 
-        addAirportViewController.setMainController(this);
-        flightViewController.setMainController(this);
-        mapViewController.setMainController(this);
+
+
     }
 
 
+
+    @FXML
+    public void getDistance(ActionEvent e){
+        distanceMenu.hide();
+        if(airportTable.getSelectionModel().getSelectedItems().size() == 2){
+
+            Airport airport1 = airportTable.getSelectionModel().getSelectedItems().get(0);
+            Airport airport2 = airportTable.getSelectionModel().getSelectedItems().get(1);
+
+           double distance = airport1.calculateDistanceTo(airport2);
+            JOptionPane.showMessageDialog(null, "The distance is "+distance+" km.", "Distance from "+airport1.getName()+" to "+airport2.getName(), JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
 }
+
+
