@@ -2160,6 +2160,11 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
+
+        mapViewController.initMap();
+        flightViewController.setMainController(this);
+        mapViewController.setMainController(this);
+
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
         alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
@@ -2281,7 +2286,6 @@ public class MainController implements Initializable {
             }
         });
 
-        mapViewController.initMap();
         airportTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         airportTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
                                                    @Override
@@ -2315,9 +2319,6 @@ public class MainController implements Initializable {
 
     }
 
-        flightViewController.setMainController(this);
-        mapViewController.setMainController(this);
-    }
-
-
 }
+
+
