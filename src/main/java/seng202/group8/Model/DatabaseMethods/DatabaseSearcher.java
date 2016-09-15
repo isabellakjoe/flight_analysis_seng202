@@ -68,13 +68,25 @@ public class DatabaseSearcher {
         }
     }
 
+    /** Method used to build an sql statement for searching through airports in the database
+     *
+     * @param option string parameter for which table column to search through
+     * @param name string parameter for which table column must match
+     * @return a sql statement
+     */
     public String buildAirportSearch(String option, String name) {
 
-        String sql = "SELECT DISTINCT * FROM airport WHERE " + option + " LIKE '" + name + "%'";
+        String sql = "SELECT DISTINCT * FROM airport WHERE " + option + " LIKE '%" + name + "%'";
         return sql;
 
     }
 
+    /** Method used to build an sql statement for searching through airlines in the database
+     *
+     * @param option string parameter for which table column to search through
+     * @param name string parameter for which table column must match
+     * @return a sql statement
+     */
     public String buildAirlineSearch(String option, String name) {
 
         String sql = "SELECT DISTINCT * FROM airline WHERE " + option + " LIKE '%" + name + "%'";
@@ -82,31 +94,54 @@ public class DatabaseSearcher {
 
     }
 
+    /** Method used to build an sql statment for searching through routes in the database
+     *
+     * @param option string parameter for which table column to search through
+     * @param name string parameter for which table column must match
+     * @return a sql statement
+     */
     public String buildRouteSearch(String option, String name) {
 
-        String sql = "SELECT DISTINCT * FROM route WHERE " + option + " LIKE '" + name + "%'";
+        String sql = "SELECT DISTINCT * FROM route WHERE " + option + " LIKE '%" + name + "%'";
         return sql;
 
     }
 
-    /* Method to add additional like statements to an sql statement */
+    /** Method to add additional like statements to an sql statement
+     *
+     * @param sql an sql statement which needs additional parameters
+     * @param table the table of the database
+     * @param option the column of the table
+     * @param name the string parameter for which the tables column must match
+     * @return
+     */
     public String addAdditionalLikeOption(String sql, String table, String option, String name) {
         String addQuery = " UNION SELECT * FROM " + table + " WHERE " + option + " LIKE '" + name + "%'";
         return sql + addQuery;
     }
 
+    /** Method to build a sql query for the number of routes a source airport has
+     *
+     * @param orderby string parameter to order the list ASC or DESC
+     * @return a sql statement containing airport ids and the number of routes
+     */
     public String buildSrcRouteQuery(String orderby) {
         String sql = "SELECT airport.airportid, COUNT(*) from airport INNER JOIN route ON airport.airportid = route.sourceid GROUP BY airport.airportid ORDER BY COUNT(*) " + orderby + " ;";
         return sql;
     }
 
+    /** Method to build a sql query for the number of routes a destination airport has
+     *
+     * @param orderby string parameter to order the list ASC or DESC
+     * @return a sql statement containing airport ids and the number of routes
+     */
     public String buildDestRouteQuery(String orderby) {
         String sql = "SELECT airport.airportid, COUNT(*) from airport INNER JOIN route ON airport.airportid = route.destinationid GROUP BY airport.airportid ORDER BY COUNT(*) " + orderby + " ;";
         return sql;
     }
 
     private ObservableList<Integer> checkForZeroRoutes(ArrayList<ArrayList<Integer>> airportRouteList) {
-
+        // Method used to find a list of all of the ids of airports which have no routes
         ObservableList<Integer> zeroRouteAirports = FXCollections.observableArrayList();
         for (int i = 0; i < airportRouteList.size(); i++) {
             if (airportRouteList.get(i).get(1) == 0) {
@@ -119,7 +154,7 @@ public class DatabaseSearcher {
     }
 
     private ObservableList<Integer> getNumOfRoutes(Connection conn, String sqlSrc, String sqlDest) {
-
+        //A method to get the number of routes each airport in the database has
         ArrayList<ArrayList<Integer>> numSrcRoutes = new ArrayList<ArrayList<Integer>>();
         ArrayList<ArrayList<Integer>> numDestRoutes = new ArrayList<ArrayList<Integer>>();
         ArrayList<ArrayList<Integer>> totalNumRoutes = new ArrayList<ArrayList<Integer>>();
@@ -163,7 +198,11 @@ public class DatabaseSearcher {
 
     }
 
-
+    /** A methid used to find all of the airports without routes
+     *
+     * @param conn a static connection to a database
+     * @return a list of all of the id's of airports which currently have no routes
+     */
     public ObservableList<Integer> findAirportsWithNoRoutes(Connection conn) {
         String sqlSrc = "SELECT airport.airportid, count(route.sourceid) AS numroutes FROM airport LEFT OUTER JOIN route ON airport.airportid = route.sourceid GROUP BY airport.airportid;";
         String sqlDest = "SELECT airport.airportid, count(route.destinationid) AS numroutes FROM airport LEFT OUTER JOIN route ON airport.airportid = route.destinationid GROUP BY airport.airportid;";
@@ -173,7 +212,12 @@ public class DatabaseSearcher {
 
     }
 
-
+    /** A method used to search the database for airports which match a certain constraints
+     *
+     * @param conn a static connection to a database
+     * @param sql a sql statement for airports
+     * @return an observable list of airport objects which match search criteria
+     */
     public ObservableList<Airport> searchForAirportByOption(Connection conn, String sql) {
 
         ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -207,6 +251,12 @@ public class DatabaseSearcher {
 
     }
 
+    /** A method used to search the database for airlines which match a certain constraints
+     *
+     * @param conn a static connection to a database
+     * @param sql a sql statement for airlines
+     * @return an observable list of airport objects which match search criteria
+     */
     public ObservableList<Airline> searchForAirlinesByOption(Connection conn, String sql) {
 
         ObservableList<Airline> airlines = FXCollections.observableArrayList();
@@ -235,7 +285,12 @@ public class DatabaseSearcher {
         return airlines;
     }
 
-
+    /** A method used to search the database for airlines which match a certain constraints
+     *
+     * @param conn a static connection to a database
+     * @param sql a sql statement for routes
+     * @return an observable list of airport objects which match search criteria
+     */
     public ObservableList<Route> searchRouteByOption(Connection conn, String sql) {
 
         ObservableList<Route> routes = FXCollections.observableArrayList();
@@ -270,7 +325,12 @@ public class DatabaseSearcher {
     }
 
 
-
+    /** A method used to get the number of routes an airport has
+     *
+     * @param conn a static connection to a database
+     * @param sql a sql statement to compute the number of routes
+     * @return an arraylist of airport ids without the number of routes contained
+     */
     public ObservableList<Integer> getNumRoutesOfAirport(Connection conn, String sql) {
 
         ObservableList<Integer> airportIDs = FXCollections.observableArrayList();

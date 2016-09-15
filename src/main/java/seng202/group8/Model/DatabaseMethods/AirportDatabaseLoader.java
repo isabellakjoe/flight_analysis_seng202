@@ -15,7 +15,11 @@ import java.util.ArrayList;
  * Created by Callum on 26/08/16.
  */
 public class AirportDatabaseLoader extends AirportMethod {
-
+    /** Method used to get a list of all the airports currently in the database
+     *
+     * @param conn a connection to the database
+     * @return an observable list of all the airports currently in the database
+     */
     public ObservableList<Airport> loadAirport(Connection conn) {
 
         ObservableList<Airport> airports = FXCollections.observableArrayList();
