@@ -57,6 +57,7 @@ public class AddAirlineViewController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+
     }
 
     public void makeVisible() {
@@ -77,7 +78,7 @@ public class AddAirlineViewController {
         addedAirlineICAO.clear();
         addedAirlineCallsign.clear();
         addedAirlineActive.setSelected(false);
-        mainController.backToTableView(e);
+        mainController.backToTableView(new ActionEvent());
     }
 
     @FXML

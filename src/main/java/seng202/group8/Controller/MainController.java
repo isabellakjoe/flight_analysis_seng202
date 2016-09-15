@@ -2021,6 +2021,7 @@ public class MainController implements Initializable {
         mapViewController.initMap();
         flightViewController.setMainController(this);
         mapViewController.setMainController(this);
+        addAirlineViewController.setMainController(this);
 
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
