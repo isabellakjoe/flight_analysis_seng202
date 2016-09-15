@@ -98,19 +98,21 @@ public class FlightParser {
         return resultWaypoint;
     }
 
-    /* Method to separate an input string based off of comma positioning */
-
-    /** Method to Create
+    /** Method to split a string of Route Data at each comma.
      *
-     * @param inputRoute
-     * @return
+     * @param inputRoute: A string of Route Data.
+     * @return An ArrayList of Route Data.
      */
     private ArrayList<String> splitByComma(String inputRoute) {
         /* Returns a new ArrayList, containing all of the string elements */
         return new ArrayList<String>(Arrays.asList(inputRoute.split(",")));
     }
 
-    /* Method to parse a string to a float with error handling */
+    /** Method to convert a String of numbers to a Float.
+     *
+     * @param inputNum: A number in String form.
+     * @return The number as a Float or -1 if the string is not a number.
+     */
     private double parseToDouble(String inputNum) {
         try {
             return Double.parseDouble(inputNum);
@@ -119,7 +121,11 @@ public class FlightParser {
         }
     }
 
-    /* Method to parse a string to an integer with error handling */
+    /** Method to conver a String of numbers to a Integer.
+     *
+     * @param inputNum: A number in String form.
+     * @return The number as an Integer or -1 if the string is not a number.
+     */
     private int parseToInt(String inputNum) {
         try {
             return Integer.parseInt(inputNum);

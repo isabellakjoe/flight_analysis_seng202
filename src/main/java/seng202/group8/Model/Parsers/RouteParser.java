@@ -74,6 +74,13 @@ public class RouteParser extends RouteMethod {
     }
 
     /* Public method which is used to create a single route */
+
+    /** Method to create a Route Object.
+     *
+     * @param input: String of Route data.
+     * @return A Route Object or null if the input is null.
+     */
+
     public Route createSingleRoute(String input) {
         ArrayList<String> routeInfo = refactorData(input);
         if(routeInfo != null) {
