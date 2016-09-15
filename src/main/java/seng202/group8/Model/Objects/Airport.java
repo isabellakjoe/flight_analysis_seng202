@@ -1,5 +1,7 @@
 package seng202.group8.Model.Objects;
 
+import java.util.ArrayList;
+
 /**
  * Created by esa46 on 19/08/16.
  */
@@ -127,7 +129,6 @@ public class Airport {
 
     /* Returns distance (in km, rounded to nearest 100km) to second airport */
     public double calculateDistanceTo(Airport airport){
-
         double distanceKm;
         double earthRadiusKm = 6371;
         double latDiff = Math.toRadians(airport.getLatitude()-this.getLatitude());

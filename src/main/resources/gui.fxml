@@ -377,6 +377,13 @@
                                             <TableColumn fx:id="timezone" minWidth="30.0" prefWidth="75.0" text="Timezone" visible="false" />
                                             <TableColumn fx:id="DST" minWidth="30.0" prefWidth="75.0" text="DST" visible="false" />
                                         </columns>
+                                 <contextMenu>
+                                    <ContextMenu fx:id="distanceMenu">
+                                      <items>
+                                        <MenuItem fx:id="getDistanceMenu" mnemonicParsing="false" onAction="#getDistance" text="Get Distance" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
                                     </TableView>
                               <GridPane fx:id="airportPane" visible="false" GridPane.rowIndex="3">
                                  <columnConstraints>

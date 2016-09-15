@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -905,7 +907,8 @@ public class Controller implements Initializable {
         int count = 0;
         for (int i = 0; i < size; i++) {
             String current = input.get(i);
-            if (current.equals(null) || current.equals("")) {
+
+            if (current == null || current.equals("")) {
 
                 switch (i) {
                     case 0:
@@ -2201,6 +2204,8 @@ public class Controller implements Initializable {
     private Button individualRouteBackButton;
     @FXML
     private Button flightViewBackButton;
+    @FXML
+    private ContextMenu distanceMenu;
 
 
 
@@ -2392,12 +2397,46 @@ public class Controller implements Initializable {
         });
 
         initMap();
+        airportTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        airportTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+                                                   @Override
+                                                   public void handle(ContextMenuEvent event) {
+                                                       if(airportTable.getSelectionModel().getSelectedItems().size() != 2){
+                                                           getDistanceMenu.setDisable(true);
+                                                       }else{
+                                                           getDistanceMenu.setDisable(false);
+                                                       }
+                                                   }
+                                               }
+        );
+
+
+
+    }
+
+
+
+    @FXML
+    public void getDistance(ActionEvent e){
+        distanceMenu.hide();
+        if(airportTable.getSelectionModel().getSelectedItems().size() == 2){
+
+            Airport airport1 = airportTable.getSelectionModel().getSelectedItems().get(0);
+            Airport airport2 = airportTable.getSelectionModel().getSelectedItems().get(1);
+
+           double distance = airport1.calculateDistanceTo(airport2);
+            JOptionPane.showMessageDialog(null, "The distance is "+distance+" km.", "Distance from "+airport1.getName()+" to "+airport2.getName(), JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
 
     //Google Maps initialization
     @FXML
     private WebView webView;
     private WebEngine webEngine;
+
+    @FXML
+    private MenuItem getDistanceMenu;
 
     private void initMap() {
        webEngine = webView.getEngine();
