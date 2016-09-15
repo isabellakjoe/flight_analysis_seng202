@@ -7,10 +7,16 @@ import java.util.Arrays;
 
 /**
  * Created by Callum on 25/08/16.
+ * Class that contains methods for error handling and checking airline objects for parsing.
  */
 public abstract class AirlineMethod {
 
-    /* Method to separate an input string based off of comma positioning and eliminate any extra white space and quote marks */
+    /**
+     * Method to separate an input string based off of comma positioning and eliminate any extra white space and quote marks
+     * @param inputAirport
+     * @return Returns a new ArrayList, containing all of the refactored string elements refactoredData
+     * @return null if the input string had too many or not enough elements
+     */
     public ArrayList<String> refactorData(String inputAirport) {
 
         ArrayList<String> splitData = new ArrayList<String>(Arrays.asList(inputAirport.split(",")));
@@ -20,15 +26,18 @@ public abstract class AirlineMethod {
             for (int i = 0; i < size; i++) {
                 refactoredData.add(splitData.get(i).trim().replace("\"", ""));
             }
-            /* Returns a new ArrayList, containing all of the refactored string elements */
             return refactoredData;
         } else{
-            /* Returns null if the input string had too many or not enough elements */
             return null;
         }
     }
 
-    /* Method to parse a string to an integer with error handling */
+    /**
+     * Method to parse a string to an integer with error handling
+     * @param inputNum
+     * @return string integer parsed to an Integer
+     * @return -1 for NumberFormatException
+     */
     public int parseToInt(String inputNum) {
         try {
             return Integer.parseInt(inputNum);
@@ -37,7 +46,11 @@ public abstract class AirlineMethod {
         }
     }
 
-    /* Method to check whether airline has an alias */
+    /**
+     * Method to check whether airline has an alias
+     * @param airline
+     * @param alias (null if no value available)
+     */
     public void checkAlias(Airline airline, String alias) {
         if (alias.equals("\\N")) {
             airline.setAlias(null);
@@ -46,7 +59,11 @@ public abstract class AirlineMethod {
         }
     }
 
-    /* Method to check whether an airline is currently active*/
+    /**
+     * Method to check whether an airline is currently active
+     * @param airline
+     * @param active
+     */
     public void checkActive(Airline airline, String active) {
         if(active.equals("Y")) {
             airline.setActive(true);

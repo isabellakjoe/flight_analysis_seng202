@@ -2,6 +2,8 @@ package seng202.group8.Model.Objects;
 
 /**
  * Created by esa46 on 19/08/16.
+ *
+ * Airline object class.
  */
 public class Airline {
 
@@ -83,6 +85,12 @@ public class Airline {
         return this.alias!= null;
     }
 
+    /**
+     * Method to check if Airline being added has any parameter equal to another Airline already in database
+     *
+     * @param other (Airline) being checked against
+     * @return isEqual (boolean) true if parameter already in database, false otherwise
+     */
     public boolean isEqualTo(Airline other){
         boolean isEqual = true;
         if (!this.name.equals(other.getName())) {
