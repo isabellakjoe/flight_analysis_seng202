@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -861,8 +862,8 @@ public class MainController implements Initializable {
         airportDSTSearch.setVisible(false);
         airportICAOSearch.setVisible(false);
 
-        airportSearchButton.setLayoutY(183);
-        resetAirportSearch.setLayoutY(183);
+        airportSearchButton.setLayoutY(250);
+        resetAirportSearch.setLayoutY(250);
         airportAddButton.setVisible(true);
     }
 
@@ -880,8 +881,8 @@ public class MainController implements Initializable {
         airportDSTSearch.setVisible(true);
         airportICAOSearch.setVisible(true);
 
-        airportSearchButton.setLayoutY(552);
-        resetAirportSearch.setLayoutY(552);
+        airportSearchButton.setLayoutY(570);
+        resetAirportSearch.setLayoutY(570);
         airportAddButton.setVisible(false);
     }
 
@@ -894,8 +895,8 @@ public class MainController implements Initializable {
         airlineSearchID.setVisible(false);
         destinationIDSearch.setVisible(false);
         sourceIDSearch.setVisible(false);
-        routeSearch.setLayoutY(251);
-        resetRouteSearch.setLayoutY(251);
+        routeSearch.setLayoutY(250);
+        resetRouteSearch.setLayoutY(250);
         routeAddButton.setVisible(true);
     }
 
@@ -921,8 +922,8 @@ public class MainController implements Initializable {
         airlineIATASearch.setVisible(true);
         airlineICAOSearch.setVisible(true);
         airlineCallsignSearch.setVisible(true);
-        airlineSearchButton.setLayoutY(401);
-        resetAirlineSearch.setLayoutY(401);
+        airlineSearchButton.setLayoutY(415);
+        resetAirlineSearch.setLayoutY(415);
         airlineAddButton.setVisible(false);
     }
 
@@ -935,8 +936,8 @@ public class MainController implements Initializable {
         airlineSearchID.setVisible(false);
         airlineICAOSearch.setVisible(false);
         airlineCallsignSearch.setVisible(false);
-        airlineSearchButton.setLayoutY(235);
-        resetAirlineSearch.setLayoutY(235);
+        airlineSearchButton.setLayoutY(250);
+        resetAirlineSearch.setLayoutY(250);
         airlineAddButton.setVisible(true);
     }
 
