@@ -45,7 +45,7 @@ public class AirlineParser extends AirlineMethod {
      * Public method that creates a single Airline Object by calling createParsedAirline().
      *
      * @param input: A string of parameters for an Airline.
-     * @return a Airline object or null if the
+     * @return a Airline object or null if the input is null.
      */
     public Airline createSingleAirline(String input) {
         ArrayList<String> airlineInfo = refactorData(input);

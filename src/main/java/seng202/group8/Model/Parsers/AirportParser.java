@@ -59,7 +59,7 @@ public class AirportParser extends AirportMethod {
      * Public method that creates a single Airport Object by calling createParsedAirport().
      *
      * @param input: A string of parameters for an Airport.
-     * @return an Airport object or null if the the input is null.
+     * @return an Airport object or null if the input is null.
      */
     public Airport createSingleAirport(String input) {
         ArrayList<String> airportInfo = refactorData(input);
