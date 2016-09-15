@@ -36,14 +36,14 @@ public class AirlineDatabaseLoaderTest {
     }
 
     @Test
-    public void testAllRoutesLoadCorrectly(){
+    public void testAllAirlinesLoadCorrectly(){
         ObservableList<Airline> airlines = dba.loadAirlines(conn);
         //Currently 7 airlines in the database
         assertTrue(7 == airlines.size());
     }
 
     @Test
-    public void testAirlineIDParsesCorrectly() {
+    public void testAirlineLoadsCorrectly() {
         ObservableList<Airline> airlines = dba.loadAirlines(conn);
         Airline testAirline = new Airline();
         //Because we are using a set, have to find where in set airline to test is.
@@ -54,6 +54,5 @@ public class AirlineDatabaseLoaderTest {
         }
         assertTrue(testAirline.getName().equals("Servicios Aereos Del Vaupes"));
     }
-
 
 }

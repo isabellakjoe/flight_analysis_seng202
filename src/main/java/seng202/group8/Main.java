@@ -25,7 +25,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         /* Adds the FXML files to the GUI */
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("gui.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Main.fxml"));
         /* Set the name of the GUI */
         primaryStage.setTitle("Flight Viewer");
         primaryStage.setScene(new Scene(root, 1100, 700));

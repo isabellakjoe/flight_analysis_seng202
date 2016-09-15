@@ -10,7 +10,6 @@ import java.util.ArrayList;
  */
 public class AirlineParser extends AirlineMethod {
 
-
     private Airline createParsedAirline(ArrayList<String> airlineInfo) {
         /* Create the Airline Object */
         Airline airline = new Airline();
@@ -42,7 +41,11 @@ public class AirlineParser extends AirlineMethod {
         return airline;
     }
 
-    /* Public method which is used to create a single airline */
+    /** Public method that creates a single Airline Object by calling createParsedAirline().
+     *
+     * @param input: A string of parameters for an Airline.
+     * @return a Airline object or null if the input is null.
+     */
     public Airline createSingleAirline(String input) {
         ArrayList<String> airlineInfo = refactorData(input);
         if(airlineInfo != null) {

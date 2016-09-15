@@ -24,16 +24,18 @@ public class FileLoader {
     private BufferedReader reader;
     private ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
+    /** Constructor for the FileLoader class
+     *
+     * @param br: A BufferedReader
+     */
     public FileLoader(BufferedReader br){
         this.reader = br;
     }
 
-    /*Reads the buffered reader to a local buffered reader.*/
-    public BufferedReader getFile(BufferedReader br){
-        this.reader = br;
-        return br;
-    }
-
+    /** A method to create an ObservableList of Airports.
+     *
+     * @return The created Airport ObservableList.
+     */
     public ObservableList<Airport> buildAirports(){
         Scanner textScanner = new Scanner(reader);
         ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -50,6 +52,10 @@ public class FileLoader {
         return airports;
     }
 
+    /** A method to create an ObservableList of Airlines.
+     *
+     * @return The created Airline ObservableList.
+     */
     public ObservableList<Airline> buildAirlines(){
         Scanner textScanner = new Scanner(reader);
         ObservableList<Airline> airlines = FXCollections.observableArrayList();
@@ -66,6 +72,10 @@ public class FileLoader {
         return airlines;
     }
 
+    /** A method to create an ObservableList of Routes.
+     *
+     * @return The created Routes ObservableList.
+     */
     public ObservableList<Route> buildRoutes(){
         Scanner textScanner = new Scanner(reader);
         ObservableList<Route> routes = FXCollections.observableArrayList();
@@ -81,6 +91,10 @@ public class FileLoader {
         return routes;
     }
 
+    /** Method to create a Flight object.
+     *
+     * @return The Flight Object.
+     */
     public Flight buildFlight(){
         FlightParser parser = new FlightParser(reader);
         Flight flight = parser.parseFlightFile();
@@ -90,6 +104,12 @@ public class FileLoader {
 
 
 /*Reads a file from a buffered reader and outputs each line as an arraylist of properties.*/
+
+    /** Method that reads a a file from a BufferedReader
+     *
+     * @param br: The BufferedReader of a File.
+     * @return An ArrayList of ArrayLists of Strings.
+     */
     public ArrayList<ArrayList<String>> readData(BufferedReader br){
         String line;
         try {

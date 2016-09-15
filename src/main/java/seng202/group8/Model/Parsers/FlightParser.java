@@ -20,10 +20,18 @@ public class FlightParser {
     private BufferedReader br;
     private Flight resultFlight = new Flight();
 
+    /** Constructor for Flight Parser.
+     *
+     * @param br: A BufferedReader of a Flight File.
+     */
     public FlightParser(BufferedReader br){
         this.br = br;
     }
 
+    /** Method to Create a Flight Object.
+     *
+     * @return A FLight Object.
+     */
     public Flight parseFlightFile(){
         Scanner textScanner = new Scanner(br);
 
@@ -53,9 +61,10 @@ public class FlightParser {
         return resultFlight;
     }
 
-    /*
-    Method to process header and footer lines containing airport details.
-    Currently creates a new airport - later should be changed to search for existing airport in database
+    /** Method to process header and footer lines containing Airport data.
+     *
+     * @param nextLine: The next line to be processed.
+     * @return An Airport Object.
      */
     private Airport processAirportDetails(String nextLine){
         ArrayList<String> inputValues = splitByComma(nextLine);
@@ -70,6 +79,11 @@ public class FlightParser {
         return resultAirport;
     }
 
+    /** Method to process header and footer lines containing Waypoint data.
+     *
+     * @param nextLine: The next line to be processed.
+     * @return An Waypoint Object.
+     */
     private Waypoint processWaypointDetails(String nextLine){
         ArrayList<String> inputValues = splitByComma(nextLine);
         Waypoint resultWaypoint = new Waypoint();
@@ -84,13 +98,21 @@ public class FlightParser {
         return resultWaypoint;
     }
 
-    /* Method to separate an input string based off of comma positioning */
+    /** Method to split a string of Route Data at each comma.
+     *
+     * @param inputRoute: A string of Route Data.
+     * @return An ArrayList of Route Data.
+     */
     private ArrayList<String> splitByComma(String inputRoute) {
         /* Returns a new ArrayList, containing all of the string elements */
         return new ArrayList<String>(Arrays.asList(inputRoute.split(",")));
     }
 
-    /* Method to parse a string to a float with error handling */
+    /** Method to convert a String of numbers to a Float.
+     *
+     * @param inputNum: A number in String form.
+     * @return The number as a Float or -1 if the string is not a number.
+     */
     private double parseToDouble(String inputNum) {
         try {
             return Double.parseDouble(inputNum);
@@ -99,7 +121,11 @@ public class FlightParser {
         }
     }
 
-    /* Method to parse a string to an integer with error handling */
+    /** Method to conver a String of numbers to a Integer.
+     *
+     * @param inputNum: A number in String form.
+     * @return The number as an Integer or -1 if the string is not a number.
+     */
     private int parseToInt(String inputNum) {
         try {
             return Integer.parseInt(inputNum);
