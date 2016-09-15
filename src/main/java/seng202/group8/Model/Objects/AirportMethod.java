@@ -81,7 +81,7 @@ public abstract class AirportMethod {
             airport.setIATA(airportCode);
         }
     }
-    
+
 
     /**
      * Method to check whether the airport code is the string "\\N".
