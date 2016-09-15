@@ -494,6 +494,8 @@ public class Controller implements Initializable {
     private WebEngine webEngine;
     @FXML
     private MenuItem getDistanceMenu;
+    @FXML
+    private ContextMenu distanceMenu;
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e) {
