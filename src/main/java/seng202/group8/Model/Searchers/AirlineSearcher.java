@@ -2,7 +2,6 @@ package seng202.group8.Model.Searchers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Airline;
@@ -17,7 +16,8 @@ public class AirlineSearcher {
     // Private list used to contain all loaded airlines
     private ObservableList<Airline> loadedAirlines = FXCollections.observableArrayList();
 
-    /** A constructor for the AirlineSearcher Object
+    /**
+     * A constructor for the AirlineSearcher Object
      *
      * @param loadedAirlines a observable list of airlines
      */
@@ -25,7 +25,8 @@ public class AirlineSearcher {
         this.loadedAirlines = loadedAirlines;
     }
 
-    /** Return the list of all currently loaded airlines
+    /**
+     * Return the list of all currently loaded airlines
      *
      * @return an observable list of airlines
      */
@@ -45,7 +46,8 @@ public class AirlineSearcher {
         return airlines;
     }
 
-    /** Method to search for airline based off of ID
+    /**
+     * Method to search for airline based off of ID
      *
      * @param airlineID ID of a airline
      */
@@ -55,7 +57,8 @@ public class AirlineSearcher {
         loadedAirlines = matchingAirlines;
     }
 
-    /** Method to search for airline based off of name
+    /**
+     * Method to search for airline based off of name
      *
      * @param name name of a airline
      */
@@ -64,7 +67,8 @@ public class AirlineSearcher {
         loadedAirlines = matchingAirlines;
     }
 
-    /** Method to search for a airline based off of alias
+    /**
+     * Method to search for a airline based off of alias
      *
      * @param alias alias of a airline
      */
@@ -73,7 +77,8 @@ public class AirlineSearcher {
         loadedAirlines = matchingAirlines;
     }
 
-    /** Method to search for a airline based off of IATA
+    /**
+     * Method to search for a airline based off of IATA
      *
      * @param IATA iata of a airline
      */
@@ -82,7 +87,8 @@ public class AirlineSearcher {
         loadedAirlines = matchingAirlines;
     }
 
-    /** Method to search for a airline based off of ICAO
+    /**
+     * Method to search for a airline based off of ICAO
      *
      * @param ICAO icao of a airline
      */
@@ -91,7 +97,8 @@ public class AirlineSearcher {
         loadedAirlines = matchingAirlines;
     }
 
-    /** Method to search for a airline based off of Callsign
+    /**
+     * Method to search for a airline based off of Callsign
      *
      * @param callsign callsign of a airline
      */
@@ -100,7 +107,8 @@ public class AirlineSearcher {
         loadedAirlines = matchingAirlines;
     }
 
-    /** Method to search for a airline based off of Country
+    /**
+     * Method to search for a airline based off of Country
      *
      * @param country country of a airline
      */
@@ -109,15 +117,15 @@ public class AirlineSearcher {
         loadedAirlines = matchingAirlines;
     }
 
-    /** Method to search for a airline based off of it's status
+    /**
+     * Method to search for a airline based off of it's status
      *
      * @param activeStatus status of a airline
      */
-    public void airlinesOfActiveStatus(String activeStatus){
+    public void airlinesOfActiveStatus(String activeStatus) {
         ObservableList<Airline> matchingAirlines = generateSearchList("active", "Y");
         loadedAirlines = matchingAirlines;
     }
-
 
 
 }

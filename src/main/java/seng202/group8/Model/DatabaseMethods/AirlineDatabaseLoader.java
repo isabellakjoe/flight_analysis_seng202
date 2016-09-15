@@ -2,8 +2,8 @@ package seng202.group8.Model.DatabaseMethods;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seng202.group8.Model.Objects.AirlineMethod;
 import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Objects.AirlineMethod;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,7 +14,8 @@ import java.sql.Statement;
  */
 public class AirlineDatabaseLoader extends AirlineMethod {
 
-    /** Function to return an observable list of Airlines which have been loaded from the database
+    /**
+     * Function to return an observable list of Airlines which have been loaded from the database
      *
      * @param conn a connection to the database
      * @return an observable list of airports

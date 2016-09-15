@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by esa46 on 19/08/16.
- *
+ * <p>
  * Airline object class.
  */
 public class Airport {
@@ -138,11 +138,11 @@ public class Airport {
     public double calculateDistanceTo(Airport airport){
         double distanceKm;
         double earthRadiusKm = 6371;
-        double latDiff = Math.toRadians(airport.getLatitude()-this.getLatitude());
-        double longDiff = Math.toRadians(airport.getLongitude()-this.getLongitude());
-        double a = Math.sin(latDiff/2) * Math.sin(latDiff/2) + Math.cos(Math.toRadians(this.getLatitude()))
-                * Math.cos(Math.toRadians(airport.getLatitude())) * Math.sin(longDiff/2) * Math.sin(longDiff/2);
-        double b = Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double latDiff = Math.toRadians(airport.getLatitude() - this.getLatitude());
+        double longDiff = Math.toRadians(airport.getLongitude() - this.getLongitude());
+        double a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.cos(Math.toRadians(this.getLatitude()))
+                * Math.cos(Math.toRadians(airport.getLatitude())) * Math.sin(longDiff / 2) * Math.sin(longDiff / 2);
+        double b = Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         distanceKm = (earthRadiusKm * b * 2);
 
         distanceKm = (Math.round(distanceKm * 0.01) / 0.01);
@@ -156,50 +156,49 @@ public class Airport {
      * @param other (Airport) being checked against
      * @return isEqual (boolean) true if parameter already in database, false otherwise
      */
-    public boolean isEqualTo(Airport other){
+    public boolean isEqualTo(Airport other) {
         boolean isEqual = true;
         if (!this.name.equals(other.getName())) {
             isEqual = false;
         }
-        if (this.airportID!=other.getAirportID()) {
+        if (this.airportID != other.getAirportID()) {
             isEqual = false;
         }
-        if (this.latitude!=other.getLatitude()){
+        if (this.latitude != other.getLatitude()) {
             isEqual = false;
         }
-        if (this.longitude!=other.getLongitude()){
+        if (this.longitude != other.getLongitude()) {
             isEqual = false;
         }
-        if (this.altitude!=other.getAltitude()){
+        if (this.altitude != other.getAltitude()) {
             isEqual = false;
         }
-        if (!this.city.equals(other.getCity())){
+        if (!this.city.equals(other.getCity())) {
             isEqual = false;
         }
-        if (!this.country.equals(other.getCountry())){
+        if (!this.country.equals(other.getCountry())) {
             isEqual = false;
         }
-        if (this.DST!=other.getDST()) {
+        if (this.DST != other.getDST()) {
             isEqual = false;
         }
-        if (this.timezone!=other.getTimezone()){
+        if (this.timezone != other.getTimezone()) {
             isEqual = false;
         }
-        if (!this.olsonTimezone.equals(other.getOlsonTimezone())){
+        if (!this.olsonTimezone.equals(other.getOlsonTimezone())) {
             isEqual = false;
         }
-        if (this.FAA!=other.getFAA()){
+        if (this.FAA != other.getFAA()) {
             isEqual = false;
         }
-        if (!this.IATA.equals(other.getIATA())){
+        if (!this.IATA.equals(other.getIATA())) {
             isEqual = false;
         }
-        if (!this.ICAO.equals(other.getICAO())){
+        if (!this.ICAO.equals(other.getICAO())) {
             isEqual = false;
         }
         return isEqual;
     }
-
 
 
 }

@@ -5,9 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import seng202.group8.Model.DatabaseMethods.Database;
+import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
-import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;
@@ -37,7 +37,7 @@ public class DatabaseSearcherTest {
 
 
     @Test
-    public void testAirportSearchesCorrectly(){
+    public void testAirportSearchesCorrectly() {
         String sqlStatement = dbs.buildAirportSearch("name", "Goro");
         ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, sqlStatement);
         //Only one in database like Goro, so output should be one element
@@ -45,7 +45,7 @@ public class DatabaseSearcherTest {
     }
 
     @Test
-    public void testAirportSearchesCorrectlyWithNameTest(){
+    public void testAirportSearchesCorrectlyWithNameTest() {
         String sqlStatement = dbs.buildAirportSearch("name", "Goro");
         ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, sqlStatement);
         //Only one in database like Goro, so output should be one element
@@ -54,7 +54,7 @@ public class DatabaseSearcherTest {
     }
 
     @Test
-    public void testAirportSearchesCountryCorrectly(){
+    public void testAirportSearchesCountryCorrectly() {
         String sqlStatement = dbs.buildAirportSearch("country", "Papua New");
         ObservableList<Airport> airports = dbs.searchForAirportByOption(conn, sqlStatement);
         //Six elements currently in database with Papua New Guinea as a country
@@ -62,7 +62,7 @@ public class DatabaseSearcherTest {
     }
 
     @Test
-    public void testAirlineSearchesCorrectly(){
+    public void testAirlineSearchesCorrectly() {
         String sqlStatement = dbs.buildAirlineSearch("name", "Servicios");
         ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, sqlStatement);
         //Two elements in database like Servicios, so output should be one element
@@ -70,7 +70,7 @@ public class DatabaseSearcherTest {
     }
 
     @Test
-    public void testAirlineSearchesCorrectlyWithNameTest(){
+    public void testAirlineSearchesCorrectlyWithNameTest() {
         String sqlStatement = dbs.buildAirlineSearch("name", "Servicios Aereos Del");
         ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, sqlStatement);
         //Only one in database like Servicios, so output should be one element
@@ -79,7 +79,7 @@ public class DatabaseSearcherTest {
     }
 
     @Test
-    public void testAirlineSearchesCountryCorrectly(){
+    public void testAirlineSearchesCountryCorrectly() {
         String sqlStatement = dbs.buildAirlineSearch("country", "Mex");
         ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, sqlStatement);
         //Two elements currently in database with Mexico as a country
@@ -87,7 +87,7 @@ public class DatabaseSearcherTest {
     }
 
     @Test
-    public void testRouteSearchesAirlineCorrectly(){
+    public void testRouteSearchesAirlineCorrectly() {
         String sqlStatement = dbs.buildRouteSearch("airlinecode", "2B");
         ObservableList<Route> routes = dbs.searchRouteByOption(conn, sqlStatement);
         //Seven elements currently in database with Mexico as a country

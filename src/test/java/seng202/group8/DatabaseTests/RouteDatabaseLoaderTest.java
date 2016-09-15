@@ -9,9 +9,7 @@ import seng202.group8.Model.DatabaseMethods.RouteDatabaseLoader;
 import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -36,7 +34,7 @@ public class RouteDatabaseLoaderTest {
     }
 
     @Test
-    public void testAllRoutesLoadCorrectly(){
+    public void testAllRoutesLoadCorrectly() {
         ObservableList<Route> routes = dbr.loadRoutes(conn);
         //Currently 16 routes in the database
         assertTrue(16 == routes.size());
@@ -46,7 +44,7 @@ public class RouteDatabaseLoaderTest {
     public void testRouteLoads() {
         ObservableList<Route> routes = dbr.loadRoutes(conn);
         Route testRoute = new Route();
-        for (Route route: routes) {
+        for (Route route : routes) {
             if (route.getRouteID() == 500) {
                 testRoute = route;
             }

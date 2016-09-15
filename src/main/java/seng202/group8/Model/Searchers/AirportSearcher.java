@@ -16,7 +16,8 @@ public class AirportSearcher {
     // Private list used to store all Airport objects
     private ObservableList<Airport> loadedAirports = FXCollections.observableArrayList();
 
-    /** A constructor for the Airport Searcher Object
+    /**
+     * A constructor for the Airport Searcher Object
      *
      * @param loadedAirports an observable list of airports
      */
@@ -24,7 +25,8 @@ public class AirportSearcher {
         this.loadedAirports = loadedAirports;
     }
 
-    /** Return the list of all currently loaded airports
+    /**
+     * Return the list of all currently loaded airports
      *
      * @return an observable list of airports
      */
@@ -45,7 +47,8 @@ public class AirportSearcher {
 
     }
 
-    /** Method to search for airport based off of ID
+    /**
+     * Method to search for airport based off of ID
      *
      * @param airportID id of airport
      */
@@ -54,7 +57,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of Name
+    /**
+     * Method to search for airport based off of Name
      *
      * @param name name of airport
      */
@@ -63,7 +67,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of City
+    /**
+     * Method to search for airport based off of City
      *
      * @param city city of airport
      */
@@ -72,7 +77,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of Country
+    /**
+     * Method to search for airport based off of Country
      *
      * @param country country of airport
      */
@@ -81,7 +87,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of FAA
+    /**
+     * Method to search for airport based off of FAA
      *
      * @param FAA faa of airport
      */
@@ -90,7 +97,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of IATA
+    /**
+     * Method to search for airport based off of IATA
      *
      * @param IATA iata of airport
      */
@@ -99,7 +107,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of ICAO
+    /**
+     * Method to search for airport based off of ICAO
      *
      * @param ICAO icao of airport
      */
@@ -108,7 +117,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of Latitude
+    /**
+     * Method to search for airport based off of Latitude
      *
      * @param latitude latitude of airport
      */
@@ -117,7 +127,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of Longitude
+    /**
+     * Method to search for airport based off of Longitude
      *
      * @param longitude longitude of airport
      */
@@ -126,7 +137,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of Altitude
+    /**
+     * Method to search for airport based off of Altitude
      *
      * @param altitude altitude of airport
      */
@@ -135,7 +147,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of Timezone
+    /**
+     * Method to search for airport based off of Timezone
      *
      * @param timezone timezone of airport
      */
@@ -144,7 +157,8 @@ public class AirportSearcher {
         loadedAirports = matchingAirports;
     }
 
-    /** Method to search for airport based off of DST
+    /**
+     * Method to search for airport based off of DST
      *
      * @param DST dst of airport
      */

@@ -2,7 +2,7 @@ package seng202.group8.Model.Objects;
 
 /**
  * Created by esa46 on 19/08/16.
- *
+ * <p>
  * Route object class.
  */
 public class Route {
@@ -20,9 +20,13 @@ public class Route {
     private String equipment;
 
 
-    public int getRouteID() { return routeID;}
+    public int getRouteID() {
+        return routeID;
+    }
 
-    public void setRouteID(int routeID) { this.routeID = routeID;}
+    public void setRouteID(int routeID) {
+        this.routeID = routeID;
+    }
 
     public Airline getAirline() {
         return airline;
@@ -32,9 +36,13 @@ public class Route {
         this.airline = airline;
     }
 
-    public String getAirlineName() { return airlineName; }
+    public String getAirlineName() {
+        return airlineName;
+    }
 
-    public void setAirlineName(String airlineName) {this.airlineName = airlineName;}
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
+    }
 
     public Airport getSourceAirport() {
         return sourceAirport;
@@ -44,13 +52,21 @@ public class Route {
         this.sourceAirport = sourceAirport;
     }
 
-    public String getSourceAirportName() {return sourceAirportName; }
+    public String getSourceAirportName() {
+        return sourceAirportName;
+    }
 
-    public void setSourceAirportName(String sourceAirportName) {this.sourceAirportName = sourceAirportName; }
+    public void setSourceAirportName(String sourceAirportName) {
+        this.sourceAirportName = sourceAirportName;
+    }
 
-    public String getDestinationAirportName() {return destinationAirportName; }
+    public String getDestinationAirportName() {
+        return destinationAirportName;
+    }
 
-    public void setDestinationAirportName(String destinationAirportName) {this.destinationAirportName = destinationAirportName; }
+    public void setDestinationAirportName(String destinationAirportName) {
+        this.destinationAirportName = destinationAirportName;
+    }
 
     public Airport getDestinationAirport() {
         return destinationAirport;
@@ -76,9 +92,13 @@ public class Route {
         this.stops = stops;
     }
 
-    public String getCodeshareString(){ return codeshareString; }
+    public String getCodeshareString() {
+        return codeshareString;
+    }
 
-    public void setCodeshareString(String codeshareString){ this.codeshareString= codeshareString; }
+    public void setCodeshareString(String codeshareString) {
+        this.codeshareString = codeshareString;
+    }
 
     public String getEquipment() {
         return equipment;
@@ -92,7 +112,6 @@ public class Route {
      * Method to check if Route being added has any parameter equal to another Route already in database.
      *
      * @param other (Route) being checked against.
-     * @return true if another Route has same parameter.
      * @return false otherwise.
      */
     public boolean isEqualTo(Route other) {
@@ -103,7 +122,7 @@ public class Route {
         if (this.sourceAirport.getAirportID() != (other.getSourceAirport().getAirportID())) {
             isEqual = false;
         }
-        if (this.destinationAirport.getAirportID() != (other.getDestinationAirport().getAirportID())){
+        if (this.destinationAirport.getAirportID() != (other.getDestinationAirport().getAirportID())) {
             isEqual = false;
         }
         if (this.isCodeshare != other.isCodeshare()) {

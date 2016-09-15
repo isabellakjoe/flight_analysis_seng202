@@ -2,7 +2,7 @@ package seng202.group8.Model.Objects;
 
 /**
  * Created by esa46 on 19/08/16.
- *
+ * <p>
  * Airline object class.
  */
 public class Airline {
@@ -81,8 +81,8 @@ public class Airline {
         isActive = active;
     }
 
-    public boolean hasAlias(){
-        return this.alias!= null;
+    public boolean hasAlias() {
+        return this.alias != null;
     }
 
     /**
@@ -91,34 +91,33 @@ public class Airline {
      * @param other (Airline) being checked against
      * @return isEqual (boolean) true if parameter already in database, false otherwise
      */
-    public boolean isEqualTo(Airline other){
+    public boolean isEqualTo(Airline other) {
         boolean isEqual = true;
         if (!this.name.equals(other.getName())) {
             isEqual = false;
         }
-        if (this.airlineID!=other.getAirlineID()) {
+        if (this.airlineID != other.getAirlineID()) {
             isEqual = false;
         }
-        if (this.hasAlias()){
+        if (this.hasAlias()) {
             if (other.hasAlias()) {
                 if (!this.alias.equals(other.getAlias())) {
                     isEqual = false;
                 }
-            }
-            else {
+            } else {
                 isEqual = false;
             }
         }
-        if (!this.IATA.equals(other.getIATA())){
+        if (!this.IATA.equals(other.getIATA())) {
             isEqual = false;
         }
-        if (!this.ICAO.equals(other.getICAO())){
+        if (!this.ICAO.equals(other.getICAO())) {
             isEqual = false;
         }
-        if (!this.callsign.equals(other.getCallsign())){
+        if (!this.callsign.equals(other.getCallsign())) {
             isEqual = false;
         }
-        if(!this.country.equals(other.getCountry())){
+        if (!this.country.equals(other.getCountry())) {
             isEqual = false;
         }
         return isEqual;

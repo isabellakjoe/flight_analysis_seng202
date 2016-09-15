@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
-import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
@@ -26,7 +25,6 @@ import java.io.FileReader;
 import java.sql.Connection;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class SearcherTest {
 
@@ -60,7 +58,7 @@ public class SearcherTest {
     }
 
     @Test
-    public void airlineSearchEverythingButIDTest()throws FileNotFoundException {
+    public void airlineSearchEverythingButIDTest() throws FileNotFoundException {
         FileLoader loader = new FileLoader(new BufferedReader(new FileReader("SearchTestAirlines.txt")));
         ObservableList<Airline> airlines = loader.buildAirlines();
         dbSave.saveAirlines(conn, airlines);
@@ -90,7 +88,7 @@ public class SearcherTest {
     }
 
     @Test
-    public void airportSearchEverythingButIDTest()throws FileNotFoundException {
+    public void airportSearchEverythingButIDTest() throws FileNotFoundException {
         FileLoader loader = new FileLoader(new BufferedReader(new FileReader("SearchTestAirports.txt")));
         ObservableList<Airport> airports = loader.buildAirports();
         dbSave.saveAirports(conn, airports);
@@ -111,7 +109,7 @@ public class SearcherTest {
 
 
     @Test
-    public void routeSearchTest()throws FileNotFoundException {
+    public void routeSearchTest() throws FileNotFoundException {
         FileLoader loader = new FileLoader(new BufferedReader(new FileReader("SearchTestRoutes.txt")));
         ObservableList<Route> routes = loader.buildRoutes();
         dbSave.saveRoutes(conn, routes);
@@ -124,8 +122,6 @@ public class SearcherTest {
         Route expectedRoute = routes.get(0);
         assertEquals(returnedRoute.getStops(), expectedRoute.getStops());
     }
-
-
 
 
 }

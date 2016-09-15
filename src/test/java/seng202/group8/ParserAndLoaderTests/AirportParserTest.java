@@ -7,13 +7,14 @@ import seng202.group8.Model.Parsers.AirportParser;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+
 /**
  * Created by ikj11 on 22/08/16.
  */
 public class AirportParserTest {
 
     /* String containing IATA information */
-    private String IATAString =  "2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland";
+    private String IATAString = "2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland";
     /* String containing FAA and null information */
     private String FAAString = "6891,Putnam County Airport,Greencastle,United States,4I7,\\N,39.6335556,-86.8138056,842,-5,U,America/New_York";
 
@@ -85,7 +86,7 @@ public class AirportParserTest {
 
     @Test
     /* Test to see if the Airport altitude is correctly addedto an airport object */
-    public void testAirportAltitude(){
+    public void testAirportAltitude() {
         AirportParser airportParser = new AirportParser();
         Airport airportTest = airportParser.createSingleAirport(IATAString);
 
@@ -94,7 +95,7 @@ public class AirportParserTest {
 
     @Test
     /* Test to see if the Airport timezone is correctly added to an airport object */
-    public void testAirportTimezone(){
+    public void testAirportTimezone() {
         AirportParser airportParser = new AirportParser();
         Airport airportTest = airportParser.createSingleAirport(IATAString);
 
@@ -103,7 +104,7 @@ public class AirportParserTest {
 
     @Test
     /* Test to see if the Airport DST is correctly added to an airport object */
-    public void testAirportDST(){
+    public void testAirportDST() {
         AirportParser airportParser = new AirportParser();
         Airport airportTest = airportParser.createSingleAirport(IATAString);
 
@@ -112,7 +113,7 @@ public class AirportParserTest {
 
     @Test
     /* Test to see if the Airport Olson timezone is correctly added to an airport object */
-    public void testAirportTimezoneInfoCorrect(){
+    public void testAirportTimezoneInfoCorrect() {
         AirportParser airportParser = new AirportParser();
         Airport airportTest = airportParser.createSingleAirport(IATAString);
 
@@ -121,7 +122,7 @@ public class AirportParserTest {
 
     @Test
     /* Test to see if the IATA information is correctly added to an airport object */
-    public void testAirportIATA(){
+    public void testAirportIATA() {
         AirportParser airportParser = new AirportParser();
         Airport airportTest = airportParser.createSingleAirport(IATAString);
 
@@ -131,7 +132,7 @@ public class AirportParserTest {
 
     @Test
     /* Test to see if the FAA information is correctly added to an airport object */
-    public void testAirportFAA(){
+    public void testAirportFAA() {
         AirportParser airportParser = new AirportParser();
         Airport airportTest = airportParser.createSingleAirport(FAAString);
 
@@ -140,7 +141,7 @@ public class AirportParserTest {
 
     @Test
     /* Test to see if null element is correctly added to an airport object */
-    public void testNullInput(){
+    public void testNullInput() {
         AirportParser airportParser = new AirportParser();
         Airport airportTest = airportParser.createSingleAirport(FAAString);
 

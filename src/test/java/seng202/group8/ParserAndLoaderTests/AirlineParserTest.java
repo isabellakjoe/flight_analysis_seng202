@@ -53,6 +53,7 @@ public class AirlineParserTest {
 
         assertEquals(airline.getIATA(), "NH");
     }
+
     @Test
     public void testICAOParsesCorrectly() {
         AirlineParser airlineParser = new AirlineParser();

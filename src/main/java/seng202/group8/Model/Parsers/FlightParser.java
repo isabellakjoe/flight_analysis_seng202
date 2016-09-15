@@ -20,19 +20,21 @@ public class FlightParser {
     private BufferedReader br;
     private Flight resultFlight = new Flight();
 
-    /** Constructor for Flight Parser.
+    /**
+     * Constructor for Flight Parser.
      *
      * @param br: A BufferedReader of a Flight File.
      */
-    public FlightParser(BufferedReader br){
+    public FlightParser(BufferedReader br) {
         this.br = br;
     }
 
-    /** Method to Create a Flight Object.
+    /**
+     * Method to Create a Flight Object.
      *
      * @return A FLight Object.
      */
-    public Flight parseFlightFile(){
+    public Flight parseFlightFile() {
         Scanner textScanner = new Scanner(br);
 
         // Process header
@@ -44,7 +46,7 @@ public class FlightParser {
         nextLine = textScanner.nextLine();
         ObservableList<Waypoint> waypoints = FXCollections.observableArrayList();
         boolean finalWaypointProcessed = false;
-        while(!finalWaypointProcessed && textScanner.hasNextLine()){
+        while (!finalWaypointProcessed && textScanner.hasNextLine()) {
             Waypoint waypoint = processWaypointDetails(nextLine);
             waypoints.add(waypoint);
             nextLine = textScanner.nextLine();
@@ -61,16 +63,17 @@ public class FlightParser {
         return resultFlight;
     }
 
-    /** Method to process header and footer lines containing Airport data.
+    /**
+     * Method to process header and footer lines containing Airport data.
      *
      * @param nextLine: The next line to be processed.
      * @return An Airport Object.
      */
-    private Airport processAirportDetails(String nextLine){
+    private Airport processAirportDetails(String nextLine) {
         ArrayList<String> inputValues = splitByComma(nextLine);
         Airport resultAirport = new Airport();
         resultAirport.setName(inputValues.get(1));
-        int altitude =  parseToInt(inputValues.get(2));
+        int altitude = parseToInt(inputValues.get(2));
         resultAirport.setAltitude(altitude);
         double latitude = parseToDouble(inputValues.get(3));
         resultAirport.setLatitude(latitude);
@@ -79,17 +82,18 @@ public class FlightParser {
         return resultAirport;
     }
 
-    /** Method to process header and footer lines containing Waypoint data.
+    /**
+     * Method to process header and footer lines containing Waypoint data.
      *
      * @param nextLine: The next line to be processed.
      * @return An Waypoint Object.
      */
-    private Waypoint processWaypointDetails(String nextLine){
+    private Waypoint processWaypointDetails(String nextLine) {
         ArrayList<String> inputValues = splitByComma(nextLine);
         Waypoint resultWaypoint = new Waypoint();
         resultWaypoint.setType(inputValues.get(0));
         resultWaypoint.setName(inputValues.get(1));
-        double altitude =  parseToDouble(inputValues.get(2));
+        double altitude = parseToDouble(inputValues.get(2));
         resultWaypoint.setAltitude(altitude);
         double latitude = parseToDouble(inputValues.get(3));
         resultWaypoint.setLatitude(latitude);

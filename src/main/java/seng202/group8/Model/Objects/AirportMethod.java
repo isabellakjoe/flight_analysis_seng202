@@ -1,7 +1,5 @@
 package seng202.group8.Model.Objects;
 
-import seng202.group8.Model.Objects.Airport;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -31,7 +29,7 @@ public abstract class AirportMethod {
 
             }
             return refactoredData;
-        } else{
+        } else {
             return null;
         }
     }
@@ -39,14 +37,14 @@ public abstract class AirportMethod {
 
     /**
      * Method to parse a string to an integer with error handling
+     *
      * @param inputNum
-     * @return string integer parsed to an Integer
      * @return -1 for NumberFormatException
      */
-    public int parseToInt(String inputNum){
-        try{
+    public int parseToInt(String inputNum) {
+        try {
             return Integer.parseInt(inputNum);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return -1;
         }
     }
@@ -54,8 +52,8 @@ public abstract class AirportMethod {
 
     /**
      * Method to parse a string to a double with error handling
+     *
      * @param inputDouble
-     * @return string integer parsed to an Integer
      * @return -1 for NumberFormatException
      */
     public double parseToDouble(String inputDouble) {
@@ -70,12 +68,13 @@ public abstract class AirportMethod {
     /**
      * Method to check whether the airport code is IATA or FAA.
      * Airports located in the US have an FAA code. All others have an IATA code.
+     *
      * @param airport
      * @param airportCode
      * @param country
      */
-    public void checkCodeType(Airport airport, String airportCode, String country){
-        if(country.equals("United States")) {
+    public void checkCodeType(Airport airport, String airportCode, String country) {
+        if (country.equals("United States")) {
             airport.setFAA(airportCode);
         } else {
             airport.setIATA(airportCode);
@@ -85,13 +84,14 @@ public abstract class AirportMethod {
 
     /**
      * Method to check whether the airport code is the string "\\N".
+     *
      * @param airportCode
      * @return airportCode, changes it to null if given code is null
      */
     /* Method to check whether the given code is null. If so, change to null. Return airportCode */
-    public String checkNull(String airportCode){
+    public String checkNull(String airportCode) {
 
-        if(airportCode.equals("\\N") || airportCode.equals("")) {
+        if (airportCode.equals("\\N") || airportCode.equals("")) {
             airportCode = null;
         }
         return airportCode;

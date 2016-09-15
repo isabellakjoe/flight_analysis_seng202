@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.web.*?>
-
-
-
-
-
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="seng202.group8.Controller.MainController">
 
     <left>
         <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -20,21 +15,36 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <Button fx:id="routeSearch" layoutX="182.0" layoutY="250.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
-                                <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <Button fx:id="routeAddButton" layoutX="75.0" layoutY="350.0" mnemonicParsing="false" onAction="#switchToAddRoute" text="Add New Route" />
-                                <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
-                                <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
-                                <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
-                                <TextField fx:id="sourceIDSearch" layoutX="29.0" layoutY="369.0" prefHeight="25.0" prefWidth="220.0" promptText="from (airport ID)" visible="false" />
-                                <ComboBox fx:id="sourceSearch" layoutX="29.0" layoutY="115.0" prefHeight="26.0" prefWidth="220.0" promptText="Source " />
-                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " />
-                                <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Destination" />
-                                <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Stops" />
-                                <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="238.0" prefWidth="150.0" promptText="Equipment" visible="false" />
-                                <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="280.0" prefWidth="150.0" promptText="Codeshare" visible="false" />
-                                <Button fx:id="routeAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced" />
-                                <Button fx:id="routeBackButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#routeSearchBack" text="Back" visible="false" />
+                                <Button fx:id="routeSearch" layoutX="182.0" layoutY="250.0" mnemonicParsing="false"
+                                        onAction="#routeSearch" text="Search"/>
+                                <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false"
+                                        onAction="#resetSearch" text="Reset"/>
+                                <Button fx:id="routeAddButton" layoutX="75.0" layoutY="350.0" mnemonicParsing="false"
+                                        onAction="#switchToAddRoute" text="Add New Route"/>
+                                <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="airline code"/>
+                                <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="airline ID" visible="false"/>
+                                <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="to (airport ID)" visible="false"/>
+                                <TextField fx:id="sourceIDSearch" layoutX="29.0" layoutY="369.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="from (airport ID)" visible="false"/>
+                                <ComboBox fx:id="sourceSearch" layoutX="29.0" layoutY="115.0" prefHeight="26.0"
+                                          prefWidth="220.0" promptText="Source "/>
+                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Route search "/>
+                                <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0"
+                                          promptText="Destination"/>
+                                <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0"
+                                          promptText="Stops"/>
+                                <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="238.0" prefWidth="150.0"
+                                          promptText="Equipment" visible="false"/>
+                                <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="280.0" prefWidth="150.0"
+                                          promptText="Codeshare" visible="false"/>
+                                <Button fx:id="routeAdvancedButton" layoutX="178.0" layoutY="16.0"
+                                        mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced"/>
+                                <Button fx:id="routeBackButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false"
+                                        onAction="#routeSearchBack" text="Back" visible="false"/>
                             </children>
                         </AnchorPane>
                     </content>
@@ -43,46 +53,80 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="airportIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
-                                <Button fx:id="airportSearchButton" layoutX="182.0" layoutY="205.0" mnemonicParsing="false" onAction="#airportSearch" text="Search" />
-                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " />
-                                <TextField fx:id="airportNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
-                                <TextField fx:id="airportCitySearch" layoutX="29.0" layoutY="175.0" prefHeight="25.0" prefWidth="220.0" promptText="city" visible="false" />
-                                <TextField fx:id="airportFAASearch" layoutX="29.0" layoutY="221.0" prefHeight="25.0" prefWidth="220.0" promptText="FAA" visible="false" />
-                                <TextField fx:id="airportIATASearch" layoutX="29.0" layoutY="263.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
-                                <TextField fx:id="airportLongitudeSearch" layoutX="29.0" layoutY="342.0" prefHeight="25.0" prefWidth="220.0" promptText="longitude" visible="false" />
-                                <TextField fx:id="airportLatitudeSearch" layoutX="29.0" layoutY="383.0" prefHeight="25.0" prefWidth="220.0" promptText="latitude" visible="false" />
-                                <TextField fx:id="airportAltitudeSearch" layoutX="29.0" layoutY="425.0" prefHeight="25.0" prefWidth="220.0" promptText="altitude" visible="false" />
-                                <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="468.0" prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false" />
-                                <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="508.0" prefHeight="25.0" prefWidth="220.0" promptText="DST" visible="false" />
-                                <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="205.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <Button fx:id="airportAddButton" layoutX="75.0" layoutY="350.0" mnemonicParsing="false" onAction="#switchToAddAirport" text="Add New Airport" />
-                                <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="303.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
-                                <Button fx:id="airportAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
-                                <Button fx:id="airportBackButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#airportSearchBack" text="Back" visible="false" />
-                                <ComboBox fx:id="airportCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Country" />
-                            </children></AnchorPane>
+                                <TextField fx:id="airportIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="ID"/>
+                                <Button fx:id="airportSearchButton" layoutX="182.0" layoutY="205.0"
+                                        mnemonicParsing="false" onAction="#airportSearch" text="Search"/>
+                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Airport search "/>
+                                <TextField fx:id="airportNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="name"/>
+                                <TextField fx:id="airportCitySearch" layoutX="29.0" layoutY="175.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="city" visible="false"/>
+                                <TextField fx:id="airportFAASearch" layoutX="29.0" layoutY="221.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="FAA" visible="false"/>
+                                <TextField fx:id="airportIATASearch" layoutX="29.0" layoutY="263.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="IATA" visible="false"/>
+                                <TextField fx:id="airportLongitudeSearch" layoutX="29.0" layoutY="342.0"
+                                           prefHeight="25.0" prefWidth="220.0" promptText="longitude" visible="false"/>
+                                <TextField fx:id="airportLatitudeSearch" layoutX="29.0" layoutY="383.0"
+                                           prefHeight="25.0" prefWidth="220.0" promptText="latitude" visible="false"/>
+                                <TextField fx:id="airportAltitudeSearch" layoutX="29.0" layoutY="425.0"
+                                           prefHeight="25.0" prefWidth="220.0" promptText="altitude" visible="false"/>
+                                <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="468.0"
+                                           prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false"/>
+                                <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="508.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="DST" visible="false"/>
+                                <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="205.0"
+                                        mnemonicParsing="false" onAction="#resetSearch" text="Reset"/>
+                                <Button fx:id="airportAddButton" layoutX="75.0" layoutY="350.0" mnemonicParsing="false"
+                                        onAction="#switchToAddAirport" text="Add New Airport"/>
+                                <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="303.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="ICAO" visible="false"/>
+                                <Button fx:id="airportAdvancedButton" layoutX="178.0" layoutY="16.0"
+                                        mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced"/>
+                                <Button fx:id="airportBackButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false"
+                                        onAction="#airportSearchBack" text="Back" visible="false"/>
+                                <ComboBox fx:id="airportCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0"
+                                          promptText="Country"/>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Airline">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="airlineIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
-                                <Button fx:id="airlineSearchButton" layoutX="186.0" layoutY="250.0" mnemonicParsing="false" onAction="#airlineSearch" text="Search" />
-                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Search" />
-                                <Button fx:id="airlineAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirlineSearch" text="Advanced" />
-                                <TextField fx:id="airlineNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
-                                <TextField fx:id="airlineAliasSearch" layoutX="29.0" layoutY="222.0" prefHeight="25.0" prefWidth="220.0" promptText="alias" visible="false" />
-                                <TextField fx:id="airlineIATASearch" layoutX="29.0" layoutY="266.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
-                                <TextField fx:id="airlineICAOSearch" layoutX="29.0" layoutY="313.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
-                                <TextField fx:id="airlineCallsignSearch" layoutX="29.0" layoutY="357.0" prefHeight="25.0" prefWidth="220.0" promptText="call sign" visible="false" />
-                                <Button fx:id="resetAirlineSearch" layoutX="30.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <ComboBox fx:id="airlineCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Country" />
-                                <ComboBox fx:id="airlineActiveSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Active/Inactive" />
-                                <Button fx:id="airlineBackButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#airlineSearchBack" text="Back" visible="false" />
-                        <Button fx:id="airlineAddButton" layoutX="75.0" layoutY="350.0" mnemonicParsing="false" onAction="#switchToAddAirline" text="Add New Airline" />
-                            </children></AnchorPane>
+                                <TextField fx:id="airlineIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="ID"/>
+                                <Button fx:id="airlineSearchButton" layoutX="186.0" layoutY="250.0"
+                                        mnemonicParsing="false" onAction="#airlineSearch" text="Search"/>
+                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Airline Search"/>
+                                <Button fx:id="airlineAdvancedButton" layoutX="178.0" layoutY="16.0"
+                                        mnemonicParsing="false" onAction="#showAirlineSearch" text="Advanced"/>
+                                <TextField fx:id="airlineNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="name"/>
+                                <TextField fx:id="airlineAliasSearch" layoutX="29.0" layoutY="222.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="alias" visible="false"/>
+                                <TextField fx:id="airlineIATASearch" layoutX="29.0" layoutY="266.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="IATA" visible="false"/>
+                                <TextField fx:id="airlineICAOSearch" layoutX="29.0" layoutY="313.0" prefHeight="25.0"
+                                           prefWidth="220.0" promptText="ICAO" visible="false"/>
+                                <TextField fx:id="airlineCallsignSearch" layoutX="29.0" layoutY="357.0"
+                                           prefHeight="25.0" prefWidth="220.0" promptText="call sign" visible="false"/>
+                                <Button fx:id="resetAirlineSearch" layoutX="30.0" layoutY="250.0"
+                                        mnemonicParsing="false" onAction="#resetSearch" text="Reset"/>
+                                <ComboBox fx:id="airlineCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0"
+                                          promptText="Country"/>
+                                <ComboBox fx:id="airlineActiveSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0"
+                                          promptText="Active/Inactive"/>
+                                <Button fx:id="airlineBackButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false"
+                                        onAction="#airlineSearchBack" text="Back" visible="false"/>
+                                <Button fx:id="airlineAddButton" layoutX="75.0" layoutY="350.0" mnemonicParsing="false"
+                                        onAction="#switchToAddAirline" text="Add New Airline"/>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
@@ -93,10 +137,14 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Add">
                     <items>
-                        <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData" text="Airline Data" />
-                        <MenuItem fx:id="addAirportData" mnemonicParsing="false" onAction="#addAirportData" text="Airport Data" />
-                        <MenuItem fx:id="addRouteData" mnemonicParsing="false" onAction="#addRouteData" text="Route Data" />
-                        <MenuItem fx:id="addFlightData" mnemonicParsing="false" onAction="#addFlightData" text="Flight Data" />
+                        <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData"
+                                  text="Airline Data"/>
+                        <MenuItem fx:id="addAirportData" mnemonicParsing="false" onAction="#addAirportData"
+                                  text="Airport Data"/>
+                        <MenuItem fx:id="addRouteData" mnemonicParsing="false" onAction="#addRouteData"
+                                  text="Route Data"/>
+                        <MenuItem fx:id="addFlightData" mnemonicParsing="false" onAction="#addFlightData"
+                                  text="Flight Data"/>
                     </items>
                 </Menu>
             </menus>
@@ -732,551 +780,10 @@
                               <Insets bottom="15.0" right="15.0" />
                            </padding>
                         </GridPane>
-                            <GridPane fx:id="addRouteView" visible="false">
-                                <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="30.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="217.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.0" minWidth="10.0" prefWidth="248.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="30.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Route" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
-                                        <GridPane.margin>
-                                            <Insets left="100.0" />
-                                        </GridPane.margin>
-                                        <font>
-                                            <Font size="19.0" />
-                                        </font>
-                                    </Text>
-                                    <ComboBox fx:id="addedRouteAirline" prefWidth="150.0" promptText="Airline" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                        <GridPane.margin>
-                                            <Insets left="100.0" />
-                                        </GridPane.margin>
-                                    </ComboBox>
-                                    <ComboBox fx:id="addedRouteSource" layoutX="110.0" layoutY="194.0" prefWidth="150.0" promptText="Source" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                        <GridPane.margin>
-                                            <Insets left="100.0" />
-                                        </GridPane.margin>
-                                    </ComboBox>
-                                    <ComboBox fx:id="addedRouteDestination" layoutX="110.0" layoutY="194.0" prefWidth="150.0" promptText="Destination" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                        <GridPane.margin>
-                                            <Insets left="100.0" />
-                                        </GridPane.margin>
-                                    </ComboBox>
-                                    <TextField fx:id="addedRouteEquipment" maxWidth="-Infinity" prefHeight="25.0" prefWidth="212.0" promptText="Equipment (seperate by spaces)" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                        <GridPane.margin>
-                                            <Insets left="75.0" />
-                                        </GridPane.margin>
-                                    </TextField>
-                                    <CheckBox fx:id="addedRouteCodeshare" mnemonicParsing="false" text="Codeshare " GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                        <GridPane.margin>
-                                            <Insets left="120.0" />
-                                        </GridPane.margin>
-                                    </CheckBox>
-                                    <Button fx:id="addedRouteCancelButton" mnemonicParsing="false" onAction="#cancelAddedRoute" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                                        <opaqueInsets>
-                                            <Insets />
-                                        </opaqueInsets>
-                                        <GridPane.margin>
-                                            <Insets left="75.0" />
-                                        </GridPane.margin>
-                                    </Button>
-                                    <Button fx:id="addedRouteSaveButton" mnemonicParsing="false" onAction="#saveAddedRoute" prefHeight="25.0" prefWidth="64.0" text="Save" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                                        <GridPane.margin>
-                                            <Insets left="200.0" />
-                                        </GridPane.margin>
-                                    </Button>
-                                    <TextField fx:id="addedRouteStops" layoutX="459.0" layoutY="194.0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="212.0" promptText="Stops (0 for direct)" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                        <GridPane.margin>
-                                            <Insets left="75.0" />
-                                        </GridPane.margin>
-                                    </TextField>
-                              <Text fx:id="addRouteAirlineErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select an airline." visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addRouteSourceErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select a source." visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addRouteDestErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select a destination." visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addRouteEquipErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter equipment codes." visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addRouteStopsErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter stops." visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addRouteStopsErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Number of stops must be an integer." visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                                </children>
-                            </GridPane>
-                        <GridPane fx:id="addAirportView" visible="false">
-                          <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="80.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="110.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="171.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="110.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="200.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="91.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Airport" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Airport ID:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IATA/FAA:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Timezone:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DST:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Olsen TZ:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                               <TextField fx:id="addedAirportID" promptText="eg. 2006" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportName" promptText="eg. Auckland Intl" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportCity" promptText="eg. Auckland" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportCountry" promptText="eg. New Zealand" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportCode" promptText="eg. AKL" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportICAO" promptText="eg. NZAA" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportLatitude" promptText="eg. -37.008056 (6 dp)" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportLongitude" promptText="eg. 174.791667 (6 dp)" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportAltitude" promptText="eg. 23 (In feet)" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportTimezone" promptText="eg. 12 (Hours)" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportDST" promptText="eg. Z (Daylight Savings Time)" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <TextField fx:id="addedAirportOlsen" promptText="eg. Pacific/Auckland" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </TextField>
-                               <Button fx:id="addedAirlineSaveButton" mnemonicParsing="false" onAction="#saveAddedAirport" text="Save" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </Button>
-                               <Button fx:id="addedAirlineCancelButton" mnemonicParsing="false" onAction="#cancelAddedAirport" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-                                   <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                   </GridPane.margin>
-                               </Button>
-                               <Text fx:id="addAirportIDErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter ID." visible="false" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                               </Text>
-                               <Text fx:id="addAirportNameErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter name." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportCityErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter city." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportCountryErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter country." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportCodeErrorType" fill="#fc0303" layoutX="201.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. IATA/FAA must be a 3-4 character code." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportLatErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter latitude." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportLongErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter longitude.." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportAltErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter altitude." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportTimeErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter timezone." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportDSTErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter DST." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                               <Text fx:id="addAirportOlsenErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter olsen timezone." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
-                                   <font>
-                                       <Font size="10.0" />
-                                   </font>
-                                   <GridPane.margin>
-                                       <Insets bottom="10.0" left="5.0" />
-                                   </GridPane.margin>
-                               </Text>
-                              <Text fx:id="addAirportLatErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Latitude must be a decimal number." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirportLongErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Longitude must be a decimal number." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirportAltErrorType" fill="#fc0303" layoutX="478.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Altitude must be an integer." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirportTimeErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Timezone must be an integer." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirportDSTErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. DST must be an integer." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirportIDErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Airport ID must be an integer." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DST -  N (None), E (Europe), A (US/Canada), O (Australia), &#10;Z (New Zealand),S (South America) or U (Unknown)" GridPane.columnIndex="4" GridPane.rowIndex="5" GridPane.valignment="TOP">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </GridPane>
-<GridPane fx:id="addAirlineView" layoutX="10.0" layoutY="10.0" visible="false">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Airline ID:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Alias:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IATA:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Callsign:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Airline" textAlignment="CENTER" wrappingWidth="144.513671875" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
-                              </Text>
-                                    <Button fx:id="addedAirlineCancelButton1" mnemonicParsing="false" onAction="#cancelAddedAirline" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                                 <GridPane.margin>
-                                    <Insets left="50.0" />
-                                 </GridPane.margin></Button>
-                                    <Button fx:id="addedAirlineSaveButton1" mnemonicParsing="false" onAction="#saveAddedAirline" text="Save" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                                 <GridPane.margin>
-                                    <Insets left="50.0" />
-                                 </GridPane.margin></Button>
-                                    <TextField fx:id="addedAirlineID" promptText="eg. 345" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <TextField fx:id="addedAirlineName" promptText="eg. Air New Zealand" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                    <TextField fx:id="addedAirlineAlias" promptText="eg. ANA (or \N for None)" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                    <TextField fx:id="addedAirlineCountry" promptText="eg. New Zealand" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                    <TextField fx:id="addedAirlineIATA" promptText="eg. NZ (2 letter code)" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                    <TextField fx:id="addedAirlineICAO" promptText="eg. ANZ (3 letter code)" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                    <TextField fx:id="addedAirlineCallsign" promptText="eg. NEW ZEALAND" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                    <CheckBox fx:id="addedAirlineActive" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin></CheckBox>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Active:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                              <Text fx:id="addAirlineIDErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter Airline ID." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirlineNameErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter name." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirlineAliasErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter alias." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirlineCountryErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter country." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="addAirlineIDErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Airline ID must be an integer." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                           </children>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="80.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="110.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="20.0" prefWidth="181.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="20.0" prefWidth="77.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="20.0" prefWidth="197.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="0.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="91.0" />
-                              <ColumnConstraints />
-                              <ColumnConstraints />
-                              <ColumnConstraints />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
+                            <fx:include source="AddRouteView.fxml" fx:id="addRouteView"/>
+                            <fx:include source="AddAirportView.fxml" fx:id="addAirportView"/>
+                            <fx:include source="AddAirlineView.fxml" fx:id="addAirlineView"/>
+
                         </children>
                     </StackPane>
                </content>
