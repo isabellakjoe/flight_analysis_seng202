@@ -33,7 +33,7 @@ public class FileLoaderTest {
         ArrayList<Airport> airportsExpected = new ArrayList<Airport>();
         AirportParser parser = new AirportParser();
         Airport airport1 = parser.createSingleAirport("2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
-        Airport airport2 = parser.createSingleAirport("2007,Christchurch Intl,Christchurch,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
+        Airport airport2 = parser.createSingleAirport("2007,Christchurch Intl,Christchurch,New Zealand,AKL,NZAA,-43.489358,172.532225,23,12,Z,Pacific/Auckland");
         Airport airport3 = parser.createSingleAirport("2008,Wellington Intl,Wellington,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
         airportsExpected.add(airport1);
         airportsExpected.add(airport2);
@@ -42,6 +42,7 @@ public class FileLoaderTest {
         for(int i = 0; i < 3; i++){
             Airport a = airportsExpected.get(i);
             Airport b = airportsActual.get(i);
+
             if (!a.isEqualTo(b)){
                 isEqual = false;
             }
@@ -62,6 +63,7 @@ public class FileLoaderTest {
         airlinesExpected.add(airline2);
         airlinesExpected.add(airline3);
         boolean isEqual = true;
+
         for(int i = 0; i < 3; i++){
             Airline a = airlinesExpected.get(i);
             Airline b = airlinesActual.get(i);
