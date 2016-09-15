@@ -1,5 +1,7 @@
 package seng202.group8.Model.Objects;
 
+import java.util.ArrayList;
+
 /**
  * Created by esa46 on 19/08/16.
  * <p>
@@ -133,8 +135,7 @@ public class Airport {
      * @param airport being measured to
      * @return distanceKm (double)
      */
-    public double calculateDistanceTo(Airport airport) {
-
+    public double calculateDistanceTo(Airport airport){
         double distanceKm;
         double earthRadiusKm = 6371;
         double latDiff = Math.toRadians(airport.getLatitude() - this.getLatitude());

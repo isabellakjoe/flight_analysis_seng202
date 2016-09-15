@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -433,7 +435,10 @@ public class MainController implements Initializable {
     private Button individualAirlineBackButton;
     @FXML
     private Button individualRouteBackButton;
-
+    @FXML
+    private MenuItem getDistanceMenu;
+    @FXML
+    private ContextMenu distanceMenu;
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e) {
@@ -1134,7 +1139,8 @@ public class MainController implements Initializable {
         int count = 0;
         for (int i = 0; i < size; i++) {
             String current = input.get(i);
-            if (current.equals(null) || current.equals("")) {
+
+            if (current == null || current.equals("")) {
 
                 switch (i) {
                     case 0:
@@ -2011,6 +2017,11 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
+
+        mapViewController.initMap();
+        flightViewController.setMainController(this);
+        mapViewController.setMainController(this);
+
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
         alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
@@ -2131,11 +2142,39 @@ public class MainController implements Initializable {
             }
         });
 
-        mapViewController.initMap();
-        addAirlineViewController.setMainController(this);
-        flightViewController.setMainController(this);
-        mapViewController.setMainController(this);
+        airportTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        airportTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+                                                   @Override
+                                                   public void handle(ContextMenuEvent event) {
+                                                       if(airportTable.getSelectionModel().getSelectedItems().size() != 2){
+                                                           getDistanceMenu.setDisable(true);
+                                                       }else{
+                                                           getDistanceMenu.setDisable(false);
+                                                       }
+                                                   }
+                                               }
+        );
+
+
+
     }
 
 
+
+    @FXML
+    public void getDistance(ActionEvent e){
+        distanceMenu.hide();
+        if(airportTable.getSelectionModel().getSelectedItems().size() == 2){
+
+            Airport airport1 = airportTable.getSelectionModel().getSelectedItems().get(0);
+            Airport airport2 = airportTable.getSelectionModel().getSelectedItems().get(1);
+
+           double distance = airport1.calculateDistanceTo(airport2);
+            JOptionPane.showMessageDialog(null, "The distance is "+distance+" km.", "Distance from "+airport1.getName()+" to "+airport2.getName(), JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
 }
+
+
