@@ -9,11 +9,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.group8.Model.DatabaseMethods.*;
@@ -36,17 +36,15 @@ import java.util.*;
  * Created by esa46 on 19/08/16.
  */
 
-public class Controller implements Initializable {
+public class MainController implements Initializable {
 
     static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
     static ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
     static ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
-    //  Database mainDataBase = new Database();
-    // Connection mainConn = mainDataBase.testConnect();
-    /**
-     * FXML imports for searching
-     */
-
+    @FXML
+    private FlightViewController flightViewController;
+    @FXML
+    private MapViewController mapViewController;
 
     @FXML
     private TextField editSourceField;
@@ -62,6 +60,10 @@ public class Controller implements Initializable {
     private Button saveRouteChangesButton;
     @FXML
     private Button cancelRouteChangesButton;
+
+    /*
+     * Populate the flightView table with waypoints
+     */
     @FXML
     private Button editRouteDataDutton;
     @FXML
@@ -259,42 +261,6 @@ public class Controller implements Initializable {
     @FXML
     private ComboBox equipmentSearch;
     /**
-     * Setting up for flight table
-     */
-    @FXML
-    private Text titleString;
-    @FXML
-    private Text aName;
-    @FXML
-    private Text bName;
-    @FXML
-    private Text aLatitude;
-    @FXML
-    private Text bLatitude;
-    @FXML
-    private Text aLongitude;
-    @FXML
-    private Text bLongitude;
-    @FXML
-    private Text aAltitude;
-    @FXML
-    private Text bAltitude;
-    /**
-     * Initializing flight column names
-     */
-    @FXML
-    private TableView<Waypoint> flightTable;
-    @FXML
-    private TableColumn<Waypoint, String> waypointName;
-    @FXML
-    private TableColumn<Waypoint, String> waypointAltitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointLatitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointLongitude;
-    @FXML
-    private TableColumn<Waypoint, String> waypointType;
-    /**
      * Initializing airline column names
      */
     @FXML
@@ -400,6 +366,15 @@ public class Controller implements Initializable {
     private Text airportLongitudeDisplay;
     @FXML
     private Text airportLatitudeDisplay;
+
+
+    /**
+     * Setting up for flight table
+     */
+
+    /**
+     * Initializing flight column names
+     */
     @FXML
     private Text airportAltitudeDisplay;
     @FXML
@@ -418,8 +393,6 @@ public class Controller implements Initializable {
     private Text routeShareDisplay;
     @FXML
     private Pane tableView;
-    @FXML
-    private Pane flightView;
     @FXML
     private Pane addAirportView;
     @FXML
@@ -484,12 +457,8 @@ public class Controller implements Initializable {
     private Button individualAirlineBackButton;
     @FXML
     private Button individualRouteBackButton;
-    @FXML
-    private Button flightViewBackButton;
-    //Google Maps initialization
-    @FXML
-    private WebView webView;
-    private WebEngine webEngine;
+
+
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e) {
@@ -730,52 +699,14 @@ public class Controller implements Initializable {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 Flight flight = load.buildFlight();
-                flightViewSetUp(flight);
+                flightViewController.setUpFlightView(flight);
                 //Swap panes from raw data to the flight viewer
                 resetView();
-                flightView.setVisible(true);
+                //flightViewContent.setVisible(true);
             }
         } catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
-
-    }
-
-    /*
-     * Populate the flightView table with waypoints
-     */
-    private void flightViewSetUp(Flight flight) {
-
-        //Set source airport information
-        Airport source = flight.getSourceAirport();
-        String sourceName = source.getName();
-        double sourceAltitude = source.getAltitude();
-        double sourceLatitude = source.getLatitude();
-        double sourceLongitude = source.getLongitude();
-        aName.setText(sourceName);
-        int srcAltitudeInt = ((int) Math.ceil(sourceAltitude));
-        aAltitude.setText(Integer.toString(srcAltitudeInt));
-        aLatitude.setText(Double.toString(sourceLatitude));
-        aLongitude.setText(Double.toString(sourceLongitude));
-
-        //Set destination airport information
-        Airport destination = flight.getDestinationAirport();
-        String destinationName = destination.getName();
-        double destinationAltitude = destination.getAltitude();
-        double destinationLatitude = destination.getLatitude();
-        double destinationLongitude = destination.getLongitude();
-        bName.setText(destinationName);
-        int destAltitudeInt = ((int) Math.ceil(destinationAltitude));
-        bAltitude.setText(Integer.toString(destAltitudeInt));
-        bLatitude.setText(Double.toString(destinationLatitude));
-        bLongitude.setText(Double.toString(destinationLongitude));
-
-        //Create header string
-        String headerString = "Flight from " + sourceName + " to " + destinationName;
-        titleString.setText(headerString);
-
-        ObservableList<Waypoint> waypoints = flight.getWaypoints();
-        flightTable.setItems(waypoints);
 
     }
 
@@ -1050,7 +981,6 @@ public class Controller implements Initializable {
         int size = input.size();
         List<Integer> ints = Arrays.asList(0, 8, 9);
         List<Integer> doubles = Arrays.asList(6, 7);
-
 
         int count = 0;
         for (int i = 0; i < size; i++) {
@@ -2155,7 +2085,7 @@ public class Controller implements Initializable {
 
     private void resetView() {
         tableView.setVisible(false);
-        flightView.setVisible(false);
+        //flightViewContent.setVisible(false);
         addAirportView.setVisible(false);
         addAirlineView.setVisible(false);
         addRouteView.setVisible(false);
@@ -2208,10 +2138,12 @@ public class Controller implements Initializable {
     public void backToTableView(ActionEvent e) {
         resetTables();
         addAirportView.setVisible(false);
+        addAirlineView.setVisible(false);
+        addRouteView.setVisible(false);
         airportPane.setVisible(false);
         airlinePane.setVisible(false);
         routePane.setVisible(false);
-        flightView.setVisible(false);
+        //flightViewContent.setVisible(false);
         airportTable.setVisible(true);
         airlineTable.setVisible(true);
         routeTable.setVisible(true);
@@ -2221,6 +2153,8 @@ public class Controller implements Initializable {
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
+
+
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
         alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
@@ -2254,11 +2188,6 @@ public class Controller implements Initializable {
         equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
 
 
-        waypointName.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("name"));
-        waypointType.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("type"));
-        waypointAltitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("altitude"));
-        waypointLatitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("latitude"));
-        waypointLongitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("longitude"));
 
         // Allows individual cells to be selected as opposed to rows
         //airportTable.getSelectionModel().setCellSelectionEnabled(true);
@@ -2347,11 +2276,11 @@ public class Controller implements Initializable {
             }
         });
 
-        initMap();
+        mapViewController.initMap();
+
+        flightViewController.setMainController(this);
+        mapViewController.setMainController(this);
     }
 
-    private void initMap() {
-        webEngine = webView.getEngine();
-        webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
-    }
+
 }
