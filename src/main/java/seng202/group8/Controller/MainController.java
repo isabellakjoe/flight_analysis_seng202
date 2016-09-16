@@ -864,6 +864,14 @@ public class MainController implements Initializable {
 
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
 
+        //This is a patch for deliverable two, needs to be implemented propelry in the loader class at some point
+
+        for (Route route: matchingRoutes) {
+            route.setAirlineName(route.getAirline().getName());
+            route.setSourceAirportName(route.getSourceAirport().getIATA());
+            route.setDestinationAirportName(route.getDestinationAirport().getIATA());
+        }
+
         routeTable.setItems(matchingRoutes);
     }
 
