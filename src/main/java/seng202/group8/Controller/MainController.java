@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -1710,7 +1709,7 @@ public class MainController implements Initializable {
             public void handle(MouseEvent click) {
                 //Checks if table is empty then checks for double click
                 if (!airportTable.getItems().isEmpty()) {
-                    if (click.getClickCount() >= 2 && click.getButton() == MouseButton.PRIMARY && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                    if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
                         System.out.println(click.getTarget().toString());
                         airportInfo();
                     }
@@ -1723,7 +1722,7 @@ public class MainController implements Initializable {
             public void handle(MouseEvent click) {
                 //Checks if table is empty then checks for double click
                 if (!airlineTable.getItems().isEmpty()) {
-                    if (click.getClickCount() >= 2 && click.getButton() == MouseButton.PRIMARY && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                    if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
                         airlineInfo();
                     }
                 }
@@ -1735,7 +1734,7 @@ public class MainController implements Initializable {
             public void handle(MouseEvent click) {
             //Checks if table is empty then checks for double click
             if (!routeTable.getItems().isEmpty()) {
-                if (click.getClickCount() >= 2 && click.getButton() == MouseButton.PRIMARY && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
                     routeInfo();
                 }
             }
