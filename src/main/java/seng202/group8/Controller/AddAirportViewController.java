@@ -23,6 +23,7 @@ import java.util.List;
 public class AddAirportViewController {
 
     private MainController mainController;
+    private AirportSearchController airportSearchController;
 
 
     @FXML
@@ -152,7 +153,7 @@ public class AddAirportViewController {
             }
             mainController.airportTable.setItems(mainController.currentlyLoadedAirports);
             mainController.resetView();
-            mainController.setAirportComboBoxes();
+            airportSearchController.setAirportComboBoxes();
             mainController.backToTableView(e);
         }
     }

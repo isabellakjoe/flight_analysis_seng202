@@ -17,6 +17,7 @@ import seng202.group8.Model.Searchers.AirlineSearcher;
 import seng202.group8.Model.Searchers.AirportSearcher;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class AddRouteViewController {
     private MainController mainController;
 
     @FXML
-    private GridPane addRouteViewPane;
+    private GridPane addRouteView;
     @FXML
     public ComboBox addedRouteAirline;
     @FXML
@@ -205,9 +206,17 @@ public class AddRouteViewController {
         }
     }
 
-    public void makeInvisible() {
-        addRouteViewPane.setVisible(false);
+    public void setRouteSourceDestination (List sorted) {
+        addedRouteSource.getItems().clear();
+        addedRouteSource.getItems().addAll(sorted);
+        addedRouteDestination.getItems().clear();
+        addedRouteDestination.getItems().addAll(sorted);
     }
 
-    public void makeVisible() {addRouteViewPane.setVisible(true);}
+
+    public void makeInvisible() {
+        addRouteView.setVisible(false);
+    }
+
+    public void makeVisible() {addRouteView.setVisible(true);}
 }

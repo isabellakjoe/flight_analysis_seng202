@@ -34,32 +34,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Airport">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <TextField fx:id="airportIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
-                                <Button fx:id="airportSearchButton" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#airportSearch" text="Search" />
-                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " />
-                                <TextField fx:id="airportNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
-                                <TextField fx:id="airportCitySearch" layoutX="29.0" layoutY="202.0" prefHeight="25.0" prefWidth="220.0" promptText="city" visible="false" />
-                                <TextField fx:id="airportFAASearch" layoutX="29.0" layoutY="243.0" prefHeight="25.0" prefWidth="220.0" promptText="FAA" visible="false" />
-                                <TextField fx:id="airportIATASearch" layoutX="29.0" layoutY="284.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
-                                <TextField fx:id="airportLongitudeSearch" layoutX="29.0" layoutY="365.0" prefHeight="25.0" prefWidth="220.0" promptText="longitude" visible="false" />
-                                <TextField fx:id="airportLatitudeSearch" layoutX="29.0" layoutY="406.0" prefHeight="25.0" prefWidth="220.0" promptText="latitude" visible="false" />
-                                <TextField fx:id="airportAltitudeSearch" layoutX="29.0" layoutY="447.0" prefHeight="25.0" prefWidth="220.0" promptText="altitude" visible="false" />
-                                <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="489.0" prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false" />
-                                <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="530.0" prefHeight="25.0" prefWidth="220.0" promptText="DST" visible="false" />
-                                <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <Button fx:id="airportAddButton" layoutX="70.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddAirport" text="Add New Airport" />
-                                <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="323.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
-                                <Button fx:id="airportAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
-                                <Button fx:id="airportBackButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#airportSearchBack" text="Back" visible="false" />
-                                <ComboBox fx:id="airportCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Country" />
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
+                <fx:include fx:id="airportSearchTab" source="AirportSearchView.fxml" />
                 <Tab text="Airline">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
