@@ -54,37 +54,23 @@ public class MainController implements Initializable {
     @FXML
     private AddAirportViewController addAirportViewController;
     @FXML
-    private AddRouteViewController addRouteViewController;
+    public AddRouteViewController addRouteViewController;
+    @FXML
+    public SearchRouteController searchRouteTabController;
 
 
 
 
-    @FXML
-    private TextField editSourceField;
-    @FXML
-    private TextField editDestinationField;
-    @FXML
-    private TextField editStopsField;
-    @FXML
-    private TextField editEquipmentField;
-    @FXML
-    private TextField editCodeshareField;
-    @FXML
-    private Button saveRouteChangesButton;
-    @FXML
-    private Button cancelRouteChangesButton;
 
     /*
      * Populate the flightView table with waypoints
      */
-    @FXML
-    private Button editRouteDataDutton;
+
     @FXML
     private Button airportAddButton;
     @FXML
     private Button airlineAddButton;
-    @FXML
-    private Button routeAddButton;
+
 
     @FXML
     private TextField editAirportIDField;
@@ -116,14 +102,7 @@ public class MainController implements Initializable {
     private Button editAirportDataButton;
     @FXML
     private Button editAirlineDataButton;
-    @FXML
-    private Button routeAdvancedButton;
-    @FXML
-    private Button routeSearch;
-    @FXML
-    private Button resetRouteSearch;
-    @FXML
-    private Button routeBackButton;
+
     @FXML
     private TextField editCallsignField;
     @FXML
@@ -198,24 +177,7 @@ public class MainController implements Initializable {
     private ComboBox airlineCountrySearch;
     @FXML
     private ComboBox airlineActiveSearch;
-    @FXML
-    private TextField airlineSearch;
-    @FXML
-    private TextField airlineSearchID;
-    @FXML
-    private ComboBox sourceSearch;
-    @FXML
-    private TextField sourceIDSearch;
-    @FXML
-    private ComboBox destinationSearch;
-    @FXML
-    private TextField destinationIDSearch;
-    @FXML
-    private ComboBox stopoverSearch;
-    @FXML
-    private ComboBox codeshareSearch;
-    @FXML
-    private ComboBox equipmentSearch;
+
     /**
      * Initializing airline column names
      */
@@ -334,19 +296,19 @@ public class MainController implements Initializable {
     @FXML
     private Text airportAltitudeDisplay;
     @FXML
-    private Pane routePane;
+    public Pane routePane;
     @FXML
-    private Text routeSourceDisplay;
+    public Text routeSourceDisplay;
     @FXML
-    private Text routeDestinationDisplay;
+    public Text routeDestinationDisplay;
     @FXML
-    private Text routeStopsDisplay;
+    public Text routeStopsDisplay;
     @FXML
     private Text routeAirlineDisplay;
     @FXML
-    private Text routeEquipmentDisplay;
+    public Text routeEquipmentDisplay;
     @FXML
-    private Text routeShareDisplay;
+    public Text routeShareDisplay;
     @FXML
     public Pane tableView;
 
@@ -354,8 +316,7 @@ public class MainController implements Initializable {
     private Button individualAirportBackButton;
     @FXML
     private Button individualAirlineBackButton;
-    @FXML
-    private Button individualRouteBackButton;
+
     @FXML
     private MenuItem getDistanceMenu;
     @FXML
@@ -397,6 +358,8 @@ public class MainController implements Initializable {
         }
 
     }
+
+
 
     public void setAirportComboBoxes() {
 
@@ -491,103 +454,9 @@ public class MainController implements Initializable {
         addRouteViewController.addedRouteAirline.getItems().addAll(sortedAirlines);
     }
 
-    /* Method to open up a file chooser for the user to select the Route Data file with error handling */
-    public void addRouteData(ActionEvent e) {
-        try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Route datafile");
-            File file = fileChooser.showOpenDialog(new Stage());
-            if (file != null) {
-                BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
-                FileLoader load = new FileLoader(br);
-                //Use imported methods from FileLoader to process the route data file
-                //ObservableList<Route> routes = load.buildRoutes();
-
-                Database dbOne = new Database();
-                Database dbTwo = new Database();
-                DatabaseSaver dbsave = new DatabaseSaver();
-                RouteDatabaseLoader rdl = new RouteDatabaseLoader();
-
-                Connection connOne = dbOne.connect();
-                Connection connTwo = dbTwo.connect();
-
-                dbsave.saveRoutes(connOne, load.buildRoutes());
-                dbOne.disconnect(connOne);
-
-                ObservableList<Route> routes = rdl.loadRoutes(connTwo);
-                dbTwo.disconnect(connTwo);
-
-                currentlyLoadedRoutes = routes;
-                routeTable.setItems(routes);
-                setRouteComboBoxes();
-                resetView();
-                tableView.setVisible(true);
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println("FILE NOT FOUND");
-        }
-
-    }
-
-    public void setRouteComboBoxes() {
-        ArrayList<String> codeshareStatuses = new ArrayList<String>();
-        codeshareStatuses.add("ALL");
-        codeshareStatuses.add("Codeshare");
-        codeshareStatuses.add("Non Codeshare");
-        codeshareSearch.getItems().clear();
-        codeshareSearch.getItems().setAll(codeshareStatuses);
-
-        HashSet<String> sources = new HashSet<String>();
-        HashSet<String> destinations = new HashSet<String>();
-        HashSet<String> equipment = new HashSet<String>();
-
-        int stops = 0;
-        for (int i = 0; i < currentlyLoadedRoutes.size(); i++) {
-            if (currentlyLoadedRoutes.get(i).getSourceAirport().getIATA() != null) {
-                sources.add(currentlyLoadedRoutes.get(i).getSourceAirport().getIATA());
-            } else {
-                sources.add(currentlyLoadedRoutes.get(i).getSourceAirport().getICAO());
-            }
-            if (currentlyLoadedRoutes.get(i).getDestinationAirport().getIATA() != null) {
-                destinations.add(currentlyLoadedRoutes.get(i).getDestinationAirport().getIATA());
-            } else {
-                destinations.add(currentlyLoadedRoutes.get(i).getDestinationAirport().getICAO());
-            }
-            equipment.add(currentlyLoadedRoutes.get(i).getEquipment());
-            if (currentlyLoadedRoutes.get(i).getStops() > stops) {
-                stops = currentlyLoadedRoutes.get(i).getStops();
-            }
-        }
-
-        ArrayList<String> stopsList = new ArrayList<String>();
-        stopsList.add("ALL");
-
-        for (int i = 0; i <= stops; i++) {
-            stopsList.add(Integer.toString(i));
-        }
-
-        List sortedSources = new ArrayList(sources);
-        List sortedDestinations = new ArrayList(destinations);
-        List sortedEquipment = new ArrayList(equipment);
-
-        Collections.sort(sortedSources);
-        Collections.sort(sortedDestinations);
-        Collections.sort(sortedEquipment);
 
 
-        sortedSources.add(0, "ALL");
-        sortedDestinations.add(0, "ALL");
-        sortedEquipment.add(0, "ALL");
 
-        sourceSearch.getItems().clear();
-        sourceSearch.getItems().setAll(sortedSources);
-        destinationSearch.getItems().clear();
-        destinationSearch.getItems().setAll(sortedDestinations);
-        equipmentSearch.getItems().clear();
-        equipmentSearch.getItems().setAll(sortedEquipment);
-        stopoverSearch.getItems().clear();
-        stopoverSearch.getItems().setAll(stopsList);
-    }
 
     @FXML
     /* Method to open up a file chooser for the user to select the Flight Data file  with error handling*/
@@ -613,7 +482,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void resetSearch(ActionEvent e) {
-        routeTable.setItems(currentlyLoadedRoutes);
+
         airlineTable.setItems(currentlyLoadedAirlines);
         airportTable.setItems(currentlyLoadedAirports);
         resetView();
@@ -746,81 +615,7 @@ public class MainController implements Initializable {
         airlineTable.setItems(matchingAirlines);
     }
 
-    @FXML
-    private void routeSearch(ActionEvent e) {
-        resetView();
-        tableView.setVisible(true);
-        routeTable.setVisible(true);
-        routePane.setVisible(false);
 
-
-        RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
-        String airline = airlineSearch.getText();
-        String airlineID = airlineSearchID.getText();
-        String sourceAirport = (String) sourceSearch.getValue();
-        String sourceID = sourceIDSearch.getText();
-        String destinationAirport = (String) destinationSearch.getValue();
-        String destinationID = destinationIDSearch.getText();
-        String stops = (String) stopoverSearch.getValue();
-        String codeshareStatus = (String) codeshareSearch.getValue();
-        String equipment = (String) equipmentSearch.getValue();
-
-        if (airline.length() > 0) {
-            searcher.routesOfAirline(airline);
-        }
-
-        if (airlineID.length() > 0) {
-            try {
-                int intAirlineID = Integer.parseInt(airlineID);
-                searcher.routesOfAirlineID(intAirlineID);
-            } catch (NumberFormatException exception) {
-            }
-        }
-
-        if (sourceAirport != null && !sourceAirport.equals("ALL")) {
-            searcher.routesOfSource(sourceAirport);
-        }
-
-        if (sourceID.length() > 0) {
-            try {
-                int intSourceID = Integer.parseInt(sourceID);
-                searcher.routesOfSourceID(intSourceID);
-            } catch (NumberFormatException exception) {
-            }
-        }
-
-        if (destinationAirport != null && !destinationAirport.equals("ALL")) {
-            searcher.routesOfDestination(destinationAirport);
-        }
-
-        if (destinationID.length() > 0) {
-            try {
-                int intDestID = Integer.parseInt(destinationID);
-                searcher.routesOfDestinationID(intDestID);
-            } catch (NumberFormatException exception) {
-            }
-        }
-
-        if (stops != null && !stops.equals("ALL")) {
-            try {
-                int intStops = Integer.parseInt(stops);
-                searcher.routesOfStops(intStops);
-            } catch (NumberFormatException exception) {
-            }
-        }
-
-        if (codeshareStatus != null && !codeshareStatus.equals("ALL")) {
-            searcher.routesOfCodeshare(codeshareStatus);
-        }
-
-        if (equipment != null && !equipment.equals("ALL")) {
-            searcher.routesOfEquipment(equipment);
-        }
-
-        ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
-
-        routeTable.setItems(matchingRoutes);
-    }
 
     /* Method to add a new airline to the currentlyLoadedAirlines from search text fields.
     Executed when the add button is clicked */
@@ -840,11 +635,7 @@ public class MainController implements Initializable {
     }
 
 
-    @FXML
-    private void switchToAddRoute(ActionEvent e) {
-        resetView();
-        addRouteViewController.makeVisible();
-    }
+
 
 
 
@@ -886,33 +677,7 @@ public class MainController implements Initializable {
         airportAddButton.setVisible(false);
     }
 
-    @FXML
-    private void routeSearchBack(ActionEvent e) {
-        routeAdvancedButton.setVisible(true);
-        routeBackButton.setVisible(false);
-        equipmentSearch.setVisible(false);
-        codeshareSearch.setVisible(false);
-        airlineSearchID.setVisible(false);
-        destinationIDSearch.setVisible(false);
-        sourceIDSearch.setVisible(false);
-        routeSearch.setLayoutY(250);
-        resetRouteSearch.setLayoutY(250);
-        routeAddButton.setVisible(true);
-    }
 
-    @FXML
-    private void showRouteSearch(ActionEvent e) {
-        routeAdvancedButton.setVisible(false);
-        routeBackButton.setVisible(true);
-        equipmentSearch.setVisible(true);
-        codeshareSearch.setVisible(true);
-        airlineSearchID.setVisible(true);
-        destinationIDSearch.setVisible(true);
-        sourceIDSearch.setVisible(true);
-        routeSearch.setLayoutY(455);
-        resetRouteSearch.setLayoutY(455);
-        routeAddButton.setVisible(false);
-    }
 
     @FXML
     private void showAirlineSearch(ActionEvent e) {
@@ -933,7 +698,7 @@ public class MainController implements Initializable {
         airlineBackButton.setVisible(false);
         airlineAliasSearch.setVisible(false);
         airlineIATASearch.setVisible(false);
-        airlineSearchID.setVisible(false);
+        searchRouteTabController.airlineSearchID.setVisible(false);
         airlineICAOSearch.setVisible(false);
         airlineCallsignSearch.setVisible(false);
         airlineSearchButton.setLayoutY(250);
@@ -1423,115 +1188,24 @@ public class MainController implements Initializable {
         setAirportComboBoxes();
     }
 
-    @FXML
-    public void editRouteData(ActionEvent e) {
-        Route currentRoute = routeTable.getSelectionModel().getSelectedItem();
-        editSourceField.setVisible(true);
-        editDestinationField.setVisible(true);
-        editStopsField.setVisible(true);
-        editEquipmentField.setVisible(true);
-        editCodeshareField.setVisible(true);
-
-        individualRouteBackButton.setVisible(false);
-        editRouteDataDutton.setVisible(false);
-
-        saveRouteChangesButton.setVisible(true);
-        cancelRouteChangesButton.setVisible(true);
-
-        editSourceField.setText(currentRoute.getSourceAirportName());
-        editDestinationField.setText(currentRoute.getDestinationAirportName());
-        editStopsField.setText(Integer.toString(currentRoute.getStops()));
-        if (currentRoute.getEquipment() != null) {
-            editEquipmentField.setText(currentRoute.getEquipment());
-        } else {
-            editEquipmentField.setText("None");
-        }
-        if (currentRoute.isCodeshare() == true) {
-            editCodeshareField.setText("Yes");
-        } else {
-            editCodeshareField.setText("No");
-        }
 
 
+
+    public void editRouteData(ActionEvent e){
+        searchRouteTabController.editRouteData(e);
+    }
+    public void saveRouteChanges(ActionEvent e){
+        searchRouteTabController.saveRouteChanges(e);
+    }
+    public void cancelRouteChanges(ActionEvent e){
+
+        searchRouteTabController.cancelRouteChanges(e);
+    }
+    public void addRouteData(ActionEvent e){
+
+        searchRouteTabController.addRouteData(e);
     }
 
-    @FXML
-    public void cancelRouteChanges(ActionEvent e) {
-
-
-        individualRouteBackButton.setVisible(true);
-        editRouteDataDutton.setVisible(true);
-
-        saveRouteChangesButton.setVisible(false);
-        cancelRouteChangesButton.setVisible(false);
-        editSourceField.setVisible(false);
-        editDestinationField.setVisible(false);
-        editStopsField.setVisible(false);
-        editEquipmentField.setVisible(false);
-        editCodeshareField.setVisible(false);
-        ;
-
-    }
-
-    @FXML
-    public void saveRouteChanges(ActionEvent e) {
-        Route currentRoute = routeTable.getSelectionModel().getSelectedItem();
-
-        //Delete the route from the database
-        Database db = new Database();
-        DatabaseSaver dbSave = new DatabaseSaver();
-        Connection connDelete = db.connect();
-        ArrayList<Integer> ids = new ArrayList<Integer>();
-        ids.add(currentRoute.getRouteID());
-        dbSave.deleteRoutes(connDelete, ids);
-        db.disconnect(connDelete);
-
-        currentRoute.setSourceAirportName(editSourceField.getText());
-        currentRoute.setDestinationAirportName(editDestinationField.getText());
-        //Add methods to find airports as well
-        currentRoute.setStops(Integer.parseInt(editStopsField.getText()));
-
-        if (!editEquipmentField.getText().equals("None")) {
-            currentRoute.setEquipment(editEquipmentField.getText());
-        }
-        if (editCodeshareField.getText().equals("Yes")) {
-            currentRoute.setCodeshare(true);
-            routeShareDisplay.setText("Yes");
-        } else if (editCodeshareField.getText().equals("No")) {
-            currentRoute.setCodeshare(false);
-            routeShareDisplay.setText("No");
-        }
-
-
-        routeSourceDisplay.setText(currentRoute.getSourceAirportName());
-        routeDestinationDisplay.setText(currentRoute.getDestinationAirportName());
-        routeStopsDisplay.setText(Integer.toString(currentRoute.getStops()));
-        routeEquipmentDisplay.setText(currentRoute.getEquipment());
-
-        editSourceField.setVisible(false);
-        editDestinationField.setVisible(false);
-        editStopsField.setVisible(false);
-        editEquipmentField.setVisible(false);
-        editCodeshareField.setVisible(false);
-        ;
-
-
-        individualRouteBackButton.setVisible(true);
-        editRouteDataDutton.setVisible(true);
-
-        saveRouteChangesButton.setVisible(false);
-        cancelRouteChangesButton.setVisible(false);
-
-        //Save the updated route to the database
-        Connection connSave = db.connect();
-        ObservableList<Route> newRoutes = FXCollections.observableArrayList();
-        newRoutes.add(currentRoute);
-        dbSave.saveRoutes(connSave, newRoutes);
-        db.disconnect(connDelete);
-
-
-        setRouteComboBoxes();
-    }
 
     public void resetView() {
         tableView.setVisible(false);
@@ -1610,6 +1284,7 @@ public class MainController implements Initializable {
         addAirlineViewController.setMainController(this);
         addAirportViewController.setMainController(this);
         addRouteViewController.setMainController(this);
+        searchRouteTabController.setMainController(this);
 
 
 
@@ -1703,6 +1378,8 @@ public class MainController implements Initializable {
            }
         );
     }
+
+
 
     public void airportInfo(){
         //Changes visible pane;

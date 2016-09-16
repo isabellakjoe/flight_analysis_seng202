@@ -28,6 +28,7 @@ import static seng202.group8.Controller.MainController.currentlyLoadedRoutes;
 public class AddRouteViewController {
 
     private MainController mainController;
+    private SearchRouteController searchRouteController;
 
     @FXML
     private GridPane addRouteViewPane;
@@ -200,7 +201,7 @@ public class AddRouteViewController {
             currentlyLoadedRoutes.add(newRoute);
             mainController.routeTable.setItems(currentlyLoadedRoutes);
             mainController.resetView();
-            mainController.setRouteComboBoxes();
+            searchRouteController.setRouteComboBoxes();
             mainController.tableView.setVisible(true);
         }
     }

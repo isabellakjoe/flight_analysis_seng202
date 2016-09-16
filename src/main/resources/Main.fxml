@@ -11,29 +11,7 @@
     <left>
         <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
-                <Tab text="Route">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <Button fx:id="routeSearch" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
-                                <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
-                                <Button fx:id="routeAddButton" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddRoute" text="Add New Route" />
-                                <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
-                                <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
-                                <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
-                                <TextField fx:id="sourceIDSearch" layoutX="29.0" layoutY="369.0" prefHeight="25.0" prefWidth="220.0" promptText="from (airport ID)" visible="false" />
-                                <ComboBox fx:id="sourceSearch" layoutX="29.0" layoutY="115.0" prefHeight="26.0" prefWidth="220.0" promptText="Source " />
-                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " />
-                                <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Destination" />
-                                <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Stops" />
-                                <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="244.0" prefWidth="150.0" promptText="Equipment" visible="false" />
-                                <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="287.0" prefWidth="150.0" promptText="Codeshare" visible="false" />
-                                <Button fx:id="routeAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced" />
-                                <Button fx:id="routeBackButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#routeSearchBack" text="Back" visible="false" />
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
+                <fx:include fx:id="searchRouteTab" source="SearchRouteTab.fxml" />
                 <Tab text="Airport">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -92,7 +70,7 @@
                     <items>
                         <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData" text="Airline Data" />
                         <MenuItem fx:id="addAirportData" mnemonicParsing="false" onAction="#addAirportData" text="Airport Data" />
-                        <MenuItem fx:id="addRouteData" mnemonicParsing="false" onAction="#addRouteData" text="Route Data" />
+                        <MenuItem fx:id="addRouteData" mnemonicParsing="false"  onAction="#addRouteData" text="Route Data"  />
                         <MenuItem fx:id="addFlightData" mnemonicParsing="false" onAction="#addFlightData" text="Flight Data" />
                     </items>
                 </Menu>
@@ -701,7 +679,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                            <Button fx:id="editRouteDataDutton" mnemonicParsing="false" onAction="#editRouteData" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                            <Button fx:id="editRouteDataButton" mnemonicParsing="false" onAction="#editRouteData" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
@@ -711,7 +689,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </Button>
-                                            <Button fx:id="cancelRouteChangesButton" mnemonicParsing="false" onAction="#cancelRouteChanges" text="Cancel" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                            <Button fx:id="cancelRouteChangesButton" mnemonicParsing="false"  onAction="#cancelRouteChanges" text="Cancel" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>

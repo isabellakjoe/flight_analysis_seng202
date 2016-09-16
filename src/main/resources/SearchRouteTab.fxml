@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.text.Text?>
+<Tab fx:id="searchRouteTab" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+     fx:controller="seng202.group8.Controller.SearchRouteController" text="Route">
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <children>
+                <Button fx:id="routeSearch" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
+                <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetRouteSearch" text="Reset" />
+                <Button fx:id="routeAddButton" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddRoute" text="Add New Route" />
+                <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
+                <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
+                <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
+                <TextField fx:id="sourceIDSearch" layoutX="29.0" layoutY="369.0" prefHeight="25.0" prefWidth="220.0" promptText="from (airport ID)" visible="false" />
+                <ComboBox fx:id="sourceSearch" layoutX="29.0" layoutY="115.0" prefHeight="26.0" prefWidth="220.0" promptText="Source " />
+                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " />
+                <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Destination" />
+                <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Stops" />
+                <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="244.0" prefWidth="150.0" promptText="Equipment" visible="false" />
+                <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="287.0" prefWidth="150.0" promptText="Codeshare" visible="false" />
+                <Button fx:id="routeAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced" />
+                <Button fx:id="routeBackButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#routeSearchBack" text="Back" visible="false" />
+            </children>
+        </AnchorPane>
+    </content>
+</Tab>
