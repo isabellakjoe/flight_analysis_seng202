@@ -102,22 +102,19 @@ public class DatabaseSaverTest {
     public void testRouteSavesCorrectly() {
         RouteParser rp = new RouteParser();
         //Make a route to test and add it to an array
-        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP, 1001");
-        testRoute.setRouteID(10);
-        ObservableList<Route> testArray = FXCollections.observableArrayList();
-        testArray.add(testRoute);
+        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP", 7867);
         //Create the connections to the database
         //Save the new route here
-        dbsave.saveRoutes(connSave, testArray);
-        //Search for the new saved route, only one currently in database with id 10
-        String sqlStatement = dbsearch.buildRouteSearch("equipment", "SF3");
+        dbsave.saveRoutesWithID(connSave, testRoute);
+        //Search for the new saved route, only one currently in database with id 7867
+        String sqlStatement = dbsearch.buildRouteSearch("routeid", "7867");
         ObservableList<Route> returnedRoutes = dbsearch.searchRouteByOption(connSearch, sqlStatement);
         dbOne.disconnect(connSave);
         dbOne.disconnect(connSearch);
         //Current test database should only return one result
         //Remove the route from the database for test repetability.
         ArrayList<Integer> idsToDelete = new ArrayList<Integer>();
-        idsToDelete.add(10);
+        idsToDelete.add(7867);
         dbsave.deleteRoutes(connDelete, idsToDelete);
         dbOne.disconnect(connDelete);
         Route testReturnedRoute = returnedRoutes.get(0);
@@ -129,25 +126,22 @@ public class DatabaseSaverTest {
 
         RouteParser rp = new RouteParser();
         //Make a route to test and add it to an array
-        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP, 1001");
-        testRoute.setRouteID(10);
-        ObservableList<Route> testArray = FXCollections.observableArrayList();
-        testArray.add(testRoute);
+        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP", 1001);
 
         //Add route to the database
-        dbsave.saveRoutes(connSave, testArray);
+        dbsave.saveRoutesWithID(connSave, testRoute);
         dbOne.disconnect(connSave);
 
         //Delete it
         ArrayList<Integer> idsToDelete = new ArrayList<Integer>();
-        idsToDelete.add(10);
+        idsToDelete.add(1001);
         dbsave.deleteRoutes(connDelete, idsToDelete);
-        dbOne.disconnect(connDelete);
+        //dbOne.disconnect(connDelete);
 
         //Search for deleted data
-        String sqlStatement = dbsearch.buildRouteSearch("routeid", "10");
-        ObservableList<Route> returnedRoutes = dbsearch.searchRouteByOption(connSearch, sqlStatement);
-        dbOne.disconnect(connSearch);
+        String sqlStatement = dbsearch.buildRouteSearch("routeid", "1001");
+        ObservableList<Route> returnedRoutes = dbsearch.searchRouteByOption(connDelete, sqlStatement);
+        dbOne.disconnect(connDelete);
 
         //Assertion Test
         assertTrue(returnedRoutes.size() == 0);

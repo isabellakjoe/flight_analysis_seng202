@@ -15,17 +15,17 @@ import static junit.framework.TestCase.assertTrue;
 public class RouteParserTest {
 
     /* String containing IATA information */
-    private String routeString = "2B,410,AER,2965,KZN,2990,Y,10,CR2,9921";
+    private String routeString = "2B,410,AER,2965,KZN,2990,Y,10,CR2";
     /* String containing ICAO information */
-    private String ICAOString = "9W,3000,TRVA,3153,BOMV,2997,,0,73H,2112";
+    private String ICAOString = "9W,3000,TRVA,3153,BOMV,2997,,0,73H";
     /* String containing empty inforamtion */
-    private String emptyString = "4Y,\\N,WNA,\\N,PKA,\\N,,0,CNA,1010";
+    private String emptyString = "4Y,\\N,WNA,\\N,PKA,\\N,,0,CNA";
 
     @Test
     /* Test to see if the airline is added correctly to a route object */
     public void testAirlineParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(routeString);
+        Route route = routeParser.createSingleRoute(routeString, 1001);
 
         Airline airline = new Airline();
         airline.setName("2B");
@@ -39,7 +39,7 @@ public class RouteParserTest {
     /* Test to see if the source airport is correctly added to a route object */
     public void testSourceAirportParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(routeString);
+        Route route = routeParser.createSingleRoute(routeString, 1002);
 
         /* IATA TEST CASE */
         Airport sourceAirport = new Airport();
@@ -54,7 +54,7 @@ public class RouteParserTest {
     /* Test to see if the destination airport is correctly added to a route object */
     public void testDestinationAirportParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(routeString);
+        Route route = routeParser.createSingleRoute(routeString, 1003);
 
         /* IATA TEST CASE */
         Airport destinationAirport = new Airport();
@@ -68,7 +68,7 @@ public class RouteParserTest {
     @Test
     public void testSourceAirportICAOParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(ICAOString);
+        Route route = routeParser.createSingleRoute(ICAOString, 1004);
 
         /* ICAO TEST CASE */
         Airport sourceAirport = new Airport();
@@ -82,7 +82,7 @@ public class RouteParserTest {
     @Test
     public void testDesinationAirportICAOParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(ICAOString);
+        Route route = routeParser.createSingleRoute(ICAOString, 1005);
 
         /* ICAO TEST CASE */
         Airport destinationAirport = new Airport();
@@ -97,7 +97,7 @@ public class RouteParserTest {
     /* Test to see whether codeshare boolean logic parses correctly */
     public void testCodeShareWorksCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(routeString);
+        Route route = routeParser.createSingleRoute(routeString, 1006);
 
         assertEquals(route.isCodeshare(), true);
     }
@@ -106,7 +106,7 @@ public class RouteParserTest {
     /* Test to see if the number of stops parses correctly */
     public void testStopsParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(routeString);
+        Route route = routeParser.createSingleRoute(routeString, 1007);
         assertEquals(route.getStops(), 10);
     }
 
@@ -114,7 +114,7 @@ public class RouteParserTest {
     /* Test to see whether the equipment specified is added to a route object correctly */
     public void testEquipmentParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(routeString);
+        Route route = routeParser.createSingleRoute(routeString, 1008);
         assertTrue(route.getEquipment().equals("CR2"));
     }
 
@@ -122,7 +122,7 @@ public class RouteParserTest {
     /* Test to see if the airline is added correctly to a route object when null */
     public void testEmptyAirlineParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(emptyString);
+        Route route = routeParser.createSingleRoute(emptyString, 1010);
 
         Airline airline = new Airline();
         airline.setName("4Y");
@@ -136,7 +136,7 @@ public class RouteParserTest {
     @Test
     public void testEmptySourceAirportParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(emptyString);
+        Route route = routeParser.createSingleRoute(emptyString, 10002);
 
         Airport sourceAirport = new Airport();
         sourceAirport.setICAO("WNA");
@@ -153,7 +153,7 @@ public class RouteParserTest {
     @Test
     public void testEmptyDestinationAirportParsesCorrectly() {
         RouteParser routeParser = new RouteParser();
-        Route route = routeParser.createSingleRoute(emptyString);
+        Route route = routeParser.createSingleRoute(emptyString, 9999);
 
         Airport destinationAirport = new Airport();
         destinationAirport.setICAO("WNA");

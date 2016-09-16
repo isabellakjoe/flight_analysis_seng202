@@ -6,6 +6,8 @@ import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -22,6 +24,26 @@ public class DatabaseSaver {
             return airport.getIATA();
         }
 
+    }
+
+    public int getCurrentMaxRouteID(Connection conn) {
+        int max = -1;
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "select max(routeid) from route;";
+            ResultSet result = stmt.executeQuery(sql);
+            while (result.next()) {
+                max = result.getInt(0);
+            }
+        } catch (SQLException e) {
+            max = 1;
+        }
+
+        if (max < 0) {
+            max = 1;
+        }
+
+        return max;
     }
 
     private String convertIntToString(int toConvert) {
@@ -188,14 +210,30 @@ public class DatabaseSaver {
      */
     public void saveRoutes(Connection conn, ObservableList<Route> routeList) {
 
+        int routeIDStart = getCurrentMaxRouteID(conn);
         try {
             Statement stmt = conn.createStatement();
             for (int i = 0; i < routeList.size(); i++) {
+                routeList.get(i).setRouteID(routeIDStart);
                 String sql = createRouteStatement(routeList.get(i));
                 stmt.executeUpdate(sql);
+                routeIDStart += 1;
             }
             conn.commit();
         } catch (Exception e) {
+            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+        }
+
+    }
+
+    public void saveRoutesWithID(Connection conn, Route route) {
+
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = createRouteStatement(route);
+            stmt.executeUpdate(sql);
+            conn.commit();
+        } catch (SQLException e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 

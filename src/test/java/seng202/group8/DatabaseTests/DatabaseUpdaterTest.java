@@ -131,13 +131,11 @@ public class DatabaseUpdaterTest {
     @Test
     public void testRouteUpdatesCorrectly() {
 
-        String testRoute = "3B,411,AOR,2865,KUL,2991,Y,11,CR2,5499";
+        String testRoute = "3B,411,AOR,2865,KUL,2991,Y,11,CR2";
         RouteParser rp = new RouteParser();
-        Route route = rp.createSingleRoute(testRoute);
-        ObservableList<Route> routes = FXCollections.observableArrayList();
-        routes.add(route);
+        Route route = rp.createSingleRoute(testRoute, 5499);
 
-        dbSave.saveRoutes(connSave, routes);
+        dbSave.saveRoutesWithID(connSave, route);
         db.disconnect(connSave);
 
         ArrayList<ArrayList<String>> updates = new ArrayList<ArrayList<String>>();

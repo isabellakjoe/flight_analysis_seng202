@@ -2,6 +2,8 @@ package seng202.group8.Model.Parsers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seng202.group8.Model.DatabaseMethods.Database;
+import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Flight;
@@ -9,6 +11,7 @@ import seng202.group8.Model.Objects.Route;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -81,9 +84,15 @@ public class FileLoader {
         ObservableList<Route> routes = FXCollections.observableArrayList();
         RouteParser parser = new RouteParser();
         String currentString;
+        Database db = new Database();
+        Connection conn = db.connect();
+        DatabaseSaver dbSave = new DatabaseSaver();
+        int routeID = dbSave.getCurrentMaxRouteID(conn);
+        db.disconnect(conn);
         while (textScanner.hasNextLine()) {
             currentString = textScanner.nextLine();
-            Route route = parser.createSingleRoute(currentString);
+            Route route = parser.createSingleRoute(currentString, routeID);
+            routeID += 1;
             if (route != null) {
                 routes.add(route);
             }

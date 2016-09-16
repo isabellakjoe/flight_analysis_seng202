@@ -1,10 +1,13 @@
 package seng202.group8.Model.Parsers;
 
+import seng202.group8.Model.DatabaseMethods.Database;
+import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
 import seng202.group8.Model.Objects.RouteMethod;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +15,7 @@ import java.util.ArrayList;
  */
 public class RouteParser extends RouteMethod {
 
-    private Route createParsedRoute(ArrayList<String> routeInfo) {
+    private Route createParsedRoute(ArrayList<String> routeInfo, int routeID) {
         /* Create the route object */
         Route route = new Route();
 
@@ -59,9 +62,7 @@ public class RouteParser extends RouteMethod {
         /* Sets what plane the route uses */
         route.setEquipment(routeInfo.get(8));
 
-        /*Assign a unique route ID to the database*/
-        //TODO This needs to be dynamically created from the database (or by the application)
-        route.setRouteID(parseToInt(routeInfo.get(9)));
+        route.setRouteID(routeID);
 
         route.setAirlineName(routeInfo.get(0));
 
@@ -81,10 +82,10 @@ public class RouteParser extends RouteMethod {
      * @return A Route Object or null if the input is null.
      */
 
-    public Route createSingleRoute(String input) {
+    public Route createSingleRoute(String input, int routeID) {
         ArrayList<String> routeInfo = refactorData(input);
         if (routeInfo != null) {
-            return createParsedRoute(routeInfo);
+            return createParsedRoute(routeInfo, routeID);
         } else {
             return null;
         }

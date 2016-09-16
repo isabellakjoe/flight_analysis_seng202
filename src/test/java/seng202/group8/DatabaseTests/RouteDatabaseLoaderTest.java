@@ -36,8 +36,8 @@ public class RouteDatabaseLoaderTest {
     @Test
     public void testAllRoutesLoadCorrectly() {
         ObservableList<Route> routes = dbr.loadRoutes(conn);
-        //Currently 16 routes in the database
-        assertTrue(16 == routes.size());
+        //Currently 17 routes in the test database
+        assertTrue(17 == routes.size());
     }
 
     @Test
