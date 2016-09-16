@@ -2,7 +2,7 @@ package seng202.group8;
 
 /**
  * Created by Callum on 22/08/16.
- **/
+ */
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +26,9 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Main.fxml"));
         /* Set the name of the GUI */
         primaryStage.setTitle("Flight Viewer");
-        primaryStage.setScene(new Scene(root, 1100, 700));
-        primaryStage.setMinHeight(700);
-        primaryStage.setMinWidth(850);
+        primaryStage.setScene(new Scene(root, 1100, 800));
+        primaryStage.setMinHeight(800);
+        primaryStage.setMinWidth(1100);
         primaryStage.setMaximized(true);
         primaryStage.show();
     }

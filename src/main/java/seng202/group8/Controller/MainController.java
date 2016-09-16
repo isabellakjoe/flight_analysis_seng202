@@ -608,14 +608,60 @@ public class MainController implements Initializable {
         } catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
-
     }
 
     @FXML
-    private void resetSearch(ActionEvent e) {
+    private void resetRoute() {
+        /* Clears all search fields*/
+        airlineSearch.clear();
+        sourceSearch.setValue(null);
+        destinationSearch.setValue(null);
+        stopoverSearch.setValue(null);
+        equipmentSearch.setValue(null);
+        codeshareSearch.setValue(null);
+        airlineSearchID.clear();
+        sourceIDSearch.clear();
+        destinationIDSearch.clear();
+        /*Resets the tableview*/
         routeTable.setItems(currentlyLoadedRoutes);
-        airlineTable.setItems(currentlyLoadedAirlines);
+        resetView();
+        tableView.setVisible(true);
+    }
+
+    @FXML
+    private void resetAirport(){
+        /* Clears all search fields*/
+        airportCountrySearch.setValue(null);
+        airportIDSearch.clear();
+        airportNameSearch.clear();
+        airportCitySearch.clear();
+        airportFAASearch.clear();
+        airportIATASearch.clear();
+        airportICAOSearch.clear();
+        airportLongitudeSearch.clear();
+        airportLatitudeSearch.clear();
+        airportAltitudeSearch.clear();
+        airportTimezoneSearch.clear();
+        airportDSTSearch.clear();
+        /*Resets the tableview*/
         airportTable.setItems(currentlyLoadedAirports);
+        resetView();
+        tableView.setVisible(true);
+    }
+
+    @FXML
+    private void resetAirline(){
+        /* Clears all search fields*/
+        airlineCountrySearch.setValue(null);
+        airlineActiveSearch.setValue(null);
+        airlineIDSearch.clear();
+        airlineNameSearch.clear();
+        airlineAliasSearch.clear();
+        airlineIATASearch.clear();
+        airlineICAOSearch.clear();
+        airlineCallsignSearch.clear();
+        /*Resets the tableview*/
+        airlineTable.setItems(currentlyLoadedAirlines);
         resetView();
         tableView.setVisible(true);
     }
@@ -849,7 +895,7 @@ public class MainController implements Initializable {
 
 
     @FXML
-    private void airportSearchBack(ActionEvent e) {
+    private void airportSearchBack() {
         airportAdvancedButton.setVisible(true);
         airportBackButton.setVisible(false);
         airportCitySearch.setVisible(false);
@@ -861,10 +907,19 @@ public class MainController implements Initializable {
         airportTimezoneSearch.setVisible(false);
         airportDSTSearch.setVisible(false);
         airportICAOSearch.setVisible(false);
-
         airportSearchButton.setLayoutY(250);
         resetAirportSearch.setLayoutY(250);
         airportAddButton.setVisible(true);
+        /*Clear hidden parameters*/
+        airportCitySearch.clear();
+        airportFAASearch.clear();
+        airportIATASearch.clear();
+        airportICAOSearch.clear();
+        airportLongitudeSearch.clear();
+        airportLatitudeSearch.clear();
+        airportAltitudeSearch.clear();
+        airportTimezoneSearch.clear();
+        airportDSTSearch.clear();
     }
 
     @FXML
@@ -887,7 +942,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void routeSearchBack(ActionEvent e) {
+    private void routeSearchBack() {
         routeAdvancedButton.setVisible(true);
         routeBackButton.setVisible(false);
         equipmentSearch.setVisible(false);
@@ -898,6 +953,12 @@ public class MainController implements Initializable {
         routeSearch.setLayoutY(250);
         resetRouteSearch.setLayoutY(250);
         routeAddButton.setVisible(true);
+        /*Clear hidden parameters*/
+        equipmentSearch.setValue(null);
+        codeshareSearch.setValue(null);
+        airlineSearchID.clear();
+        sourceIDSearch.clear();
+        destinationIDSearch.clear();
     }
 
     @FXML
@@ -928,7 +989,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void airlineSearchBack(ActionEvent e) {
+    private void airlineSearchBack() {
         airlineAdvancedButton.setVisible(true);
         airlineBackButton.setVisible(false);
         airlineAliasSearch.setVisible(false);
@@ -939,6 +1000,11 @@ public class MainController implements Initializable {
         airlineSearchButton.setLayoutY(250);
         resetAirlineSearch.setLayoutY(250);
         airlineAddButton.setVisible(true);
+        /*Clear hidden parameters*/
+        airlineAliasSearch.clear();
+        airlineIATASearch.clear();
+        airlineICAOSearch.clear();
+        airlineCallsignSearch.clear();
     }
 
     private void filterAirlinesByName(ActionEvent e) {
@@ -1451,8 +1517,6 @@ public class MainController implements Initializable {
         } else {
             editCodeshareField.setText("No");
         }
-
-
     }
 
     @FXML
@@ -1469,8 +1533,6 @@ public class MainController implements Initializable {
         editStopsField.setVisible(false);
         editEquipmentField.setVisible(false);
         editCodeshareField.setVisible(false);
-        ;
-
     }
 
     @FXML
@@ -1513,8 +1575,6 @@ public class MainController implements Initializable {
         editStopsField.setVisible(false);
         editEquipmentField.setVisible(false);
         editCodeshareField.setVisible(false);
-        ;
-
 
         individualRouteBackButton.setVisible(true);
         editRouteDataDutton.setVisible(true);
@@ -1529,7 +1589,6 @@ public class MainController implements Initializable {
         dbSave.saveRoutes(connSave, newRoutes);
         db.disconnect(connDelete);
 
-
         setRouteComboBoxes();
     }
 
@@ -1539,7 +1598,6 @@ public class MainController implements Initializable {
         addAirportViewController.makeInvisible();
         addAirlineViewController.makeInvisible();
         addRouteViewController.makeInvisible();
-
     }
 
     private void resetTables() {
@@ -1612,7 +1670,6 @@ public class MainController implements Initializable {
         addRouteViewController.setMainController(this);
 
 
-
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
         alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
@@ -1656,7 +1713,6 @@ public class MainController implements Initializable {
                     if (click.getClickCount() >= 2 && click.getButton() == MouseButton.PRIMARY && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
                         System.out.println(click.getTarget().toString());
                         airportInfo();
-
                     }
                 }
             }
@@ -1677,20 +1733,16 @@ public class MainController implements Initializable {
         routeTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             //click event handler for double clicking a table cell.
             public void handle(MouseEvent click) {
-                //Checks if table is empty then checks for double click
-                if (!routeTable.getItems().isEmpty()) {
-                    if (click.getClickCount() >= 2 && click.getButton() == MouseButton.PRIMARY && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
-                        routeInfo();
-                    }
+            //Checks if table is empty then checks for double click
+            if (!routeTable.getItems().isEmpty()) {
+                if (click.getClickCount() >= 2 && click.getButton() == MouseButton.PRIMARY && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                    routeInfo();
                 }
+            }
             }
         });
 
         airportTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        if (!airportTable.getItems().isEmpty()) {
-
-        }
-
         airportTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
                @Override
                public void handle(ContextMenuEvent event) {
@@ -1761,16 +1813,15 @@ public class MainController implements Initializable {
     public void getDistance(ActionEvent e){
         distanceMenu.hide();
         if(airportTable.getSelectionModel().getSelectedItems().size() == 2){
-
             Airport airport1 = airportTable.getSelectionModel().getSelectedItems().get(0);
             Airport airport2 = airportTable.getSelectionModel().getSelectedItems().get(1);
 
-           double distance = airport1.calculateDistanceTo(airport2);
-            JOptionPane.showMessageDialog(null, "The distance is "+distance+" km.", "Distance from "+airport1.getName()+" to "+airport2.getName(), JOptionPane.INFORMATION_MESSAGE);
+
+
+            double distance = airport1.calculateDistanceTo(airport2);
+            JOptionPane jp = new JOptionPane();
+            jp.setSize(600, 600);
+            jp.showMessageDialog(null, "The distance is "+distance+" km.", "Distance from "+airport1.getName()+" to "+airport2.getName(), JOptionPane.INFORMATION_MESSAGE);
         }
-
     }
-
 }
-
-

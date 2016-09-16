@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
 
     <left>
         <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -16,7 +32,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
                                 <Button fx:id="routeSearch" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
-                                <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
+                                <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetRoute" text="Reset" />
                                 <Button fx:id="routeAddButton" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddRoute" text="Add New Route" />
                                 <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
                                 <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
@@ -26,8 +42,8 @@
                                 <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " />
                                 <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Destination" />
                                 <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Stops" />
-                                <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="244.0" prefWidth="150.0" promptText="Equipment" visible="false" />
-                                <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="287.0" prefWidth="150.0" promptText="Codeshare" visible="false" />
+                                <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="244.0" prefHeight="26.0" prefWidth="220.0" promptText="Equipment" visible="false" />
+                                <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="287.0" prefHeight="26.0" prefWidth="220.0" promptText="Codeshare" visible="false" />
                                 <Button fx:id="routeAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced" />
                                 <Button fx:id="routeBackButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#routeSearchBack" text="Back" visible="false" />
                             </children>
@@ -50,7 +66,7 @@
                                 <TextField fx:id="airportAltitudeSearch" layoutX="29.0" layoutY="447.0" prefHeight="25.0" prefWidth="220.0" promptText="altitude" visible="false" />
                                 <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="489.0" prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false" />
                                 <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="530.0" prefHeight="25.0" prefWidth="220.0" promptText="DST" visible="false" />
-                                <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
+                                <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetAirport" text="Reset" />
                                 <Button fx:id="airportAddButton" layoutX="70.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddAirport" text="Add New Airport" />
                                 <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="323.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
                                 <Button fx:id="airportAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
@@ -73,7 +89,7 @@
                                 <TextField fx:id="airlineIATASearch" layoutX="29.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
                                 <TextField fx:id="airlineICAOSearch" layoutX="29.0" layoutY="334.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
                                 <TextField fx:id="airlineCallsignSearch" layoutX="29.0" layoutY="377.0" prefHeight="25.0" prefWidth="220.0" promptText="call sign" visible="false" />
-                                <Button fx:id="resetAirlineSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetSearch" text="Reset" />
+                                <Button fx:id="resetAirlineSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetAirline" text="Reset" />
                                 <ComboBox fx:id="airlineCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Country" />
                                 <ComboBox fx:id="airlineActiveSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Active/Inactive" />
                                 <Button fx:id="airlineBackButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#airlineSearchBack" text="Back" visible="false" />
@@ -139,7 +155,7 @@
                                     </MenuButton>
                                     <TableView fx:id="airlineTable" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="1">
                                         <columns>
-                                            <TableColumn fx:id="airlineID" minWidth="30.0" prefWidth="150.0" text="ID" visible="false" />
+                                            <TableColumn fx:id="airlineID" minWidth="30.0" prefWidth="150.0" text="ID" />
                                             <TableColumn fx:id="airlineName" minWidth="30.0" prefWidth="150.0" text="Name" />
                                             <TableColumn fx:id="alias" minWidth="30.0" prefWidth="150.0" text="Alias" />
                                             <TableColumn fx:id="IATA" minWidth="30.0" prefWidth="150.0" text="IATA" visible="false" />
@@ -327,7 +343,7 @@
                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                         </columnResizePolicy>
                                         <columns>
-                                            <TableColumn fx:id="airportID" minWidth="30.0" prefWidth="75.0" text="ID" visible="false" />
+                                            <TableColumn fx:id="airportID" minWidth="30.0" prefWidth="75.0" text="ID" />
                                             <TableColumn fx:id="airportName" minWidth="30.0" prefWidth="75.0" text="Name" />
                                             <TableColumn fx:id="city" minWidth="30.0" prefWidth="75.0" text="City" />
                                             <TableColumn fx:id="airportCountry" minWidth="30.0" prefWidth="75.0" text="Country" />
