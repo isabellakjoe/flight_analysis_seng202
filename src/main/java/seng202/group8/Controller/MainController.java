@@ -2027,25 +2027,24 @@ public class MainController implements Initializable {
         airportTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             //click event handler for double clicking a table cell.
             public void handle(MouseEvent click) {
-                //Checks if table is empty then checks for double click
-                if (!airportTable.getItems().isEmpty()) {
-                    if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
-                        System.out.println(click.getTarget().toString());
-                        airportInfo();
-                    }
+            //Checks if table is empty then checks for double click
+            if (!airportTable.getItems().isEmpty()) {
+                if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                    airportInfo();
                 }
+            }
             }
         });
 
         airlineTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             //click event handler for double clicking a table cell.
             public void handle(MouseEvent click) {
-                //Checks if table is empty then checks for double click
-                if (!airlineTable.getItems().isEmpty()) {
-                    if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
-                        airlineInfo();
-                    }
+            //Checks if table is empty then checks for double click
+            if (!airlineTable.getItems().isEmpty()) {
+                if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                    airlineInfo();
                 }
+            }
             }
         });
 
@@ -2134,8 +2133,6 @@ public class MainController implements Initializable {
         if(airportTable.getSelectionModel().getSelectedItems().size() == 2){
             Airport airport1 = airportTable.getSelectionModel().getSelectedItems().get(0);
             Airport airport2 = airportTable.getSelectionModel().getSelectedItems().get(1);
-
-
 
             double distance = airport1.calculateDistanceTo(airport2);
             JOptionPane jp = new JOptionPane();
