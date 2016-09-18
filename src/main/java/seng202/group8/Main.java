@@ -25,7 +25,7 @@ public class Main extends Application {
         /* Adds the FXML files to the GUI */
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Main.fxml"));
         /* Set the name of the GUI */
-        primaryStage.setTitle("Flight Viewer");
+        primaryStage.setTitle("Hop2it");
         primaryStage.setScene(new Scene(root, 1100, 800));
         primaryStage.setMinHeight(800);
         primaryStage.setMinWidth(1100);

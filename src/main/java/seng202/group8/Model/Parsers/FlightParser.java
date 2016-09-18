@@ -125,7 +125,7 @@ public class FlightParser {
         }
     }
 
-    /** Method to conver a String of numbers to a Integer.
+    /** Method to convert a String of numbers to a Integer.
      *
      * @param inputNum: A number in String form.
      * @return The number as an Integer or -1 if the string is not a number.
