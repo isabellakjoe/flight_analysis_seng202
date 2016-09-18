@@ -1964,6 +1964,7 @@ public class MainController implements Initializable {
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
 
+        mapViewController.setMainController(this);
         mapViewController.initMap();
         flightViewController.setMainController(this);
         mapViewController.setMainController(this);

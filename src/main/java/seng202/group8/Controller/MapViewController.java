@@ -16,13 +16,15 @@ public class MapViewController {
     private WebEngine webEngine;
     private MainController mainController;
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     public void initMap() {
         webEngine = webView.getEngine();
         webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
     }
 
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
+
 }
