@@ -144,7 +144,6 @@ public class MainController implements Initializable {
     private Button airlineBackButton;
     @FXML
     private Button saveAirlineChangesButton;
-
     @FXML
     private Button cancelAirlineChangesButton;
     @FXML
@@ -667,10 +666,6 @@ public class MainController implements Initializable {
                     jp.showMessageDialog(null, "Data you are trying to add is invalid", "Error Message", JOptionPane.INFORMATION_MESSAGE);
 
                 }
-
-
-
-
 
             }
         } catch (FileNotFoundException ex) {
