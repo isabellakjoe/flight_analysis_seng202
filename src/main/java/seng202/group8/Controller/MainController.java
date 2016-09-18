@@ -655,7 +655,23 @@ public class MainController implements Initializable {
                 flightViewController.setUpFlightView(flight);
                 //Swap panes from raw data to the flight viewer
                 resetView();
-                //flightViewContent.setVisible(true);
+
+                if (flightViewController.getIsValid()) {
+                    flightViewController.makeVisible();
+                    flightViewController.isValid = false;
+
+                } else {
+                    backToTableView(e);
+                    JOptionPane jp = new JOptionPane();
+                    jp.setSize(600, 600);
+                    jp.showMessageDialog(null, "Data you are trying to add is invalid", "Error Message", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+
+
+
+
+
             }
         } catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
@@ -2123,8 +2139,8 @@ public class MainController implements Initializable {
 
             double distance = airport1.calculateDistanceTo(airport2);
             JOptionPane jp = new JOptionPane();
-            jp.setSize(600, 600);
-            jp.showMessageDialog(null, "The distance is "+distance+" km.", "Distance from "+airport1.getName()+" to "+airport2.getName(), JOptionPane.INFORMATION_MESSAGE);
+            jp.setSize(700, 600);
+            jp.showMessageDialog(null, "From "+airport1.getName()+" to "+airport2.getName() + "\nThe distance is "+distance+" km.", "Calculated Distance", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

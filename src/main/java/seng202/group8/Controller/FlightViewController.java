@@ -17,11 +17,13 @@ import seng202.group8.Model.Objects.Waypoint;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 /**
  * Created by esa46 on 15/09/16.
  */
 public class FlightViewController implements Initializable {
 
+    public boolean isValid = false;
     private MainController mainController;
     @FXML
     private GridPane flightViewPane;
@@ -73,9 +75,14 @@ public class FlightViewController implements Initializable {
         mainController.backToTableView(e);
     }
 
-    public void setUpFlightView(Flight flight) {
+    public boolean getIsValid(){
+        return this.isValid;
 
+    }
+
+    public void setUpFlightView(Flight flight) {
         flightViewPane.setVisible(true);
+
         //Set source airport information
         Airport source = flight.getSourceAirport();
         String sourceName = source.getName();
@@ -106,6 +113,12 @@ public class FlightViewController implements Initializable {
 
         ObservableList<Waypoint> waypoints = flight.getWaypoints();
         flightTable.setItems(waypoints);
+
+
+        if (isAlpha(sourceName) && isAlpha(destinationName)) {
+            isValid = true;
+        }
+
     }
 
     @FXML
@@ -116,6 +129,11 @@ public class FlightViewController implements Initializable {
         waypointLatitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("latitude"));
         waypointLongitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("longitude"));
     }
+
+    public boolean isAlpha(String name) {
+        return name.matches("[a-zA-Z]+");
+    }
+
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
