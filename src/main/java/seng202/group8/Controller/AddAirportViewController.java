@@ -20,7 +20,8 @@ import java.util.List;
 /**
  * Created by swa158 on 15/09/16.
  */
-public class AddAirportViewController {
+public class
+AddAirportViewController {
 
     private MainController mainController;
 

@@ -67,7 +67,7 @@ public class MainController implements Initializable {
     @FXML
     private TextField editEquipmentField;
     @FXML
-    private TextField editCodeshareField;
+    private CheckBox editCodeshareField;
     @FXML
     private Button saveRouteChangesButton;
     @FXML
@@ -77,7 +77,7 @@ public class MainController implements Initializable {
      * Populate the flightView table with waypoints
      */
     @FXML
-    private Button editRouteDataDutton;
+    private Button editRouteDataButton;
     @FXML
     private Button airportAddButton;
     @FXML
@@ -85,8 +85,7 @@ public class MainController implements Initializable {
     @FXML
     private Button routeAddButton;
 
-    @FXML
-    private TextField editAirportIDField;
+
     @FXML
     private TextField editFAAField;
     @FXML
@@ -145,8 +144,7 @@ public class MainController implements Initializable {
     private Button airlineBackButton;
     @FXML
     private Button saveAirlineChangesButton;
-    @FXML
-    private TextField editAirlineIDField;
+
     @FXML
     private Button cancelAirlineChangesButton;
     @FXML
@@ -359,6 +357,61 @@ public class MainController implements Initializable {
     private MenuItem getDistanceMenu;
     @FXML
     private ContextMenu distanceMenu;
+
+
+    /**
+     * Initialising error messages in the Airport edit view
+
+     */
+
+    @FXML
+    private Text editAirportFAAError;
+    @FXML
+    private Text editAirportIATAError;
+    @FXML
+    private Text editAirportICAOError;
+    @FXML
+    private Text editAirportTimeError;
+    @FXML
+    private Text editAirportDSTError;
+    @FXML
+    private Text editAirportCountryError;
+    @FXML
+    private Text editAirportCityError;
+    @FXML
+    private Text editAirportLongError;
+    @FXML
+    private Text editAirportLatError;
+    @FXML
+    private Text editAirportAltError;
+
+    /**
+     * Initialising error messages in the Airline edit view
+
+     */
+
+    @FXML
+    private Text editAirlineAliasError;
+    @FXML
+    private Text editAirlineCountryError;
+    @FXML
+    private Text editAirlineAliasErrorMessage;
+
+    /**
+     * Initialising error messages in the Route edit view
+
+     */
+
+    @FXML
+    private Text editRouteSourceError;
+    @FXML
+    private Text editRouteDestError;
+    @FXML
+    private Text editRouteStopsError;
+    @FXML
+    private Text editRouteEquipError;
+
+
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
     public void addAirportData(ActionEvent e) {
@@ -1224,7 +1277,7 @@ public class MainController implements Initializable {
     @FXML
     public void editAirlineData(ActionEvent e) {
         Airline currentAirline = airlineTable.getSelectionModel().getSelectedItem();
-        editAirlineIDField.setVisible(true);
+
         editCallsignField.setVisible(true);
         editAirlineIATAField.setVisible(true);
         editAirlineICAOField.setVisible(true);
@@ -1239,7 +1292,7 @@ public class MainController implements Initializable {
         saveAirlineChangesButton.setVisible(true);
         cancelAirlineChangesButton.setVisible(true);
 
-        editAirlineIDField.setText(Integer.toString(currentAirline.getAirlineID()));
+
         editAirlineCountryField.setText(currentAirline.getCountry());
         if (currentAirline.getCallsign() != null) {
             editCallsignField.setText(currentAirline.getCallsign());
@@ -1272,92 +1325,140 @@ public class MainController implements Initializable {
 
     @FXML
     public void cancelAirlineChanges(ActionEvent e) {
-
+        clearEditAirlineErrors();
         editAirlineDataButton.setVisible(true);
         individualAirlineBackButton.setVisible(true);
         saveAirlineChangesButton.setVisible(false);
         cancelAirlineChangesButton.setVisible(false);
-        editAirlineIDField.setVisible(false);
         editCallsignField.setVisible(false);
         editAirlineIATAField.setVisible(false);
         editAirlineICAOField.setVisible(false);
         editAliasField.setVisible(false);
         editActiveField.setVisible(false);
         editAirlineCountryField.setVisible(false);
+
+    }
+    @FXML
+    private void clearEditAirlineErrors() {
+        editAirlineAliasError.setVisible(false);
+        editAirlineCountryError.setVisible(false);
+        editAirlineAliasErrorMessage.setVisible(false);
+
+    }
+    @FXML
+    private boolean editAirlineErrors(List<String> input) {
+
+        boolean filled = false;
+        int size = input.size();
+
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            String current = input.get(i);
+            if (current.equals("")) {
+                switch (i) {
+                    case 0:
+                        editAirlineAliasError.setVisible(true);
+                        editAirlineAliasErrorMessage.setVisible(true);
+                        break;
+                    case 1:
+                        editAirlineCountryError.setVisible(true);
+                        break;
+                }
+            } else {
+                count += 1;
+            }
+        }
+
+        if (count == 2) {
+            filled = true;
+        }
+        return filled;
 
     }
 
     @FXML
     public void saveAirlineChanges(ActionEvent e) {
+        clearEditAirlineErrors();
         Airline currentAirline = airlineTable.getSelectionModel().getSelectedItem();
 
-        //TODO: NEED TO CHECK UNIQUE CONSTRAINTS BEFORE ALLOWING DELETION + SAVING
-        //Delete the current airline object from the database
-        Database db = new Database();
-        DatabaseSaver dbSave = new DatabaseSaver();
-        Connection connDelete = db.connect();
-        ArrayList<Integer> ids = new ArrayList<Integer>();
-        ids.add(currentAirline.getAirlineID());
-        dbSave.deleteAirlines(connDelete, ids);
-        db.disconnect(connDelete);
+        String callsign = editCallsignField.getText();
+        String IATA = editAirlineIATAField.getText();
+        String ICAO = editAirlineICAOField.getText();
+        String alias = editAliasField.getText();
+        String country = editAirlineCountryField.getText();
 
-        currentAirline.setAirlineID(Integer.parseInt(editAirlineIDField.getText()));
-        if (!editCallsignField.getText().equals("None")) {
-            currentAirline.setCallsign(editCallsignField.getText());
+        List<String> airlineData = Arrays.asList(alias, country);
+        boolean noErrors = editAirlineErrors(airlineData);
+
+        if(noErrors) {
+            //TODO: NEED TO CHECK UNIQUE CONSTRAINTS BEFORE ALLOWING DELETION + SAVING
+            //Delete the current airline object from the database
+            Database db = new Database();
+            DatabaseSaver dbSave = new DatabaseSaver();
+            Connection connDelete = db.connect();
+            ArrayList<Integer> ids = new ArrayList<Integer>();
+            ids.add(currentAirline.getAirlineID());
+            dbSave.deleteAirlines(connDelete, ids);
+            db.disconnect(connDelete);
+
+
+            if (!editCallsignField.getText().equals("None")) {
+                currentAirline.setCallsign(callsign);
+            }
+            if (!editAirlineIATAField.getText().equals("None")) {
+                currentAirline.setIATA(IATA);
+            }
+            if (!editAirlineICAOField.getText().equals("None")) {
+                currentAirline.setICAO(ICAO);
+            }
+            if (!editAliasField.getText().equals("None")) {
+                currentAirline.setAlias(alias);
+            }
+            if (editActiveField.isSelected()) {
+                currentAirline.setActive(true);
+                airlineActiveDisplay.setText("Yes");
+            } else if (!(editActiveField.isSelected())) {
+                currentAirline.setActive(false);
+                airlineActiveDisplay.setText("No");
+            }
+            currentAirline.setCountry(country);
+
+            airlineIDDisplay.setText(Integer.toString(currentAirline.getAirlineID()));
+            airlineCallsignDisplay.setText(currentAirline.getCallsign());
+            airlineIATADisplay.setText(currentAirline.getIATA());
+            airlineICAODisplay.setText(currentAirline.getICAO());
+            airlineAliasDisplay.setText(currentAirline.getAlias());
+            airlineCountryDisplay.setText(currentAirline.getCountry());
+
+
+            editCallsignField.setVisible(false);
+            editAirlineIATAField.setVisible(false);
+            editAirlineICAOField.setVisible(false);
+            editAliasField.setVisible(false);
+            editActiveField.setVisible(false);
+            editAirlineCountryField.setVisible(false);
+
+            editAirlineDataButton.setVisible(true);
+            individualAirlineBackButton.setVisible(true);
+            saveAirlineChangesButton.setVisible(false);
+            cancelAirlineChangesButton.setVisible(false);
+            airlineActiveDisplay.setVisible(true);
+
+            //Save the updated airline to the database
+            Connection connSave = db.connect();
+            ObservableList<Airline> newAirlines = FXCollections.observableArrayList();
+            newAirlines.add(currentAirline);
+            dbSave.saveAirlines(connSave, newAirlines);
+            db.disconnect(connDelete);
+
+            setAirlineComboBoxes();
         }
-        if (!editAirlineIATAField.getText().equals("None")) {
-            currentAirline.setIATA(editAirlineIATAField.getText());
-        }
-        if (!editAirlineICAOField.getText().equals("None")) {
-            currentAirline.setICAO(editAirlineICAOField.getText());
-        }
-        if (!editAliasField.getText().equals("None")) {
-            currentAirline.setAlias(editAliasField.getText());
-        }
-        if (editActiveField.isSelected()) {
-            currentAirline.setActive(true);
-            airlineActiveDisplay.setText("Yes");
-        } else if (!(editActiveField.isSelected())) {
-            currentAirline.setActive(false);
-            airlineActiveDisplay.setText("No");
-        }
-        currentAirline.setCountry(editAirlineCountryField.getText());
-
-        airlineIDDisplay.setText(Integer.toString(currentAirline.getAirlineID()));
-        airlineCallsignDisplay.setText(currentAirline.getCallsign());
-        airlineIATADisplay.setText(currentAirline.getIATA());
-        airlineICAODisplay.setText(currentAirline.getICAO());
-        airlineAliasDisplay.setText(currentAirline.getAlias());
-        airlineCountryDisplay.setText(currentAirline.getCountry());
-
-        editAirlineIDField.setVisible(false);
-        editCallsignField.setVisible(false);
-        editAirlineIATAField.setVisible(false);
-        editAirlineICAOField.setVisible(false);
-        editAliasField.setVisible(false);
-        editActiveField.setVisible(false);
-        editAirlineCountryField.setVisible(false);
-
-        editAirlineDataButton.setVisible(true);
-        individualAirlineBackButton.setVisible(true);
-        saveAirlineChangesButton.setVisible(false);
-        cancelAirlineChangesButton.setVisible(false);
-        airlineActiveDisplay.setVisible(true);
-
-        //Save the updated airline to the database
-        Connection connSave = db.connect();
-        ObservableList<Airline> newAirlines = FXCollections.observableArrayList();
-        newAirlines.add(currentAirline);
-        dbSave.saveAirlines(connSave, newAirlines);
-        db.disconnect(connDelete);
-
-        setAirlineComboBoxes();
     }
 
     @FXML
     public void editAirportData(ActionEvent e) {
         Airport currentAirport = airportTable.getSelectionModel().getSelectedItem();
-        editAirportIDField.setVisible(true);
         editFAAField.setVisible(true);
         editAirportIATAField.setVisible(true);
         editAirportICAOField.setVisible(true);
@@ -1375,7 +1476,6 @@ public class MainController implements Initializable {
         saveAirportChangesButton.setVisible(true);
         cancelAirportChangesButton.setVisible(true);
 
-        editAirportIDField.setText(Integer.toString(currentAirport.getAirportID()));
         editAirportCountryField.setText(currentAirport.getCountry());
         if (currentAirport.getFAA() != null) {
             editFAAField.setText(currentAirport.getFAA());
@@ -1403,13 +1503,12 @@ public class MainController implements Initializable {
 
     @FXML
     public void cancelAirportChanges(ActionEvent e) {
-
+        clearEditAirportErrors();
 
         individualAirportBackButton.setVisible(true);
         editAirportDataButton.setVisible(true);
         saveAirportChangesButton.setVisible(false);
         cancelAirportChangesButton.setVisible(false);
-        editAirportIDField.setVisible(false);
         editFAAField.setVisible(false);
         editAirportIATAField.setVisible(false);
         editAirportICAOField.setVisible(false);
@@ -1423,7 +1522,111 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void clearEditAirportErrors() {
+        editAirportFAAError.setVisible(false);
+        editAirportIATAError.setVisible(false);
+        editAirportICAOError.setVisible(false);
+        editAirportTimeError.setVisible(false);
+        editAirportDSTError.setVisible(false);
+        editAirportCountryError.setVisible(false);
+        editAirportCityError.setVisible(false);
+        editAirportLongError.setVisible(false);
+        editAirportLatError.setVisible(false);
+        editAirportAltError.setVisible(false);
+
+    }
+    @FXML
+    private boolean editAirportErrors(List<String> input){
+        boolean filled = false;
+        int size = input.size();
+        List<Integer> doubles = Arrays.asList(7,8,9);
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            String current = input.get(i);
+            if (current.equals("")) {
+                switch (i) {
+
+                    case 0:
+                        editAirportFAAError.setVisible(true);
+                        break;
+                    case 1:
+                        editAirportIATAError.setVisible(true);
+                        break;
+                    case 2:
+                        editAirportICAOError.setVisible(true);
+                        break;
+                    case 3:
+                        editAirportTimeError.setVisible(true);
+                        break;
+                    case 4:
+                        editAirportDSTError.setVisible(true);
+                        break;
+                    case 5:
+                        editAirportCountryError.setVisible(true);
+                        break;
+                    case 6:
+                        editAirportCityError.setVisible(true);
+                        break;
+                    case 7:
+                        editAirportLongError.setVisible(true);
+                        break;
+                    case 8:
+                        editAirportLatError.setVisible(true);
+                        break;
+                    case 9:
+                        editAirportAltError.setVisible(true);
+                        break;
+                }
+            } else {
+                count += 1;
+            }
+
+            if (i == 3 && !(current.equals(""))) {
+
+                try {
+                    Integer.parseInt(input.get(i));
+                    count += 1;
+
+                } catch (NumberFormatException e) {
+                    editAirportTimeError.setVisible(true);
+                    break;
+
+                }
+            } else if (doubles.contains(i) && !(current.equals(""))) {
+                try {
+                    Double.parseDouble(input.get(i));
+
+                    count += 1;
+                } catch (NumberFormatException e) {
+
+                    switch (i) {
+                        case 7:
+                            editAirportLongError.setVisible(true);
+                            break;
+                        case 8:
+                            editAirportLatError.setVisible(true);
+                            break;
+                        case 9:
+                            editAirportAltError.setVisible(true);
+                            break;
+
+                    }
+                }
+            }
+
+        }
+
+        if (count == 14) {
+            filled = true;
+        }
+        return filled;
+
+    }
+
+    @FXML
     public void saveAirportChanges(ActionEvent e) {
+        clearEditAirportErrors();
         Airport currentAirport = airportTable.getSelectionModel().getSelectedItem();
 
         //Delete the airport to be changed from the database
@@ -1435,65 +1638,83 @@ public class MainController implements Initializable {
         dbSave.deleteAirport(connDelete, ids);
         db.disconnect(connDelete);
 
-        currentAirport.setAirportID(Integer.parseInt(editAirportIDField.getText()));
 
-        if (!editFAAField.getText().equals("None")) {
-            currentAirport.setFAA(editFAAField.getText());
+        String FAA = editFAAField.getText();
+        String IATA = editAirportIATAField.getText();
+        String ICAO = editAirportICAOField.getText();
+        String timezone = editTimezoneField.getText();
+        String DST = editDSTField.getText();
+        String country = editAirportCountryField.getText();
+        String city = editAirportCityField.getText();
+        String longitude = editLongitudeField.getText();
+        String latitude = editLatitudeField.getText();
+        String altitude = editAltitudeField.getText();
+
+        List<String> airportData = Arrays.asList(FAA, IATA, ICAO, timezone, DST, country, city, longitude, latitude, altitude);
+
+        boolean noErrors = editAirportErrors(airportData);
+
+        if(noErrors) {
+
+
+            if (!editFAAField.getText().equals("None")) {
+                currentAirport.setFAA(FAA);
+            }
+            if (!editAirportIATAField.getText().equals("None")) {
+                currentAirport.setIATA(IATA);
+            }
+            if (!editAirportICAOField.getText().equals("None")) {
+                currentAirport.setICAO(ICAO);
+            }
+
+            currentAirport.setTimezone(Integer.parseInt(timezone));
+            currentAirport.setDST(DST.charAt(0));
+            currentAirport.setCountry(country);
+            currentAirport.setCity(city);
+            currentAirport.setLongitude(Double.parseDouble(longitude));
+            currentAirport.setLatitude(Double.parseDouble(latitude));
+            currentAirport.setAltitude(Double.parseDouble(altitude));
+
+            airportIDDisplay.setText(Integer.toString(currentAirport.getAirportID()));
+            airportFAADisplay.setText(currentAirport.getFAA());
+            airportIATADisplay.setText(currentAirport.getIATA());
+            airportICAODisplay.setText(currentAirport.getICAO());
+            airportTimezoneDisplay.setText(Integer.toString(currentAirport.getTimezone()));
+            airportDSTDisplay.setText(Character.toString(currentAirport.getDST()));
+            airportCountryDisplay.setText(currentAirport.getCountry());
+            airportCityDisplay.setText(currentAirport.getCity());
+            airportLongitudeDisplay.setText(Double.toString(currentAirport.getLongitude()));
+            airportLatitudeDisplay.setText(Double.toString(currentAirport.getLatitude()));
+            airportAltitudeDisplay.setText(Double.toString(currentAirport.getAltitude()));
+
+
+            editFAAField.setVisible(false);
+            editAirportIATAField.setVisible(false);
+            editAirportICAOField.setVisible(false);
+            editTimezoneField.setVisible(false);
+            editDSTField.setVisible(false);
+            editAirportCountryField.setVisible(false);
+            editAirportCityField.setVisible(false);
+            editLatitudeField.setVisible(false);
+            editLongitudeField.setVisible(false);
+            editAltitudeField.setVisible(false);
+
+
+            individualAirportBackButton.setVisible(true);
+            editAirportDataButton.setVisible(true);
+
+            saveAirportChangesButton.setVisible(false);
+            cancelAirportChangesButton.setVisible(false);
+
+            //Save the updated airline to the database
+            Connection connSave = db.connect();
+            ObservableList<Airport> newAirports = FXCollections.observableArrayList();
+            newAirports.add(currentAirport);
+            dbSave.saveAirports(connSave, newAirports);
+            db.disconnect(connDelete);
+
+            setAirportComboBoxes();
         }
-        if (!editAirportIATAField.getText().equals("None")) {
-            currentAirport.setIATA(editAirportIATAField.getText());
-        }
-        if (!editAirportICAOField.getText().equals("None")) {
-            currentAirport.setICAO(editAirportICAOField.getText());
-        }
-
-        currentAirport.setTimezone(Integer.parseInt(editTimezoneField.getText()));
-        currentAirport.setDST(editDSTField.getText().charAt(0));
-        currentAirport.setCountry(editAirportCountryField.getText());
-        currentAirport.setCity(editAirportCityField.getText());
-        currentAirport.setLongitude(Double.parseDouble(editLongitudeField.getText()));
-        currentAirport.setLatitude(Double.parseDouble(editLatitudeField.getText()));
-        currentAirport.setAltitude(Double.parseDouble(editAltitudeField.getText()));
-
-        airportIDDisplay.setText(Integer.toString(currentAirport.getAirportID()));
-        airportFAADisplay.setText(currentAirport.getFAA());
-        airportIATADisplay.setText(currentAirport.getIATA());
-        airportICAODisplay.setText(currentAirport.getICAO());
-        airportTimezoneDisplay.setText(Integer.toString(currentAirport.getTimezone()));
-        airportDSTDisplay.setText(Character.toString(currentAirport.getDST()));
-        airportCountryDisplay.setText(currentAirport.getCountry());
-        airportCityDisplay.setText(currentAirport.getCity());
-        airportLongitudeDisplay.setText(Double.toString(currentAirport.getLongitude()));
-        airportLatitudeDisplay.setText(Double.toString(currentAirport.getLatitude()));
-        airportAltitudeDisplay.setText(Double.toString(currentAirport.getAltitude()));
-
-        editAirportIDField.setVisible(false);
-        editFAAField.setVisible(false);
-        editAirportIATAField.setVisible(false);
-        editAirportICAOField.setVisible(false);
-        editTimezoneField.setVisible(false);
-        editDSTField.setVisible(false);
-        editAirportCountryField.setVisible(false);
-        editAirportCityField.setVisible(false);
-        editLatitudeField.setVisible(false);
-        editLongitudeField.setVisible(false);
-        editAltitudeField.setVisible(false);
-
-
-        individualAirportBackButton.setVisible(true);
-        editAirportDataButton.setVisible(true);
-
-        saveAirportChangesButton.setVisible(false);
-        cancelAirportChangesButton.setVisible(false);
-
-        //Save the updated airline to the database
-        Connection connSave = db.connect();
-        ObservableList<Airport> newAirports = FXCollections.observableArrayList();
-        newAirports.add(currentAirport);
-        dbSave.saveAirports(connSave, newAirports);
-        db.disconnect(connDelete);
-
-        setAirportComboBoxes();
     }
 
     @FXML
@@ -1504,9 +1725,10 @@ public class MainController implements Initializable {
         editStopsField.setVisible(true);
         editEquipmentField.setVisible(true);
         editCodeshareField.setVisible(true);
+        routeShareDisplay.setVisible(false);
 
         individualRouteBackButton.setVisible(false);
-        editRouteDataDutton.setVisible(false);
+        editRouteDataButton.setVisible(false);
 
         saveRouteChangesButton.setVisible(true);
         cancelRouteChangesButton.setVisible(true);
@@ -1519,19 +1741,18 @@ public class MainController implements Initializable {
         } else {
             editEquipmentField.setText("None");
         }
-        if (currentRoute.isCodeshare() == true) {
-            editCodeshareField.setText("Yes");
+        if (currentRoute.isCodeshare()) {
+            editCodeshareField.setSelected(true);
         } else {
-            editCodeshareField.setText("No");
+            editCodeshareField.setSelected(false);
         }
     }
 
     @FXML
     public void cancelRouteChanges(ActionEvent e) {
-
-
+        clearEditRouteErrors();
         individualRouteBackButton.setVisible(true);
-        editRouteDataDutton.setVisible(true);
+        editRouteDataButton.setVisible(true);
 
         saveRouteChangesButton.setVisible(false);
         cancelRouteChangesButton.setVisible(false);
@@ -1540,63 +1761,137 @@ public class MainController implements Initializable {
         editStopsField.setVisible(false);
         editEquipmentField.setVisible(false);
         editCodeshareField.setVisible(false);
+        routeShareDisplay.setVisible(true);
+    }
+
+    @FXML
+    private boolean editRouteErrors(List<String> input) {
+
+        boolean filled = false;
+        int size = input.size();
+
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            String current = input.get(i);
+
+            if (current == null || current.equals("")) {
+
+                switch (i) {
+                    case 0:
+                        editRouteSourceError.setVisible(true);
+                        break;
+                    case 1:
+                        editRouteDestError.setVisible(true);
+                        break;
+                    case 2:
+                        editRouteStopsError.setVisible(true);
+                        break;
+                    case 3:
+                        editRouteEquipError.setVisible(true);
+                        break;
+
+                }
+            } else {
+                count += 1;
+            }
+
+            if ((i == 2) && !(current.equals(""))) {
+
+                try {
+                    Integer.parseInt(input.get(i));
+                    count += 1;
+
+                } catch (NumberFormatException e) {
+                    editRouteStopsError.setVisible(true);
+                }
+            }
+        }
+
+
+        if (count == 5) {
+            filled = true;
+        }
+        return filled;
+
+    }
+
+    @FXML
+    private void clearEditRouteErrors() {
+        editRouteSourceError.setVisible(false);
+        editRouteDestError.setVisible(false);
+        editRouteStopsError.setVisible(false);
+        editRouteEquipError.setVisible(false);
+
     }
 
     @FXML
     public void saveRouteChanges(ActionEvent e) {
+        clearEditRouteErrors();
         Route currentRoute = routeTable.getSelectionModel().getSelectedItem();
 
-        //Delete the route from the database
-        Database db = new Database();
-        DatabaseSaver dbSave = new DatabaseSaver();
-        Connection connDelete = db.connect();
-        ArrayList<Integer> ids = new ArrayList<Integer>();
-        ids.add(currentRoute.getRouteID());
-        dbSave.deleteRoutes(connDelete, ids);
-        db.disconnect(connDelete);
+        String source = editSourceField.getText();
+        String destination = editDestinationField.getText();
+        String stops = editStopsField.getText();
+        String equipment = editEquipmentField.getText();
 
-        currentRoute.setSourceAirportName(editSourceField.getText());
-        currentRoute.setDestinationAirportName(editDestinationField.getText());
-        //Add methods to find airports as well
-        currentRoute.setStops(Integer.parseInt(editStopsField.getText()));
+        List<String> routeData = Arrays.asList(source, destination, stops, equipment);
+        boolean noErrors = editRouteErrors(routeData);
 
-        if (!editEquipmentField.getText().equals("None")) {
-            currentRoute.setEquipment(editEquipmentField.getText());
+        if(noErrors) {
+            //Delete the route from the database
+            Database db = new Database();
+            DatabaseSaver dbSave = new DatabaseSaver();
+            Connection connDelete = db.connect();
+            ArrayList<Integer> ids = new ArrayList<Integer>();
+            ids.add(currentRoute.getRouteID());
+            dbSave.deleteRoutes(connDelete, ids);
+            db.disconnect(connDelete);
+
+            currentRoute.setSourceAirportName(source);
+            currentRoute.setDestinationAirportName(destination);
+            //Add methods to find airports as well
+            currentRoute.setStops(Integer.parseInt(stops));
+
+            if (!editEquipmentField.getText().equals("None")) {
+                currentRoute.setEquipment(equipment);
+            }
+            if (editCodeshareField.isSelected()) {
+                currentRoute.setCodeshare(true);
+                routeShareDisplay.setText("Yes");
+            } else {
+                currentRoute.setCodeshare(false);
+                routeShareDisplay.setText("No");
+            }
+
+
+            routeSourceDisplay.setText(currentRoute.getSourceAirportName());
+            routeDestinationDisplay.setText(currentRoute.getDestinationAirportName());
+            routeStopsDisplay.setText(Integer.toString(currentRoute.getStops()));
+            routeEquipmentDisplay.setText(currentRoute.getEquipment());
+
+            editSourceField.setVisible(false);
+            editDestinationField.setVisible(false);
+            editStopsField.setVisible(false);
+            editEquipmentField.setVisible(false);
+            editCodeshareField.setVisible(false);
+            routeShareDisplay.setVisible(true);
+
+            individualRouteBackButton.setVisible(true);
+            editRouteDataButton.setVisible(true);
+
+            saveRouteChangesButton.setVisible(false);
+            cancelRouteChangesButton.setVisible(false);
+
+            //Save the updated route to the database
+            Connection connSave = db.connect();
+            ObservableList<Route> newRoutes = FXCollections.observableArrayList();
+            newRoutes.add(currentRoute);
+            dbSave.saveRoutes(connSave, newRoutes);
+            db.disconnect(connDelete);
+
+            setRouteComboBoxes();
         }
-        if (editCodeshareField.getText().equals("Yes")) {
-            currentRoute.setCodeshare(true);
-            routeShareDisplay.setText("Yes");
-        } else if (editCodeshareField.getText().equals("No")) {
-            currentRoute.setCodeshare(false);
-            routeShareDisplay.setText("No");
-        }
-
-
-        routeSourceDisplay.setText(currentRoute.getSourceAirportName());
-        routeDestinationDisplay.setText(currentRoute.getDestinationAirportName());
-        routeStopsDisplay.setText(Integer.toString(currentRoute.getStops()));
-        routeEquipmentDisplay.setText(currentRoute.getEquipment());
-
-        editSourceField.setVisible(false);
-        editDestinationField.setVisible(false);
-        editStopsField.setVisible(false);
-        editEquipmentField.setVisible(false);
-        editCodeshareField.setVisible(false);
-
-        individualRouteBackButton.setVisible(true);
-        editRouteDataDutton.setVisible(true);
-
-        saveRouteChangesButton.setVisible(false);
-        cancelRouteChangesButton.setVisible(false);
-
-        //Save the updated route to the database
-        Connection connSave = db.connect();
-        ObservableList<Route> newRoutes = FXCollections.observableArrayList();
-        newRoutes.add(currentRoute);
-        dbSave.saveRoutes(connSave, newRoutes);
-        db.disconnect(connDelete);
-
-        setRouteComboBoxes();
     }
 
     public void resetView() {

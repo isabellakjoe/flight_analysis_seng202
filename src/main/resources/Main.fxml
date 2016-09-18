@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -22,7 +27,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
 
     <left>
         <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -123,7 +128,7 @@
                     <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="450.0" prefHeight="650.0" prefWidth="750.0">
                         <children>
                             <fx:include fx:id="flightView" source="FlightView.fxml" visible="false" />
-                        <GridPane fx:id="tableView" visible="true">
+                        <GridPane fx:id="tableView">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                           </columnConstraints>
@@ -285,29 +290,24 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </Text>
-                                            <TextField fx:id="editAirlineIDField" text="ID Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
                                             <TextField fx:id="editCallsignField" text="Callsign Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editAirlineIATAField" text="IATA field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editAirlineICAOField" text="ICAO field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editAliasField" text="Alias field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <CheckBox fx:id="editActiveField" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
@@ -317,9 +317,16 @@
                                     </CheckBox>
                                             <TextField fx:id="editAirlineCountryField" text="Country Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
+                                    <Text fx:id="editAirlineAliasError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                    <Text fx:id="editAirlineCountryError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                    <Text fx:id="editAirlineAliasErrorMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="If Alias is &quot;None&quot; please enter \\N." visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </GridPane>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Table Viewer" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -381,7 +388,7 @@
                                     <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                            <Text fx:id="airportNameDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Name" wrappingWidth="187.638671875" GridPane.halignment="LEFT">
+                                            <Text fx:id="airportNameDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Name" wrappingWidth="165.638671875" GridPane.halignment="LEFT">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
@@ -442,7 +449,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IATA field:" wrappingWidth="71.94775390625" GridPane.rowIndex="4">
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO:" textAlignment="RIGHT" wrappingWidth="71.94775390625" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
@@ -522,61 +529,66 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </Text>
-                                            <TextField fx:id="editAirportIDField" text="ID Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
                                             <TextField fx:id="editFAAField" text="FAA Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editAirportIATAField" text="IATA Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editAirportICAOField" text="ICAO Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editTimezoneField" text="Timezone Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editDSTField" text="DST Field" visible="false" GridPane.columnIndex="3">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editAirportCountryField" text="Country Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editAirportCityField" text="City Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editLongitudeField" text="Longitude Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editLatitudeField" text="Latitude Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editAltitudeField" text="Altitude Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="5">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
+                                    <Text fx:id="editAirportFAAError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                    <Text fx:id="editAirportIATAError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                    <Text fx:id="editAirportICAOError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                                    <Text fx:id="editAirportTimeError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                                    <Text fx:id="editAirportDSTError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+                                    <Text fx:id="editAirportCountryError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                    <Text fx:id="editAirportCityError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                    <Text fx:id="editAirportLongError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                    <Text fx:id="editAirportLatError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                                    <Text fx:id="editAirportAltError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
                                  </children>
                               </GridPane>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route Table Viewer" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
@@ -694,30 +706,25 @@
                                     </Text>
                                             <TextField fx:id="editSourceField" text="Source Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editDestinationField" text="Destination Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editStopsField" text="Stops Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
                                             <TextField fx:id="editEquipmentField" text="Equipment Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                            <TextField fx:id="editCodeshareField" text="Codeshare Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <Button fx:id="editRouteDataDutton" mnemonicParsing="false" onAction="#editRouteData" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                            <Button fx:id="editRouteDataButton" mnemonicParsing="false" onAction="#editRouteData" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
@@ -732,11 +739,17 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </Button>
+                                    <Text fx:id="editRouteSourceError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                    <Text fx:id="editRouteDestError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                    <Text fx:id="editRouteStopsError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                    <Text fx:id="editRouteEquipError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                    <CheckBox fx:id="editCodeshareField" mnemonicParsing="false" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                  </children>
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                               </GridPane>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                            </children>
                            <opaqueInsets>
                               <Insets />
