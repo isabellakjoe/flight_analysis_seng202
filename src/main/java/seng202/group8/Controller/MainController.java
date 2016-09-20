@@ -2146,4 +2146,68 @@ public class MainController implements Initializable {
             jp.showMessageDialog(null, "From "+airport1.getName()+" to "+airport2.getName() + "\nThe distance is "+distance+" km.", "Calculated Distance", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+    @FXML
+    public void helpAdd(ActionEvent e){
+        JOptionPane jp = new JOptionPane();
+       // ImageIcon icon = new ImageIcon()
+        jp.showMessageDialog(null, "Below the Search and Reset buttons is Add New \n" +
+                "Route/Airport/Airline, (Depending on which tab you are in) \n" +
+                "which allows for adding a single object to the table. \n\n" +
+                "Filling out the fields and clicking save will add the \n" +
+                "created object to its corresponding table.", "How to Add Data", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+
+    @FXML
+    public void helpEdit(ActionEvent e){
+        JOptionPane jp = new JOptionPane();
+        jp.showMessageDialog(null, "The objects in the data tables can be double \n" +
+                "clicked to display a more detailed pane on that object. \n" +
+                "Inside this detailed pane, you can choose to edit an \n" +
+                "existing Object by clicking the Edit button, which will allow editing. ", "How to Edit Data", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @FXML
+    public void helpFilter(ActionEvent e){
+        JOptionPane jp = new JOptionPane();
+        jp.showMessageDialog(null, "The data can be filtered using the Filter dropdown\n" +
+                "boxes at the top right of the tables, and will filter \n" +
+                "data based on the selected parameter. ", "How to Filter Data", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @FXML
+    public void helpDistance(ActionEvent e){
+        JOptionPane jp = new JOptionPane();
+        jp.showMessageDialog(null, "If you hold CTRL to select two Airport objects \n" +
+                "from the table, then left click, you can choose \n" +
+                "to get the distance between those two Airports.", "How to Get the Distance between two Airports", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @FXML
+    public void helpSearch(ActionEvent e){
+        JOptionPane jp = new JOptionPane();
+        jp.showMessageDialog(null, "On the left hand side of the program is a search pane, \n" +
+                "with three tabs for Route, Airline and Airport searches. \n\n" +
+                "Here you can input search parameters for the different tables, \n" +
+                "and an Advanced Pane with more search options is available by \n" +
+                "clicking the Advanced button. Searching begins once Search \n" +
+                "is clicked, and Reset will reset the tables and the search inputs. \n" +
+                "If nothing satisfies the search parameters, no data will \n\n" +
+                "be displayed in the table. Also, if spelling is incorrect, \n" +
+                "the desired data will not be displayed until the spelling is corrected.", "How to Get the Distance between two Airports", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @FXML
+    public void helpLoad(ActionEvent e){
+        JOptionPane jp = new JOptionPane();
+        jp.showMessageDialog(null, "Simply load in data using the \"Load\" menu at the top left \n" +
+                "corner of the program and choose the type of data file\n" +
+                " you wish to add. \n\n" +
+                "Once added, the data will be displayed in either one of the three\n" +
+                " tables if Add Route, Airline or Airport was chosen, otherwise\n" +
+                " the Fight Pane with be displayed showing added flight data. \n\n" +
+                "If the file contains an object that already exists in the table, \n" +
+                "the entire file will not be added. ", "How to Get the Distance between two Airports", JOptionPane.INFORMATION_MESSAGE);
+    }
 }

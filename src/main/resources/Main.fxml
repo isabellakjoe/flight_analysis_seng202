@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
-
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -108,7 +107,17 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="Add">
+            <Menu mnemonicParsing="false" text="Help">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#helpAdd" text="Add Data" />
+                  <MenuItem mnemonicParsing="false" onAction="#helpEdit" text="Edit Data" />
+                  <MenuItem mnemonicParsing="false" onAction="#helpFilter" text="Filter Data" />
+                  <MenuItem mnemonicParsing="false" onAction="#helpDistance" text="Get Distance" />
+                <MenuItem mnemonicParsing="false" onAction="#helpLoad" text="Load file" />
+                  <MenuItem mnemonicParsing="false" onAction="#helpSearch" text="Search" />
+              </items>
+            </Menu>
+                <Menu mnemonicParsing="false" text="Load">
                     <items>
                         <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData" text="Airline Data" />
                         <MenuItem fx:id="addAirportData" mnemonicParsing="false" onAction="#addAirportData" text="Airport Data" />
