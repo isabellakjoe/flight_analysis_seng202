@@ -1,4 +1,4 @@
-package seng202.group8.Controller;
+package seng202.group8.Controller.AddObjectControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
@@ -149,9 +150,9 @@ AddAirportViewController {
                 String sql = dbSearch.buildAirportSearch("airportid", airportID);
                 ObservableList<Airport> addedAirport = dbSearch.searchForAirportByOption(connSearch, sql);
                 db.disconnect(connSearch);
-                mainController.currentlyLoadedAirports.add(addedAirport.get(0));
+                mainController.addToCurrentlyLoadedAirports(addedAirport.get(0));
             }
-            mainController.airportTable.setItems(mainController.currentlyLoadedAirports);
+            mainController.airportTable.setItems(mainController.getCurrentlyLoadedAirports());
             mainController.resetView();
             mainController.setAirportComboBoxes();
             mainController.backToTableView(e);

@@ -1,4 +1,4 @@
-package seng202.group8.Controller;
+package seng202.group8.Controller.AddObjectControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
@@ -20,7 +21,6 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
 
-import static seng202.group8.Controller.MainController.currentlyLoadedRoutes;
 
 /**
  * Created by esa46 on 15/09/16.
@@ -163,13 +163,13 @@ public class AddRouteViewController {
             newRoute.setSourceAirportName(source);
             newRoute.setDestinationAirportName(destination);
 
-            AirportSearcher sourceSearcher = new AirportSearcher(mainController.currentlyLoadedAirports);
+            AirportSearcher sourceSearcher = new AirportSearcher(mainController.getCurrentlyLoadedAirports());
             sourceSearcher.airportsOfName(newRoute.getSourceAirportName());
 
-            AirportSearcher destinationSearcher = new AirportSearcher(mainController.currentlyLoadedAirports);
+            AirportSearcher destinationSearcher = new AirportSearcher(mainController.getCurrentlyLoadedAirports());
             destinationSearcher.airportsOfName(newRoute.getDestinationAirportName());
 
-            AirlineSearcher airlineSearcher = new AirlineSearcher(mainController.currentlyLoadedAirlines);
+            AirlineSearcher airlineSearcher = new AirlineSearcher(mainController.getCurrentlyLoadedAirlines());
             airlineSearcher.airlinesOfName(newRoute.getAirlineName());
 
             newRoute.setSourceAirport(sourceSearcher.getLoadedAirports().get(0));
@@ -185,15 +185,12 @@ public class AddRouteViewController {
             DatabaseSearcher dbSearch = new DatabaseSearcher();
             Connection connSave = db.connect();
             Connection connSearch = db.connect();
-            mainController.routeIds = dbSave.saveRouteWithID(connSave, routes, mainController.routeIds);
-            mainController.routeHashMap.put(mainController.routeIds, routes.get(0));
+            mainController.setRouteIds(dbSave.saveRouteWithID(connSave, routes, mainController.getRouteIds()));
+            mainController.putInRouteHashMap(routes.get(0));
             db.disconnect(connSave);
 
-
-
-
-            currentlyLoadedRoutes.add(newRoute);
-            mainController.routeTable.setItems(currentlyLoadedRoutes);
+            mainController.addToCurrentlyLoadedRoutes(newRoute);
+            mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
             mainController.resetView();
             mainController.setRouteComboBoxes();
             mainController.tableView.setVisible(true);

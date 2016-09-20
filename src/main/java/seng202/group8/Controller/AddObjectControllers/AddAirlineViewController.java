@@ -1,4 +1,4 @@
-package seng202.group8.Controller;
+package seng202.group8.Controller.AddObjectControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +8,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
@@ -176,10 +177,10 @@ public class AddAirlineViewController {
                 db.disconnect(connSave);
                 String sql = dbSearch.buildAirlineSearch("airlineid", airlineID);
                 ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
-                mainController.currentlyLoadedAirlines.add(addedAirline.get(0));
+                mainController.addToCurrentlyLoadedAirlines(addedAirline.get(0));
                 db.disconnect(connSearch);
             }
-            mainController.airlineTable.setItems(mainController.currentlyLoadedAirlines);
+            mainController.airlineTable.setItems(mainController.getCurrentlyLoadedAirlines());
             mainController.resetView();
             mainController.setAirlineComboBoxes();
             mainController.backToTableView(e);
