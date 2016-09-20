@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -1986,6 +1987,7 @@ public class MainController implements Initializable {
 
         mapViewController.setMainController(this);
         mapViewController.initMap();
+
         flightViewController.setMainController(this);
         mapViewController.setMainController(this);
         addAirlineViewController.setMainController(this);
