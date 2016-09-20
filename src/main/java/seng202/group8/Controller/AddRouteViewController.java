@@ -176,12 +176,8 @@ public class AddRouteViewController {
             newRoute.setDestinationAirport(destinationSearcher.getLoadedAirports().get(0));
             newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
 
-            //Need a way to get the route ID Number
-            //newRoute.setRouteID();
-
             ObservableList<Route> routes = FXCollections.observableArrayList();
             routes.add(newRoute);
-
 
             //Add the new airport to the database here
             Database db = new Database();
@@ -189,13 +185,12 @@ public class AddRouteViewController {
             DatabaseSearcher dbSearch = new DatabaseSearcher();
             Connection connSave = db.connect();
             Connection connSearch = db.connect();
-            dbSave.saveRoutes(connSave, routes);
+            mainController.routeIds = dbSave.saveRouteWithID(connSave, routes, mainController.routeIds);
+            mainController.routeHashMap.put(mainController.routeIds, routes.get(0));
             db.disconnect(connSave);
 
-            //TODO: Need a way of getting the last max value and using this dynamically
 
-            //String sql = dbSearch.buildAirlineSearch("routeid", airlineID);
-            //ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
+
 
             currentlyLoadedRoutes.add(newRoute);
             mainController.routeTable.setItems(currentlyLoadedRoutes);

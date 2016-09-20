@@ -6,12 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -41,9 +39,18 @@ import java.util.*;
 
 public class MainController implements Initializable {
 
+    //These lists are used to display the currently loaded objects
     static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
     static ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
     static ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
+
+    //These lists are used to hold the information about currently loaded objects.
+    protected HashMap<String, Airline> airlineHashMap = new HashMap<String, Airline>();
+    protected HashMap<String, Airport> airportHashMap = new HashMap<String, Airport>();
+    protected HashMap<Integer, Route> routeHashMap = new HashMap<Integer, Route>();
+    //This integer here is currently to keep track of route id's
+    int routeIds = 0;
+
     @FXML
     private FlightViewController flightViewController;
     @FXML
@@ -433,9 +440,8 @@ public class MainController implements Initializable {
                 //Save all of the loaded files to the database here
                 dbsave.saveAirports(connOne, load.buildAirports());
                 dbOne.disconnect(connOne);
-                //Load all of the content from the database here
-                ObservableList<Airport> airports = adl.loadAirport(connTwo);
-
+                //Load all of the content from the database here, and add all airports to the hashmap.
+                ObservableList<Airport> airports = adl.loadAirport(connTwo, airportHashMap);
                 dbTwo.disconnect(connTwo);
                 currentlyLoadedAirports = airports;
                 airportTable.setItems(airports);
@@ -497,7 +503,7 @@ public class MainController implements Initializable {
                 dbsave.saveAirlines(connOne, load.buildAirlines());
                 dbOne.disconnect(connOne);
 
-                ObservableList<Airline> airlines = adl.loadAirlines(connTwo);
+                ObservableList<Airline> airlines = adl.loadAirlines(connTwo, airlineHashMap);
                 dbTwo.disconnect(connTwo);
 
                 currentlyLoadedAirlines = airlines;
@@ -562,10 +568,13 @@ public class MainController implements Initializable {
                 Connection connOne = dbOne.connect();
                 Connection connTwo = dbTwo.connect();
 
-                dbsave.saveRoutes(connOne, load.buildRoutes());
+                if (routeIds == 0) {
+                    routeIds = dbsave.saveRoutes(connOne, load.buildRoutes());
+                } else {
+                    routeIds = dbsave.saveRouteWithID(connOne, load.buildRoutes(), routeIds);
+                }
                 dbOne.disconnect(connOne);
-
-                ObservableList<Route> routes = rdl.loadRoutes(connTwo);
+                ObservableList<Route> routes = rdl.loadRoutes(connTwo, routeHashMap, airlineHashMap, airportHashMap);
                 dbTwo.disconnect(connTwo);
 
                 currentlyLoadedRoutes = routes;

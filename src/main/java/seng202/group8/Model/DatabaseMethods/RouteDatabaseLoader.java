@@ -10,6 +10,7 @@ import seng202.group8.Model.Objects.RouteMethod;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
 
 /**
  * Created by Callum on 25/08/16.
@@ -22,7 +23,7 @@ public class RouteDatabaseLoader extends RouteMethod {
      * @param conn a static connection to the database
      * @return a observable list of all routes in the database
      */
-    public ObservableList<Route> loadRoutes(Connection conn) {
+    public ObservableList<Route> loadRoutes(Connection conn, HashMap<Integer, Route> routeHashMap, HashMap<String, Airline> airlineHashMap, HashMap<String, Airport> airportHashMap) {
 
         ObservableList<Route> routes = FXCollections.observableArrayList();
         try {
@@ -30,21 +31,39 @@ public class RouteDatabaseLoader extends RouteMethod {
             ResultSet result = stmt.executeQuery("SELECT * FROM route");
             while (result.next()) {
                 Route loadRoute = new Route();
-                //Create the airline for the route, needs to check in the future
-                Airline routeAirline = createAirline(result.getString("airlinecode"), result.getInt("airlineid"));
-                loadRoute.setAirline(routeAirline);
-                loadRoute.setAirlineName(result.getString("airlinecode"));
-                Airport sourceAirport = createAirport(result.getString("sourceairport"), result.getInt("sourceid"));
-                Airport destinationAirport = createAirport(result.getString("destinationAirport"), result.getInt("destinationid"));
-                loadRoute.setSourceAirport(sourceAirport);
-                loadRoute.setSourceAirportName(result.getString("sourceairport"));
-                loadRoute.setDestinationAirport(destinationAirport);
-                loadRoute.setDestinationAirportName(result.getString("destinationAirport"));
+                //Check if the airline is currently in the application. If so link the objects together
+                if (airlineHashMap.get(result.getString("airlinecode")) instanceof Airline) {
+                    loadRoute.setAirline(airlineHashMap.get(result.getString("airlinecode")));
+                    loadRoute.setAirlineName(airlineHashMap.get(result.getString("airlinecode")).getName());
+                } else {
+                    System.out.println("Error: Airline does not exist");
+                    continue;
+                }
+                if (airportHashMap.get(result.getString("sourceairport")) instanceof Airport) {
+                    loadRoute.setSourceAirport(airportHashMap.get(result.getString("sourceairport")));
+                    loadRoute.setSourceAirportName(airportHashMap.get(result.getString("sourceairport")).getName());
+                    int numSrcRoutes = airportHashMap.get(result.getString("sourceairport")).getNumRoutes() + 1;
+                    airportHashMap.get(result.getString("sourceairport")).setNumRoutes(numSrcRoutes);
+                } else {
+                    System.out.println("Error: Source Airport does not exist");
+                    continue;
+                }
+                if (airportHashMap.get(result.getString("destinationairport")) instanceof Airport) {
+                    loadRoute.setDestinationAirport(airportHashMap.get(result.getString("destinationairport")));
+                    loadRoute.setDestinationAirportName(airportHashMap.get(result.getString("destinationairport")).getName());
+                    int numDestRoutes = airportHashMap.get(result.getString("destinationairport")).getNumRoutes() + 1;
+                    airportHashMap.get(result.getString("destinationairport")).setNumRoutes(numDestRoutes);
+                } else {
+                    System.out.println("Error: Destination Airport does not exist");
+                    continue;
+                }
+
                 checkCodeshared(loadRoute, result.getString("codeshare"));
                 loadRoute.setStops(result.getInt("stops"));
                 loadRoute.setEquipment(result.getString("equipment"));
                 loadRoute.setRouteID(result.getInt("routeid"));
                 routes.add(loadRoute);
+                routeHashMap.put(loadRoute.getRouteID(), loadRoute);
             }
             result.close();
             stmt.close();

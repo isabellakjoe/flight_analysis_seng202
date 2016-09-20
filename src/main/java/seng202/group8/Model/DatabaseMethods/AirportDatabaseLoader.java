@@ -8,6 +8,7 @@ import seng202.group8.Model.Objects.AirportMethod;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
 
 /**
  * Created by Callum on 26/08/16.
@@ -19,7 +20,7 @@ public class AirportDatabaseLoader extends AirportMethod {
      * @param conn a connection to the database
      * @return an observable list of all the airports currently in the database
      */
-    public ObservableList<Airport> loadAirport(Connection conn) {
+    public ObservableList<Airport> loadAirport(Connection conn, HashMap<String, Airport> airportIATAHashMap) {
 
         ObservableList<Airport> airports = FXCollections.observableArrayList();
         try {
@@ -31,7 +32,7 @@ public class AirportDatabaseLoader extends AirportMethod {
                 loadAirport.setName(result.getString("name"));
                 loadAirport.setCity(result.getString("city"));
                 loadAirport.setCountry(result.getString("country"));
-                checkCodeType(loadAirport, result.getString("country"), result.getString("iata"));
+                checkCodeType(loadAirport, result.getString("iata"), result.getString("country"));
                 loadAirport.setICAO(result.getString("icao"));
                 loadAirport.setLatitude(result.getDouble("latitude"));
                 loadAirport.setLongitude(result.getDouble("longitude"));
@@ -40,6 +41,19 @@ public class AirportDatabaseLoader extends AirportMethod {
                 loadAirport.setDST(result.getString("dst").charAt(0));
                 loadAirport.setTimezone(result.getInt("timezone"));
                 airports.add(loadAirport);
+                if (loadAirport.getCountry().equals("United States")) {
+                    if (loadAirport.getFAA() != null) {
+                        airportIATAHashMap.put(loadAirport.getFAA(), loadAirport);
+                    } else {
+                        airportIATAHashMap.put(loadAirport.getICAO(), loadAirport);
+                    }
+                } else {
+                    if (loadAirport.getIATA() != null) {
+                        airportIATAHashMap.put(loadAirport.getIATA(), loadAirport);
+                    } else {
+                        airportIATAHashMap.put(loadAirport.getICAO(), loadAirport);
+                    }
+                }
             }
         } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());

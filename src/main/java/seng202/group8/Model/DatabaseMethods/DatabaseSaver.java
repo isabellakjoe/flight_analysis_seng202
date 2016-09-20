@@ -5,7 +5,6 @@ import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,6 +35,7 @@ public class DatabaseSaver {
             while (result.next()) {
                 max = result.getInt(0);
             }
+            System.out.println(max);
         } catch (SQLException e) {
             max = 1;
         }
@@ -219,9 +219,10 @@ public class DatabaseSaver {
      * @param conn      a static connection to a database
      * @param routeList an observable list of routes
      */
-    public void saveRoutes(Connection conn, ObservableList<Route> routeList) {
+    public int saveRoutes(Connection conn, ObservableList<Route> routeList) {
 
         int routeIDStart = getCurrentMaxRouteID(conn);
+        System.out.println("Current ID Starts at " + Integer.toString(routeIDStart));
         try {
             Statement stmt = conn.createStatement();
             for (int i = 0; i < routeList.size(); i++) {
@@ -240,9 +241,33 @@ public class DatabaseSaver {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
 
+        return routeIDStart;
     }
 
-    public void saveRoutesWithID(Connection conn, Route route) {
+    public int saveRouteWithID(Connection conn, ObservableList<Route> routeList, int id) {
+
+        int routeid = id;
+
+        try {
+            Statement stmt = conn.createStatement();
+            for (int i = 0; i < routeList.size(); i++) {
+                routeList.get(i).setRouteID(routeid);
+                routeid += 1;
+                String sql = createRouteStatement(routeList.get(i));
+                try {
+                    stmt.executeUpdate(sql);
+                } catch (java.sql.SQLException e){
+                    System.out.print("Route being added includes non unique data.\n");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+        }
+
+        return routeid;
+    }
+
+    public void saveSingleRoute(Connection conn, Route route) {
 
         try {
             Statement stmt = conn.createStatement();

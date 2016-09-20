@@ -9,6 +9,7 @@ import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.Objects.Airline;
 
 import java.sql.Connection;
+import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -20,12 +21,14 @@ public class AirlineDatabaseLoaderTest {
     Database db;
     Connection conn;
     AirlineDatabaseLoader dba;
+    HashMap<String, Airline> airlineIATAHashMap;
 
     @Before
     public void initialise() {
         db = new Database();
         conn = db.testConnect();
         dba = new AirlineDatabaseLoader();
+        airlineIATAHashMap = new HashMap<String, Airline>();
     }
 
     @After
@@ -35,14 +38,14 @@ public class AirlineDatabaseLoaderTest {
 
     @Test
     public void testAllAirlinesLoadCorrectly() {
-        ObservableList<Airline> airlines = dba.loadAirlines(conn);
+        ObservableList<Airline> airlines = dba.loadAirlines(conn, airlineIATAHashMap);
         //Currently 7 airlines in the database
         assertTrue(7 == airlines.size());
     }
 
     @Test
     public void testAirlineLoadsCorrectly() {
-        ObservableList<Airline> airlines = dba.loadAirlines(conn);
+        ObservableList<Airline> airlines = dba.loadAirlines(conn, airlineIATAHashMap);
         Airline testAirline = new Airline();
         //Because we are using a set, have to find where in set airline to test is.
         for (Airline airline : airlines) {

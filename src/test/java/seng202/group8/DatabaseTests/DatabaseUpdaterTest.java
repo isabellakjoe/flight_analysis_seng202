@@ -135,7 +135,7 @@ public class DatabaseUpdaterTest {
         RouteParser rp = new RouteParser();
         Route route = rp.createSingleRoute(testRoute, 5499);
 
-        dbSave.saveRoutesWithID(connSave, route);
+        dbSave.saveSingleRoute(connSave, route);
         db.disconnect(connSave);
 
         ArrayList<ArrayList<String>> updates = new ArrayList<ArrayList<String>>();

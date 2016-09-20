@@ -4,10 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.AirlineMethod;
+import seng202.group8.Model.Objects.Airport;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
 
 /**
  * Created by Callum on 25/08/16.
@@ -20,7 +22,7 @@ public class AirlineDatabaseLoader extends AirlineMethod {
      * @param conn a connection to the database
      * @return an observable list of airports
      */
-    public ObservableList<Airline> loadAirlines(Connection conn) {
+    public ObservableList<Airline> loadAirlines(Connection conn, HashMap<String, Airline> airlineIATAHashMap) {
 
         ObservableList<Airline> airlines = FXCollections.observableArrayList();
         try {
@@ -38,6 +40,11 @@ public class AirlineDatabaseLoader extends AirlineMethod {
                 loadedAirline.setCountry(result.getString("country"));
                 checkActive(loadedAirline, result.getString("active"));
                 airlines.add(loadedAirline);
+                if (loadedAirline.getIATA() != null) {
+                    airlineIATAHashMap.put(loadedAirline.getIATA(), loadedAirline);
+                } else {
+                    airlineIATAHashMap.put(loadedAirline.getICAO(), loadedAirline);
+                }
             }
         } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());

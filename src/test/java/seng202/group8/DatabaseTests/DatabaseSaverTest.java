@@ -105,7 +105,7 @@ public class DatabaseSaverTest {
         Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP", 7867);
         //Create the connections to the database
         //Save the new route here
-        dbsave.saveRoutesWithID(connSave, testRoute);
+        dbsave.saveSingleRoute(connSave, testRoute);
         //Search for the new saved route, only one currently in database with id 7867
         String sqlStatement = dbsearch.buildRouteSearch("routeid", "7867");
         ObservableList<Route> returnedRoutes = dbsearch.searchRouteByOption(connSearch, sqlStatement);
@@ -129,7 +129,7 @@ public class DatabaseSaverTest {
         Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP", 1001);
 
         //Add route to the database
-        dbsave.saveRoutesWithID(connSave, testRoute);
+        dbsave.saveSingleRoute(connSave, testRoute);
         dbOne.disconnect(connSave);
 
         //Delete it

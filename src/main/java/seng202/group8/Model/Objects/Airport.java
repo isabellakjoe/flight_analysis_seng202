@@ -22,6 +22,7 @@ public class Airport {
     private int timezone;
     private char DST;
     private String olsonTimezone;
+    private int numRoutes = 0;
 
 
     public int getAirportID() {
@@ -127,6 +128,10 @@ public class Airport {
     public void setOlsonTimezone(String olsonTimezone) {
         this.olsonTimezone = olsonTimezone;
     }
+
+    public void setNumRoutes(int num) {this.numRoutes = num;}
+
+    public int getNumRoutes () {return numRoutes;}
 
 
     /**

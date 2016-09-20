@@ -9,6 +9,7 @@ import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.Objects.Airport;
 
 import java.sql.Connection;
+import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -20,12 +21,14 @@ public class AirportDatabaseLoaderTest {
     Database db;
     Connection conn;
     AirportDatabaseLoader dba;
+    HashMap<String, Airport> airportIATAHashMap;
 
     @Before
     public void initialise() {
         db = new Database();
         dba = new AirportDatabaseLoader();
         conn = db.testConnect();
+        airportIATAHashMap = new HashMap<String, Airport>();
     }
 
     @After
@@ -35,14 +38,14 @@ public class AirportDatabaseLoaderTest {
 
     @Test
     public void testAllAirportsLoadCorrectly() {
-        ObservableList<Airport> airports = dba.loadAirport(conn);
+        ObservableList<Airport> airports = dba.loadAirport(conn, airportIATAHashMap);
         //Currently 14 airlines in the database
         assertTrue(14 == airports.size());
     }
 
     @Test
     public void testAiportLoads() {
-        ObservableList<Airport> airports = dba.loadAirport(conn);
+        ObservableList<Airport> airports = dba.loadAirport(conn, airportIATAHashMap);
         Airport testAirport = new Airport();
         for (Airport airport : airports) {
             if (airport.getAirportID() == 2962) {
