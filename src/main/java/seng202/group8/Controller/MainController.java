@@ -1329,7 +1329,6 @@ public class MainController implements Initializable {
                 "created object to its corresponding table.", "How to Add Data", JOptionPane.INFORMATION_MESSAGE);
     }
 
-
     @FXML
     public void helpEdit(ActionEvent e){
         JOptionPane jp = new JOptionPane();
