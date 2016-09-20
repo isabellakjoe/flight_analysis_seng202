@@ -123,7 +123,13 @@ public class AirlineSearcher {
      * @param activeStatus status of a airline
      */
     public void airlinesOfActiveStatus(String activeStatus) {
-        ObservableList<Airline> matchingAirlines = generateSearchList("active", "Y");
+        ObservableList<Airline> matchingAirlines;
+        if (activeStatus.equals("Active")) {
+            matchingAirlines = generateSearchList("active", "Y");
+        }
+        else{
+            matchingAirlines = generateSearchList("active", "N");
+        }
         loadedAirlines = matchingAirlines;
     }
 
