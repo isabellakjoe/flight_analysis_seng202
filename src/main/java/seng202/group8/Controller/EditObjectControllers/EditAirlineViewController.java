@@ -1,4 +1,4 @@
-package seng202.group8.Controller;
+package seng202.group8.Controller.EditObjectControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +9,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Objects.Airline;
