@@ -58,7 +58,6 @@ public class AddAirlineViewController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
-
     }
 
     public void makeVisible() {

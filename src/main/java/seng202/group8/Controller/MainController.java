@@ -81,93 +81,11 @@ public class MainController implements Initializable {
     @FXML
     private EditRouteViewController editRouteViewController;
     @FXML
-    private Button airportAddButton;
+    private SearchRouteViewController searchRouteViewController;
     @FXML
-    private Button airlineAddButton;
+    private SearchAirlineViewController searchAirlineViewController;
     @FXML
-    private Button routeAddButton;
-    @FXML
-    private Button routeAdvancedButton;
-    @FXML
-    private Button routeSearch;
-    @FXML
-    private Button resetRouteSearch;
-    @FXML
-    private Button routeBackButton;
-    @FXML
-    private Button airlineAdvancedButton;
-    @FXML
-    private Button airlineSearchButton;
-    @FXML
-    private Button resetAirlineSearch;
-    @FXML
-    private Button airlineBackButton;
-    @FXML
-    private Button resetAirportSearch;
-    @FXML
-    private Button airportSearchButton;
-    @FXML
-    private Button airportBackButton;
-    @FXML
-    private Button airportAdvancedButton;
-    @FXML
-    private TextField airportIDSearch;
-    @FXML
-    private TextField airportNameSearch;
-    @FXML
-    private TextField airportCitySearch;
-    @FXML
-    private ComboBox airportCountrySearch;
-    @FXML
-    private TextField airportFAASearch;
-    @FXML
-    private TextField airportIATASearch;
-    @FXML
-    private TextField airportICAOSearch;
-    @FXML
-    private TextField airportLatitudeSearch;
-    @FXML
-    private TextField airportLongitudeSearch;
-    @FXML
-    private TextField airportAltitudeSearch;
-    @FXML
-    private TextField airportTimezoneSearch;
-    @FXML
-    private TextField airportDSTSearch;
-    @FXML
-    private TextField airlineIDSearch;
-    @FXML
-    private TextField airlineNameSearch;
-    @FXML
-    private TextField airlineAliasSearch;
-    @FXML
-    private TextField airlineIATASearch;
-    @FXML
-    private TextField airlineICAOSearch;
-    @FXML
-    private TextField airlineCallsignSearch;
-    @FXML
-    private ComboBox airlineCountrySearch;
-    @FXML
-    private ComboBox airlineActiveSearch;
-    @FXML
-    private TextField airlineSearch;
-    @FXML
-    private TextField airlineSearchID;
-    @FXML
-    private ComboBox sourceSearch;
-    @FXML
-    private TextField sourceIDSearch;
-    @FXML
-    private ComboBox destinationSearch;
-    @FXML
-    private TextField destinationIDSearch;
-    @FXML
-    private ComboBox stopoverSearch;
-    @FXML
-    private ComboBox codeshareSearch;
-    @FXML
-    private ComboBox equipmentSearch;
+    private SearchAirportViewController searchAirportViewController;
     @FXML
     private TableColumn<Airline, String> airlineID;
     @FXML
@@ -309,7 +227,6 @@ public class MainController implements Initializable {
     }
 
     public void setAirportComboBoxes() {
-
         HashSet<String> countries = new HashSet<String>();
         HashSet<String> names = new HashSet<String>();
 
@@ -323,9 +240,7 @@ public class MainController implements Initializable {
         Collections.sort(sortedNames);
         Collections.sort(sortedCountries);
         sortedCountries.add(0, "ALL COUNTRIES");
-        airportCountrySearch.getItems().clear();
-        airportCountrySearch.getItems().setAll(sortedCountries);
-
+        searchAirportViewController.setCountryCombobox(sortedCountries);
 
         addRouteViewController.addedRouteSource.getItems().clear();
         addRouteViewController.addedRouteSource.getItems().addAll(sortedNames);
@@ -376,8 +291,7 @@ public class MainController implements Initializable {
         activeStatuses.add("ACTIVE OR INACTIVE");
         activeStatuses.add("Active");
         activeStatuses.add("Inactive");
-        airlineActiveSearch.getItems().clear();
-        airlineActiveSearch.getItems().setAll(activeStatuses);
+        searchAirlineViewController.setActiveCombobox(activeStatuses);
 
         HashSet<String> names = new HashSet<String>();
         HashSet<String> countries = new HashSet<String>();
@@ -394,8 +308,7 @@ public class MainController implements Initializable {
 
         sortedCountries.add(0, "ALL COUNTRIES");
 
-        airlineCountrySearch.getItems().clear();
-        airlineCountrySearch.getItems().setAll(sortedCountries);
+        searchAirlineViewController.setCountryCombobox(sortedCountries);
 
         addRouteViewController.addedRouteAirline.getItems().clear();
         addRouteViewController.addedRouteAirline.getItems().addAll(sortedAirlines);
@@ -447,8 +360,7 @@ public class MainController implements Initializable {
         codeshareStatuses.add("ALL");
         codeshareStatuses.add("Codeshare");
         codeshareStatuses.add("Non Codeshare");
-        codeshareSearch.getItems().clear();
-        codeshareSearch.getItems().setAll(codeshareStatuses);
+        searchRouteViewController.setCodeshareCombobox(codeshareStatuses);
 
         HashSet<String> sources = new HashSet<String>();
         HashSet<String> destinations = new HashSet<String>();
@@ -492,14 +404,10 @@ public class MainController implements Initializable {
         sortedDestinations.add(0, "ALL");
         sortedEquipment.add(0, "ALL");
 
-        sourceSearch.getItems().clear();
-        sourceSearch.getItems().setAll(sortedSources);
-        destinationSearch.getItems().clear();
-        destinationSearch.getItems().setAll(sortedDestinations);
-        equipmentSearch.getItems().clear();
-        equipmentSearch.getItems().setAll(sortedEquipment);
-        stopoverSearch.getItems().clear();
-        stopoverSearch.getItems().setAll(stopsList);
+        searchRouteViewController.setSourceCombobox(sortedSources);
+        searchRouteViewController.setDestinationCombobox(sortedDestinations);
+        searchRouteViewController.setEquipmentCombobox(sortedEquipment);
+        searchRouteViewController.setStopoverCombobox(stopsList);
     }
 
     @FXML
@@ -535,403 +443,25 @@ public class MainController implements Initializable {
         }
     }
 
-    @FXML
-    private void resetRouteSearch() {
-        /* Clears all search fields*/
-        airlineSearch.clear();
-        sourceSearch.setValue(null);
-        destinationSearch.setValue(null);
-        stopoverSearch.setValue(null);
-        equipmentSearch.setValue(null);
-        codeshareSearch.setValue(null);
-        airlineSearchID.clear();
-        sourceIDSearch.clear();
-        destinationIDSearch.clear();
-
-        routeTable.setItems(currentlyLoadedRoutes);
-    }
-
-    @FXML
-    private void resetAirportSearch(){
-        /* Clears all search fields*/
-        airportCountrySearch.setValue(null);
-        airportIDSearch.clear();
-        airportNameSearch.clear();
-        airportCitySearch.clear();
-        airportFAASearch.clear();
-        airportIATASearch.clear();
-        airportICAOSearch.clear();
-        airportLongitudeSearch.clear();
-        airportLatitudeSearch.clear();
-        airportAltitudeSearch.clear();
-        airportTimezoneSearch.clear();
-        airportDSTSearch.clear();
-
-        airportTable.setItems(currentlyLoadedAirports);
-    }
-
-    @FXML
-    private void resetAirlineSearch(){
-        /* Clears all search fields*/
-        airlineCountrySearch.setValue(null);
-        airlineActiveSearch.setValue(null);
-        airlineIDSearch.clear();
-        airlineNameSearch.clear();
-        airlineAliasSearch.clear();
-        airlineIATASearch.clear();
-        airlineICAOSearch.clear();
-        airlineCallsignSearch.clear();
-
-        airlineTable.setItems(currentlyLoadedAirlines);
-    }
-
-    @FXML
-    private void airportSearch(ActionEvent e) {
-        resetView();
-        tableView.setVisible(true);
-        airportTable.setVisible(true);
-        editAirportViewController.makeInvisible();
-        AirportSearcher searcher = new AirportSearcher(currentlyLoadedAirports);
-        String airportID = airportIDSearch.getText();
-        String name = airportNameSearch.getText();
-        String city = airportCitySearch.getText();
-        String country = (String) airportCountrySearch.getValue();
-        String FAA = airportFAASearch.getText();
-        String IATA = airportIATASearch.getText();
-        String ICAO = airportICAOSearch.getText();
-        String latitude = airportLatitudeSearch.getText();
-        String longitude = airportLongitudeSearch.getText();
-        String altitude = airportAltitudeSearch.getText();
-        String timezone = airportTimezoneSearch.getText();
-        String DST = airportDSTSearch.getText();
-
-        if (airportID.length() > 0) {
-            searcher.airportsOfID(airportID);
-        }
-
-        if (name.length() > 0) {
-            searcher.airportsOfName(name);
-        }
-
-        if (city.length() > 0) {
-            searcher.airportsOfCity(city);
-        }
-
-        if (country != null && !country.equals("ALL COUNTRIES")) {
-            searcher.airportsOfCountry(country);
-        }
-
-        if (FAA.length() > 0) {
-            searcher.airportsOfFAA(FAA);
-        }
-
-        if (IATA.length() > 0) {
-            searcher.airportsOfIATA(IATA);
-        }
-
-        if (ICAO.length() > 0) {
-            searcher.airportsOfICAO(ICAO);
-        }
-
-        if (latitude.length() > 0) {
-            searcher.airportsOfLatitude(latitude);
-        }
-
-        if (longitude.length() > 0) {
-            searcher.airportsOfLongitude(longitude);
-        }
-
-        if (altitude.length() > 0) {
-            searcher.airportsOfAltitude(altitude);
-        }
-
-        if (timezone.length() > 0) {
-            searcher.airportsOfTimezone(timezone);
-        }
-
-        if (DST.length() > 0) {
-            searcher.airportsOfDST(DST);
-        }
-
-        ObservableList<Airport> matchingAirports = searcher.getLoadedAirports();
-        airportTable.setItems(matchingAirports);
-    }
-
-    @FXML
-    private void airlineSearch(ActionEvent e) {
-        resetView();
-        tableView.setVisible(true);
-        airlineTable.setVisible(true);
-        editAirlineViewController.makeInvisible();
-        AirlineSearcher searcher = new AirlineSearcher(currentlyLoadedAirlines);
-
-        String airlineID = airlineIDSearch.getText();
-        String name = airlineNameSearch.getText();
-        String alias = airlineAliasSearch.getText();
-        String IATA = airlineIATASearch.getText();
-        String ICAO = airlineICAOSearch.getText();
-        String callsign = airlineCallsignSearch.getText();
-        String country = (String) airlineCountrySearch.getValue();
-        String activeStatus = (String) airlineActiveSearch.getValue();
-
-        if (airlineID.length() > 0) {
-            searcher.airlinesOfID(airlineID);
-        }
-
-        if (name.length() > 0) {
-            searcher.airlinesOfName(name);
-        }
-
-        if (alias.length() > 0) {
-            searcher.airlinesOfAlias(alias);
-        }
-
-        if (IATA.length() > 0) {
-            searcher.airlinesOfIATA(IATA);
-        }
-
-        if (ICAO.length() > 0) {
-            searcher.airlinesOfICAO(ICAO);
-        }
-
-        if (callsign.length() > 0) {
-            searcher.airlinesOfCallsign(callsign);
-        }
-
-        if (country != null && !country.equals("ALL COUNTRIES")) {
-            searcher.airlinesOfCountry(country);
-        }
-
-        if (activeStatus != null && !activeStatus.equals("ACTIVE OR INACTIVE")) {
-            searcher.airlinesOfActiveStatus(activeStatus);
-        }
-
-
-        ObservableList<Airline> matchingAirlines = searcher.getLoadedAirlines();
-        airlineTable.setItems(matchingAirlines);
-    }
-
-    @FXML
-    private void routeSearch(ActionEvent e) {
-        resetView();
-        tableView.setVisible(true);
-        routeTable.setVisible(true);
-        editRouteViewController.makeInvisible();
-
-
-        RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
-        String airline = airlineSearch.getText();
-        String airlineID = airlineSearchID.getText();
-        String sourceAirport = (String) sourceSearch.getValue();
-        String sourceID = sourceIDSearch.getText();
-        String destinationAirport = (String) destinationSearch.getValue();
-        String destinationID = destinationIDSearch.getText();
-        String stops = (String) stopoverSearch.getValue();
-        String codeshareStatus = (String) codeshareSearch.getValue();
-        String equipment = (String) equipmentSearch.getValue();
-
-        if (airline.length() > 0) {
-            searcher.routesOfAirline(airline);
-        }
-
-        if (airlineID.length() > 0) {
-            try {
-                int intAirlineID = Integer.parseInt(airlineID);
-                searcher.routesOfAirlineID(intAirlineID);
-            } catch (NumberFormatException exception) {
-            }
-        }
-
-        if (sourceAirport != null && !sourceAirport.equals("ALL")) {
-            searcher.routesOfSource(sourceAirport);
-        }
-
-        if (sourceID.length() > 0) {
-            try {
-                int intSourceID = Integer.parseInt(sourceID);
-                searcher.routesOfSourceID(intSourceID);
-            } catch (NumberFormatException exception) {
-            }
-        }
-
-        if (destinationAirport != null && !destinationAirport.equals("ALL")) {
-            searcher.routesOfDestination(destinationAirport);
-        }
-
-        if (destinationID.length() > 0) {
-            try {
-                int intDestID = Integer.parseInt(destinationID);
-                searcher.routesOfDestinationID(intDestID);
-            } catch (NumberFormatException exception) {
-            }
-        }
-
-        if (stops != null && !stops.equals("ALL")) {
-            try {
-                int intStops = Integer.parseInt(stops);
-                searcher.routesOfStops(intStops);
-            } catch (NumberFormatException exception) {
-            }
-        }
-
-        if (codeshareStatus != null && !codeshareStatus.equals("ALL")) {
-            searcher.routesOfCodeshare(codeshareStatus);
-        }
-
-        if (equipment != null && !equipment.equals("ALL")) {
-            searcher.routesOfEquipment(equipment);
-        }
-
-        ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
-
-        //This is a patch for deliverable two, needs to be implemented propelry in the loader class at some point
-
-        for (Route route: matchingRoutes) {
-            route.setAirlineName(route.getAirline().getName());
-            route.setSourceAirportName(route.getSourceAirport().getIATA());
-            route.setDestinationAirportName(route.getDestinationAirport().getIATA());
-        }
-
-        routeTable.setItems(matchingRoutes);
-    }
 
     /* Method to add a new airline to the currentlyLoadedAirlines from search text fields.
     Executed when the add button is clicked */
     @FXML
-    private void switchToAddAirport(ActionEvent e) {
+    public void switchToAddAirport(ActionEvent e) {
         resetView();
         addAirportViewController.makeVisible();
     }
 
-
-
-    //
     @FXML
-    private void switchToAddAirline(ActionEvent e) {
+    public void switchToAddAirline(ActionEvent e) {
         resetView();
         addAirlineViewController.makeVisible();
     }
 
-
     @FXML
-    private void switchToAddRoute(ActionEvent e) {
+    public void switchToAddRoute(ActionEvent e) {
         resetView();
         addRouteViewController.makeVisible();
-    }
-
-
-
-    @FXML
-    private void airportSearchBack() {
-        airportAdvancedButton.setVisible(true);
-        airportBackButton.setVisible(false);
-        airportCitySearch.setVisible(false);
-        airportFAASearch.setVisible(false);
-        airportIATASearch.setVisible(false);
-        airportLongitudeSearch.setVisible(false);
-        airportLatitudeSearch.setVisible(false);
-        airportAltitudeSearch.setVisible(false);
-        airportTimezoneSearch.setVisible(false);
-        airportDSTSearch.setVisible(false);
-        airportICAOSearch.setVisible(false);
-        airportSearchButton.setLayoutY(250);
-        resetAirportSearch.setLayoutY(250);
-        airportAddButton.setVisible(true);
-        /*Clear hidden parameters*/
-        airportCitySearch.clear();
-        airportFAASearch.clear();
-        airportIATASearch.clear();
-        airportICAOSearch.clear();
-        airportLongitudeSearch.clear();
-        airportLatitudeSearch.clear();
-        airportAltitudeSearch.clear();
-        airportTimezoneSearch.clear();
-        airportDSTSearch.clear();
-    }
-
-    @FXML
-    private void showAirportSearch(ActionEvent e) {
-        airportAdvancedButton.setVisible(false);
-        airportBackButton.setVisible(true);
-        airportCitySearch.setVisible(true);
-        airportFAASearch.setVisible(true);
-        airportIATASearch.setVisible(true);
-        airportLongitudeSearch.setVisible(true);
-        airportLatitudeSearch.setVisible(true);
-        airportAltitudeSearch.setVisible(true);
-        airportTimezoneSearch.setVisible(true);
-        airportDSTSearch.setVisible(true);
-        airportICAOSearch.setVisible(true);
-
-        airportSearchButton.setLayoutY(570);
-        resetAirportSearch.setLayoutY(570);
-        airportAddButton.setVisible(false);
-    }
-
-    @FXML
-    private void routeSearchBack() {
-        routeAdvancedButton.setVisible(true);
-        routeBackButton.setVisible(false);
-        equipmentSearch.setVisible(false);
-        codeshareSearch.setVisible(false);
-        airlineSearchID.setVisible(false);
-        destinationIDSearch.setVisible(false);
-        sourceIDSearch.setVisible(false);
-        routeSearch.setLayoutY(250);
-        resetRouteSearch.setLayoutY(250);
-        routeAddButton.setVisible(true);
-        /*Clear hidden parameters*/
-        equipmentSearch.setValue(null);
-        codeshareSearch.setValue(null);
-        airlineSearchID.clear();
-        sourceIDSearch.clear();
-        destinationIDSearch.clear();
-    }
-
-    @FXML
-    private void showRouteSearch(ActionEvent e) {
-        routeAdvancedButton.setVisible(false);
-        routeBackButton.setVisible(true);
-        equipmentSearch.setVisible(true);
-        codeshareSearch.setVisible(true);
-        airlineSearchID.setVisible(true);
-        destinationIDSearch.setVisible(true);
-        sourceIDSearch.setVisible(true);
-        routeSearch.setLayoutY(455);
-        resetRouteSearch.setLayoutY(455);
-        routeAddButton.setVisible(false);
-    }
-
-    @FXML
-    private void showAirlineSearch(ActionEvent e) {
-        airlineAdvancedButton.setVisible(false);
-        airlineBackButton.setVisible(true);
-        airlineAliasSearch.setVisible(true);
-        airlineIATASearch.setVisible(true);
-        airlineICAOSearch.setVisible(true);
-        airlineCallsignSearch.setVisible(true);
-        airlineSearchButton.setLayoutY(415);
-        resetAirlineSearch.setLayoutY(415);
-        airlineAddButton.setVisible(false);
-    }
-
-    @FXML
-    private void airlineSearchBack() {
-        airlineAdvancedButton.setVisible(true);
-        airlineBackButton.setVisible(false);
-        airlineAliasSearch.setVisible(false);
-        airlineIATASearch.setVisible(false);
-        airlineSearchID.setVisible(false);
-        airlineICAOSearch.setVisible(false);
-        airlineCallsignSearch.setVisible(false);
-        airlineSearchButton.setLayoutY(250);
-        resetAirlineSearch.setLayoutY(250);
-        airlineAddButton.setVisible(true);
-        /*Clear hidden parameters*/
-        airlineAliasSearch.clear();
-        airlineIATASearch.clear();
-        airlineICAOSearch.clear();
-        airlineCallsignSearch.clear();
     }
 
     private void filterAirlinesByName(ActionEvent e) {
@@ -1147,6 +677,11 @@ public class MainController implements Initializable {
         addAirportViewController.makeInvisible();
         addAirlineViewController.makeInvisible();
         addRouteViewController.makeInvisible();
+        editRouteViewController.cancelRouteChanges(new ActionEvent());
+        editRouteViewController.makeInvisible();
+        editAirlineViewController.cancelAirlineChanges(new ActionEvent());
+        editAirlineViewController.makeInvisible();
+        editAirportViewController.cancelAirportChanges(new ActionEvent());
     }
 
     private void resetTables() {
@@ -1222,6 +757,9 @@ public class MainController implements Initializable {
         editAirlineViewController.setMainController(this);
         editAirportViewController.setMainController(this);
         editRouteViewController.setMainController(this);
+        searchRouteViewController.setMainController(this);
+        searchAirlineViewController.setMainController(this);
+        searchAirportViewController.setMainController(this);
 
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
