@@ -1,4 +1,4 @@
-package seng202.group8.Controller;
+package seng202.group8.Controller.SearchObjectControllers;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import seng202.group8.Controller.MainController;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Searchers.AirlineSearcher;
 

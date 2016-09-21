@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 public class FlightViewController implements Initializable {
 
     public boolean isValid = false;
+
     private MainController mainController;
     @FXML
     private GridPane flightViewPane;

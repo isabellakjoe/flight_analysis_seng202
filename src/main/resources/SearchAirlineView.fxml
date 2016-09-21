@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
- <AnchorPane  fx:id="searchAirlinePane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.SearchAirlineViewController" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="searchAirlinePane" xmlns="http://javafx.com/javafx/8" fx:controller="seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewController" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
     <children>
         <TextField fx:id="airlineIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
             <Button fx:id="airlineSearchButton" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#airlineSearch" text="Search" />

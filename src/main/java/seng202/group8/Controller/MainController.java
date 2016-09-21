@@ -11,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.group8.Controller.AddObjectControllers.AddAirlineViewController;
@@ -20,15 +19,15 @@ import seng202.group8.Controller.AddObjectControllers.AddRouteViewController;
 import seng202.group8.Controller.EditObjectControllers.EditAirlineViewController;
 import seng202.group8.Controller.EditObjectControllers.EditAirportViewController;
 import seng202.group8.Controller.EditObjectControllers.EditRouteViewController;
+import seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewController;
+import seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController;
+import seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController;
 import seng202.group8.Model.DatabaseMethods.*;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Flight;
 import seng202.group8.Model.Objects.Route;
 import seng202.group8.Model.Parsers.FileLoader;
-import seng202.group8.Model.Searchers.AirlineSearcher;
-import seng202.group8.Model.Searchers.AirportSearcher;
-import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -49,7 +48,6 @@ public class MainController implements Initializable {
     private static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
     private static ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
     private static ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
-
     @FXML
     public TableView<Airline> airlineTable;
     @FXML
@@ -686,45 +684,19 @@ public class MainController implements Initializable {
 
     private void resetTables() {
         airportTable.getColumns().clear();
-        airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("airportID"));
-        airportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
-        city.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
-        airportCountry.setCellValueFactory(new PropertyValueFactory<Airport, String>("Country"));
-        FAA.setCellValueFactory(new PropertyValueFactory<Airport, String>("FAA"));
-        airportIATA.setCellValueFactory(new PropertyValueFactory<Airport, String>("IATA"));
-        airportICAO.setCellValueFactory(new PropertyValueFactory<Airport, String>("ICAO"));
-        latitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Latitude"));
-        longitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Longitude"));
-        altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
-        timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
-        DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
-
+        initAirportTable();
         airportTable.getColumns().addAll(airportName, city, airportCountry);
         airportTable.setItems(currentlyLoadedAirports);
 
         airlineTable.getColumns().clear();
-        airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
-        airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
-        alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
-        IATA.setCellValueFactory(new PropertyValueFactory<Airline, String>("IATA"));
-        ICAO.setCellValueFactory(new PropertyValueFactory<Airline, String>("ICAO"));
-        callsign.setCellValueFactory(new PropertyValueFactory<Airline, String>("callsign"));
-        country.setCellValueFactory(new PropertyValueFactory<Airline, String>("country"));
-        active.setCellValueFactory(new PropertyValueFactory<Airline, String>("active"));
+        initAirlineTable();
         airlineTable.getColumns().addAll(airlineName, alias, country, active);
         airlineTable.setItems(currentlyLoadedAirlines);
 
         routeTable.getColumns().clear();
-
-        routeAirlineName.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
-        source.setCellValueFactory(new PropertyValueFactory<Route, String>("sourceAirportName"));
-        destination.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
-        codeshare.setCellValueFactory(new PropertyValueFactory<Route, String>("codeshareString"));
-        stops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
-        equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
+        initRouteTable();
         routeTable.getColumns().addAll(routeAirlineName, source, destination);
         routeTable.setItems(currentlyLoadedRoutes);
-
     }
 
     public void backToTableView(ActionEvent e) {
@@ -735,17 +707,14 @@ public class MainController implements Initializable {
         editAirportViewController.makeInvisible();
         editAirlineViewController.makeInvisible();
         editRouteViewController.makeInvisible();
-        //flightViewContent.setVisible(false);
+
         airportTable.setVisible(true);
         airlineTable.setVisible(true);
         routeTable.setVisible(true);
         tableView.setVisible(true);
     }
 
-    //Sets Table Cells in Airline Table Viewer to Airline attributes
-    @FXML
-    public void initialize(URL location, ResourceBundle resources) {
-
+    private void setMainControllers(){
         mapViewController.setMainController(this);
         mapViewController.initMap();
 
@@ -760,7 +729,9 @@ public class MainController implements Initializable {
         searchRouteViewController.setMainController(this);
         searchAirlineViewController.setMainController(this);
         searchAirportViewController.setMainController(this);
+    }
 
+    private void initAirlineTable(){
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
         alias.setCellValueFactory(new PropertyValueFactory<Airline, String>("alias"));
@@ -769,7 +740,9 @@ public class MainController implements Initializable {
         callsign.setCellValueFactory(new PropertyValueFactory<Airline, String>("callsign"));
         country.setCellValueFactory(new PropertyValueFactory<Airline, String>("country"));
         active.setCellValueFactory(new PropertyValueFactory<Airline, String>("active"));
+    }
 
+    private void initAirportTable(){
         airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("airportID"));
         airportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
         city.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
@@ -782,13 +755,24 @@ public class MainController implements Initializable {
         altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
         timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
+    }
 
+    private void initRouteTable(){
         routeAirlineName.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
         source.setCellValueFactory(new PropertyValueFactory<Route, String>("sourceAirportName"));
         destination.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
         codeshare.setCellValueFactory(new PropertyValueFactory<Route, String>("codeshareString"));
         stops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
         equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
+    }
+
+    //Sets Table Cells in Airline Table Viewer to Airline attributes
+    @FXML
+    public void initialize(URL location, ResourceBundle resources) {
+        setMainControllers();
+        initAirlineTable();
+        initAirportTable();
+        initRouteTable();
 
         // Allows individual cells to be selected as opposed to rows
         //airportTable.getSelectionModel().setCellSelectionEnabled(true);
