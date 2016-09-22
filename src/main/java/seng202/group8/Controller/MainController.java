@@ -57,9 +57,9 @@ public class MainController implements Initializable {
     @FXML
     public Pane tableView;
     //These lists are used to hold the information about currently loaded objects.
-    private HashMap<String, Airline> airlineHashMap = new HashMap<String, Airline>();
-    private HashMap<String, Airport> airportHashMap = new HashMap<String, Airport>();
-    private HashMap<Integer, Route> routeHashMap = new HashMap<Integer, Route>();
+    private static HashMap<String, Airline> airlineHashMap = new HashMap<String, Airline>();
+    private static HashMap<String, Airport> airportHashMap = new HashMap<String, Airport>();
+    private static HashMap<Integer, Route> routeHashMap = new HashMap<Integer, Route>();
     //This integer here is currently to keep track of route id's
     private int routeIds = 0;
     @FXML
