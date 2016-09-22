@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="editRoutePane" xmlns="http://javafx.com/javafx/8" fx:controller="seng202.group8.Controller.EditObjectControllers.EditRouteViewController" visible="false" GridPane.rowIndex="5">
+<GridPane fx:id="editRoutePane" visible="false" GridPane.rowIndex="5" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.EditObjectControllers.EditRouteViewController">
     <columnConstraints>
         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="372.0" minWidth="10.0" prefWidth="85.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="675.0" minWidth="10.0" prefWidth="240.0" />
@@ -107,7 +107,7 @@
                 <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
             </GridPane.margin>
         </TextField>
-        <Button fx:id="editRouteDataButton" mnemonicParsing="false" onAction="#editRouteData" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="3">
+        <Button fx:id="editRouteDataButton" mnemonicParsing="false" onAction="#editRouteData" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
@@ -127,6 +127,7 @@
         <Text fx:id="editRouteStopsError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
         <Text fx:id="editRouteEquipError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
         <CheckBox fx:id="editCodeshareField" mnemonicParsing="false" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" text="Delete" GridPane.columnIndex="4" GridPane.rowIndex="3" />
     </children>
     <GridPane.margin>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

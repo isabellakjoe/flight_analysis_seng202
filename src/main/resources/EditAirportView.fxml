@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="editAirportPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="seng202.group8.Controller.EditObjectControllers.EditAirportViewController" visible="false" GridPane.rowIndex="3">
+<GridPane fx:id="editAirportPane" visible="false" GridPane.rowIndex="3" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.EditObjectControllers.EditAirportViewController">
     <columnConstraints>
         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="85.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="675.0" minWidth="10.0" prefWidth="240.0" />
@@ -224,5 +224,6 @@
         <Text fx:id="editAirportLongError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
         <Text fx:id="editAirportLatError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
         <Text fx:id="editAirportAltError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+      <Button mnemonicParsing="false" text="Delete" GridPane.columnIndex="4" GridPane.rowIndex="5" />
     </children>
 </GridPane>

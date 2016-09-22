@@ -23,17 +23,11 @@ import seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewContro
 import seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController;
 import seng202.group8.Model.DatabaseMethods.*;
-import seng202.group8.Model.Objects.Airline;
-import seng202.group8.Model.Objects.Airport;
-import seng202.group8.Model.Objects.Flight;
-import seng202.group8.Model.Objects.Route;
+import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.*;
@@ -48,6 +42,8 @@ public class MainController implements Initializable {
     private static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
     private static ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
     private static ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
+
+    private Data loadedData = null;
     @FXML
     public TableView<Airline> airlineTable;
     @FXML
@@ -145,10 +141,6 @@ public class MainController implements Initializable {
         return currentlyLoadedAirlines;
     }
 
-    public static void setCurrentlyLoadedAirlines(ObservableList<Airline> currentlyLoadedAirlines) {
-        MainController.currentlyLoadedAirlines = currentlyLoadedAirlines;
-    }
-
     public static void addToCurrentlyLoadedAirlines(Airline airline) {
         MainController.currentlyLoadedAirlines.add(airline);
     }
@@ -157,20 +149,12 @@ public class MainController implements Initializable {
         return currentlyLoadedAirports;
     }
 
-    public static void setCurrentlyLoadedAirports(ObservableList<Airport> currentlyLoadedAirports) {
-        MainController.currentlyLoadedAirports = currentlyLoadedAirports;
-    }
-
     public static void addToCurrentlyLoadedAirports(Airport airport) {
         MainController.currentlyLoadedAirports.add(airport);
     }
 
     public static ObservableList<Route> getCurrentlyLoadedRoutes() {
         return currentlyLoadedRoutes;
-    }
-
-    public static void setCurrentlyLoadedRoutes(ObservableList<Route> currentlyLoadedRoutes) {
-        MainController.currentlyLoadedRoutes = currentlyLoadedRoutes;
     }
 
     public static void addToCurrentlyLoadedRoutes(Route route) {
@@ -187,6 +171,74 @@ public class MainController implements Initializable {
 
     public void putInRouteHashMap(Route route) {
         this.routeHashMap.put(this.getRouteIds(), route);
+    }
+
+    public void fileSave(ActionEvent e){
+        //PLEASE DON'T DELETE ME!'
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setTitle("Save loaded data");
+//        File file = fileChooser.showSaveDialog(new Stage());
+//        if (file != null){
+//            //Check user wants to overwrite
+//        }
+//        try{
+//            FileOutputStream fileStream = new FileOutputStream(file);
+//            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+//            Data data = new Data(5);
+//            //System.out.println(data.getAirlines().size());
+//            //System.out.println(data.getAirports().size());
+//            objectStream.writeObject(data);
+//            objectStream.flush();
+//            objectStream.close();
+//            fileStream.close();
+//            }
+//
+//        catch(FileNotFoundException ex) {
+//
+//        }
+//        catch(IOException ex){
+//
+//        }
+    }
+//
+    public void fileOpen(ActionEvent e){
+        //PLEASE DON'T DELETE!
+//        try {
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Open datafile"); //Text in the window header
+//            File file = fileChooser.showOpenDialog(new Stage());
+//            if (file != null) {
+//                FileInputStream filestream = new FileInputStream(file);
+//                ObjectInputStream objectStream = new ObjectInputStream(filestream);
+//                Object openedData = objectStream.readObject();
+//                if (openedData == null){
+//                    System.out.println("File null");
+//                }
+//                if (!(openedData instanceof Data)){
+//                    System.out.println("Malformed data");
+//                    return;
+//                }
+//                loadedData = (Data) openedData;
+//
+//                //System.out.println(((Data) openedData).getAirlines().size());
+//                System.out.println(loadedData.getNum());
+//                //currentlyLoadedAirlines = FXCollections.observableArrayList(((Data) openedData).getAirlines());
+//                //currentlyLoadedAirports = FXCollections.observableArrayList(((Data) openedData).getAirports());
+//                //currentlyLoadedRoutes = FXCollections.observableArrayList(((Data) openedData).getRoutes());
+//
+//                System.out.println("Gothere");
+//                resetTables();
+//            }
+//         }
+//        catch (FileNotFoundException ex) {
+//            System.out.println("FILE NOT FOUND");
+//        }
+//        catch(java.io.IOException ex){
+//            System.out.println("Oops, IO exception");
+//        }
+//        catch(ClassNotFoundException ex){
+//            System.out.println("Double Oops");
+//        }
     }
 
     /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
@@ -222,28 +274,6 @@ public class MainController implements Initializable {
         } catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
-    }
-
-    public void setAirportComboBoxes() {
-        HashSet<String> countries = new HashSet<String>();
-        HashSet<String> names = new HashSet<String>();
-
-        for (int i = 0; i < currentlyLoadedAirports.size(); i++) {
-            countries.add(currentlyLoadedAirports.get(i).getCountry());
-            names.add(currentlyLoadedAirports.get(i).getName());
-        }
-        List sortedCountries = new ArrayList(countries);
-        List sortedNames = new ArrayList(names);
-
-        Collections.sort(sortedNames);
-        Collections.sort(sortedCountries);
-        sortedCountries.add(0, "ALL COUNTRIES");
-        searchAirportViewController.setCountryCombobox(sortedCountries);
-
-        addRouteViewController.addedRouteSource.getItems().clear();
-        addRouteViewController.addedRouteSource.getItems().addAll(sortedNames);
-        addRouteViewController.addedRouteDestination.getItems().clear();
-        addRouteViewController.addedRouteDestination.getItems().addAll(sortedNames);
     }
 
     /* Method to open up a file chooser for the user to select the Airline Data file with error handling */
@@ -282,34 +312,6 @@ public class MainController implements Initializable {
             System.out.println("FILE NOT FOUND");
         }
 
-    }
-
-    public void setAirlineComboBoxes() {
-        ArrayList<String> activeStatuses = new ArrayList<String>();
-        activeStatuses.add("ACTIVE OR INACTIVE");
-        activeStatuses.add("Active");
-        activeStatuses.add("Inactive");
-        searchAirlineViewController.setActiveCombobox(activeStatuses);
-
-        HashSet<String> names = new HashSet<String>();
-        HashSet<String> countries = new HashSet<String>();
-        for (int i = 0; i < currentlyLoadedAirlines.size(); i++) {
-            countries.add(currentlyLoadedAirlines.get(i).getCountry());
-            names.add(currentlyLoadedAirlines.get(i).getName());
-        }
-
-        List sortedCountries = new ArrayList(countries);
-        List sortedAirlines = new ArrayList(names);
-
-        Collections.sort(sortedAirlines);
-        Collections.sort(sortedCountries);
-
-        sortedCountries.add(0, "ALL COUNTRIES");
-
-        searchAirlineViewController.setCountryCombobox(sortedCountries);
-
-        addRouteViewController.addedRouteAirline.getItems().clear();
-        addRouteViewController.addedRouteAirline.getItems().addAll(sortedAirlines);
     }
 
     /* Method to open up a file chooser for the user to select the Route Data file with error handling */
@@ -353,6 +355,59 @@ public class MainController implements Initializable {
 
     }
 
+    /*Fills comboboxes used for searching airports and creating routes*/
+    public void setAirportComboBoxes() {
+        HashSet<String> countries = new HashSet<String>();
+        HashSet<String> names = new HashSet<String>();
+
+        for (int i = 0; i < currentlyLoadedAirports.size(); i++) {
+            countries.add(currentlyLoadedAirports.get(i).getCountry());
+            names.add(currentlyLoadedAirports.get(i).getName());
+        }
+        List sortedCountries = new ArrayList(countries);
+        List sortedNames = new ArrayList(names);
+
+        Collections.sort(sortedNames);
+        Collections.sort(sortedCountries);
+        sortedCountries.add(0, "ALL COUNTRIES");
+        searchAirportViewController.setCountryCombobox(sortedCountries);
+
+        addRouteViewController.addedRouteSource.getItems().clear();
+        addRouteViewController.addedRouteSource.getItems().addAll(sortedNames);
+        addRouteViewController.addedRouteDestination.getItems().clear();
+        addRouteViewController.addedRouteDestination.getItems().addAll(sortedNames);
+    }
+
+    /*Fills comboboxes used for searching airlines and creating routes*/
+    public void setAirlineComboBoxes() {
+        ArrayList<String> activeStatuses = new ArrayList<String>();
+        activeStatuses.add("ACTIVE OR INACTIVE");
+        activeStatuses.add("Active");
+        activeStatuses.add("Inactive");
+        searchAirlineViewController.setActiveCombobox(activeStatuses);
+
+        HashSet<String> names = new HashSet<String>();
+        HashSet<String> countries = new HashSet<String>();
+        for (int i = 0; i < currentlyLoadedAirlines.size(); i++) {
+            countries.add(currentlyLoadedAirlines.get(i).getCountry());
+            names.add(currentlyLoadedAirlines.get(i).getName());
+        }
+
+        List sortedCountries = new ArrayList(countries);
+        List sortedAirlines = new ArrayList(names);
+
+        Collections.sort(sortedAirlines);
+        Collections.sort(sortedCountries);
+
+        sortedCountries.add(0, "ALL COUNTRIES");
+
+        searchAirlineViewController.setCountryCombobox(sortedCountries);
+
+        addRouteViewController.addedRouteAirline.getItems().clear();
+        addRouteViewController.addedRouteAirline.getItems().addAll(sortedAirlines);
+    }
+
+    /*Fills comboboxes used for searching routes*/
     public void setRouteComboBoxes() {
         ArrayList<String> codeshareStatuses = new ArrayList<String>();
         codeshareStatuses.add("ALL");
@@ -408,8 +463,7 @@ public class MainController implements Initializable {
         searchRouteViewController.setStopoverCombobox(stopsList);
     }
 
-    @FXML
-    /* Method to open up a file chooser for the user to select the Flight Data file  with error handling*/
+    /* Opens a file chooser for the user to select the Flight Data file, then loads the data and switches views*/
     public void addFlightData(ActionEvent e) {
         try {
             FileChooser fileChooser = new FileChooser();
@@ -441,29 +495,7 @@ public class MainController implements Initializable {
         }
     }
 
-
-    /* Method to add a new airline to the currentlyLoadedAirlines from search text fields.
-    Executed when the add button is clicked */
-    @FXML
-    public void switchToAddAirport(ActionEvent e) {
-        resetView();
-        addAirportViewController.makeVisible();
-    }
-
-    @FXML
-    public void switchToAddAirline(ActionEvent e) {
-        resetView();
-        addAirlineViewController.makeVisible();
-    }
-
-    @FXML
-    public void switchToAddRoute(ActionEvent e) {
-        resetView();
-        addRouteViewController.makeVisible();
-    }
-
     private void filterAirlinesByName(ActionEvent e) {
-
         Comparator<Airline> airlineNameComparator = new Comparator<Airline>() {
             public int compare(Airline o1, Airline o2) {
                 String airline1 = o1.getName();
@@ -669,6 +701,7 @@ public class MainController implements Initializable {
         tableView.setVisible(true);
     }
 
+    /* Resets and hides most panes, giving the interface a clean slate*/
     public void resetView() {
         tableView.setVisible(false);
         flightViewController.makeInvisible();
@@ -682,6 +715,7 @@ public class MainController implements Initializable {
         editAirportViewController.cancelAirportChanges(new ActionEvent());
     }
 
+    /* Clears tables and re-adds currently loaded objects to them*/
     private void resetTables() {
         airportTable.getColumns().clear();
         initAirportTable();
@@ -699,25 +733,37 @@ public class MainController implements Initializable {
         routeTable.setItems(currentlyLoadedRoutes);
     }
 
+    /* Switches to raw data table viewing interface*/
     public void backToTableView(ActionEvent e) {
         resetTables();
-        addAirportViewController.makeInvisible();
-        addAirlineViewController.makeInvisible();
-        addRouteViewController.makeInvisible();
-        editAirportViewController.makeInvisible();
-        editAirlineViewController.makeInvisible();
-        editRouteViewController.makeInvisible();
-
         airportTable.setVisible(true);
         airlineTable.setVisible(true);
         routeTable.setVisible(true);
         tableView.setVisible(true);
     }
 
+    /*Switches to interface for adding an airport*/
+    public void switchToAddAirport(ActionEvent e) {
+        resetView();
+        addAirportViewController.makeVisible();
+    }
+
+    /*Switches to interface for adding an airline*/
+    public void switchToAddAirline(ActionEvent e) {
+        resetView();
+        addAirlineViewController.makeVisible();
+    }
+
+    /*Switches to interface for adding a route*/
+    public void switchToAddRoute(ActionEvent e) {
+        resetView();
+        addRouteViewController.makeVisible();
+    }
+
+    /*Used during initialisation to set this as main controller of all child controllers*/
     private void setMainControllers(){
         mapViewController.setMainController(this);
         mapViewController.initMap();
-
         flightViewController.setMainController(this);
         mapViewController.setMainController(this);
         addAirlineViewController.setMainController(this);
@@ -731,6 +777,7 @@ public class MainController implements Initializable {
         searchAirportViewController.setMainController(this);
     }
 
+    /*Set columns of airline table*/
     private void initAirlineTable(){
         airlineID.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineID"));
         airlineName.setCellValueFactory(new PropertyValueFactory<Airline, String>("name"));
@@ -742,6 +789,7 @@ public class MainController implements Initializable {
         active.setCellValueFactory(new PropertyValueFactory<Airline, String>("active"));
     }
 
+    /*Set columns of airport table*/
     private void initAirportTable(){
         airportID.setCellValueFactory(new PropertyValueFactory<Airport, String>("airportID"));
         airportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
@@ -757,6 +805,7 @@ public class MainController implements Initializable {
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
     }
 
+    /*Set columns of route table*/
     private void initRouteTable(){
         routeAirlineName.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
         source.setCellValueFactory(new PropertyValueFactory<Route, String>("sourceAirportName"));
