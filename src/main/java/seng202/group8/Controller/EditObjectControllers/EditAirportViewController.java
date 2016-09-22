@@ -169,6 +169,7 @@ public class EditAirportViewController {
         editLatitudeField.setVisible(false);
         editLongitudeField.setVisible(false);
         editAltitudeField.setVisible(false);
+
     }
 
     @FXML
@@ -183,6 +184,7 @@ public class EditAirportViewController {
         editAirportLongError.setVisible(false);
         editAirportLatError.setVisible(false);
         editAirportAltError.setVisible(false);
+
 
     }
     @FXML

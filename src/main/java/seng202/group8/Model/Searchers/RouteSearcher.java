@@ -2,11 +2,11 @@ package seng202.group8.Model.Searchers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seng202.group8.Model.DatabaseMethods.Database;
-import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Route;
 
-import java.sql.Connection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * Created by Erika on 29-Aug-16.
@@ -15,123 +15,139 @@ public class RouteSearcher {
 
     private ObservableList<Route> loadedRoutes = FXCollections.observableArrayList();
 
-    /**
-     * A constructor for the route seacher object
-     *
-     * @param loadedRoutes an observalble list of routes
-     */
     public RouteSearcher(ObservableList<Route> loadedRoutes) {
         this.loadedRoutes = loadedRoutes;
     }
 
-    /**
-     * Return the list of all currently loaded routes
-     *
-     * @return an observable list of routes
-     */
     public ObservableList<Route> getLoadedRoutes() {
         return loadedRoutes;
     }
 
-    private ObservableList<Route> generateSearchList(String paramID, String searchParam) {
+    public void routesOfAirline(String airline){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
 
-        Database db = new Database();
-        DatabaseSearcher dbs = new DatabaseSearcher();
-        String sql = dbs.buildRouteSearch(paramID, searchParam);
-        Connection conn = db.connect();
-        ObservableList<Route> routes = dbs.searchRouteByOption(conn, sql);
-        db.disconnect(conn);
+        String regex = airline + "\\w*";
+        Pattern p = Pattern.compile(regex);
 
-        return routes;
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            Matcher m = p.matcher(loadedRoutes.get(i).getAirline().getName());
+            if (m.find()){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
+        loadedRoutes = matchingRoutes;
     }
+    public void routesOfAirlineID(int airlineID){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
 
-    /**
-     * Method to search for route based off of airlinecode
-     *
-     * @param airline name of airline
-     */
-    public void routesOfAirline(String airline) {
-        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(airlinecode)", airline);
+        String regex = Integer.toString(airlineID) + "\\d*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            Matcher m = p.matcher(Integer.toString(loadedRoutes.get(i).getAirline().getAirlineID()));
+            if (m.find()){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
         loadedRoutes = matchingRoutes;
     }
 
-    /**
-     * Method to search for route based off of airlineid
-     *
-     * @param airlineID id of airline
-     */
-    public void routesOfAirlineID(int airlineID) {
-        ObservableList<Route> matchingRoutes = generateSearchList("airlineid", Integer.toString(airlineID));
+    public void routesOfSource(String sourceAirportName){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+
+        String regex = sourceAirportName + "\\w*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).getSourceAirport().getIATA() != null) {
+                Matcher m = p.matcher(loadedRoutes.get(i).getSourceAirport().getIATA());
+                if (m.find()) {
+                    matchingRoutes.add(loadedRoutes.get(i));
+                }
+            }
+        }
+        loadedRoutes = matchingRoutes;
+    }
+    public void routesOfSourceID(int sourceAirportID){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+
+        String regex = sourceAirportID + "\\d*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            Matcher m = p.matcher(Integer.toString(loadedRoutes.get(i).getSourceAirport().getAirportID()));
+            if (m.find()){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
         loadedRoutes = matchingRoutes;
     }
 
-    /**
-     * Method to search for route based off of source airport name
-     *
-     * @param sourceAirportName name of source airport
-     */
-    public void routesOfSource(String sourceAirportName) {
-        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(sourceairport)", sourceAirportName);
+    public void routesOfDestination(String destinationAirport){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+
+        String regex = destinationAirport + "\\w*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).getDestinationAirport().getIATA() != null) {
+                Matcher m = p.matcher(loadedRoutes.get(i).getDestinationAirport().getIATA());
+                if (m.find()) {
+                    matchingRoutes.add(loadedRoutes.get(i));
+                }
+            }
+        }
         loadedRoutes = matchingRoutes;
     }
 
-    /**
-     * Method to search for route based off of source aiport id
-     *
-     * @param sourceAirportID id of source airport
-     */
-    public void routesOfSourceID(int sourceAirportID) {
-        ObservableList<Route> matchingRoutes = generateSearchList("sourceid", Integer.toString(sourceAirportID));
+    public void routesOfDestinationID(int destinationAirportID){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+
+        String regex = destinationAirportID + "\\d*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            Matcher m = p.matcher(Integer.toString(loadedRoutes.get(i).getDestinationAirport().getAirportID()));
+            if (m.find()){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
         loadedRoutes = matchingRoutes;
     }
 
-    /**
-     * Method to search for route based off destination airport name
-     *
-     * @param destinationAirport name of destination airport
-     */
-    public void routesOfDestination(String destinationAirport) {
-        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(destinationairport)", destinationAirport);
+    public void routesOfStops(int stops){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).getStops() == stops){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
         loadedRoutes = matchingRoutes;
     }
 
-    /**
-     * Method to search for route based off of destination airport id
-     *
-     * @param destinationAirportID id of destination airport
-     */
-    public void routesOfDestinationID(int destinationAirportID) {
-        ObservableList<Route> matchingRoutes = generateSearchList("destinationid", Integer.toString(destinationAirportID));
+    public void routesOfCodeshare(String codeshareStatus){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
+        boolean isCodeshare = codeshareStatus.equals("Codeshare");
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            if (loadedRoutes.get(i).isCodeshare() == isCodeshare){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
         loadedRoutes = matchingRoutes;
     }
 
-    /**
-     * Method to search for route based off of number of stops
-     *
-     * @param stops number of stops in route
-     */
-    public void routesOfStops(int stops) {
-        ObservableList<Route> matchingRoutes = generateSearchList("stops", Integer.toString(stops));
-        loadedRoutes = matchingRoutes;
-    }
+    public void routesOfEquipment(String equipment){
+        ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
 
-    /**
-     * Method to search for airport based off being codeshared
-     *
-     * @param codeshareStatus string if airport codeshared
-     */
-    public void routesOfCodeshare(String codeshareStatus) {
-        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(codeshare)", codeshareStatus);
-        loadedRoutes = matchingRoutes;
-    }
+        String regex = equipment + "\\w*";
+        Pattern p = Pattern.compile(regex);
 
-    /**
-     * Method to search for route based off of equipment
-     *
-     * @param equipment equipment used in route
-     */
-    public void routesOfEquipment(String equipment) {
-        ObservableList<Route> matchingRoutes = generateSearchList("LOWER(equipment)", equipment);
+        for (int i = 0; i < loadedRoutes.size(); i++){
+            Matcher m = p.matcher(loadedRoutes.get(i).getEquipment());
+            if (m.find()){
+                matchingRoutes.add(loadedRoutes.get(i));
+            }
+        }
         loadedRoutes = matchingRoutes;
     }
 
