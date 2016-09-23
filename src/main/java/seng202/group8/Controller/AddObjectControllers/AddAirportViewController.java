@@ -134,7 +134,7 @@ AddAirportViewController {
 
         boolean noErrors = addAirportError(airportDataList);
 
-        if (noErrors) {
+        if (noErrors && mainController.getAirportHashMap().get(ICAO) == null && mainController.getAirportHashMap().get(code) == null) {
             Airport newAirport = parser.createSingleAirport(data);
             ObservableList<Airport> airports = FXCollections.observableArrayList();
             airports.add(newAirport);

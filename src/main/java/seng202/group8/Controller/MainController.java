@@ -173,6 +173,10 @@ public class MainController implements Initializable {
         this.routeHashMap.put(this.getRouteIds(), route);
     }
 
+    public HashMap<String, Airline> getAirlineHashMap() {return airlineHashMap;}
+
+    public HashMap<String, Airport> getAirportHashMap() {return airportHashMap;}
+
     public void fileSave(ActionEvent e){
         //PLEASE DON'T DELETE ME!'
 //        FileChooser fileChooser = new FileChooser();

@@ -173,7 +173,9 @@ public class AddRouteViewController {
             airlineSearcher.airlinesOfName(newRoute.getAirlineName());
 
             newRoute.setSourceAirport(sourceSearcher.getLoadedAirports().get(0));
+            newRoute.getSourceAirport().setNumRoutes(newRoute.getSourceAirport().getNumRoutes() + 1);
             newRoute.setDestinationAirport(destinationSearcher.getLoadedAirports().get(0));
+            newRoute.getDestinationAirport().setNumRoutes(newRoute.getDestinationAirport().getNumRoutes() + 1);
             newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
 
             ObservableList<Route> routes = FXCollections.observableArrayList();

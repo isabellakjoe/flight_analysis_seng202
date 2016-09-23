@@ -160,7 +160,7 @@ public class AddAirlineViewController {
 
         boolean noErrors = addAirlineError(notNullData);
 
-        if (noErrors) {
+        if (noErrors && mainController.getAirlineHashMap().get(IATA) == null && mainController.getAirlineHashMap().get(ICAO) == null) {
             ObservableList<Airline> airlines = FXCollections.observableArrayList();
             Airline newAirline = parser.createSingleAirline(data);
             airlines.add(newAirline);
@@ -183,6 +183,8 @@ public class AddAirlineViewController {
             mainController.resetView();
             mainController.setAirlineComboBoxes();
             mainController.backToTableView(e);
+        } else {
+            System.out.println("IATA NOT UNIQUE");
         }
     }
 
