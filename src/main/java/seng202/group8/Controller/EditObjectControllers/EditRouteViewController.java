@@ -76,6 +76,7 @@ public class EditRouteViewController {
 
     @FXML
     public void backToTableView(ActionEvent e){
+        makeInvisible();
         mainController.backToTableView(e);
     }
 

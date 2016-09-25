@@ -70,6 +70,7 @@ public class AddAirlineViewController {
 
     @FXML
     private void cancelAddedAirline(ActionEvent e) {
+        clearAirlineErrors();
         makeInvisible();
         mainController.backToTableView(e);
         addedAirlineName.clear();

@@ -93,6 +93,7 @@ AddAirportViewController {
 
     @FXML
     private void cancelAddedAirport(ActionEvent e) {
+        clearAirportErrors();
         addAirportViewPane.setVisible(false);
         mainController.backToTableView(e);
         addedAirportName.clear();

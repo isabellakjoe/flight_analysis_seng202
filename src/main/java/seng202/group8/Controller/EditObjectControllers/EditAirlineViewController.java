@@ -74,6 +74,7 @@ public class EditAirlineViewController {
 
     @FXML
     public void backToTableView(ActionEvent e){
+        makeInvisible();
         mainController.backToTableView(e);
     }
 

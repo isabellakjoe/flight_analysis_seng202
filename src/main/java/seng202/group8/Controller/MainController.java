@@ -721,13 +721,14 @@ public class MainController implements Initializable {
         editAirlineViewController.cancelAirlineChanges(new ActionEvent());
         editAirlineViewController.makeInvisible();
         editAirportViewController.cancelAirportChanges(new ActionEvent());
+        editAirportViewController.makeInvisible();
     }
 
     /* Clears tables and re-adds currently loaded objects to them*/
     private void resetTables() {
         airportTable.getColumns().clear();
         initAirportTable();
-        airportTable.getColumns().addAll(airportName, city, airportCountry);
+        airportTable.getColumns().addAll(airportID, airportName, city, airportCountry);
         airportTable.setItems(currentlyLoadedAirports);
 
         airlineTable.getColumns().clear();
@@ -743,6 +744,7 @@ public class MainController implements Initializable {
 
     /* Switches to raw data table viewing interface*/
     public void backToTableView(ActionEvent e) {
+        resetView();
         resetTables();
         airportTable.setVisible(true);
         airlineTable.setVisible(true);
