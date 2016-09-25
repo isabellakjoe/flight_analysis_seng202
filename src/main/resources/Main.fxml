@@ -1,28 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
     <left>
         <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Route">
                     <content>
-                        <fx:include fx:id="searchRouteView" source="SearchRouteView.fxml"/>
+                        <fx:include fx:id="searchRouteView" source="SearchRouteView.fxml" />
                     </content>
                 </Tab>
                 <Tab text="Airport">
                     <content>
-                        <fx:include fx:id="searchAirportView" source="SearchAirportView.fxml"/>
+                        <fx:include fx:id="searchAirportView" source="SearchAirportView.fxml" />
                     </content>
                 </Tab>
                 <Tab text="Airline">
                     <content>
-                <fx:include fx:id="searchAirlineView" source="SearchAirlineView.fxml"/>
+                <fx:include fx:id="searchAirlineView" source="SearchAirlineView.fxml" />
                     </content>
                 </Tab>
             </tabs>
@@ -86,7 +103,7 @@
                                     <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
                                  </padding>
                                     </MenuButton>
-                                    <TableView fx:id="airlineTable" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="1">
+                                    <TableView fx:id="airlineTable" onMouseClicked="#airlineInfo" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="1">
                                         <columns>
                                             <TableColumn fx:id="airlineID" minWidth="30.0" prefWidth="150.0" text="ID" />
                                             <TableColumn fx:id="airlineName" minWidth="30.0" prefWidth="150.0" text="Name" />
@@ -101,7 +118,7 @@
                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                         </columnResizePolicy>
                                     </TableView>
-                              <fx:include fx:id="editAirlineView" source="EditAirlineView.fxml"/>
+                              <fx:include fx:id="editAirlineView" source="EditAirlineView.fxml" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Table Viewer" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -118,7 +135,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                                     </MenuButton>
-                                    <TableView fx:id="airportTable" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="3">
+                                    <TableView fx:id="airportTable" onMouseClicked="#airportInfo" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="3">
                                         <columnResizePolicy>
                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                         </columnResizePolicy>
@@ -144,7 +161,7 @@
                                     </ContextMenu>
                                  </contextMenu>
                                     </TableView>
-                              <fx:include fx:id="editAirportView" source="EditAirportView.fxml"/>
+                              <fx:include fx:id="editAirportView" source="EditAirportView.fxml" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route Table Viewer" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -164,7 +181,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                                     </MenuButton>
-                                    <TableView fx:id="routeTable" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="5">
+                                    <TableView fx:id="routeTable" onMouseClicked="#routeInfo" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="5">
                                         <columnResizePolicy>
                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                         </columnResizePolicy>
@@ -177,7 +194,7 @@
                                             <TableColumn fx:id="equipment" minWidth="30.0" prefWidth="75.0" text="Equipment" visible="false" />
                                         </columns>
                                     </TableView>
-                              <fx:include fx:id="editRouteView" source="EditRouteView.fxml"/>
+                              <fx:include fx:id="editRouteView" source="EditRouteView.fxml" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -195,6 +212,56 @@
                </content>
             </Tab>
              <fx:include fx:id="mapView" source="MapView.fxml" />
+            <fx:include fx:id="graphView" source="GraphViewtab.fxml" />
+            <Tab closable="false" text="Graph View">
+               <content>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="211.0" minHeight="0.0" prefHeight="93.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="584.0" minHeight="10.0" prefHeight="557.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <BarChart fx:id="routesPerAirport" legendVisible="false" prefHeight="442.0" prefWidth="595.0" title="No. of Routes per Airport" GridPane.rowIndex="1">
+                                 <xAxis>
+                                    <CategoryAxis label="Airport" tickLabelRotation="90.0" fx:id="xAxis" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis label="Number of Routes" side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                              <Button fx:id="graphButton" mnemonicParsing="false" onAction="#setChart" text="Button">
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <VBox maxWidth="290.0" prefHeight="28.0" prefWidth="291.0" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Items Shown" textAlignment="CENTER" wrappingWidth="280.09619140625">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <Slider fx:id="routeNum" blockIncrement="5.0" majorTickUnit="5.0" max="50.0" maxWidth="350.0" minorTickCount="1" onMouseReleased="#setChart" prefWidth="100.0" showTickLabels="true">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Slider>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </StackPane>
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
     </center>

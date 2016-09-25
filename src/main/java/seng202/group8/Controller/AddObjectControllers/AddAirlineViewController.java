@@ -70,6 +70,8 @@ public class AddAirlineViewController {
 
     @FXML
     private void cancelAddedAirline(ActionEvent e) {
+        makeInvisible();
+        mainController.backToTableView(e);
         addedAirlineName.clear();
         addedAirlineID.clear();
         addedAirlineCountry.clear();
@@ -78,7 +80,6 @@ public class AddAirlineViewController {
         addedAirlineICAO.clear();
         addedAirlineCallsign.clear();
         addedAirlineActive.setSelected(false);
-        mainController.backToTableView(new ActionEvent());
     }
 
     @FXML

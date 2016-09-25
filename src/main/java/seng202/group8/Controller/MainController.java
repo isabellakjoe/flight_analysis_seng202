@@ -2,10 +2,14 @@ package seng202.group8.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
@@ -728,7 +732,7 @@ public class MainController implements Initializable {
 
         airlineTable.getColumns().clear();
         initAirlineTable();
-        airlineTable.getColumns().addAll(airlineName, alias, country, active);
+        airlineTable.getColumns().addAll(airlineID, airlineName, alias, country, active);
         airlineTable.setItems(currentlyLoadedAirlines);
 
         routeTable.getColumns().clear();
@@ -819,6 +823,43 @@ public class MainController implements Initializable {
         equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
     }
 
+    @FXML
+    private BarChart<String, Integer> routesPerAirport;
+    @FXML
+    private CategoryAxis xAxis;
+    @FXML
+    private Slider routeNum;
+
+    /** Fills the routesPerAirport Graph with data and sets xAxis labels
+     */
+    public void setChart(){
+        routesPerAirport.getData().clear();
+        if (!currentlyLoadedAirports.isEmpty()) {
+            XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
+            ObservableList<Airport> loadedAirports = currentlyLoadedAirports;
+            ArrayList<String> airportNames = new ArrayList<String>();
+            airportNames.clear();
+
+
+            Comparator<Airport> compAir = new Comparator<Airport>() {
+                @Override
+                public int compare(Airport o1, Airport o2) {
+                    return o1.getNumRoutes() - o2.getNumRoutes();
+                }
+            };
+            Collections.sort(loadedAirports, compAir.reversed());
+            for (int i = 0; i < routeNum.getValue(); i++) {
+                String name = loadedAirports.get(i).getName();
+                int routes = loadedAirports.get(i).getNumRoutes();
+                airportNames.add(name);
+                series.getData().add(new XYChart.Data<String, Integer>(name, routes));
+            }
+            xAxis.getCategories().clear();
+            xAxis.setCategories(FXCollections.observableArrayList(airportNames));
+            routesPerAirport.getData().add(series);
+        }
+    }
+
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -829,41 +870,8 @@ public class MainController implements Initializable {
 
         // Allows individual cells to be selected as opposed to rows
         //airportTable.getSelectionModel().setCellSelectionEnabled(true);
-        airportTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            //click event handler for double clicking a table cell.
-            public void handle(MouseEvent click) {
-            //Checks if table is empty then checks for double click
-            if (!airportTable.getItems().isEmpty()) {
-                if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
-                    editAirportViewController.setAirportInfo();
-                }
-            }
-            }
-        });
-
-        airlineTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            //click event handler for double clicking a table cell.
-            public void handle(MouseEvent click) {
-            //Checks if table is empty then checks for double click
-            if (!airlineTable.getItems().isEmpty()) {
-                if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
-                    editAirlineViewController.setAirlineInfo();
-                }
-            }
-            }
-        });
-
-        routeTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            //click event handler for double clicking a table cell.
-            public void handle(MouseEvent click) {
-            //Checks if table is empty then checks for double click
-            if (!routeTable.getItems().isEmpty()) {
-                if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
-                    editRouteViewController.setRouteInfo();
-                }
-            }
-            }
-        });
+        //Setting up Chart
+        setChart();
 
         airportTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         airportTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
@@ -877,6 +885,46 @@ public class MainController implements Initializable {
                }
            }
         );
+    }
+
+
+    /** Switches to the more info pane for Airports
+     *
+     * @param click: The click event
+     */
+    public void airportInfo(MouseEvent click) {
+        //Checks if table is empty then checks for double click
+        if (!airportTable.getItems().isEmpty()) {
+            if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                editAirportViewController.setAirportInfo();
+            }
+        }
+    }
+
+    /** Switches to the more info pane for Airports
+     *
+     * @param click: The click event
+     */
+    public void airlineInfo(MouseEvent click) {
+        //Checks if table is empty then checks for double click
+        if (!airlineTable.getItems().isEmpty()) {
+            if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                editAirlineViewController.setAirlineInfo();
+            }
+        }
+    }
+
+    /** Switches to the more info pane for Airports
+     *
+     * @param click: The click event
+     */
+    public void routeInfo(MouseEvent click) {
+        //Checks if table is empty then checks for double click
+        if (!routeTable.getItems().isEmpty()) {
+            if (click.getClickCount() >= 2 && !click.isControlDown() && !click.getTarget().toString().startsWith("TableColumnHeader")) {
+                editRouteViewController.setRouteInfo();
+            }
+        }
     }
 
     @FXML
