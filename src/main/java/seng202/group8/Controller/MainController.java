@@ -249,13 +249,14 @@ public class MainController implements Initializable {
 //        }
     }
 
-    /* Method to open up a file chooser for the user to select the Airport Data file  with error handling*/
-    public void addAirportData(ActionEvent e) {
+    /** Method to implement Airport data into the application with error handling
+     *
+     * @param file: Contains Airport data
+     */
+    public void airportFile(File file) {
         try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Airport datafile"); //Text in the window header
-            File file = fileChooser.showOpenDialog(new Stage());
             if (file != null) {
+                System.out.println("Path: " + file.getPath());
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the airport data file
@@ -279,17 +280,28 @@ public class MainController implements Initializable {
                 resetView();
                 tableView.setVisible(true);
             }
-        } catch (FileNotFoundException ex) {
+        }catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
     }
 
-    /* Method to open up a file chooser for the user to select the Airline Data file with error handling */
-    public void addAirlineData(ActionEvent e) {
+    /** Method to open up a file chooser for the user to select the Airport Data file  with error handling
+     */
+    public void addAirportData(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Airport datafile"); //Text in the window header
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        airportFile(file);
+    }
+
+
+    /** Method to implement Airline data into the application with error handling
+     *
+     * @param file: Contains Airline data
+     */
+    public void airlineFile(File file) {
         try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Airline datafile");
-            File file = fileChooser.showOpenDialog(new Stage());
             if (file != null) {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
@@ -316,18 +328,26 @@ public class MainController implements Initializable {
                 resetView();
                 tableView.setVisible(true);
             }
-        } catch (FileNotFoundException ex) {
+        }catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
-
     }
 
-    /* Method to open up a file chooser for the user to select the Route Data file with error handling */
-    public void addRouteData(ActionEvent e) {
+    /** Method to open up a file chooser for the user to select the Airline Data file
+     */
+    public void addAirlineData(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Airline datafile");
+        File file = fileChooser.showOpenDialog(new Stage());
+        airlineFile(file);
+    }
+
+    /** Method to implement Route data into the application with error handling
+     *
+     * @param file: Contains Route data
+     */
+    public void routeFile(File file) {
         try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Route datafile");
-            File file = fileChooser.showOpenDialog(new Stage());
             if (file != null) {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
@@ -357,10 +377,18 @@ public class MainController implements Initializable {
                 resetView();
                 tableView.setVisible(true);
             }
-        } catch (FileNotFoundException ex) {
+        }catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
         }
+    }
 
+    /** Method to open up a file chooser for the user to select the Route Data file with error handling
+     */
+    public void addRouteData(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Route datafile");
+        File file = fileChooser.showOpenDialog(new Stage());
+        routeFile(file);
     }
 
     /*Fills comboboxes used for searching airports and creating routes*/
@@ -850,15 +878,17 @@ public class MainController implements Initializable {
                 }
             };
             Collections.sort(loadedAirports, compAir.reversed());
-            for (int i = 0; i < routeNum.getValue(); i++) {
+            for (int i = 0; i <= routeNum.getValue(); i++) {
                 String name = loadedAirports.get(i).getName();
                 int routes = loadedAirports.get(i).getNumRoutes();
                 airportNames.add(name);
                 series.getData().add(new XYChart.Data<String, Integer>(name, routes));
             }
             xAxis.getCategories().clear();
-            xAxis.setCategories(FXCollections.observableArrayList(airportNames));
-            routesPerAirport.getData().add(series);
+            if (routeNum.getValue() > 0){
+                xAxis.setCategories(FXCollections.observableArrayList(airportNames));
+                routesPerAirport.getData().add(series);
+            }
         }
     }
 
@@ -870,6 +900,18 @@ public class MainController implements Initializable {
         initAirportTable();
         initRouteTable();
 
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("New State");
+        alert.setHeaderText("There is data availible to be loaded.");
+        alert.setContentText("Would you like to load initial data?");
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.YES){
+            airportFile(new File("src/main/resources/airports.dat"));
+            airlineFile(new File("src/main/resources/airlines.dat"));
+            routeFile(new File("src/main/resources/routes.dat"));
+        }
         // Allows individual cells to be selected as opposed to rows
         //airportTable.getSelectionModel().setCellSelectionEnabled(true);
         //Setting up Chart
