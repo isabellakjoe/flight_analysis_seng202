@@ -32,7 +32,7 @@ public class RouteDatabaseLoader extends RouteMethod {
             while (result.next()) {
                 Route loadRoute = new Route();
                 //Check if the airline is currently in the application. If so link the objects together
-                if (airlineHashMap.get(result.getString("airlinecode")) instanceof Airline) {
+                if (airlineHashMap.get(result.getString("airlinecode")) != null) {
                     loadRoute.setAirline(airlineHashMap.get(result.getString("airlinecode")));
                     loadRoute.setAirlineName(airlineHashMap.get(result.getString("airlinecode")).getName());
                 } else {
@@ -45,7 +45,7 @@ public class RouteDatabaseLoader extends RouteMethod {
                     int numSrcRoutes = airportHashMap.get(result.getString("sourceairport")).getNumRoutes() + 1;
                     airportHashMap.get(result.getString("sourceairport")).setNumRoutes(numSrcRoutes);
                 } else {
-                    System.out.println("Error: Source Airport does not exist");
+                    
                     continue;
                 }
                 if (airportHashMap.get(result.getString("destinationairport")) instanceof Airport) {
@@ -54,7 +54,6 @@ public class RouteDatabaseLoader extends RouteMethod {
                     int numDestRoutes = airportHashMap.get(result.getString("destinationairport")).getNumRoutes() + 1;
                     airportHashMap.get(result.getString("destinationairport")).setNumRoutes(numDestRoutes);
                 } else {
-                    System.out.println("Error: Destination Airport does not exist");
                     continue;
                 }
 

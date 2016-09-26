@@ -35,7 +35,6 @@ public class DatabaseSaver {
             while (result.next()) {
                 max = result.getInt(0);
             }
-            System.out.println(max);
         } catch (SQLException e) {
             max = 1;
         }
@@ -117,44 +116,56 @@ public class DatabaseSaver {
     }
 
     private String createRouteStatement(Route routeToSave) {
-        //A method used to create an sql statement used to insert an route into the database.
-        //Get the route's unique ID
-        int id = routeToSave.getRouteID();
-        String stringID = convertIntToString(id);
-        //Get the name and code of the airline
-        String code = routeToSave.getAirline().getName();
-        int airlineID = routeToSave.getAirline().getAirlineID();
-        String stringAirlineID = convertIntToString(airlineID);
-        //Get the name and ID of the source airport
-        String sourceAirportCode;
-        if (routeToSave.getSourceAirport().getIATA() == null) {
-            sourceAirportCode = routeToSave.getSourceAirport().getICAO();
-        } else {
-            sourceAirportCode = routeToSave.getSourceAirport().getIATA();
-        }
-        int sourceAirportID = routeToSave.getSourceAirport().getAirportID();
-        String stringSourceID = convertIntToString(sourceAirportID);
-        //Get the name and ID of the destination airport
-        String destinationAirportCode;
-        if (routeToSave.getDestinationAirport().getIATA() == null) {
-            destinationAirportCode = routeToSave.getDestinationAirport().getICAO();
-        } else {
-            destinationAirportCode = routeToSave.getDestinationAirport().getIATA();
-        }
-        int destinationAirportID = routeToSave.getDestinationAirport().getAirportID();
-        String stringDestinationID = convertIntToString(destinationAirportID);
-        //Get whether the route is codeshared
-        char codeshare = getCharOfBoolean(routeToSave.isCodeshare());
-        //Get the number of stops
-        int stops = routeToSave.getStops();
-        String stringStops = convertIntToString(stops);
-        //Get the equipment used
-        String equipment = routeToSave.getEquipment();
 
-        String statement = "INSERT INTO route VALUES (" + stringID + ",\"" + code + "\"," + stringAirlineID + ",\"" +
-                sourceAirportCode + "\"," + stringSourceID + ",\"" + destinationAirportCode +
-                "\"," + stringDestinationID + ",\"" + codeshare + "\"," + stringStops + ",\"" +
-                equipment + "\");";
+        String statement;
+
+        if (routeToSave.getAirline() != null && routeToSave.getSourceAirport() != null && routeToSave.getDestinationAirport() != null) {
+            //A method used to create an sql statement used to insert an route into the database.
+            //Get the route's unique ID
+            int id = routeToSave.getRouteID();
+            String stringID = convertIntToString(id);
+            //Get the name and code of the airline
+            String code = null;
+            if (routeToSave.getAirline().getIATA() != null) {
+                code = routeToSave.getAirline().getIATA();
+            } else {
+                code = routeToSave.getAirline().getICAO();
+            }
+            int airlineID = routeToSave.getAirline().getAirlineID();
+            String stringAirlineID = convertIntToString(airlineID);
+            //Get the name and ID of the source airport
+            String sourceAirportCode;
+            if (routeToSave.getSourceAirport().getIATA() != null) {
+                sourceAirportCode = routeToSave.getSourceAirport().getIATA();
+            } else {
+                sourceAirportCode = routeToSave.getSourceAirport().getICAO();
+            }
+            int sourceAirportID = routeToSave.getSourceAirport().getAirportID();
+            String stringSourceID = convertIntToString(sourceAirportID);
+            //Get the name and ID of the destination airport
+            String destinationAirportCode;
+            if (routeToSave.getDestinationAirport().getIATA() != null) {
+                destinationAirportCode = routeToSave.getDestinationAirport().getIATA();
+            } else {
+                destinationAirportCode = routeToSave.getDestinationAirport().getICAO();
+            }
+            int destinationAirportID = routeToSave.getDestinationAirport().getAirportID();
+            String stringDestinationID = convertIntToString(destinationAirportID);
+            //Get whether the route is codeshared
+            char codeshare = getCharOfBoolean(routeToSave.isCodeshare());
+            //Get the number of stops
+            int stops = routeToSave.getStops();
+            String stringStops = convertIntToString(stops);
+            //Get the equipment used
+            String equipment = routeToSave.getEquipment();
+
+            statement = "INSERT INTO route VALUES (" + stringID + ",\"" + code + "\"," + stringAirlineID + ",\"" +
+                    sourceAirportCode + "\"," + stringSourceID + ",\"" + destinationAirportCode +
+                    "\"," + stringDestinationID + ",\"" + codeshare + "\"," + stringStops + ",\"" +
+                    equipment + "\");";
+        } else {
+            statement = null;
+        }
         return statement;
 
 
@@ -219,52 +230,12 @@ public class DatabaseSaver {
      * @param conn      a static connection to a database
      * @param routeList an observable list of routes
      */
-    public int saveRoutes(Connection conn, ObservableList<Route> routeList) {
+    public void saveRoutes(Connection conn, ObservableList<Route> routeList) {
 
-        int routeIDStart = getCurrentMaxRouteID(conn);
-        System.out.println("Current ID Starts at " + Integer.toString(routeIDStart));
-        try {
-            Statement stmt = conn.createStatement();
-            for (int i = 0; i < routeList.size(); i++) {
-                routeList.get(i).setRouteID(routeIDStart);
-                String sql = createRouteStatement(routeList.get(i));
-                try {
-                    stmt.executeUpdate(sql);
-                }
-                catch (java.sql.SQLException e){
-                    System.out.print("Route being added includes non unique data.\n");
-                }
-                routeIDStart += 1;
-            }
-            conn.commit();
-        } catch (Exception e) {
-            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
+        for (int i = 0; i < routeList.size(); i++) {
+            saveSingleRoute(conn, routeList.get(i));
         }
 
-        return routeIDStart;
-    }
-
-    public int saveRouteWithID(Connection conn, ObservableList<Route> routeList, int id) {
-
-        int routeid = id;
-
-        try {
-            Statement stmt = conn.createStatement();
-            for (int i = 0; i < routeList.size(); i++) {
-                routeList.get(i).setRouteID(routeid);
-                routeid += 1;
-                String sql = createRouteStatement(routeList.get(i));
-                try {
-                    stmt.executeUpdate(sql);
-                } catch (java.sql.SQLException e){
-                    System.out.print("Route being added includes non unique data.\n");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
-        }
-
-        return routeid;
     }
 
     public void saveSingleRoute(Connection conn, Route route) {
@@ -272,8 +243,10 @@ public class DatabaseSaver {
         try {
             Statement stmt = conn.createStatement();
             String sql = createRouteStatement(route);
-            stmt.executeUpdate(sql);
-            conn.commit();
+            if (sql != null) {
+                stmt.executeUpdate(sql);
+                conn.commit();
+            }
         } catch (SQLException e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }

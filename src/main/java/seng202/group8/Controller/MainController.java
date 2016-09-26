@@ -26,6 +26,7 @@ import seng202.group8.Controller.EditObjectControllers.EditRouteViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController;
+import seng202.group8.Main;
 import seng202.group8.Model.DatabaseMethods.*;
 import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
@@ -177,9 +178,38 @@ public class MainController implements Initializable {
         this.routeHashMap.put(this.getRouteIds(), route);
     }
 
-    public HashMap<String, Airline> getAirlineHashMap() {return airlineHashMap;}
+    public static HashMap<String, Airline> getAirlineHashMap() {return airlineHashMap;}
 
-    public HashMap<String, Airport> getAirportHashMap() {return airportHashMap;}
+    public static HashMap<String, Airport> getAirportHashMap() {return airportHashMap;}
+
+    public static HashMap<Integer, Route> getRouteHashMap() {return routeHashMap;}
+
+    public void showAirlines() {
+        try {
+            airlineTable.setItems(currentlyLoadedAirlines);
+            setAirlineComboBoxes();
+        } catch (NullPointerException np) {
+            System.out.println("Error Loading Airlines");
+        }
+    }
+
+    public void showAirports() {
+        try {
+            airportTable.setItems(currentlyLoadedAirports);
+            setAirportComboBoxes();
+        } catch (NullPointerException np) {
+            System.out.println("Error Loading Airports");
+        }
+    }
+
+    public void showRoutes() {
+        try {
+            routeTable.setItems(currentlyLoadedRoutes);
+            setRouteComboBoxes();
+        } catch (NullPointerException np) {
+            System.out.println("Error Loading Routes");
+        }
+    }
 
     public void fileSave(ActionEvent e){
         //PLEASE DON'T DELETE ME!'
@@ -263,17 +293,16 @@ public class MainController implements Initializable {
                 //ObservableList<Airport> airports = load.buildAirports();
                 //Create the database objects and connections here
                 Database dbOne = new Database();
-                Database dbTwo = new Database();
                 DatabaseSaver dbsave = new DatabaseSaver();
                 AirportDatabaseLoader adl = new AirportDatabaseLoader();
                 Connection connOne = dbOne.connect();
-                Connection connTwo = dbTwo.connect();
+                Connection connTwo = dbOne.connect();
                 //Save all of the loaded files to the database here
                 dbsave.saveAirports(connOne, load.buildAirports());
                 dbOne.disconnect(connOne);
                 //Load all of the content from the database here, and add all airports to the hashmap.
                 ObservableList<Airport> airports = adl.loadAirport(connTwo, airportHashMap);
-                dbTwo.disconnect(connTwo);
+                dbOne.disconnect(connTwo);
                 currentlyLoadedAirports = airports;
                 airportTable.setItems(airports);
                 setAirportComboBoxes();
@@ -309,18 +338,17 @@ public class MainController implements Initializable {
                 //ObservableList<Airline> airlines = load.buildAirlines();
 
                 Database dbOne = new Database();
-                Database dbTwo = new Database();
                 DatabaseSaver dbsave = new DatabaseSaver();
                 AirlineDatabaseLoader adl = new AirlineDatabaseLoader();
 
                 Connection connOne = dbOne.connect();
-                Connection connTwo = dbTwo.connect();
+                Connection connTwo = dbOne.connect();
 
                 dbsave.saveAirlines(connOne, load.buildAirlines());
                 dbOne.disconnect(connOne);
 
                 ObservableList<Airline> airlines = adl.loadAirlines(connTwo, airlineHashMap);
-                dbTwo.disconnect(connTwo);
+                dbOne.disconnect(connTwo);
 
                 currentlyLoadedAirlines = airlines;
                 airlineTable.setItems(airlines);
@@ -355,27 +383,32 @@ public class MainController implements Initializable {
                 //ObservableList<Route> routes = load.buildRoutes();
 
                 Database dbOne = new Database();
-                Database dbTwo = new Database();
                 DatabaseSaver dbsave = new DatabaseSaver();
                 RouteDatabaseLoader rdl = new RouteDatabaseLoader();
 
                 Connection connOne = dbOne.connect();
-                Connection connTwo = dbTwo.connect();
+                Connection connTwo = dbOne.connect();
 
-                if (routeIds == 0) {
-                    routeIds = dbsave.saveRoutes(connOne, load.buildRoutes());
-                } else {
-                    routeIds = dbsave.saveRouteWithID(connOne, load.buildRoutes(), routeIds);
+                ObservableList<Route> loadedRoutes = load.buildRoutes(airlineHashMap, airportHashMap);
+
+                for (Route route: loadedRoutes) {
+                    route.setRouteID(routeIds);
+                    routeIds += 1;
                 }
+
+                dbsave.saveRoutes(connOne, loadedRoutes);
+
+                ObservableList<Route> routes = rdl.loadRoutes(connOne, routeHashMap, airlineHashMap, airportHashMap);
                 dbOne.disconnect(connOne);
-                ObservableList<Route> routes = rdl.loadRoutes(connTwo, routeHashMap, airlineHashMap, airportHashMap);
-                dbTwo.disconnect(connTwo);
+
+                System.out.println(routes.size());
 
                 currentlyLoadedRoutes = routes;
                 routeTable.setItems(routes);
                 setRouteComboBoxes();
                 resetView();
                 tableView.setVisible(true);
+
             }
         }catch (FileNotFoundException ex) {
             System.out.println("FILE NOT FOUND");
@@ -457,6 +490,11 @@ public class MainController implements Initializable {
 
         int stops = 0;
         for (int i = 0; i < currentlyLoadedRoutes.size(); i++) {
+
+            sources.add(currentlyLoadedRoutes.get(i).getSourceAirport().getName());
+            destinations.add(currentlyLoadedRoutes.get(i).getDestinationAirport().getName());
+
+            /**
             if (currentlyLoadedRoutes.get(i).getSourceAirport().getIATA() != null) {
                 sources.add(currentlyLoadedRoutes.get(i).getSourceAirport().getIATA());
             } else {
@@ -467,6 +505,7 @@ public class MainController implements Initializable {
             } else {
                 destinations.add(currentlyLoadedRoutes.get(i).getDestinationAirport().getICAO());
             }
+             */
             equipment.add(currentlyLoadedRoutes.get(i).getEquipment());
             if (currentlyLoadedRoutes.get(i).getStops() > stops) {
                 stops = currentlyLoadedRoutes.get(i).getStops();
@@ -550,6 +589,7 @@ public class MainController implements Initializable {
         resetView();
         tableView.setVisible(true);
     }
+
 
     /* Method to Filter ALREADY loaded airlines by country
     Need to display an error message if airlines aren't yet loaded
@@ -929,6 +969,11 @@ public class MainController implements Initializable {
                }
            }
         );
+
+        setRouteIds(currentlyLoadedRoutes.size());
+        showAirlines();
+        showAirports();
+        showRoutes();
     }
 
 

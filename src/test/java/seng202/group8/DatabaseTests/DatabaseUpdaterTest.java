@@ -18,6 +18,7 @@ import seng202.group8.Model.Parsers.RouteParser;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -32,6 +33,8 @@ public class DatabaseUpdaterTest {
     DatabaseSaver dbSave;
     Connection connUpdate;
     Connection connSave;
+    HashMap<String, Airline> airlineHashMap;
+    HashMap<String, Airport> airportHashMap;
 
     @Before
     public void initalise() {
@@ -43,6 +46,8 @@ public class DatabaseUpdaterTest {
         //Connect to the static testing database...
         connUpdate = db.testConnect();
         connSave = db.testConnect();
+        airlineHashMap = new HashMap<String, Airline>();
+        airportHashMap = new HashMap<String, Airport>();
 
     }
 
@@ -131,9 +136,23 @@ public class DatabaseUpdaterTest {
     @Test
     public void testRouteUpdatesCorrectly() {
 
+        Airline air = new Airline();
+        air.setIATA("3B");
+        air.setName("Test Airline");
+        airlineHashMap.put("3B", air);
+
+        Airport src = new Airport();
+        Airport dest = new Airport();
+        src.setIATA("AOR");
+        src.setName("Src Test");
+        dest.setIATA("KUL");
+        dest.setName("Dest Test");
+        airportHashMap.put("AOR", src);
+        airportHashMap.put("KUL", dest);
+
         String testRoute = "3B,411,AOR,2865,KUL,2991,Y,11,CR2";
         RouteParser rp = new RouteParser();
-        Route route = rp.createSingleRoute(testRoute, 5499);
+        Route route = rp.createSingleRoute(testRoute, 5499, airlineHashMap, airportHashMap);
 
         dbSave.saveSingleRoute(connSave, route);
         db.disconnect(connSave);

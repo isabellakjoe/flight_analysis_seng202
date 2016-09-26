@@ -172,8 +172,8 @@ public class SearchRouteViewController {
 
         for (Route route: matchingRoutes) {
             route.setAirlineName(route.getAirline().getName());
-            route.setSourceAirportName(route.getSourceAirport().getIATA());
-            route.setDestinationAirportName(route.getDestinationAirport().getIATA());
+            route.setSourceAirportName(route.getSourceAirport().getName());
+            route.setDestinationAirportName(route.getDestinationAirport().getName());
         }
 
         mainController.routeTable.setItems(matchingRoutes);

@@ -157,6 +157,8 @@ AddAirportViewController {
             mainController.resetView();
             mainController.setAirportComboBoxes();
             mainController.backToTableView(e);
+
+            System.out.println(mainController.airportTable);
         }
     }
 

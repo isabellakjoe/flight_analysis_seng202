@@ -153,7 +153,6 @@ public class AddRouteViewController {
         String destination = (String) addedRouteDestination.getValue();
 
         List<String> routeDataList = Arrays.asList(stops, equipment, airline, source, destination);
-        System.out.println(routeDataList);
         boolean noErrors = addRouteError(routeDataList);
 
         if (noErrors) {
@@ -178,16 +177,17 @@ public class AddRouteViewController {
             newRoute.getDestinationAirport().setNumRoutes(newRoute.getDestinationAirport().getNumRoutes() + 1);
             newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
 
+            newRoute.setRouteID(mainController.getRouteIds());
+            mainController.setRouteIds(mainController.getRouteIds() + 1);
+
             ObservableList<Route> routes = FXCollections.observableArrayList();
             routes.add(newRoute);
 
-            //Add the new airport to the database here
+            //Add the new route to the database here
             Database db = new Database();
             DatabaseSaver dbSave = new DatabaseSaver();
-            DatabaseSearcher dbSearch = new DatabaseSearcher();
             Connection connSave = db.connect();
-            Connection connSearch = db.connect();
-            mainController.setRouteIds(dbSave.saveRouteWithID(connSave, routes, mainController.getRouteIds()));
+            dbSave.saveSingleRoute(connSave, newRoute);
             mainController.putInRouteHashMap(routes.get(0));
             db.disconnect(connSave);
 

@@ -108,6 +108,8 @@ public class SearcherTest {
     }
 
 
+    /**
+
     @Test
     public void routeSearchTest() throws FileNotFoundException {
         FileLoader loader = new FileLoader(new BufferedReader(new FileReader("SearchTestRoutes.txt")));
@@ -122,6 +124,9 @@ public class SearcherTest {
         Route expectedRoute = routes.get(0);
         assertEquals(returnedRoute.getStops(), expectedRoute.getStops());
     }
+
+
+    */
 
 
 }
