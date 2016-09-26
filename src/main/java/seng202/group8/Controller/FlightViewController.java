@@ -77,7 +77,6 @@ public class FlightViewController implements Initializable {
 
     public boolean getIsValid(){
         return this.isValid;
-
     }
 
     public void setUpFlightView(Flight flight) {

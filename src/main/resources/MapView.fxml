@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.WebView?>
 
-<Tab fx:id="mapViewPane" closable="false" disable="true" text="Map View" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MapViewController">
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+<Tab fx:id="mapViewPane" closable="false" text="Map View" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MapViewController">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <children>
                 <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <Pane layoutX="535.0" layoutY="30.0" prefHeight="200.0" prefWidth="153.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f7f8" height="200.0" stroke="#f5f7f8" strokeType="INSIDE" width="152.0" />
+                        <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Display:" />
+                        <CheckBox fx:id="displayAllAirports" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#mapAirports" text="Airports" />
+                        <CheckBox fx:id="displayAllRoutes" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" onAction="#mapRoutes" text="Routes" />
+                    </children>
+                </Pane>
             </children>
             <padding>
                 <Insets bottom="15.0" right="15.0" top="15.0" />

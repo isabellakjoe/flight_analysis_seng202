@@ -12,8 +12,11 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import seng202.group8.Controller.AddObjectControllers.AddAirlineViewController;
 import seng202.group8.Controller.AddObjectControllers.AddAirportViewController;
 import seng202.group8.Controller.AddObjectControllers.AddRouteViewController;
@@ -36,9 +39,12 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.*;
 
+
+
 /**
  * Created by esa46 on 19/08/16.
  */
+
 
 public class MainController implements Initializable {
 
@@ -1913,4 +1919,144 @@ public class MainController implements Initializable {
             jp.showMessageDialog(null, "From "+airport1.getName()+" to "+airport2.getName() + "\nThe distance is "+distance+" km.", "Calculated Distance", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+    /**
+     *
+     * Temporary shift from mapviewcontroller so map pane can be edited in scene builder using main.fxml
+     * Transfer back into mapView.fxml and uncomment comments with "MapViewController Uncomment"
+     *
+     * transfer all methods after this point
+     */
+//    @FXML
+//    private CheckBox displayAllAirports;
+//    @FXML
+//    private CheckBox displayAllRoutes;
+//    @FXML
+//    private WebView webView;
+//    private WebEngine webEngine;
+//
+//    public void initMap() {
+//        webEngine = webView.getEngine();
+//        webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
+//
+//    }
+//
+//    // Action Event for 'Display Airports' checkbox
+//    @FXML
+//    public void mapAirports(ActionEvent e) {
+//        if (displayAllAirports.isSelected()) {
+//            displayAirports(currentlyLoadedAirports);
+//        } else {
+//            clearAirports();
+//        }
+//    }
+//
+//    // Remove currently displayed airport markers
+//    private void clearAirports() {
+//        webEngine.executeScript("clearMarkers()");
+//    }
+//
+//    // Display markers for list of airports
+//    private void displayAirports(List airportList) {
+//        if (airportList.size() < 1000 && airportList.size() != 0) {
+//            showAirportMarkers(airportList);
+//        } else if (airportList.isEmpty()) {
+//            JOptionPane jp = new JOptionPane();
+//            jp.setSize(600, 600);
+//            jp.showMessageDialog(null, "No Airports to display.", "Error Message", JOptionPane.INFORMATION_MESSAGE);
+//            displayAllAirports.setSelected(false);
+//        } else {
+//            JOptionPane jp = new JOptionPane();
+//            jp.setSize(600, 600);
+//            JLabel msgLabel = new JLabel("Are you sure you want to display " +  airportList.size() + " airports? \nThis may take a while...", JLabel.CENTER);
+//            int reply = jp.showConfirmDialog(null, msgLabel, "Error Message", JOptionPane.YES_NO_OPTION);
+//            if (reply == JOptionPane.YES_OPTION) {
+//                showAirportMarkers(airportList);
+//            } else {
+//                displayAllAirports.setSelected(false);
+//            }
+//        }
+//    }
+//
+//
+//    // Method that clears, creates and displays airport markers
+//    private void showAirportMarkers(List airports) {
+//        Iterator i = airports.iterator();
+//        while (i.hasNext()) {
+//            Airport airport = (Airport) i.next();
+//            Double latitude = airport.getLatitude();
+//            Double longitude = airport.getLongitude();
+//            webEngine.executeScript("clearMarkers()");
+//            String scriptToExecute = "createMarker(" + latitude + ',' + longitude + ");";
+//            webEngine.executeScript(scriptToExecute);
+//            webEngine.executeScript("showMarkers()");
+//        }
+//    }
+//
+//
+//    // Action Event for 'Display Routes' checkbox
+//    @FXML
+//    public void mapRoutes(ActionEvent e) {
+//        if (displayAllRoutes.isSelected()) {
+//            displayRoutes(currentlyLoadedRoutes);
+//        } else {
+//            clearAirports();
+//        }
+//    }
+//
+//    // Method for displaying routes on map
+//    private void displayRoutes(List routes) {
+//        if (routes.size() < 1000 && routes.size() != 0) {
+//            createMapRoutes(routes);
+//        } else if (routes.isEmpty()) {
+//            JOptionPane jp = new JOptionPane();
+//            jp.setSize(600, 600);
+//            jp.showMessageDialog(null, "No Routes to display.", "Error Message", JOptionPane.INFORMATION_MESSAGE);
+//            displayAllRoutes.setSelected(false);
+//        } else {
+//            JOptionPane jp = new JOptionPane();
+//            jp.setSize(600, 600);
+//            JLabel msgLabel = new JLabel("Are you sure you want to display " +  routes.size() + " routes? \nThis may take a while...", JLabel.CENTER);
+//            int reply = jp.showConfirmDialog(null, msgLabel, "Error Message", JOptionPane.YES_NO_OPTION);
+//            if (reply == JOptionPane.YES_OPTION) {
+//                createMapRoutes(routes);
+//            } else {
+//                displayAllRoutes.setSelected(false);
+//            }
+//        }
+//    }
+//
+//    // Method that clears, creates and displays airport markers
+//    private void createMapRoutes(List routes) {
+//        Iterator i = routes.iterator();
+//        while (i.hasNext()) {
+//            Route route = (Route) i.next();
+//            // get ids of source and destination airport
+//            String source = route.getSourceAirportName();
+//            String dest = route.getDestinationAirportName();
+//            // find airport in currentlyLoadedAirports to get coords
+//            double[] sourceCoords = getCoordinates(source);
+//            double[] destCoords = getCoordinates(dest);
+//            String scriptToExecute = "drawRouteLine(" + sourceCoords + ", " + destCoords + ")";
+//            webEngine.executeScript(scriptToExecute);
+//        }
+//    }
+//
+//    private double[] getCoordinates(String airportID) {
+//        Iterator i = currentlyLoadedAirports.iterator();
+//        while (i.hasNext()) {
+//            Airport airport = (Airport) i.next();
+//            if (airport.getICAO() == airportID || airport.getIATA() == airportID) {
+//                double lat = airport.getLatitude();
+//                double lng = airport.getLongitude();
+//                double[] coord = {lat, lng};
+//                return coord;
+//            } else {
+//                continue;
+//            }
+//        }
+//        //reached end of airports list without a match
+//        double[] null_ = {};
+//        return null_;
+//    }
 }
