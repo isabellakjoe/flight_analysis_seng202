@@ -41,7 +41,7 @@ public class AirlineDatabaseLoader extends AirlineMethod {
                 airlines.add(loadedAirline);
                 if (loadedAirline.getIATA() != null) {
                     airlineIATAHashMap.put(loadedAirline.getIATA(), loadedAirline);
-                } else {
+                } else if (loadedAirline.getICAO() != null){
                     airlineIATAHashMap.put(loadedAirline.getICAO(), loadedAirline);
                 }
             }

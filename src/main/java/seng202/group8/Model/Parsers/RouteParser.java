@@ -9,48 +9,31 @@ import seng202.group8.Model.Objects.RouteMethod;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Callum on 21/08/16.
  */
 public class RouteParser extends RouteMethod {
 
-    private Route createParsedRoute(ArrayList<String> routeInfo, int routeID) {
+    private Route createParsedRoute(ArrayList<String> routeInfo, int routeID, HashMap<String, Airline> airlineHashMap, HashMap<String, Airport> airportHashMap) {
         /* Create the route object */
         Route route = new Route();
 
 
-        /** Creates the airline object, later this needs to check if airline
-         * already loaded into the system
-         */
-        /* check if airlineID is null, if is sets ID to -1 */
-        if (routeInfo.get(1) == "") {
-            Airline airline = createAirline(routeInfo.get(0), -1);
-            route.setAirline(airline);
-        } else {
-            Airline airline = createAirline(routeInfo.get(0), Integer.parseInt(routeInfo.get(1)));
-            route.setAirline(airline);
+        if (airlineHashMap.get(routeInfo.get(0)) != null) {
+            route.setAirline(airlineHashMap.get(routeInfo.get(0)));
+            route.setAirlineName(airlineHashMap.get(routeInfo.get(0)).getName());
         }
 
-        /** Creates the airport objects for the route, later this also needs to check
-         * whether 'new' airports are already in the system
-         * Checks if airport is null
-         */
-        /* check if source airportID is null, if is sets ID to -1 */
-        if (routeInfo.get(3) == "") {
-            Airport sourceAirport = createAirport(routeInfo.get(2), -1);
-            route.setSourceAirport(sourceAirport);
-        } else {
-            Airport sourceAirport = createAirport(routeInfo.get(2), parseToInt(routeInfo.get(3)));
-            route.setSourceAirport(sourceAirport);
+        if (airportHashMap.get(routeInfo.get(2)) != null) {
+            route.setSourceAirport(airportHashMap.get(routeInfo.get(2)));
+            route.setSourceAirportName(airportHashMap.get(routeInfo.get(2)).getName());
         }
-        /* check if destination airportID is null, if is sets ID to -1 */
-        if (routeInfo.get(5) == "") {
-            Airport destinationAirport = createAirport(routeInfo.get(4), -1);
-            route.setDestinationAirport(destinationAirport);
-        } else {
-            Airport destinationAirport = createAirport(routeInfo.get(4), parseToInt(routeInfo.get(5)));
-            route.setDestinationAirport(destinationAirport);
+
+        if (airportHashMap.get(routeInfo.get(4)) != null) {
+            route.setDestinationAirport(airportHashMap.get(routeInfo.get(4)));
+            route.setDestinationAirportName(airportHashMap.get(routeInfo.get(4)).getName());
         }
 
         /* Sets whether the codeshare value is Y */
@@ -64,13 +47,6 @@ public class RouteParser extends RouteMethod {
 
         route.setRouteID(routeID);
 
-        route.setAirlineName(routeInfo.get(0));
-
-        route.setSourceAirportName(routeInfo.get(2));
-
-        route.setDestinationAirportName(routeInfo.get(4));
-
-
         return route;
     }
 
@@ -82,10 +58,10 @@ public class RouteParser extends RouteMethod {
      * @return A Route Object or null if the input is null.
      */
 
-    public Route createSingleRoute(String input, int routeID) {
+    public Route createSingleRoute(String input, int routeID, HashMap<String, Airline> airlineHashMap, HashMap<String, Airport> airportHashMap) {
         ArrayList<String> routeInfo = refactorData(input);
         if (routeInfo != null) {
-            return createParsedRoute(routeInfo, routeID);
+            return createParsedRoute(routeInfo, routeID, airlineHashMap, airportHashMap);
         } else {
             return null;
         }

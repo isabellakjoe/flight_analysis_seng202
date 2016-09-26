@@ -16,6 +16,7 @@ import seng202.group8.Model.Parsers.RouteParser;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -30,6 +31,8 @@ public class DatabaseSaverTest {
     Connection connSave;
     Connection connSearch;
     Connection connDelete;
+    HashMap<String, Airline> airlineHashMap;
+    HashMap<String, Airport> airportHashMap;
 
 
     @Before
@@ -40,6 +43,8 @@ public class DatabaseSaverTest {
         connSave = dbOne.testConnect();
         connSearch = dbOne.testConnect();
         connDelete = dbOne.testConnect();
+        airlineHashMap = new HashMap<String, Airline>();
+        airportHashMap = new HashMap<String, Airport>();
     }
 
     @Test
@@ -100,9 +105,24 @@ public class DatabaseSaverTest {
 
     @Test
     public void testRouteSavesCorrectly() {
+
+        Airline air = new Airline();
+        air.setIATA("2N");
+        air.setName("Test Airline");
+        airlineHashMap.put("2N", air);
+
+        Airport src = new Airport();
+        Airport dest = new Airport();
+        src.setIATA("VBY");
+        src.setName("Src Test");
+        dest.setIATA("ARN");
+        dest.setName("Dest Test");
+        airportHashMap.put("VBY", src);
+        airportHashMap.put("ARN", dest);
+
         RouteParser rp = new RouteParser();
         //Make a route to test and add it to an array
-        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP", 7867);
+        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP", 7867, airlineHashMap, airportHashMap);
         //Create the connections to the database
         //Save the new route here
         dbsave.saveSingleRoute(connSave, testRoute);
@@ -124,9 +144,23 @@ public class DatabaseSaverTest {
     @Test
     public void testRouteDeletesProperly() {
 
+        Airline air = new Airline();
+        air.setIATA("2N");
+        air.setName("Test Airline");
+        airlineHashMap.put("2N", air);
+
+        Airport src = new Airport();
+        Airport dest = new Airport();
+        src.setIATA("VBY");
+        src.setName("Src Test");
+        dest.setIATA("ARN");
+        dest.setName("Dest Test");
+        airportHashMap.put("VBY", src);
+        airportHashMap.put("ARN", dest);
+
         RouteParser rp = new RouteParser();
         //Make a route to test and add it to an array
-        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP", 1001);
+        Route testRoute = rp.createSingleRoute("2N,3652,VBY,746,ARN,737,,0,SF3 ATP", 1001, airlineHashMap, airportHashMap);
 
         //Add route to the database
         dbsave.saveSingleRoute(connSave, testRoute);

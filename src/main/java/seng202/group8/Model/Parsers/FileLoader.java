@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -79,7 +80,7 @@ public class FileLoader {
      *
      * @return The created Routes ObservableList.
      */
-    public ObservableList<Route> buildRoutes() {
+    public ObservableList<Route> buildRoutes(HashMap<String, Airline> airlineHashMap, HashMap<String, Airport> airportHashMap) {
         Scanner textScanner = new Scanner(reader);
         ObservableList<Route> routes = FXCollections.observableArrayList();
         RouteParser parser = new RouteParser();
@@ -91,7 +92,7 @@ public class FileLoader {
         db.disconnect(conn);
         while (textScanner.hasNextLine()) {
             currentString = textScanner.nextLine();
-            Route route = parser.createSingleRoute(currentString, routeID);
+            Route route = parser.createSingleRoute(currentString, routeID, airlineHashMap, airportHashMap);
             routeID += 1;
             if (route != null) {
                 routes.add(route);

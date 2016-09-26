@@ -222,7 +222,7 @@
                </content>
             </Tab>
              <fx:include fx:id="mapView" source="MapView.fxml" />
-            <fx:include fx:id="graphView" source="GraphViewtab.fxml" />
+             <fx:include fx:id="graphView" source="GraphViewtab.fxml" />
             <Tab closable="false" text="Graph View">
                <content>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
