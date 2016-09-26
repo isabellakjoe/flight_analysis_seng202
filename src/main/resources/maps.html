@@ -65,20 +65,32 @@
         markers = [];
     }
 
-    function drawRouteLine(src, dest) {
-        var srcLatLng = {lat: src[0], lng: src[1]};
-        var destLatLng = {lat: dest[0], lng: dest[1]};
+
+    function drawRouteLine(srclat, srclng, destlat, destlng) {
+        var srcLatLng = {lat: srclat, lng: srclng};
+        var destLatLng = {lat: destlat, lng: destlng};
         var coords = [srcLatLng, destLatLng];
         var path = new google.maps.Polyline({
             path: coords,
             geodesic: true,
-            strokeColor: '#99ccff',
+            strokeColor: '#FF0000',
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
         path.setMap(map);
         paths.push(path);
         repositionMap(coords);
+    }
+
+    // Sets the map on all markers in the array.
+    function setPaths(map) {
+        for (var i = 0; i < paths.length; i++) {
+            paths[i].setMap(map);
+        }
+    }
+
+    function clearRoutes() {
+        setPaths(null);
     }
 
     function repositionMap(path) {

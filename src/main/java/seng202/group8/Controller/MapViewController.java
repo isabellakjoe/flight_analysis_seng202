@@ -10,6 +10,7 @@ import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
 
 import javax.swing.*;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -95,7 +96,7 @@ public class MapViewController {
         if (displayAllRoutes.isSelected()) {
             displayRoutes(mainController.getCurrentlyLoadedRoutes());
         } else {
-            clearAirports();
+            clearRoutes();
         }
     }
 
@@ -132,27 +133,32 @@ public class MapViewController {
             // find airport in currentlyLoadedAirports to get coords
             double[] sourceCoords = getCoordinates(source);
             double[] destCoords = getCoordinates(dest);
-            String scriptToExecute = "drawRouteLine(" + sourceCoords + ", " + destCoords + ")";
+            String scriptToExecute = "drawRouteLine(" + sourceCoords[0] + ", " + sourceCoords[1] + ", " + destCoords[0]
+                    + ", " + destCoords[1] + ")";
             webEngine.executeScript(scriptToExecute);
         }
     }
 
     private double[] getCoordinates(String airportID) {
-        Iterator i = mainController.getCurrentlyLoadedAirports().iterator();
-        while (i.hasNext()) {
+        double[] coords = {};
+        List airports = mainController.getCurrentlyLoadedAirports();
+        Iterator i = airports.iterator();
+        while(i.hasNext()) {
             Airport airport = (Airport) i.next();
-            if (airport.getICAO() == airportID || airport.getIATA() == airportID) {
+            if (airport.getName() == airportID) {
+                System.out.println("lat: " + airport.getLatitude() + " long: " + airport.getLongitude());
                 double lat = airport.getLatitude();
                 double lng = airport.getLongitude();
-                double[] coord = {lat, lng};
-                return coord;
-            } else {
-                continue;
+                coords = new double[] {lat, lng};
+                break;
             }
         }
-        //reached end of airports list without a match
-        double[] null_ = {};
-        return null_;
+        return coords;
+    }
+
+    // Remove currently displayed airport markers
+    private void clearRoutes() {
+        webEngine.executeScript("clearRoutes()");
     }
 
 
