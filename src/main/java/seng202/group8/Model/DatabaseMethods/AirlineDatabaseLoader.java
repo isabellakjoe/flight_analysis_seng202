@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.AirlineMethod;
-import seng202.group8.Model.Objects.Airport;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

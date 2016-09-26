@@ -2,136 +2,139 @@ package seng202.group8.Model.Searchers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seng202.group8.Model.DatabaseMethods.Database;
-import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Airline;
 
-import java.sql.Connection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Erika on 29-Aug-16.
  */
 public class AirlineSearcher {
 
-    // Private list used to contain all loaded airlines
     private ObservableList<Airline> loadedAirlines = FXCollections.observableArrayList();
 
-    /**
-     * A constructor for the AirlineSearcher Object
-     *
-     * @param loadedAirlines a observable list of airlines
-     */
     public AirlineSearcher(ObservableList<Airline> loadedAirlines) {
         this.loadedAirlines = loadedAirlines;
     }
 
-    /**
-     * Return the list of all currently loaded airlines
-     *
-     * @return an observable list of airlines
-     */
     public ObservableList<Airline> getLoadedAirlines() {
         return loadedAirlines;
     }
 
-    private ObservableList<Airline> generateSearchList(String paramID, String searchParam) {
-        // Method to search for airlines through the database
-        Database db = new Database();
-        DatabaseSearcher dbs = new DatabaseSearcher();
-        String sql = dbs.buildAirlineSearch(paramID, searchParam);
-        Connection conn = db.connect();
-        ObservableList<Airline> airlines = dbs.searchForAirlinesByOption(conn, sql);
-        db.disconnect(conn);
-
-        return airlines;
-    }
-
-    /**
-     * Method to search for airline based off of ID
-     *
-     * @param airlineID ID of a airline
-     */
     public void airlinesOfID(String airlineID) {
-        ObservableList<Airline> matchingAirlines = generateSearchList("airlineid", airlineID);
-        System.out.println(matchingAirlines);
+        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+
+        String regex = airlineID + "\\w*";
+        Pattern p = Pattern.compile(regex);
+
+        //int intID = Integer.parseInt(airlineID);
+        for (int i = 0; i < loadedAirlines.size(); i++) {
+            Matcher m = p.matcher(Integer.toString(loadedAirlines.get(i).getAirlineID()));
+            if (m.find()) {
+                matchingAirlines.add(loadedAirlines.get(i));
+            }
+        }
         loadedAirlines = matchingAirlines;
     }
 
-    /**
-     * Method to search for airline based off of name
-     *
-     * @param name name of a airline
-     */
     public void airlinesOfName(String name) {
-        ObservableList<Airline> matchingAirlines = generateSearchList("LOWER(name)", name);
+        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+
+        String regexString = name + "\\w*";
+        Pattern p = Pattern.compile(regexString);
+
+        for (int i = 0; i < loadedAirlines.size(); i++) {
+            Matcher m = p.matcher(loadedAirlines.get(i).getName());
+            if (m.find()) {
+                matchingAirlines.add(loadedAirlines.get(i));
+            }
+        }
         loadedAirlines = matchingAirlines;
     }
 
-    /**
-     * Method to search for a airline based off of alias
-     *
-     * @param alias alias of a airline
-     */
     public void airlinesOfAlias(String alias) {
-        ObservableList<Airline> matchingAirlines = generateSearchList("LOWER(alias)", alias);
+        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+
+        String regex = alias + "\\w*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedAirlines.size(); i++) {
+            Matcher m = p.matcher(loadedAirlines.get(i).getAlias());
+            if (m.find()) {
+                matchingAirlines.add(loadedAirlines.get(i));
+            }
+        }
         loadedAirlines = matchingAirlines;
     }
 
-    /**
-     * Method to search for a airline based off of IATA
-     *
-     * @param IATA iata of a airline
-     */
     public void airlinesOfIATA(String IATA) {
-        ObservableList<Airline> matchingAirlines = generateSearchList("LOWER(iata)", IATA);
+        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+
+        String regex = IATA + "\\w*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedAirlines.size(); i++) {
+            Matcher m = p.matcher(loadedAirlines.get(i).getIATA());
+            if (m.find()) {
+                matchingAirlines.add(loadedAirlines.get(i));
+            }
+        }
         loadedAirlines = matchingAirlines;
     }
 
-    /**
-     * Method to search for a airline based off of ICAO
-     *
-     * @param ICAO icao of a airline
-     */
     public void airlinesOfICAO(String ICAO) {
-        ObservableList<Airline> matchingAirlines = generateSearchList("LOWER(icao)", ICAO);
+        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+
+        String regex = ICAO + "\\w*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedAirlines.size(); i++) {
+            Matcher m = p.matcher(loadedAirlines.get(i).getICAO());
+            if (m.find()) {
+                matchingAirlines.add(loadedAirlines.get(i));
+            }
+        }
         loadedAirlines = matchingAirlines;
     }
 
-    /**
-     * Method to search for a airline based off of Callsign
-     *
-     * @param callsign callsign of a airline
-     */
     public void airlinesOfCallsign(String callsign) {
-        ObservableList<Airline> matchingAirlines = generateSearchList("LOWER(callsign)", callsign);
+        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+
+        String regex = callsign + "\\w*";
+        Pattern p = Pattern.compile(regex);
+
+        for (int i = 0; i < loadedAirlines.size(); i++) {
+            Matcher m = p.matcher(loadedAirlines.get(i).getCallsign());
+            if (m.find()) {
+                matchingAirlines.add(loadedAirlines.get(i));
+            }
+        }
         loadedAirlines = matchingAirlines;
     }
 
-    /**
-     * Method to search for a airline based off of Country
-     *
-     * @param country country of a airline
-     */
     public void airlinesOfCountry(String country) {
-        ObservableList<Airline> matchingAirlines = generateSearchList("LOWER(country)", country);
+        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+        for (int i = 0; i < loadedAirlines.size(); i++) {
+            if (loadedAirlines.get(i).getCountry().equalsIgnoreCase(country)) {
+                matchingAirlines.add(loadedAirlines.get(i));
+            }
+        }
         loadedAirlines = matchingAirlines;
     }
 
-    /**
-     * Method to search for a airline based off of it's status
-     *
-     * @param activeStatus status of a airline
-     */
-    public void airlinesOfActiveStatus(String activeStatus) {
-        ObservableList<Airline> matchingAirlines;
-        if (activeStatus.equals("Active")) {
-            matchingAirlines = generateSearchList("active", "Y");
-        }
-        else{
-            matchingAirlines = generateSearchList("active", "N");
+    public void airlinesOfActiveStatus(String activeStatus){
+        System.out.println(activeStatus);
+        ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
+        boolean isActive = activeStatus.equals("Active");
+        for (int i = 0; i < loadedAirlines.size(); i++){
+            if (loadedAirlines.get(i).isActive() == isActive){
+                matchingAirlines.add(loadedAirlines.get(i));
+            }
         }
         loadedAirlines = matchingAirlines;
     }
+
 
 
 }

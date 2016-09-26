@@ -58,7 +58,6 @@ public class AddAirlineViewController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
-
     }
 
     public void makeVisible() {
@@ -71,6 +70,9 @@ public class AddAirlineViewController {
 
     @FXML
     private void cancelAddedAirline(ActionEvent e) {
+        clearAirlineErrors();
+        makeInvisible();
+        mainController.backToTableView(e);
         addedAirlineName.clear();
         addedAirlineID.clear();
         addedAirlineCountry.clear();
@@ -79,7 +81,6 @@ public class AddAirlineViewController {
         addedAirlineICAO.clear();
         addedAirlineCallsign.clear();
         addedAirlineActive.setSelected(false);
-        mainController.backToTableView(new ActionEvent());
     }
 
     @FXML
@@ -161,7 +162,7 @@ public class AddAirlineViewController {
 
         boolean noErrors = addAirlineError(notNullData);
 
-        if (noErrors) {
+        if (noErrors && mainController.getAirlineHashMap().get(IATA) == null && mainController.getAirlineHashMap().get(ICAO) == null) {
             ObservableList<Airline> airlines = FXCollections.observableArrayList();
             Airline newAirline = parser.createSingleAirline(data);
             airlines.add(newAirline);
@@ -184,6 +185,8 @@ public class AddAirlineViewController {
             mainController.resetView();
             mainController.setAirlineComboBoxes();
             mainController.backToTableView(e);
+        } else {
+            System.out.println("IATA NOT UNIQUE");
         }
     }
 

@@ -1,11 +1,13 @@
 package seng202.group8.Model.Objects;
 
+import java.io.Serializable;
+
 /**
  * Created by esa46 on 19/08/16.
  * <p>
  * Route object class.
  */
-public class Route {
+public class Route implements Serializable {
 
     private int routeID;
     private Airline airline;

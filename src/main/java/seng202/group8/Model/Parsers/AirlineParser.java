@@ -23,11 +23,15 @@ public class AirlineParser extends AirlineMethod {
         /* Checks whether the airline has an alias. If it does, the alias is set to given string */
         checkAlias(airline, airlineInfo.get(2));
 
-        /* Sets IATA value*/
-        airline.setIATA(airlineInfo.get(3));
+        if (airlineInfo.get(3).equals("")) {
+            airline.setIATA(airlineInfo.get(4));
+        } else {
+            /* Sets IATA value*/
+            airline.setIATA(airlineInfo.get(3));
 
-        /* Sets ICAO value*/
-        airline.setICAO(airlineInfo.get(4));
+            /* Sets ICAO value*/
+            airline.setICAO(airlineInfo.get(4));
+        }
 
         /* Sets Callsign */
         airline.setCallsign(airlineInfo.get(5));

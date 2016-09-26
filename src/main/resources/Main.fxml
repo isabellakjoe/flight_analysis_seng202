@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
@@ -10,80 +32,24 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
 
-    <left>
+     <left>
         <TabPane prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Route">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <Button fx:id="routeSearch" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
-                                <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetRouteSearch" text="Reset" />
-                                <Button fx:id="routeAddButton" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddRoute" text="Add New Route" />
-                                <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="airline code" />
-                                <TextField fx:id="airlineSearchID" layoutX="29.0" layoutY="328.0" prefHeight="25.0" prefWidth="220.0" promptText="airline ID" visible="false" />
-                                <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
-                                <TextField fx:id="sourceIDSearch" layoutX="29.0" layoutY="369.0" prefHeight="25.0" prefWidth="220.0" promptText="from (airport ID)" visible="false" />
-                                <ComboBox fx:id="sourceSearch" layoutX="29.0" layoutY="115.0" prefHeight="26.0" prefWidth="220.0" promptText="Source " />
-                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " />
-                                <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Destination" />
-                                <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Stops" />
-                                <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="244.0" prefHeight="26.0" prefWidth="220.0" promptText="Equipment" visible="false" />
-                                <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="287.0" prefHeight="26.0" prefWidth="220.0" promptText="Codeshare" visible="false" />
-                                <Button fx:id="routeAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced" />
-                                <Button fx:id="routeBackButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#routeSearchBack" text="Back" visible="false" />
-                            </children>
-                        </AnchorPane>
+                        <fx:include fx:id="searchRouteView" source="SearchRouteView.fxml" />
                     </content>
                 </Tab>
                 <Tab text="Airport">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <TextField fx:id="airportIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
-                                <Button fx:id="airportSearchButton" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#airportSearch" text="Search" />
-                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " />
-                                <TextField fx:id="airportNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
-                                <TextField fx:id="airportCitySearch" layoutX="29.0" layoutY="202.0" prefHeight="25.0" prefWidth="220.0" promptText="city" visible="false" />
-                                <TextField fx:id="airportFAASearch" layoutX="29.0" layoutY="243.0" prefHeight="25.0" prefWidth="220.0" promptText="FAA" visible="false" />
-                                <TextField fx:id="airportIATASearch" layoutX="29.0" layoutY="284.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
-                                <TextField fx:id="airportLongitudeSearch" layoutX="29.0" layoutY="365.0" prefHeight="25.0" prefWidth="220.0" promptText="longitude" visible="false" />
-                                <TextField fx:id="airportLatitudeSearch" layoutX="29.0" layoutY="406.0" prefHeight="25.0" prefWidth="220.0" promptText="latitude" visible="false" />
-                                <TextField fx:id="airportAltitudeSearch" layoutX="29.0" layoutY="447.0" prefHeight="25.0" prefWidth="220.0" promptText="altitude" visible="false" />
-                                <TextField fx:id="airportTimezoneSearch" layoutX="29.0" layoutY="489.0" prefHeight="25.0" prefWidth="220.0" promptText="timezone" visible="false" />
-                                <TextField fx:id="airportDSTSearch" layoutX="29.0" layoutY="530.0" prefHeight="25.0" prefWidth="220.0" promptText="DST" visible="false" />
-                                <Button fx:id="resetAirportSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetAirportSearch" text="Reset" />
-                                <Button fx:id="airportAddButton" layoutX="70.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddAirport" text="Add New Airport" />
-                                <TextField fx:id="airportICAOSearch" layoutX="29.0" layoutY="323.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
-                                <Button fx:id="airportAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
-                                <Button fx:id="airportBackButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#airportSearchBack" text="Back" visible="false" />
-                                <ComboBox fx:id="airportCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Country" />
-                            </children>
-                        </AnchorPane>
+                        <fx:include fx:id="searchAirportView" source="SearchAirportView.fxml" />
                     </content>
                 </Tab>
                 <Tab text="Airline">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <TextField fx:id="airlineIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
-                                <Button fx:id="airlineSearchButton" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#airlineSearch" text="Search" />
-                                <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Search" />
-                                <Button fx:id="airlineAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirlineSearch" text="Advanced" />
-                                <TextField fx:id="airlineNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
-                                <TextField fx:id="airlineAliasSearch" layoutX="29.0" layoutY="248.0" prefHeight="25.0" prefWidth="220.0" promptText="alias" visible="false" />
-                                <TextField fx:id="airlineIATASearch" layoutX="29.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" promptText="IATA" visible="false" />
-                                <TextField fx:id="airlineICAOSearch" layoutX="29.0" layoutY="334.0" prefHeight="25.0" prefWidth="220.0" promptText="ICAO" visible="false" />
-                                <TextField fx:id="airlineCallsignSearch" layoutX="29.0" layoutY="377.0" prefHeight="25.0" prefWidth="220.0" promptText="call sign" visible="false" />
-                                <Button fx:id="resetAirlineSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetAirlineSearch" text="Reset" />
-                                <ComboBox fx:id="airlineCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Country" />
-                                <ComboBox fx:id="airlineActiveSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Active/Inactive" />
-                                <Button fx:id="airlineBackButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#airlineSearchBack" text="Back" visible="false" />
-                                <Button fx:id="airlineAddButton" layoutX="71.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddAirline" text="Add New Airline" />
-                            </children>
-                        </AnchorPane>
+                <fx:include fx:id="searchAirlineView" source="SearchAirlineView.fxml" />
                     </content>
                 </Tab>
             </tabs>
@@ -92,6 +58,12 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
+            <Menu mnemonicParsing="false" text="File">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#fileOpen" text="Open" />
+                  <MenuItem mnemonicParsing="false" onAction="#fileSave" text="Save As" />
+              </items>
+            </Menu>
                 <Menu mnemonicParsing="false" text="Add">
                     <items>
                         <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData" text="Airline Data" />
@@ -141,7 +113,7 @@
                                     <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
                                  </padding>
                                     </MenuButton>
-                                    <TableView fx:id="airlineTable" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="1">
+                                    <TableView fx:id="airlineTable" onMouseClicked="#airlineInfo" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="1">
                                         <columns>
                                             <TableColumn fx:id="airlineID" minWidth="30.0" prefWidth="150.0" text="ID" />
                                             <TableColumn fx:id="airlineName" minWidth="30.0" prefWidth="150.0" text="Name" />
@@ -173,7 +145,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                                     </MenuButton>
-                                    <TableView fx:id="airportTable" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="3">
+                                    <TableView fx:id="airportTable" onMouseClicked="#airportInfo" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="3">
                                         <columnResizePolicy>
                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                         </columnResizePolicy>
@@ -199,226 +171,7 @@
                                     </ContextMenu>
                                  </contextMenu>
                                     </TableView>
-                              <GridPane fx:id="airportPane" visible="false" GridPane.rowIndex="3">
-                                 <columnConstraints>
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="85.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="675.0" minWidth="10.0" prefWidth="240.0" />
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="85.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="675.0" minWidth="10.0" prefWidth="240.0" />
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="85.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="39.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                            <Text fx:id="airportNameDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport Name" wrappingWidth="165.638671875" GridPane.halignment="LEFT">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Button fx:id="editAirportDataButton" mnemonicParsing="false" onAction="#editAirportData" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Button>
-                                            <Button fx:id="saveAirportChangesButton" mnemonicParsing="false" onAction="#saveAirportChanges" text="Save" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Button>
-                                            <Button fx:id="cancelAirportChangesButton" mnemonicParsing="false" onAction="#cancelAirportChanges" text="Cancel" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Button>
-                                            <Button fx:id="individualAirportBackButton" mnemonicParsing="false" onAction="#backToTableView" text="Back" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                                <padding>
-                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                                </padding>
-                                                <opaqueInsets>
-                                                    <Insets />
-                                                </opaqueInsets>
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                            </Button>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Airport ID:" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City:" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DST:" GridPane.columnIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FAA:" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="IATA:" wrappingWidth="36.9609375" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ICAO:" textAlignment="RIGHT" wrappingWidth="71.94775390625" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Timezone:" GridPane.rowIndex="5">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude:" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude:" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Altitude:" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportIDDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportFAADisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportIATADisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportICAODisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportTimezoneDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportDSTDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportCountryDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportCityDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportLongitudeDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportLatitudeDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="airportAltitudeDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <TextField fx:id="editFAAField" text="FAA Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editAirportIATAField" text="IATA Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editAirportICAOField" text="ICAO Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editTimezoneField" text="Timezone Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editDSTField" text="DST Field" visible="false" GridPane.columnIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editAirportCountryField" text="Country Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editAirportCityField" text="City Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editLongitudeField" text="Longitude Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editLatitudeField" text="Latitude Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editAltitudeField" text="Altitude Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                    <Text fx:id="editAirportFAAError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                    <Text fx:id="editAirportIATAError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                    <Text fx:id="editAirportICAOError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                                    <Text fx:id="editAirportTimeError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                                    <Text fx:id="editAirportDSTError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
-                                    <Text fx:id="editAirportCountryError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                    <Text fx:id="editAirportCityError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                    <Text fx:id="editAirportLongError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                    <Text fx:id="editAirportLatError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                                    <Text fx:id="editAirportAltError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                                 </children>
-                              </GridPane>
+                              <fx:include fx:id="editAirportView" source="EditAirportView.fxml" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route Table Viewer" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -438,7 +191,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                                     </MenuButton>
-                                    <TableView fx:id="routeTable" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="5">
+                                    <TableView fx:id="routeTable" onMouseClicked="#routeInfo" prefHeight="170.0" prefWidth="745.0" GridPane.rowIndex="5">
                                         <columnResizePolicy>
                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                         </columnResizePolicy>
@@ -451,133 +204,7 @@
                                             <TableColumn fx:id="equipment" minWidth="30.0" prefWidth="75.0" text="Equipment" visible="false" />
                                         </columns>
                                     </TableView>
-                              <GridPane fx:id="routePane" visible="false" GridPane.rowIndex="5">
-                                 <columnConstraints>
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="372.0" minWidth="10.0" prefWidth="85.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="675.0" minWidth="10.0" prefWidth="240.0" />
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="675.0" minWidth="10.0" prefWidth="85.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="675.0" minWidth="10.0" prefWidth="240.0" />
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="675.0" minWidth="10.0" prefWidth="85.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                            <Text fx:id="routeAirlineDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Name" wrappingWidth="187.638671875" GridPane.halignment="LEFT">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Source:" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stops:" wrappingWidth="40.9609375" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equipment:" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Button fx:id="individualRouteBackButton" mnemonicParsing="false" onAction="#backToTableView" text="Back" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                                <padding>
-                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                                </padding>
-                                                <opaqueInsets>
-                                                    <Insets />
-                                                </opaqueInsets>
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                            </Button>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codeshare:" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="routeSourceDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="routeDestinationDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="routeStopsDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" wrappingWidth="62.822265625" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="routeEquipmentDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <Text fx:id="routeShareDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="blank" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                            <TextField fx:id="editSourceField" text="Source Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editDestinationField" text="Destination Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editStopsField" text="Stops Field" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <TextField fx:id="editEquipmentField" text="Equipment Field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                            <Button fx:id="editRouteDataButton" mnemonicParsing="false" onAction="#editRouteData" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Button>
-                                            <Button fx:id="saveRouteChangesButton" mnemonicParsing="false" onAction="#saveRouteChanges" text="Save" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Button>
-                                            <Button fx:id="cancelRouteChangesButton" mnemonicParsing="false" onAction="#cancelRouteChanges" text="Cancel" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Button>
-                                    <Text fx:id="editRouteSourceError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                    <Text fx:id="editRouteDestError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                    <Text fx:id="editRouteStopsError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                    <Text fx:id="editRouteEquipError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                    <CheckBox fx:id="editCodeshareField" mnemonicParsing="false" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </GridPane>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                              <fx:include fx:id="editRouteView" source="EditRouteView.fxml" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -595,6 +222,56 @@
                </content>
             </Tab>
              <fx:include fx:id="mapView" source="MapView.fxml" />
+            <fx:include fx:id="graphView" source="GraphViewtab.fxml" />
+            <Tab closable="false" text="Graph View">
+               <content>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="211.0" minHeight="0.0" prefHeight="93.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="584.0" minHeight="10.0" prefHeight="557.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <BarChart fx:id="routesPerAirport" legendVisible="false" prefHeight="442.0" prefWidth="595.0" title="No. of Routes per Airport" GridPane.rowIndex="1">
+                                 <xAxis>
+                                    <CategoryAxis label="Airport" tickLabelRotation="90.0" fx:id="xAxis" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis label="Number of Routes" side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                              <Button fx:id="graphButton" mnemonicParsing="false" onAction="#setChart" text="Button">
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <VBox maxWidth="290.0" prefHeight="28.0" prefWidth="291.0" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Items Shown" textAlignment="CENTER" wrappingWidth="280.09619140625">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <Slider fx:id="routeNum" blockIncrement="5.0" majorTickUnit="5.0" max="50.0" maxWidth="350.0" minorTickCount="1" onMouseReleased="#setChart" prefWidth="100.0" showTickLabels="true">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Slider>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </StackPane>
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
     </center>

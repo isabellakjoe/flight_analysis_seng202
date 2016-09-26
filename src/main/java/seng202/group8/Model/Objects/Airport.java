@@ -1,5 +1,6 @@
 package seng202.group8.Model.Objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * <p>
  * Airline object class.
  */
-public class Airport {
+public class Airport implements Serializable {
 
     private int airportID;
     private String name;
