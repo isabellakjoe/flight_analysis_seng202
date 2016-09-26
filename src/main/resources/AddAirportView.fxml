@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="addAirportViewPane" xmlns="http://javafx.com/javafx/8" fx:controller="seng202.group8.Controller.AddObjectControllers.AddAirportViewController" visible="false">
+<GridPane fx:id="addAirportViewPane" visible="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.AddObjectControllers.AddAirportViewController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="80.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="110.0" />
@@ -306,5 +306,21 @@
                 <Font size="10.0" />
             </font>
         </Text>
+      <Text fx:id="addAirportCodeErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter Airport Code." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="10.0" left="5.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="addAirportICAOErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter ICAO." visible="false" GridPane.columnIndex="2" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="10.0" left="5.0" />
+         </GridPane.margin>
+      </Text>
     </children>
 </GridPane>

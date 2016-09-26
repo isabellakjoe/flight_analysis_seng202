@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.HelpPopupController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="457.0" minWidth="10.0" prefWidth="445.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="159.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="305.0" minHeight="10.0" prefHeight="242.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Text fx:id="helpPopupTextTwo" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="349.7294921875" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></Text>
+      <Text fx:id="helpPopupTextOne" layoutX="132.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="349.7294921875" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="35.0" />
+         </GridPane.margin></Text>
+      <Button fx:id="helpPopupOKButton" mnemonicParsing="false" onAction="#closePopup" text="OK" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="20.0" right="20.0" />
+         </GridPane.margin></Button>
+      <ImageView fx:id="helpImage" fitHeight="248.0" fitWidth="322.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      </ImageView>
+   </children>
+</GridPane>

@@ -160,6 +160,6 @@
                 <Font size="10.0" />
             </font>
         </Text>
-      <Button mnemonicParsing="false" text="Delete" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <!--<Button fx:id="airlineDeleteButton" mnemonicParsing="false" onAction="#deleteAirline" text="Delete" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />-->
     </children>
 </GridPane>

@@ -14,10 +14,13 @@ import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Objects.Airline;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static javax.swing.JOptionPane.YES_OPTION;
 
 /**
  * Created by esa46 on 20/09/16.
@@ -278,6 +281,22 @@ public class EditAirlineViewController {
             airlineActiveDisplay.setText("No");
         }
     }
+/* DO NOT DELETE PLEASE!!
+    public void deleteAirline(ActionEvent e){
+        Airline airline = mainController.airlineTable.getSelectionModel().getSelectedItem();
+        int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airline.getName() + "?", "Delete Airline", JOptionPane.YES_NO_OPTION);
+        if(jp == YES_OPTION){
+            Database db = new Database();
+            DatabaseSaver dbSave = new DatabaseSaver();
+            Connection connDelete = db.connect();
+            ArrayList<Integer> ids = new ArrayList<Integer>();
+            ids.add(airline.getAirlineID());
+            dbSave.deleteRoutes(connDelete, ids);
+            db.disconnect(connDelete);
+
+        }
+
+    }*/
 
     public void makeInvisible() {
         editAirlinePane.setVisible(false);

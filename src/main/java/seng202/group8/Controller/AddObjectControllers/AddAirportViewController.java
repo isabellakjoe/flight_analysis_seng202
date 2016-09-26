@@ -36,6 +36,10 @@ AddAirportViewController {
     @FXML
     private Text addAirportCountryErrorEmpty;
     @FXML
+    private Text addAirportCodeErrorEmpty;
+    @FXML
+    private Text addAirportICAOErrorEmpty;
+    @FXML
     private Text addAirportLatErrorEmpty;
     @FXML
     private Text addAirportLongErrorEmpty;
@@ -168,6 +172,8 @@ AddAirportViewController {
         addAirportNameErrorEmpty.setVisible(false);
         addAirportCityErrorEmpty.setVisible(false);
         addAirportCountryErrorEmpty.setVisible(false);
+        addAirportCodeErrorEmpty.setVisible(false);
+        addAirportICAOErrorEmpty.setVisible(false);
         addAirportLatErrorEmpty.setVisible(false);
         addAirportLongErrorEmpty.setVisible(false);
         addAirportAltErrorEmpty.setVisible(false);
@@ -209,6 +215,12 @@ AddAirportViewController {
                         break;
                     case 3:
                         addAirportCountryErrorEmpty.setVisible(true);
+                        break;
+                    case 4:
+                        addAirportCodeErrorEmpty.setVisible(true);
+                        break;
+                    case 5:
+                        addAirportICAOErrorEmpty.setVisible(true);
                         break;
                     case 6:
                         addAirportLatErrorEmpty.setVisible(true);
@@ -270,6 +282,9 @@ AddAirportViewController {
 
                     }
                 }
+            }
+            if(i == 4 && (current.length() < 3 || current.length() > 4) && !(current.equals(""))){
+                addAirportCodeErrorType.setVisible(true);
             }
 
         }

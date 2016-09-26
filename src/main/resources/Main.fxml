@@ -54,7 +54,17 @@
                   <MenuItem mnemonicParsing="false" onAction="#fileSave" text="Save As" />
               </items>
             </Menu>
-                <Menu mnemonicParsing="false" text="Add">
+            <Menu mnemonicParsing="false" text="Help">
+                <items>
+                    <MenuItem fx:id="helpAddButton" mnemonicParsing="false" onAction="#showHelpPopup" text="Add Data" />
+                    <MenuItem fx:id="helpEditButton" mnemonicParsing="false" onAction="#showHelpPopup" text="Edit Data" />
+                    <MenuItem fx:id="helpFilterButton" mnemonicParsing="false" onAction="#showHelpPopup" text="Filter Data" />
+                    <MenuItem fx:id="helpDistanceButton" mnemonicParsing="false" onAction="#showHelpPopup" text="Get Distance" />
+                    <MenuItem fx:id="helpLoadButton" mnemonicParsing="false" onAction="#showHelpPopup" text="Load file" />
+                    <MenuItem fx:id="helpSearchButton" mnemonicParsing="false" onAction="#showHelpPopup" text="Search" />
+                </items>
+            </Menu>
+                <Menu mnemonicParsing="false" text="Load">
                     <items>
                         <MenuItem fx:id="addAirlineData" mnemonicParsing="false" onAction="#addAirlineData" text="Airline Data" />
                         <MenuItem fx:id="addAirportData" mnemonicParsing="false" onAction="#addAirportData" text="Airport Data" />

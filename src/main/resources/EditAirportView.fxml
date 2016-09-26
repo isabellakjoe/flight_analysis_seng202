@@ -224,6 +224,6 @@
         <Text fx:id="editAirportLongError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
         <Text fx:id="editAirportLatError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
         <Text fx:id="editAirportAltError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-      <Button mnemonicParsing="false" text="Delete" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+      <!--<Button mnemonicParsing="false" onAction="#deleteAirport" text="Delete" GridPane.columnIndex="4" GridPane.rowIndex="5" />-->
     </children>
 </GridPane>

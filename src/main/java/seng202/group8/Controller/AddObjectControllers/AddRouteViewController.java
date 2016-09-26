@@ -193,6 +193,8 @@ public class AddRouteViewController {
 
             mainController.addToCurrentlyLoadedRoutes(newRoute);
             mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
+            clearRouteErrors();
+            cancelAddedRoute(e);
             mainController.resetView();
             mainController.setRouteComboBoxes();
             mainController.tableView.setVisible(true);
