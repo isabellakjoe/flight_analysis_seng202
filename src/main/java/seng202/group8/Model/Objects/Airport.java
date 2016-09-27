@@ -1,7 +1,6 @@
 package seng202.group8.Model.Objects;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by esa46 on 19/08/16.
@@ -160,7 +159,7 @@ public class Airport implements Serializable {
      * Method to check if airport being added has params equal to another airline already in database.
      *
      * @param other (Airport) being checked against
-     * @return isEqual (boolean) true if parameter already in database, false otherwise
+     * @return isEqual (boolean) true if airports have identical information, false otherwise
      */
     public boolean isEqualTo(Airport other) {
         boolean isEqual = true;

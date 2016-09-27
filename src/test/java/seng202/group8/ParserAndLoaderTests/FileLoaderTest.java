@@ -2,7 +2,6 @@ package seng202.group8.ParserAndLoaderTests;
 
 import javafx.collections.ObservableList;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
@@ -46,7 +45,7 @@ public class FileLoaderTest {
         AirportParser parser = new AirportParser();
         Airport airport1 = parser.createSingleAirport("2006,Auckland Intl,Auckland,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
         Airport airport2 = parser.createSingleAirport("2007,Christchurch Intl,Christchurch,New Zealand,AKL,NZAA,-43.489358,172.532225,23,12,Z,Pacific/Auckland");
-        Airport airport3 = parser.createSingleAirport("2008,Wellington Intl,Wellington,New Zealand,AKL,NZAA,-37.008056,174.791667,23,12,Z,Pacific/Auckland");
+        Airport airport3 = parser.createSingleAirport("2008,Wellington Intl,Wellington,New Zealand,AKL,NZAA,-41.3276,174.791667,23,12,Z,Pacific/Auckland");
         airportsExpected.add(airport1);
         airportsExpected.add(airport2);
         airportsExpected.add(airport3);
@@ -85,7 +84,7 @@ public class FileLoaderTest {
         assertTrue(isEqual);
     }
 
-    @Ignore
+    @Test
     public void buildRoutesTest() throws FileNotFoundException {
 
         Airline air = new Airline();
@@ -96,7 +95,7 @@ public class FileLoaderTest {
         airTwo.setIATA("3B");
         airTwo.setName("Test Airline Two");
         airThree.setIATA("9W");
-        airThree.setIATA("Test Airline Three");
+        airThree.setName("Test Airline Three");
         airlineHashMap.put("2B", air);
         airlineHashMap.put("3B", airTwo);
         airlineHashMap.put("9W", airThree);

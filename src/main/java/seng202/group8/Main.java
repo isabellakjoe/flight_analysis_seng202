@@ -25,7 +25,9 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        Database.createDatabase();
+        Database db = new Database();
+        db.createDatabase();
+
         Connection airlineConn = Database.connect();
         Connection airportConn = Database.connect();
         Connection routeConn = Database.connect();
