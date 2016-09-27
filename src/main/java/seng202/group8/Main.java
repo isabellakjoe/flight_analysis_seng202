@@ -25,12 +25,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        Database db = new Database();
-        db.createDatabase();
-
-        Connection airlineConn = db.connect();
-        Connection airportConn = db.connect();
-        Connection routeConn = db.connect();
+        Database.createDatabase();
+        Connection airlineConn = Database.connect();
+        Connection airportConn = Database.connect();
+        Connection routeConn = Database.connect();
 
         //Load all airlines, airports and routes into the database
 
@@ -39,19 +37,19 @@ public class Main extends Application {
         RouteDatabaseLoader routeLoader = new RouteDatabaseLoader();
 
         ObservableList<Airline> savedAirlines = airlineLoader.loadAirlines(airlineConn, MainController.getAirlineHashMap());
-        db.disconnect(airlineConn);
+        Database.disconnect(airlineConn);
         for (Airline airline: savedAirlines) {
             MainController.getCurrentlyLoadedAirlines().add(airline);
         }
 
         ObservableList<Airport> savedAirports = airportLoader.loadAirport(airportConn, MainController.getAirportHashMap());
-        db.disconnect(airportConn);
+        Database.disconnect(airportConn);
         for (Airport airport: savedAirports) {
             MainController.addToCurrentlyLoadedAirports(airport);
         }
 
         ObservableList<Route> savedRoutes = routeLoader.loadRoutes(routeConn, MainController.getRouteHashMap(), MainController.getAirlineHashMap(), MainController.getAirportHashMap());
-        db.disconnect(routeConn);
+        Database.disconnect(routeConn);
         for (Route route: savedRoutes) {
             MainController.addToCurrentlyLoadedRoutes(route);
         }

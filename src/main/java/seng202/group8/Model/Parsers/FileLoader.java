@@ -85,11 +85,10 @@ public class FileLoader {
         ObservableList<Route> routes = FXCollections.observableArrayList();
         RouteParser parser = new RouteParser();
         String currentString;
-        Database db = new Database();
-        Connection conn = db.connect();
+        Connection conn = Database.connect();
         DatabaseSaver dbSave = new DatabaseSaver();
         int routeID = dbSave.getCurrentMaxRouteID(conn);
-        db.disconnect(conn);
+        Database.disconnect(conn);
         while (textScanner.hasNextLine()) {
             currentString = textScanner.nextLine();
             Route route = parser.createSingleRoute(currentString, routeID, airlineHashMap, airportHashMap);

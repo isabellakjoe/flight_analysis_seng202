@@ -16,25 +16,17 @@ import java.util.HashMap;
  */
 public class AirlineDeleter {
 
-
-    //Step 1 -> Delete all associated routes
-    //Step 2 -> Delete from Observable Airline List
-    //Step 3 -> Delete from Airline Hashmap
-    //Step 4 -> Delete from Database
-    //Step 5 -> Return Observable Airline List
-
     public void deleteSingleAirline(Airline airline, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes, HashMap<String, Airline> airlineHashMap, ObservableList<Airline> currentlyLoadedAirlines) {
 
-        Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         DatabaseSaver dbSave = new DatabaseSaver();
-        Connection connSearch = db.connect();
-        Connection connDelete = db.connect();
+        Connection connSearch = Database.connect();
+        Connection connDelete = Database.connect();
 
         //Get all routes associated with the airline
         String sql = dbs.buildRouteSearch("airlineid", Integer.toString(airline.getAirlineID()));
         ObservableList<Route> routesToDelete = dbs.searchRouteByOption(connSearch, sql);
-        db.disconnect(connSearch);
+        Database.disconnect(connSearch);
 
         //Delete the associated routes
         RouteDeleter rd = new RouteDeleter();
@@ -56,7 +48,7 @@ public class AirlineDeleter {
 
         //Delete the airline from the database
         dbSave.deleteAirlines(connDelete, ids);
-        db.disconnect(connDelete);
+        Database.disconnect(connDelete);
     }
 
 }

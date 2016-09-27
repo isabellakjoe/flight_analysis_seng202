@@ -9,14 +9,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import seng202.group8.Controller.AddObjectControllers.AddAirlineViewController;
-import seng202.group8.Controller.AddObjectControllers.AddAirportViewController;
-import seng202.group8.Controller.AddObjectControllers.AddRouteViewController;
-import seng202.group8.Controller.FlightViewController;
 import seng202.group8.Controller.MainController;
-import seng202.group8.Controller.MapViewController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
+import seng202.group8.Model.Deleters.RouteDeleter;
 import seng202.group8.Model.Objects.Route;
 
 import javax.swing.*;
@@ -31,8 +27,6 @@ import static javax.swing.JOptionPane.YES_OPTION;
  * Created by esa46 on 20/09/16.
  */
 public class EditRouteViewController {
-
-
 
     @FXML
     private Pane editRoutePane;
@@ -274,23 +268,16 @@ public class EditRouteViewController {
         routeStopsDisplay.setText(Integer.toString(mainController.routeTable.getSelectionModel().getSelectedItem().getStops()));
     }
 
-    /* DO NOT DELETE PLEASE!!!
     public void deleteRoute(ActionEvent e){
         Route route = mainController.routeTable.getSelectionModel().getSelectedItems().get(0);
         int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete the\n" +
                 "route from " + route.getSourceAirportName() + "to "+ route.getDestinationAirportName() + "?", "Delete Route", JOptionPane.YES_NO_OPTION);
         if(jp == YES_OPTION){
-            Database db = new Database();
-            DatabaseSaver dbSave = new DatabaseSaver();
-            Connection connDelete = db.connect();
-            ArrayList<Integer> ids = new ArrayList<Integer>();
-            ids.add(route.getRouteID());
-            dbSave.deleteRoutes(connDelete, ids);
-            db.disconnect(connDelete);
-
+            RouteDeleter routeDeleter = new RouteDeleter();
+            routeDeleter.deleteSingleRoute(route, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes());
         }
 
-    }*/
+    }
 
     public void makeInvisible() {
         editRoutePane.setVisible(false);

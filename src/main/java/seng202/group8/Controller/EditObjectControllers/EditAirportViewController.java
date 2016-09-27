@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
-import seng202.group8.Model.Objects.Airline;
+import seng202.group8.Model.Deleters.AirportDeleter;
 import seng202.group8.Model.Objects.Airport;
 
 import javax.swing.*;
@@ -394,16 +394,18 @@ public class EditAirportViewController {
         airportLongitudeDisplay.setText(Double.toString(mainController.airportTable.getSelectionModel().getSelectedItem().getLongitude()));
         airportAltitudeDisplay.setText(Double.toString(mainController.airportTable.getSelectionModel().getSelectedItem().getAltitude()));
     }
-/* DO NOT DELETE PLEASE!!
+
+
     public void deleteAirport(ActionEvent e){
         Airport airport = mainController.airportTable.getSelectionModel().getSelectedItems().get(0);
         int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airport.getName() + "?", "Delete Airport", JOptionPane.YES_NO_OPTION);
         if(jp == YES_OPTION){
-
+            AirportDeleter airportDeleter = new AirportDeleter();
+            airportDeleter.deleteSingleAirport(airport, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirportHashMap(), MainController.getCurrentlyLoadedAirports());
 
         }
 
-    }*/
+    }
     public void makeInvisible() {
         editAirportPane.setVisible(false);
     }

@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
+import seng202.group8.Model.Deleters.AirlineDeleter;
 import seng202.group8.Model.Objects.Airline;
 
 import javax.swing.*;
@@ -201,13 +202,12 @@ public class EditAirlineViewController {
         if(noErrors) {
             //TODO: NEED TO CHECK UNIQUE CONSTRAINTS BEFORE ALLOWING DELETION + SAVING
             //Delete the current airline object from the database
-            Database db = new Database();
             DatabaseSaver dbSave = new DatabaseSaver();
-            Connection connDelete = db.connect();
+            Connection connDelete = Database.connect();
             ArrayList<Integer> ids = new ArrayList<Integer>();
             ids.add(currentAirline.getAirlineID());
             dbSave.deleteAirlines(connDelete, ids);
-            db.disconnect(connDelete);
+            Database.disconnect(connDelete);
 
 
             if (!editCallsignField.getText().equals("None")) {
@@ -253,11 +253,11 @@ public class EditAirlineViewController {
             airlineActiveDisplay.setVisible(true);
 
             //Save the updated airline to the database
-            Connection connSave = db.connect();
+            Connection connSave = Database.connect();
             ObservableList<Airline> newAirlines = FXCollections.observableArrayList();
             newAirlines.add(currentAirline);
             dbSave.saveAirlines(connSave, newAirlines);
-            db.disconnect(connDelete);
+            Database.disconnect(connDelete);
 
             mainController.setAirlineComboBoxes();
         }
@@ -281,22 +281,22 @@ public class EditAirlineViewController {
             airlineActiveDisplay.setText("No");
         }
     }
+
 /* DO NOT DELETE PLEASE!!
+
+*/
     public void deleteAirline(ActionEvent e){
         Airline airline = mainController.airlineTable.getSelectionModel().getSelectedItem();
         int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airline.getName() + "?", "Delete Airline", JOptionPane.YES_NO_OPTION);
         if(jp == YES_OPTION){
-            Database db = new Database();
-            DatabaseSaver dbSave = new DatabaseSaver();
-            Connection connDelete = db.connect();
-            ArrayList<Integer> ids = new ArrayList<Integer>();
-            ids.add(airline.getAirlineID());
-            dbSave.deleteRoutes(connDelete, ids);
-            db.disconnect(connDelete);
+            AirlineDeleter airlineDeleter = new AirlineDeleter();
+            airlineDeleter.deleteSingleAirline(airline, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirlineHashMap(), MainController.getCurrentlyLoadedAirlines());
+
+            mainController.setAirportComboBoxes();
 
         }
 
-    }*/
+    }
 
     public void makeInvisible() {
         editAirlinePane.setVisible(false);

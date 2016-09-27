@@ -19,17 +19,16 @@ public class AirportDeleter {
     public void deleteSingleAirport(Airport airport, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes, HashMap<String, Airport> airportHashMap, ObservableList<Airport> currentlyLoadedAirports) {
 
         //Set up the database and objects
-        Database db = new Database();
         DatabaseSearcher dbs = new DatabaseSearcher();
         DatabaseSaver dbSave = new DatabaseSaver();
-        Connection connSearch = db.connect();
-        Connection connDelete = db.connect();
+        Connection connSearch = Database.connect();
+        Connection connDelete = Database.connect();
 
         //Get all routes associated with this airport
         String sql = dbs.buildRouteSearch("sourceid", Integer.toString(airport.getAirportID()));
         sql = dbs.addAdditionalLikeOption(sql, "route", "destinationid", Integer.toString(airport.getAirportID()));
         ObservableList<Route> routesToDelete = dbs.searchRouteByOption(connSearch, sql);
-        db.disconnect(connSearch);
+        Database.disconnect(connSearch);
 
         //Delete the routes from the app
         RouteDeleter rd = new RouteDeleter();
@@ -53,7 +52,7 @@ public class AirportDeleter {
 
         //Remove the airport from the database
         dbSave.deleteAirport(connDelete, id);
-        db.disconnect(connDelete);
+        Database.disconnect(connDelete);
 
     }
 
