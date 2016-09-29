@@ -147,6 +147,7 @@
                                     <MenuButton alignment="TOP_LEFT" contentDisplay="TOP" graphicTextGap="1.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="69.0" text="Filter" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                         <items>
                                             <MenuItem fx:id="FilterAirportsByCountry" mnemonicParsing="false" onAction="#FilterAirportsByCountry" text="Country" />
+                                            <MenuItem fx:id="FilterAirportsByRoutes" mnemonicParsing="false" onAction="#FilterAirportsByRoutes" text="Routes" />
                                         </items>
                                         <padding>
                                             <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />
@@ -193,6 +194,7 @@
                                             <MenuItem fx:id="FilterRoutesByDestinationAirport" mnemonicParsing="false" onAction="#FilterRoutesByDestinationAirport" text="Destination Airport" />
                                             <MenuItem fx:id="FilterRoutesByStops" mnemonicParsing="false" onAction="#FilterRoutesByStops" text="Stops" />
                                             <MenuItem fx:id="FilterRoutesByEquipment" mnemonicParsing="false" onAction="#FilterRoutesByEquipment" text="Equipment" />
+
                                         </items>
                                         <padding>
                                             <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />

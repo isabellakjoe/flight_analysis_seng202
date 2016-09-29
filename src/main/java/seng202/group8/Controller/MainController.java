@@ -695,6 +695,29 @@ public class MainController implements Initializable {
         tableView.setVisible(true);
     }
 
+    @FXML
+    private void FilterAirportsByRoutes(ActionEvent e) {
+
+        Comparator<Airport> airportRouteComparator = new Comparator<Airport>() {
+            public int compare(Airport o1, Airport o2) {
+                int airport1 = o1.getNumRoutes();
+                int airport2 = o2.getNumRoutes();
+
+                return airport2 - airport1;
+            }
+        };
+        ArrayList<Airport> sortedAirports = new ArrayList<Airport>();
+        Collections.sort(currentlyLoadedAirports, airportRouteComparator);
+        for (Airport str : currentlyLoadedAirports) {
+            sortedAirports.add(str);
+        }
+        ObservableList<Airport> sortedObservableAirports = FXCollections.observableArrayList(sortedAirports);
+        airportTable.setItems(sortedObservableAirports);
+        resetView();
+        tableView.setVisible(true);
+
+    }
+
     /* Method to Filter ALREADY loaded routes by Source Airport
     Need to display an error message if routes aren't yet loaded
      */
@@ -963,18 +986,18 @@ public class MainController implements Initializable {
         initAirportTable();
         initRouteTable();
 
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("New State");
-        alert.setHeaderText("There is data availible to be loaded.");
-        alert.setContentText("Would you like to load initial data?");
-        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.YES){
-            airportFile(new File("src/main/resources/airports.dat"));
-            airlineFile(new File("src/main/resources/airlines.dat"));
-            routeFile(new File("src/main/resources/routes.dat"));
-        }
+//
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("New State");
+//        alert.setHeaderText("There is data availible to be loaded.");
+//        alert.setContentText("Would you like to load initial data?");
+//        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+//        Optional<ButtonType> result = alert.showAndWait();
+//        if (result.get() == ButtonType.YES){
+//            airportFile(new File("src/main/resources/airports.dat"));
+//            airlineFile(new File("src/main/resources/airlines.dat"));
+//            routeFile(new File("src/main/resources/routes.dat"));
+//        }
         // Allows individual cells to be selected as opposed to rows
         //airportTable.getSelectionModel().setCellSelectionEnabled(true);
         //Setting up Chart
@@ -1093,4 +1116,5 @@ public class MainController implements Initializable {
 
 
     }
+
 }
