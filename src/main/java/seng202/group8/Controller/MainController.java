@@ -162,7 +162,7 @@ public class MainController implements Initializable {
     @FXML
     private MenuItem getDistanceMenu;
     @FXML
-    private ContextMenu distanceMenu;
+    private ContextMenu airportMenu;
     @FXML
     private MenuItem helpAddButton;
     @FXML
@@ -1318,7 +1318,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void getDistance(ActionEvent e){
-        distanceMenu.hide();
+       airportMenu.hide();
         if(airportTable.getSelectionModel().getSelectedItems().size() == 2){
             Airport airport1 = airportTable.getSelectionModel().getSelectedItems().get(0);
             Airport airport2 = airportTable.getSelectionModel().getSelectedItems().get(1);
