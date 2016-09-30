@@ -127,7 +127,7 @@
         <Text fx:id="editRouteStopsError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
         <Text fx:id="editRouteEquipError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="*" visible="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
         <CheckBox fx:id="editCodeshareField" mnemonicParsing="false" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <!--<Button mnemonicParsing="false" onAction="#deleteRoute" text="Delete" GridPane.columnIndex="4" GridPane.rowIndex="3" />-->
+      <Button mnemonicParsing="false" onAction="#deleteRoute" text="Delete" GridPane.columnIndex="4" GridPane.rowIndex="3" />
     </children>
     <GridPane.margin>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
