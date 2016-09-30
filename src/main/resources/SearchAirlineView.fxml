@@ -7,7 +7,7 @@
     <children>
         <TextField fx:id="airlineIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
             <Button fx:id="airlineSearchButton" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#airlineSearch" text="Search" />
-            <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Search" />
+            <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airline Search" id="header"/>
             <Button fx:id="airlineAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirlineSearch" text="Advanced" />
             <TextField fx:id="airlineNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
             <TextField fx:id="airlineAliasSearch" layoutX="29.0" layoutY="248.0" prefHeight="25.0" prefWidth="220.0" promptText="alias" visible="false" />

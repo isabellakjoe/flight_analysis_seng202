@@ -1,13 +1,18 @@
 package seng202.group8.Controller;
 
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
+import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -20,13 +25,18 @@ import java.util.List;
 public class MapViewController {
 
     private MainController mainController;
+    private WebEngine webEngine;
     @FXML
     private CheckBox displayAllAirports;
     @FXML
     private CheckBox displayAllRoutes;
     @FXML
+    private TextField equipmentSearchBox;
+    @FXML
+    private TextField airportSearchBox;
+    @FXML
     private WebView webView;
-    private WebEngine webEngine;
+
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
@@ -45,11 +55,6 @@ public class MapViewController {
         } else {
             clearAirports();
         }
-    }
-
-    // Remove currently displayed airport markers
-    private void clearAirports() {
-        webEngine.executeScript("clearMarkers()");
     }
 
     // Display markers for list of airports
@@ -82,12 +87,20 @@ public class MapViewController {
             Airport airport = (Airport) i.next();
             Double latitude = airport.getLatitude();
             Double longitude = airport.getLongitude();
-            webEngine.executeScript("clearMarkers()");
-            String scriptToExecute = "createMarker(" + latitude + ',' + longitude + ");";
+//            String createInfoScript = "createInfoString(" + airport.getAirportID() + ", " + airport.getName() + ", " +
+//                    airport.getCity() + ", " + airport.getCountry() + ", " + airport.getIATA() + ", " + airport.getFAA() +
+//                    airport.getICAO() + ", " + airport.getLatitude() + ", " + airport.getLongitude() + ", " +
+//                    airport.getAltitude() + ", " + airport.getTimezone() + ", " + airport.getDST() + ", " +
+//                    airport.getOlsonTimezone() + ')';
+//            webEngine.executeScript(createInfoScript);
+            String scriptToExecute = "createMarker(" + latitude + ", " + longitude + ")";
             webEngine.executeScript(scriptToExecute);
             webEngine.executeScript("showMarkers()");
         }
     }
+
+    // Remove currently displayed airport markers
+    private void clearAirports() { webEngine.executeScript("clearMarkers()");}
 
 
     // Action Event for 'Display Routes' checkbox
@@ -146,7 +159,6 @@ public class MapViewController {
         while(i.hasNext()) {
             Airport airport = (Airport) i.next();
             if (airport.getName() == airportID) {
-                System.out.println("lat: " + airport.getLatitude() + " long: " + airport.getLongitude());
                 double lat = airport.getLatitude();
                 double lng = airport.getLongitude();
                 coords = new double[] {lat, lng};
@@ -161,6 +173,56 @@ public class MapViewController {
         webEngine.executeScript("clearRoutes()");
     }
 
+
+    // KeyEvent function that calls displayRoutesByEquipment function when input is received in text field
+    // and enter is pressed
+    @FXML
+    private void enterEquipmentPressed( KeyEvent key) {
+        if (key.getCode() == KeyCode.ENTER) {
+            displayRoutesByEquipment(equipmentSearchBox.getText());
+        }
+    }
+
+
+    private void displayRoutesByEquipment(String equipment) {
+
+        RouteSearcher searcher = new RouteSearcher(mainController.getCurrentlyLoadedRoutes());
+
+
+        if (equipment != null && !equipment.equals("ALL")) {
+            searcher.routesOfEquipment(equipment);
+        }
+
+        ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
+        List routes = matchingRoutes;
+
+        displayRoutes(routes);
+
+    }
+
+    // KeyEvent function that calls displayRoutesByAirport function when input is received in text field
+    // and enter is pressed
+    @FXML
+    private void enterAirportPressed( KeyEvent key) {
+        if (key.getCode() == KeyCode.ENTER) {
+            displayRoutesByAirports(airportSearchBox.getText());
+        }
+    }
+
+
+    private void displayRoutesByAirports(String airport) {
+
+        RouteSearcher searcher = new RouteSearcher(mainController.getCurrentlyLoadedRoutes());
+
+        if (airport != null && !airport.equals("ALL")) {
+            searcher.routesOfSource(airport);
+        }
+
+        ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
+        List routes = matchingRoutes;
+        displayRoutes(routes);
+
+    }
 
 
 }

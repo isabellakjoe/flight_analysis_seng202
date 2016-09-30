@@ -23,46 +23,99 @@
     var markers = new Array();
     var paths = new Array();
     var path;
+    var info;
 
     function initMap() {
         var init = {lat: 29.947130, lng: 23.961692};
 
         map = new google.maps.Map(document.getElementById('map'), {
             center: init,
-            zoom: 3
+            zoom: 3,
+            streetViewControl: false
         });
+
+        map.setOptions({ minZoom: 2, maxZoom: 15 });
+
+        google.maps.event.addListener(map, 'center_changed', function() {
+            checkBounds(map);
+        });
+
+
     }
+
+
+    // If the map position is out of range, move it back
+    function checkBounds(map) {
+
+        var latNorth = map.getBounds().getNorthEast().lat();
+        var latSouth = map.getBounds().getSouthWest().lat();
+        var newLat;
+
+        if(latNorth<85 && latSouth>-85)     /* in both side -> it's ok */
+            return;
+        else {
+            if(latNorth>85 && latSouth<-85)   /* out both side -> it's ok */
+                return;
+            else {
+                if(latNorth>85)
+                    newLat =  map.getCenter().lat() - (latNorth-85);   /* too north, centering */
+                if(latSouth<-85)
+                    newLat =  map.getCenter().lat() - (latSouth+85);   /* too south, centering */
+            }
+        }
+        if(newLat) {
+            var newCenter= new google.maps.LatLng( newLat ,map.getCenter().lng() );
+            map.setCenter(newCenter);
+        }
+    }
+
+
+//    function createInfoString(AirportId, Name, City, Country, IATA, FAA, ICAO, Lat, Lng, Alt, Time, DST, Tz) {
+//        info = '<div id="content">'+
+//                '<div id="siteNotice">'+
+//                '</div>'+
+//                'Airport Id: ' + AirportId + '\n Name: ' + Name + '\n City: ' + City + '\n Country: ' + Country +
+//                '\n IATA: ' + IATA + '\n FAA: ' + FAA + '\n ICAO: ' + ICAO + '\n Latitude: ' + Lat +
+//                '\n Longitude: ' + Lng + '\n Altitude: ' + Alt + '\n Time: ' + Time + '\n Daylight Savings Time: ' +
+//                DST + '\n Timezone: ' + Tz +
+//                '</div>'+
+//                '</div>';
+//
+//    }
 
     function createMarker(lat, lng) {
         var latLng = {lat: lat, lng: lng};
         var marker = new google.maps.Marker({
             position: latLng,
             map: map
-        })
+        });
         markers.push(marker);
-        // centres screen over marker
+//        var infowindow = new google.maps.InfoWindow({
+//            content: info
+//        });
+//        marker.addEventListener('click', function() {
+//            infowindow.open(map, marker);
+//        });
+        /*
+        centres screen over marker, DELETE THIS AND ADD FUNCTION
+        THAT CAN BE CALLED WHEN ALL AIRPORTS ADDED FOR SPEED
+         */
         map.panTo(marker.position);
     }
 
     // Sets the map on all markers in the array.
-    function setMarkers(map) {
+    function setAllMarkers(map) {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(map);
         }
     }
 
-    //
     function showMarkers() {
-        setMarkers(map);
+        setAllMarkers(map);
     }
 
     function clearMarkers() {
-        setMarkers(null);
-    }
-
-    function deleteMarkers() {
-        clearMarkers();
-        markers = [];
+        setAllMarkers(null);
     }
 
 
@@ -100,6 +153,8 @@
         }
         map.fitBounds(bounds);
     }
+
+
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6fwgIBGdcUE5YlxlfCWK9kxBXBujdM9U&callback=initMap"

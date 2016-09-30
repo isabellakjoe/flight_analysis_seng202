@@ -9,7 +9,7 @@
     <children>
         <TextField fx:id="airportIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
         <Button fx:id="airportSearchButton" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#airportSearch" text="Search" />
-        <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " />
+        <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " id="header"/>
         <TextField fx:id="airportNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
         <TextField fx:id="airportCitySearch" layoutX="29.0" layoutY="202.0" prefHeight="25.0" prefWidth="220.0" promptText="city" visible="false" />
         <TextField fx:id="airportFAASearch" layoutX="29.0" layoutY="243.0" prefHeight="25.0" prefWidth="220.0" promptText="FAA" visible="false" />
