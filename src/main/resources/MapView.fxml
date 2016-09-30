@@ -20,12 +20,21 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <children>
                 <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <Pane layoutX="535.0" layoutY="30.0" prefHeight="140.0" prefWidth="148.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                <Pane layoutX="535.0" layoutY="30.0" prefHeight="214.0" prefWidth="148.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7f7f780" height="140.0" mouseTransparent="true" opacity="0.67" stroke="#f5f7f8" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE" width="148.0" />
-                        <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Display:" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7f7f780" height="214.0" mouseTransparent="true" stroke="#f5f7f8" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE" width="148.0" />
+                        <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Display:">
+                            <font>
+                                <Font size="14.0" />
+                            </font></Text>
                         <CheckBox fx:id="displayAllAirports" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#mapAirports" text="All Airports" />
                         <CheckBox fx:id="displayAllRoutes" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" onAction="#mapRoutes" text="All Routes" />
+                        <Text layoutX="14.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Routes using this" />
+                  <Text layoutX="14.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="equipment:" />
+                        <TextField fx:id="equipmentSearchBox" layoutX="14.0" layoutY="122.0" onKeyPressed="#enterEquipmentPressed" prefWidth="125.0" promptText="e.g. 747" />
+                        <Text layoutX="14.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Routes out of an" />
+                  <Text layoutX="14.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport:" />
+                        <TextField fx:id="airportSearchBox" layoutX="12.0" layoutY="181.0" onKeyPressed="#enterAirportPressed" prefWidth="125.0" promptText="e.g. Auckland" />
                     </children>
                 </Pane>
             </children>

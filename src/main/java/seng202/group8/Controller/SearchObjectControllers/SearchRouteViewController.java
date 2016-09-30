@@ -168,7 +168,7 @@ public class SearchRouteViewController {
 
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
 
-        //This is a patch for deliverable two, needs to be implemented propelry in the loader class at some point
+        //This is a patch for deliverable two, needs to be implemented properly in the loader class at some point
 
         for (Route route: matchingRoutes) {
             route.setAirlineName(route.getAirline().getName());

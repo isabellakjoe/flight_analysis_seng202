@@ -15,6 +15,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
@@ -39,13 +41,16 @@ import seng202.group8.Main;
 import seng202.group8.Model.DatabaseMethods.*;
 import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
+import seng202.group8.Model.Searchers.AirlineSearcher;
+import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.*;
-
+import java.util.List;
 
 
 /**
@@ -888,7 +893,6 @@ public class MainController implements Initializable {
         mapViewController.setMainController(this);
         mapViewController.initMap();
         flightViewController.setMainController(this);
-        mapViewController.setMainController(this);
         addAirlineViewController.setMainController(this);
         addAirportViewController.setMainController(this);
         addRouteViewController.setMainController(this);
@@ -1200,5 +1204,191 @@ public class MainController implements Initializable {
 
 
     }
+
+
+    /** MOVE ADDED STUFF OVER TO MAPVIEW CONTROLLER AND UNCOMMENT STUFF TOO!!!
+
+
+    @FXML
+    private CheckBox displayAllAirports;
+    @FXML
+    private CheckBox displayAllRoutes;
+    @FXML
+    private TextField equipmentSearchBox;
+    @FXML
+    private TextField airportSearchBox;
+    @FXML
+    private WebView webView;
+    private WebEngine webEngine;
+
+
+    public void initMap() {
+        webEngine = webView.getEngine();
+        webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
+    }
+
+    // Action Event for 'Display Airports' checkbox
+    @FXML
+    public void mapAirports(ActionEvent e) {
+        if (displayAllAirports.isSelected()) {
+            displayAirports(getCurrentlyLoadedAirports());
+        } else {
+            clearAirports();
+        }
+    }
+
+    // Remove currently displayed airport markers
+    private void clearAirports() {
+        webEngine.executeScript("clearMarkers()");
+    }
+
+    // Display markers for list of airports
+    private void displayAirports(List airportList) {
+        if (airportList.size() < 1000 && airportList.size() != 0) {
+            showAirportMarkers(airportList);
+        } else if (airportList.isEmpty()) {
+            JOptionPane jp = new JOptionPane();
+            jp.setSize(600, 600);
+            jp.showMessageDialog(null, "No Airports to display.", "Error Message", JOptionPane.INFORMATION_MESSAGE);
+            displayAllAirports.setSelected(false);
+        } else {
+            JOptionPane jp = new JOptionPane();
+            jp.setSize(600, 600);
+            JLabel msgLabel = new JLabel("Are you sure you want to display " +  airportList.size() + " airports? \nThis may take a while...", JLabel.CENTER);
+            int reply = jp.showConfirmDialog(null, msgLabel, "Error Message", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                showAirportMarkers(airportList);
+            } else {
+                displayAllAirports.setSelected(false);
+            }
+        }
+    }
+
+
+    // Method that clears, creates and displays airport markers
+    private void showAirportMarkers(List airports) {
+        Iterator i = airports.iterator();
+        while (i.hasNext()) {
+            Airport airport = (Airport) i.next();
+            Double latitude = airport.getLatitude();
+            Double longitude = airport.getLongitude();
+            webEngine.executeScript("clearMarkers()");
+            String scriptToExecute = "createMarker(" + latitude + ',' + longitude + ");";
+            webEngine.executeScript(scriptToExecute);
+            webEngine.executeScript("showMarkers()");
+        }
+    }
+
+
+    // Action Event for 'Display Routes' checkbox
+    @FXML
+    public void mapRoutes(ActionEvent e) {
+        if (displayAllRoutes.isSelected()) {
+            displayRoutes(getCurrentlyLoadedRoutes());
+        } else {
+            clearRoutes();
+        }
+    }
+
+    // Method for displaying routes on map
+    private void displayRoutes(List routes) {
+        if (routes.size() < 1000 && routes.size() != 0) {
+            createMapRoutes(routes);
+        } else if (routes.isEmpty()) {
+            JOptionPane jp = new JOptionPane();
+            jp.setSize(600, 600);
+            jp.showMessageDialog(null, "No Routes to display.", "Error Message", JOptionPane.INFORMATION_MESSAGE);
+            displayAllRoutes.setSelected(false);
+        } else {
+            JOptionPane jp = new JOptionPane();
+            jp.setSize(600, 600);
+            JLabel msgLabel = new JLabel("Are you sure you want to display " +  routes.size() + " routes? \nThis may take a while...", JLabel.CENTER);
+            int reply = jp.showConfirmDialog(null, msgLabel, "Error Message", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                createMapRoutes(routes);
+            } else {
+                displayAllRoutes.setSelected(false);
+            }
+        }
+    }
+
+    // Method that clears, creates and displays airport markers
+    private void createMapRoutes(List routes) {
+        Iterator i = routes.iterator();
+        while (i.hasNext()) {
+            Route route = (Route) i.next();
+            // get ids of source and destination airport
+            String source = route.getSourceAirportName();
+            String dest = route.getDestinationAirportName();
+            // find airport in currentlyLoadedAirports to get coords
+            double[] sourceCoords = getCoordinates(source);
+            double[] destCoords = getCoordinates(dest);
+            String scriptToExecute = "drawRouteLine(" + sourceCoords[0] + ", " + sourceCoords[1] + ", " + destCoords[0]
+                    + ", " + destCoords[1] + ")";
+            webEngine.executeScript(scriptToExecute);
+        }
+    }
+
+    private double[] getCoordinates(String airportID) {
+        double[] coords = {};
+        List airports = getCurrentlyLoadedAirports();
+        Iterator i = airports.iterator();
+        while(i.hasNext()) {
+            Airport airport = (Airport) i.next();
+            if (airport.getName() == airportID) {
+                System.out.println("lat: " + airport.getLatitude() + " long: " + airport.getLongitude());
+                double lat = airport.getLatitude();
+                double lng = airport.getLongitude();
+                coords = new double[] {lat, lng};
+                break;
+            }
+        }
+        return coords;
+    }
+
+    // Remove currently displayed airport markers
+    private void clearRoutes() {
+        webEngine.executeScript("clearRoutes()");
+    }
+
+    // KeyEvent function that calls displayRoutesByEquipment function when input is received in text field
+    // and enter is pressed
+    @FXML
+    private void enterEquipmentPressed( KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_ENTER) {
+            displayRoutesByEquipment(equipmentSearchBox.getText());
+        }
+    }
+
+
+    private void displayRoutesByEquipment(String text) {
+
+    }
+
+    // KeyEvent function that calls displayRoutesByEquipment function when input is received in text field
+    // and enter is pressed
+    @FXML
+    private void enterAirportPressed( KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_ENTER) {
+            displayRoutesByEquipment(airportSearchBox.getText());
+        }
+    }
+
+
+    private void displayRoutesByAirports(String airport) {
+        RouteSearcher searcher = new RouteSearcher(getCurrentlyLoadedRoutes());
+
+
+        if (airport != null && !airport.equals("ALL")) {
+            searcher.routesOfSource(airport);
+        }
+
+        ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
+
+        displayRoutes(matchingRoutes);
+
+    }
+
+    */
 
 }
