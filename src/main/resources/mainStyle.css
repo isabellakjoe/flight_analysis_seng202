@@ -1,0 +1,94 @@
+/*
+Document : mainStyle
+*/
+
+
+.menu-bar{
+    -fx-background-color: #555555;
+
+
+}
+.menu .label{
+    -fx-text-fill: #F5F5F5;
+}
+.menu-item .label{
+    -fx-text-fill: black;
+}
+
+#search {
+    -fx-background-color: #C1C1C1;
+    -fx-border-width: 2px;
+    -fx-border-color: #848484;
+
+
+}
+#header{
+    -fx-font-weight: 600;
+}
+#search .tab:selected{
+    -fx-font-weight: 500;
+    -fx-background-color:#C1C1C1;
+}
+#search .tab{
+    -fx-background-color: #EAEAEA;
+
+}
+#search .tab-header-background{
+    -fx-background-color: #AAAAAA;
+}
+
+#view{
+    -fx-border-color: #848484;
+    -fx-border-width: 2px;
+    -fx-background-color: #DCDCDC;
+
+}
+#view .tab-header-background{
+    -fx-background-color: #AAAAAA;
+}
+
+#view .tab:selected{
+    -fx-font-weight: 500;
+    -fx-background-color:#DCDCDC;
+}
+
+#view .button{
+    -fx-text-fill: white;
+    -fx-background-color: #848484,
+    linear-gradient(#8E8E8E, #5B5B5B);
+
+    -fx-background-radius: 8;
+
+    -fx-border-color: #5B5B5B;
+    -fx-border-width: 1px;
+    -fx-border-radius:5;
+
+}
+
+#view .button:focused {
+    -fx-border-color: #009ACD,
+    linear-gradient(#009ACD, #00688B);
+    -fx-border-width: 1, 1;
+    -fx-border-radius: 8;
+    -fx-border-insets: 1 1 1 1;
+}
+
+#search .button{
+    -fx-text-fill: white;
+    -fx-background-color: #7D9EC0,
+        linear-gradient(#7D9EC0, #607B8B);
+
+    -fx-background-radius: 8;
+
+    -fx-border-color: #5B5B5B;
+    -fx-border-width: 1px;
+    -fx-border-radius:5;
+
+}
+#search .button:focused {
+    -fx-border-color: #009ACD,
+        linear-gradient(#009ACD, #00688B);
+    -fx-border-width: 1, 1;
+    -fx-border-radius: 8;
+    -fx-border-insets: 1 1 1 1;
+}
