@@ -25,6 +25,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Pair;
 import seng202.group8.Controller.AddObjectControllers.AddAirlineViewController;
 import seng202.group8.Controller.AddObjectControllers.AddAirportViewController;
@@ -59,6 +60,8 @@ public class MainController implements Initializable {
     private static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
     private static ObservableList<Airport> currentlyLoadedAirports = FXCollections.observableArrayList();
     private static ObservableList<Route> currentlyLoadedRoutes = FXCollections.observableArrayList();
+
+    public boolean isLightCoral = false;
 
     private Data loadedData = null;
     @FXML
@@ -137,6 +140,8 @@ public class MainController implements Initializable {
     private TableColumn<Airport, String> timezone;
     @FXML
     private TableColumn<Airport, String> DST;
+    @FXML
+    private TableColumn<Airport, String> noRoutes;
     @FXML
     private TableColumn<Route, String> routeAirlineName;
     @FXML
@@ -926,6 +931,36 @@ public class MainController implements Initializable {
         altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
         timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
+        //noRoutes.setCellValueFactory(new PropertyValueFactory<Airport, String>("Routes"));
+
+        // This sets Airports with no routes red. Alternates colours for clarity
+        airportTable.setRowFactory(new Callback<TableView<Airport>, TableRow<Airport>>() {
+            @Override
+            public TableRow<Airport> call(TableView<Airport> param) {
+                return new TableRow<Airport>() {
+                    @Override
+                    protected void updateItem(Airport item, boolean empty) {
+                        if (!empty) {
+                            if (item.getNumRoutes() == 0) {
+                                if (isLightCoral) {
+                                    setStyle("-fx-background-color:rgba(195, 0, 0, 0.85)");
+                                    isLightCoral = false;
+                                } else {
+                                    setStyle("-fx-background-color:rgba(205, 0, 0, 0.86)");
+                                    isLightCoral = true;
+                                }
+
+                            } else {
+                                setStyle(null);
+                            }
+                            super.updateItem(item, empty);
+                        } else {
+                            setStyle(null);
+                        }
+                    }
+                };
+            }
+        });
     }
 
     /*Set columns of route table*/
@@ -943,9 +978,17 @@ public class MainController implements Initializable {
     @FXML
     private BarChart<String, Integer> routesPerAirport;
     @FXML
+    private BarChart<String, Integer> airlinePerCountry;
+    @FXML
+    private BarChart<String, Integer> airportPerCountry;
+    @FXML
     private PieChart equipmentPerRoute;
     @FXML
-    private CategoryAxis xAxis;
+    private CategoryAxis routePerAirportAxis;
+    @FXML
+    private CategoryAxis airlinePerCountryAxis;
+    @FXML
+    private CategoryAxis airportPerCountryAxis;
     @FXML
     private Slider routeNum;
     @FXML
@@ -956,8 +999,8 @@ public class MainController implements Initializable {
     private ComboBox graphCombo;
 
     public void setGraphCombo() {
-        graphCombo.getItems().addAll("Routes per Airport", "Equipment per Routes");
-        graphCombo.setValue("Choose a Graph");
+        graphCombo.getItems().addAll("Routes per Airport", "Equipment per Routes", "Airline per Country", "Airport per Country");
+        graphCombo.setValue("Graphs");
     }
 
     @FXML
@@ -966,9 +1009,23 @@ public class MainController implements Initializable {
         if (graph == "Routes per Airport"){
             routesPerAirport.setVisible(true);
             equipmentPerRoute.setVisible(false);
+            airlinePerCountry.setVisible(false);
+            airportPerCountry.setVisible(false);
         } else if (graph == "Equipment per Routes"){
             routesPerAirport.setVisible(false);
             equipmentPerRoute.setVisible(true);
+            airlinePerCountry.setVisible(false);
+            airportPerCountry.setVisible(false);
+        } else if (graph == "Airline per Country") {
+            routesPerAirport.setVisible(false);
+            equipmentPerRoute.setVisible(false);
+            airlinePerCountry.setVisible(true);
+            airportPerCountry.setVisible(false);
+        } else if (graph == "Airport per Country") {
+            routesPerAirport.setVisible(false);
+            equipmentPerRoute.setVisible(false);
+            airlinePerCountry.setVisible(false);
+            airportPerCountry.setVisible(true);
         }
     }
 
@@ -979,6 +1036,8 @@ public class MainController implements Initializable {
     public void addToRoutesPerAirport() {
         routesPerAirport.setVisible(true);
         equipmentPerRoute.setVisible(false);
+        airlinePerCountry.setVisible(false);
+        airportPerCountry.setVisible(false);
         if (!airportTable.getItems().isEmpty() || !airportTable.getSelectionModel().isEmpty()) {
             ObservableList<Airport> airports = FXCollections.observableArrayList();
             ObservableList<Airport> airportsFromTable = airportTable.getSelectionModel().getSelectedItems();
@@ -1000,26 +1059,129 @@ public class MainController implements Initializable {
             ArrayList<String> airportNames = new ArrayList<String>();
             airportNames.clear();
 
-            Collections.sort(loadedAirports, new Comparator<Airport>() {
+            /*Collections.sort(loadedAirports, new Comparator<Airport>() {
                 @Override
                 public int compare(Airport o1, Airport o2) {
                     return o1.getNumRoutes() - o2.getNumRoutes();
                 }
-            }.reversed());
-            if (routeNum.getValue() > loadedAirports.size()){
+            }.reversed());*/
+            /*if (routeNum.getValue() > loadedAirports.size()){
                 routeNum.setValue(loadedAirports.size());
-            }
-            for (int i = 0; i < routeNum.getValue(); i++) {
+            }*/
+            for (int i = 0; i < loadedAirports.size(); i++) {
                 int routes = loadedAirports.get(i).getNumRoutes();
-                String name = loadedAirports.get(i).getName() + " : " + Integer.toString(routes);
-                airportNames.add(name);
-                series.getData().add(new XYChart.Data<String, Integer>(name, routes));
+                String name = loadedAirports.get(i).getName();
+                for (int j = 0; j < series.getData().size(); j++) {
+                    int version = 2;
+                    while (name.equals(series.getData().get(j).getXValue().split(" : ")[0])){
+                        name = name + " " + Integer.toString(version);
+                        version += 1;
+                    }
+                }
+                airportNames.add(name + " : " + Integer.toString(routes));
+                series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
             }
-            xAxis.getCategories().clear();
-            if (routeNum.getValue() > 0){
-                xAxis.setCategories(FXCollections.observableArrayList(airportNames));
-                routesPerAirport.getData().add(series);
+            routePerAirportAxis.getCategories().clear();
+            /*if (routeNum.getValue() > 0){*/
+            routePerAirportAxis.setCategories(FXCollections.observableArrayList(airportNames));
+            routesPerAirport.getData().add(series);
+            /*}*/
+        }
+    }
+
+    @FXML
+    public void addToAirlinesPerCountry() {
+        routesPerAirport.setVisible(false);
+        equipmentPerRoute.setVisible(false);
+        airlinePerCountry.setVisible(true);
+        airportPerCountry.setVisible(false);
+        if (!airlineTable.getItems().isEmpty() || !airlineTable.getSelectionModel().isEmpty()) {
+            ObservableList<Airline> airlines = FXCollections.observableArrayList();
+            ObservableList<Airline> airlinesFromTable = airlineTable.getSelectionModel().getSelectedItems();
+            airlines.addAll(airlinesFromTable);
+            setAirlinesPerCountry(airlines);
+            dataTabs.getSelectionModel().select(graphTab);
+        }
+    }
+
+    public void setAirlinesPerCountry(ObservableList<Airline> loadedAirlines){
+        airlinePerCountry.getData().clear();
+        if (!loadedAirlines.isEmpty()) {
+            XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
+            ArrayList<String> countryNames = new ArrayList<String>();
+            /*if (routeNum.getValue() > loadedAirlines.size()){
+                routeNum.setValue(loadedAirlines.size());
+            }*/
+            HashMap<String, Integer> countries = new HashMap<String, Integer>();
+            for (Airline airlines : loadedAirlines) {
+                String country = airlines.getCountry();
+                if (country.length() == 0) {
+                    country = "No Country";
+                }
+                if (countries.containsKey(country)) {
+                    countries.put(country, countries.get(country) + 1);
+                } else {
+                    countries.put(country, 1);
+                }
             }
+            for (Map.Entry<String, Integer> map : countries.entrySet()) {
+                int airlines = map.getValue();
+                String country = map.getKey() + " : " + Integer.toString(airlines);
+                countryNames.add(country);
+                series.getData().add(new XYChart.Data<String, Integer>(country, airlines));
+            }
+            airlinePerCountryAxis.getCategories().clear();
+            airlinePerCountryAxis.setCategories(FXCollections.observableArrayList(countryNames));
+            airlinePerCountry.getData().add(series);
+        }
+    }
+
+    @FXML
+    public void addToAirportsPerCountry() {
+        routesPerAirport.setVisible(false);
+        equipmentPerRoute.setVisible(false);
+        airlinePerCountry.setVisible(false);
+        airportPerCountry.setVisible(true);
+        if (!airportTable.getItems().isEmpty() || !airportTable.getSelectionModel().isEmpty()) {
+            ObservableList<Airport> airports = FXCollections.observableArrayList();
+            ObservableList<Airport> airportFromTable = airportTable.getSelectionModel().getSelectedItems();
+            airports.addAll(airportFromTable);
+            setAirportsPerCountry(airports);
+            dataTabs.getSelectionModel().select(graphTab);
+        }
+    }
+
+    public void setAirportsPerCountry(ObservableList<Airport> loadedAirports){
+        airportPerCountry.getData().clear();
+        if (!loadedAirports.isEmpty()) {
+            XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
+            ArrayList<String> countryNames = new ArrayList<String>();
+            /*if (routeNum.getValue() > loadedAirports.size()){
+                routeNum.setValue(loadedAirports.size());
+            }*/
+            HashMap<String, Integer> countries = new HashMap<String, Integer>();
+            for (Airport airports : loadedAirports) {
+                String country = airports.getCountry();
+                if (country.length() == 0) {
+                    country = "No Country";
+                }
+                if (countries.containsKey(country)) {
+                    countries.put(country, countries.get(country) + 1);
+                } else {
+                    countries.put(country, 1);
+                }
+            }
+            for (Map.Entry<String, Integer> map : countries.entrySet()) {
+                int airports = map.getValue();
+                String country = map.getKey() + " : " + Integer.toString(airports);
+                countryNames.add(country);
+                series.getData().add(new XYChart.Data<String, Integer>(country, airports));
+
+            }
+            airportPerCountryAxis.getCategories().clear();
+            airportPerCountry.getData().add(series);
+            airportPerCountryAxis.setCategories(FXCollections.observableArrayList(countryNames));
+
         }
     }
 
@@ -1027,6 +1189,8 @@ public class MainController implements Initializable {
     public void addToEquipmentPerRoute(){
         equipmentPerRoute.setVisible(true);
         routesPerAirport.setVisible(false);
+        airlinePerCountry.setVisible(false);
+        airportPerCountry.setVisible(false);
         if (!routeTable.getItems().isEmpty() || !routeTable.getSelectionModel().isEmpty()) {
             ObservableList<Route> routes = FXCollections.observableArrayList();
             ObservableList<Route> routesFromTable = routeTable.getSelectionModel().getSelectedItems();
@@ -1061,6 +1225,8 @@ public class MainController implements Initializable {
 
     //-----------------------------------------------------------------------------------------------------------------
 
+
+
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -1085,7 +1251,7 @@ public class MainController implements Initializable {
         // Allows individual cells to be selected as opposed to rows
         //airportTable.getSelectionModel().setCellSelectionEnabled(true);
         //Setting up Chart
-
+        airlineTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         airportTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         routeTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         airportTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
