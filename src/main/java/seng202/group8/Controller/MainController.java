@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -309,7 +310,6 @@ public class MainController implements Initializable {
     public void airportFile(File file) {
         try {
             if (file != null) {
-                System.out.println("Path: " + file.getPath());
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
                 FileLoader load = new FileLoader(br);
                 //Use imported methods from FileLoader to process the airport data file
@@ -343,7 +343,6 @@ public class MainController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Airport datafile"); //Text in the window header
         File file = fileChooser.showOpenDialog(new Stage());
-
         airportFile(file);
     }
 
@@ -695,6 +694,29 @@ public class MainController implements Initializable {
         tableView.setVisible(true);
     }
 
+    @FXML
+    private void FilterAirportsByRoutes(ActionEvent e) {
+
+        Comparator<Airport> airportRouteComparator = new Comparator<Airport>() {
+            public int compare(Airport o1, Airport o2) {
+                int airport1 = o1.getNumRoutes();
+                int airport2 = o2.getNumRoutes();
+
+                return airport2 - airport1;
+            }
+        };
+        ArrayList<Airport> sortedAirports = new ArrayList<Airport>();
+        Collections.sort(currentlyLoadedAirports, airportRouteComparator);
+        for (Airport str : currentlyLoadedAirports) {
+            sortedAirports.add(str);
+        }
+        ObservableList<Airport> sortedObservableAirports = FXCollections.observableArrayList(sortedAirports);
+        airportTable.setItems(sortedObservableAirports);
+        resetView();
+        tableView.setVisible(true);
+
+    }
+
     /* Method to Filter ALREADY loaded routes by Source Airport
     Need to display an error message if routes aren't yet loaded
      */
@@ -916,34 +938,80 @@ public class MainController implements Initializable {
         equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
     }
 
+    //------------------------------Needs to be moved to GraphViewController eventually-----------------------------------
+
     @FXML
     private BarChart<String, Integer> routesPerAirport;
+    @FXML
+    private PieChart equipmentPerRoute;
     @FXML
     private CategoryAxis xAxis;
     @FXML
     private Slider routeNum;
+    @FXML
+    private TabPane dataTabs;
+    @FXML
+    private Tab graphTab;
+    @FXML
+    private ComboBox graphCombo;
 
-    /** Fills the routesPerAirport Graph with data and sets xAxis labels
+    public void setGraphCombo() {
+        graphCombo.getItems().addAll("Routes per Airport", "Equipment per Routes");
+        graphCombo.setValue("Choose a Graph");
+    }
+
+    @FXML
+    public void setGraph(){
+        String graph = graphCombo.getValue().toString();
+        if (graph == "Routes per Airport"){
+            routesPerAirport.setVisible(true);
+            equipmentPerRoute.setVisible(false);
+        } else if (graph == "Equipment per Routes"){
+            routesPerAirport.setVisible(false);
+            equipmentPerRoute.setVisible(true);
+        }
+    }
+
+    @FXML
+    /** Calls the setRoutesPerAirport method with the selected Airports in the Airports table
+     *
      */
-    public void setChart(){
+    public void addToRoutesPerAirport() {
+        routesPerAirport.setVisible(true);
+        equipmentPerRoute.setVisible(false);
+        if (!airportTable.getItems().isEmpty() || !airportTable.getSelectionModel().isEmpty()) {
+            ObservableList<Airport> airports = FXCollections.observableArrayList();
+            ObservableList<Airport> airportsFromTable = airportTable.getSelectionModel().getSelectedItems();
+            airports.addAll(airportsFromTable);
+            setRoutesPerAirport(airports);
+            dataTabs.getSelectionModel().select(graphTab);
+        }
+    }
+
+    /** Fills the routesPerAirport Graph with data from an ObeservableList of airports and sets xAxis labels to
+     *  Airport names
+     *
+     * @param loadedAirports: ObservableList of Airport Objects
+     */
+    public void setRoutesPerAirport(ObservableList<Airport> loadedAirports){
         routesPerAirport.getData().clear();
-        if (!currentlyLoadedAirports.isEmpty()) {
+        if (!loadedAirports.isEmpty()) {
             XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
-            ObservableList<Airport> loadedAirports = currentlyLoadedAirports;
             ArrayList<String> airportNames = new ArrayList<String>();
             airportNames.clear();
 
-
-            Comparator<Airport> compAir = new Comparator<Airport>() {
+            Collections.sort(loadedAirports, new Comparator<Airport>() {
                 @Override
                 public int compare(Airport o1, Airport o2) {
                     return o1.getNumRoutes() - o2.getNumRoutes();
                 }
-            };
-            Collections.sort(loadedAirports, compAir.reversed());
-            for (int i = 0; i <= routeNum.getValue(); i++) {
-                String name = loadedAirports.get(i).getName();
+            }.reversed());
+            if (routeNum.getValue() > loadedAirports.size()){
+                routeNum.setValue(loadedAirports.size());
+            }
+            for (int i = 0; i < routeNum.getValue(); i++) {
                 int routes = loadedAirports.get(i).getNumRoutes();
+                String name = loadedAirports.get(i).getName() + " : " + Integer.toString(routes);
                 airportNames.add(name);
                 series.getData().add(new XYChart.Data<String, Integer>(name, routes));
             }
@@ -955,6 +1023,44 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    public void addToEquipmentPerRoute(){
+        equipmentPerRoute.setVisible(true);
+        routesPerAirport.setVisible(false);
+        if (!routeTable.getItems().isEmpty() || !routeTable.getSelectionModel().isEmpty()) {
+            ObservableList<Route> routes = FXCollections.observableArrayList();
+            ObservableList<Route> routesFromTable = routeTable.getSelectionModel().getSelectedItems();
+            routes.addAll(routesFromTable);
+            setEquipmentPerRoute(routes);
+            dataTabs.getSelectionModel().select(graphTab);
+        }
+    }
+
+    public void setEquipmentPerRoute(ObservableList<Route> routes) {
+        equipmentPerRoute.getData().clear();
+        if (!routes.isEmpty()) {
+            ObservableList<PieChart.Data> chartData = FXCollections.observableArrayList();
+            HashMap<String, Integer> equipment = new HashMap<String, Integer>();
+            for (Route route : routes) {
+                for (String equip : route.getEquipment().split(" ")) {
+                    if (equipment.containsKey(equip)) {
+                        equipment.put(equip, equipment.get(equip) + 1);
+                    } else {
+                        equipment.put(equip, 1);
+                    }
+                }
+            }
+            for (Map.Entry<String, Integer> map : equipment.entrySet()) {
+                chartData.add(new PieChart.Data(map.getKey() + " : " + Integer.toString(map.getValue()), map.getValue()));
+            }
+            equipmentPerRoute.getData().addAll(chartData);
+        }
+    }
+
+
+
+    //-----------------------------------------------------------------------------------------------------------------
+
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -962,25 +1068,26 @@ public class MainController implements Initializable {
         initAirlineTable();
         initAirportTable();
         initRouteTable();
+        setGraphCombo();
 
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("New State");
-        alert.setHeaderText("There is data availible to be loaded.");
-        alert.setContentText("Would you like to load initial data?");
-        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.YES){
-            airportFile(new File("src/main/resources/airports.dat"));
-            airlineFile(new File("src/main/resources/airlines.dat"));
-            routeFile(new File("src/main/resources/routes.dat"));
-        }
+//
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("New State");
+//        alert.setHeaderText("There is data availible to be loaded.");
+//        alert.setContentText("Would you like to load initial data?");
+//        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+//        Optional<ButtonType> result = alert.showAndWait();
+//        if (result.get() == ButtonType.YES){
+//            airportFile(new File("src/main/resources/airports.dat"));
+//            airlineFile(new File("src/main/resources/airlines.dat"));
+//            routeFile(new File("src/main/resources/routes.dat"));
+//        }
         // Allows individual cells to be selected as opposed to rows
         //airportTable.getSelectionModel().setCellSelectionEnabled(true);
         //Setting up Chart
-        setChart();
 
         airportTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        routeTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         airportTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
                @Override
                public void handle(ContextMenuEvent event) {
@@ -1093,4 +1200,5 @@ public class MainController implements Initializable {
 
 
     }
+
 }

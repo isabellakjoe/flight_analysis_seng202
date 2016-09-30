@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.AirlineDatabaseLoader;
