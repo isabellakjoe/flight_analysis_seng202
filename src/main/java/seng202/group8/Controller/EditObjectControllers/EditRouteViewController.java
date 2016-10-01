@@ -194,10 +194,8 @@ public class EditRouteViewController {
         boolean noErrors = editRouteErrors(routeData);
 
         if (MainController.getAirportHashMap().get(source) == null) {
-            System.out.println("Src Wrong");
             noErrors = false;
         } else if (MainController.getAirportHashMap().get(destination) == null) {
-            System.out.println("Dest Wrong");
             noErrors = false;
         }
 

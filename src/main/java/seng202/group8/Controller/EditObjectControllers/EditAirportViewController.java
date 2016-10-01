@@ -283,16 +283,6 @@ public class EditAirportViewController {
         clearEditAirportErrors();
         Airport currentAirport = mainController.airportTable.getSelectionModel().getSelectedItem();
 
-        //Delete the airport to be changed from the database
-        Database db = new Database();
-        DatabaseSaver dbSave = new DatabaseSaver();
-        Connection connDelete = db.connect();
-        ArrayList<Integer> ids = new ArrayList<Integer>();
-        ids.add(currentAirport.getAirportID());
-        dbSave.deleteAirport(connDelete, ids);
-        db.disconnect(connDelete);
-
-
         String FAA = editFAAField.getText();
         String IATA = editAirportIATAField.getText();
         String ICAO = editAirportICAOField.getText();
@@ -308,18 +298,31 @@ public class EditAirportViewController {
 
         boolean noErrors = editAirportErrors(airportData);
 
+        if (currentAirport.getCountry().equals("United States")) {
+            if (MainController.getAirportHashMap().get(IATA) != null && !IATA.equals(currentAirport.getFAA())) {
+                noErrors = false;
+            }
+        } else {
+            if (MainController.getAirportHashMap().get(IATA) != null && !IATA.equals(currentAirport.getIATA())) {
+                noErrors = false;
+            }
+        }
+
+        if (MainController.getAirportHashMap().get(ICAO) != null && !ICAO.equals(currentAirport.getICAO())) {
+            noErrors = false;
+        }
+
         if(noErrors) {
 
+            //Delete the airport to be changed from the database
+            DatabaseSaver dbSave = new DatabaseSaver();
+            Connection connDelete = Database.connect();
+            ArrayList<Integer> ids = new ArrayList<Integer>();
+            ids.add(currentAirport.getAirportID());
+            dbSave.deleteAirport(connDelete, ids);
+            Database.disconnect(connDelete);
 
-            if (!editFAAField.getText().equals("None")) {
-                currentAirport.setFAA(FAA);
-            }
-            if (!editAirportIATAField.getText().equals("None")) {
-                currentAirport.setIATA(IATA);
-            }
-            if (!editAirportICAOField.getText().equals("None")) {
-                currentAirport.setICAO(ICAO);
-            }
+            MainController.getCurrentlyLoadedAirports().remove(currentAirport);
 
             currentAirport.setTimezone(Integer.parseInt(timezone));
             currentAirport.setDST(DST.charAt(0));
@@ -328,6 +331,32 @@ public class EditAirportViewController {
             currentAirport.setLongitude(Double.parseDouble(longitude));
             currentAirport.setLatitude(Double.parseDouble(latitude));
             currentAirport.setAltitude(Double.parseDouble(altitude));
+
+            if (!editFAAField.getText().equals("None")) {
+                if (currentAirport.getCountry().equals("United States")) {
+                    if (MainController.getAirportHashMap().get(currentAirport.getFAA()) != null) {
+                        MainController.getAirportHashMap().remove(currentAirport.getFAA());
+                        currentAirport.setFAA(FAA);
+                        MainController.getAirportHashMap().put(FAA, currentAirport);
+                    }
+                }
+            }
+            if (!editAirportIATAField.getText().equals("None")) {
+                if (MainController.getAirportHashMap().get(currentAirport.getIATA()) != null) {
+                    MainController.getAirportHashMap().remove(currentAirport.getIATA());
+                    currentAirport.setIATA(IATA);
+                    MainController.getAirportHashMap().put(IATA, currentAirport);
+                }
+            }
+            if (!editAirportICAOField.getText().equals("None")) {
+                if (MainController.getAirportHashMap().get(currentAirport.getICAO()) != null) {
+                    MainController.getAirportHashMap().remove(currentAirport.getICAO());
+                    currentAirport.setICAO(ICAO);
+                    MainController.getAirportHashMap().put(ICAO, currentAirport);
+                }
+            }
+
+            MainController.getCurrentlyLoadedAirports().add(currentAirport);
 
             airportIDDisplay.setText(Integer.toString(currentAirport.getAirportID()));
             airportFAADisplay.setText(currentAirport.getFAA());
@@ -361,13 +390,16 @@ public class EditAirportViewController {
             cancelAirportChangesButton.setVisible(false);
 
             //Save the updated airline to the database
-            Connection connSave = db.connect();
+            Connection connSave = Database.connect();
             ObservableList<Airport> newAirports = FXCollections.observableArrayList();
             newAirports.add(currentAirport);
             dbSave.saveAirports(connSave, newAirports);
-            db.disconnect(connDelete);
+            Database.disconnect(connDelete);
 
+            mainController.airportTable.setItems(mainController.getCurrentlyLoadedAirports());
             mainController.setAirportComboBoxes();
+            mainController.resetView();
+            mainController.backToTableView(e);
         }
     }
 
