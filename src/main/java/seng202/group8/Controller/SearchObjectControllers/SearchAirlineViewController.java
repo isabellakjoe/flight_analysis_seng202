@@ -119,6 +119,7 @@ public class SearchAirlineViewController {
     @FXML
     private void showAirlineSearch(ActionEvent e) {
         airlineAdvancedButton.setVisible(false);
+        airlineIDSearch.setVisible(true);
         airlineBackButton.setVisible(true);
         airlineAliasSearch.setVisible(true);
         airlineIATASearch.setVisible(true);
@@ -135,7 +136,6 @@ public class SearchAirlineViewController {
         airlineBackButton.setVisible(false);
         airlineAliasSearch.setVisible(false);
         airlineIATASearch.setVisible(false);
-        airlineIDSearch.setVisible(false);
         airlineICAOSearch.setVisible(false);
         airlineCallsignSearch.setVisible(false);
         airlineSearchButton.setLayoutY(250);
