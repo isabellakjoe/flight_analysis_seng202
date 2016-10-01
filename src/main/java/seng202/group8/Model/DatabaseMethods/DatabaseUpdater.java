@@ -46,6 +46,8 @@ public class DatabaseUpdater {
     private void updateTable(Connection conn, String sql) {
         //Method used to commit an update to the database
         try {
+            System.out.println("Updating");
+            System.out.println(sql);
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();

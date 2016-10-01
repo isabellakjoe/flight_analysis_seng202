@@ -203,8 +203,11 @@ public class EditAirlineViewController {
             Connection connDelete = Database.connect();
             ArrayList<Integer> ids = new ArrayList<Integer>();
             ids.add(currentAirline.getAirlineID());
+            //Remove the airline from the database
             dbSave.deleteAirlines(connDelete, ids);
             Database.disconnect(connDelete);
+            //Remove the airline from the GUI
+            MainController.getCurrentlyLoadedAirlines().remove(currentAirline);
 
 
             if (!editCallsignField.getText().equals("None")) {

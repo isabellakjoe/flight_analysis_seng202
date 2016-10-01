@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <GridPane fx:id="editRoutePane" visible="false" GridPane.rowIndex="5" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.EditObjectControllers.EditRouteViewController">
     <columnConstraints>
         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="372.0" minWidth="10.0" prefWidth="85.0" />
@@ -112,7 +110,7 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
         </Button>
-        <Button fx:id="saveRouteChangesButton" mnemonicParsing="false" onAction="#saveRouteChanges" text="Save" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3">
+        <Button fx:id="saveRouteChangesButton" mnemonicParsing="false" onAction="#saveRouteChanges" text="Save" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
