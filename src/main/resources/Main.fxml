@@ -53,12 +53,6 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
-            <Menu text="File">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#fileOpen" text="Open" />
-                  <MenuItem mnemonicParsing="false" onAction="#fileSave" text="Save As" />
-              </items>
-            </Menu>
             <Menu mnemonicParsing="false" text="Help">
                 <items>
                     <MenuItem fx:id="helpAddButton" mnemonicParsing="false" onAction="#showHelpPopup" text="Add Data" />
