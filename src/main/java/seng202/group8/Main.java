@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.AirlineDatabaseLoader;
@@ -32,6 +31,7 @@ public class Main extends Application {
         Connection airlineConn = Database.connect();
         Connection airportConn = Database.connect();
         Connection routeConn = Database.connect();
+        Connection idConn = Database.connect();
 
         //Load all airlines, airports and routes into the database
 
@@ -53,6 +53,8 @@ public class Main extends Application {
 
         ObservableList<Route> savedRoutes = routeLoader.loadRoutes(routeConn, MainController.getRouteHashMap(), MainController.getAirlineHashMap(), MainController.getAirportHashMap());
         Database.disconnect(routeConn);
+        MainController.setRouteIds(Database.getMaxRouteID(idConn));
+        Database.disconnect(idConn);
         for (Route route: savedRoutes) {
             MainController.addToCurrentlyLoadedRoutes(route);
         }

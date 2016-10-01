@@ -14,13 +14,10 @@ import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Deleters.AirportDeleter;
 import seng202.group8.Model.Objects.Airport;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static javax.swing.JOptionPane.YES_OPTION;
 
 /**
  * Created by esa46 on 20/09/16.
@@ -398,12 +395,18 @@ public class EditAirportViewController {
 
     public void deleteAirport(ActionEvent e){
         Airport airport = mainController.airportTable.getSelectionModel().getSelectedItems().get(0);
-        int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airport.getName() + "?", "Delete Airport", JOptionPane.YES_NO_OPTION);
-        if(jp == YES_OPTION){
+        //int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airport.getName() + "?", "Delete Airport", JOptionPane.YES_NO_OPTION);
+        //if(jp == YES_OPTION){
             AirportDeleter airportDeleter = new AirportDeleter();
             airportDeleter.deleteSingleAirport(airport, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirportHashMap(), MainController.getCurrentlyLoadedAirports());
+        //}
 
-        }
+        mainController.airportTable.setItems(mainController.getCurrentlyLoadedAirports());
+        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
+        mainController.setAirportsWithoutRoutes(mainController.airportTable);
+        mainController.setAirportComboBoxes();
+        mainController.resetView();
+        mainController.backToTableView(e);
 
     }
     public void makeInvisible() {

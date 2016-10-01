@@ -1,37 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
 <BorderPane stylesheets="@mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
 
      <left>
@@ -154,6 +127,8 @@
                                     <MenuButton alignment="TOP_LEFT" contentDisplay="TOP" graphicTextGap="1.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="69.0" text="Filter" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                         <items>
                                             <MenuItem fx:id="FilterAirportsByCountry" mnemonicParsing="false" onAction="#FilterAirportsByCountry" text="Country" />
+                                            <MenuItem fx:id="FilterAirportsByRoutesASC" mnemonicParsing="false" onAction="#FilterAirportsByRoutesASC" text="Routes ASC" />
+                                            <MenuItem fx:id="FilterAirportsByRoutesDESC" mnemonicParsing="false" onAction="#FilterAirportsByRoutesDESC" text="Routes DESC" />
                                         </items>
                                         <padding>
                                             <Insets bottom="-2.0" left="-2.0" right="-2.0" top="-2.0" />

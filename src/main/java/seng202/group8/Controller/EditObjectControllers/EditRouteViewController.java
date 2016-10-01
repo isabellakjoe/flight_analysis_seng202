@@ -15,13 +15,10 @@ import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Deleters.RouteDeleter;
 import seng202.group8.Model.Objects.Route;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static javax.swing.JOptionPane.YES_OPTION;
 
 /**
  * Created by esa46 on 20/09/16.
@@ -270,12 +267,16 @@ public class EditRouteViewController {
 
     public void deleteRoute(ActionEvent e){
         Route route = mainController.routeTable.getSelectionModel().getSelectedItems().get(0);
-        int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete the\n" +
-                "route from " + route.getSourceAirportName() + "to "+ route.getDestinationAirportName() + "?", "Delete Route", JOptionPane.YES_NO_OPTION);
-        if(jp == YES_OPTION){
+//        int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete the\n" +
+//                "route from " + route.getSourceAirportName() + "to "+ route.getDestinationAirportName() + "?", "Delete Route", JOptionPane.YES_NO_OPTION);
+//        if(jp == YES_OPTION){
             RouteDeleter routeDeleter = new RouteDeleter();
             routeDeleter.deleteSingleRoute(route, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes());
-        }
+//        }
+        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
+        mainController.setAirportsWithoutRoutes(mainController.airportTable);
+        mainController.resetView();
+        mainController.backToTableView(e);
 
     }
 

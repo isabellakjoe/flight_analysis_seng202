@@ -2,33 +2,26 @@ package seng202.group8.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.Pair;
 import seng202.group8.Controller.AddObjectControllers.AddAirlineViewController;
 import seng202.group8.Controller.AddObjectControllers.AddAirportViewController;
 import seng202.group8.Controller.AddObjectControllers.AddRouteViewController;
@@ -38,20 +31,15 @@ import seng202.group8.Controller.EditObjectControllers.EditRouteViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController;
-import seng202.group8.Main;
 import seng202.group8.Model.DatabaseMethods.*;
 import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
-import seng202.group8.Model.Searchers.AirlineSearcher;
-import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.*;
-import java.util.List;
 
 
 /**
@@ -82,7 +70,7 @@ public class MainController implements Initializable {
     private static HashMap<String, Airport> airportHashMap = new HashMap<String, Airport>();
     private static HashMap<Integer, Route> routeHashMap = new HashMap<Integer, Route>();
     //This integer here is currently to keep track of route id's
-    private int routeIds = 0;
+    private static int routeIds = 0;
     @FXML
     private FlightViewController flightViewController;
     @FXML
@@ -200,12 +188,12 @@ public class MainController implements Initializable {
         MainController.currentlyLoadedRoutes.add(route);
     }
 
-    public int getRouteIds() {
+    public static int getRouteIds() {
         return routeIds;
     }
 
-    public void setRouteIds(int routeIds) {
-        this.routeIds = routeIds;
+    public static void setRouteIds(int id) {
+        routeIds = id;
     }
 
     public void putInRouteHashMap(Route route) {
@@ -633,7 +621,6 @@ public class MainController implements Initializable {
             public int compare(Airline o1, Airline o2) {
                 String airline1 = o1.getCountry();
                 String airline2 = o2.getCountry();
-
                 return airline1.compareTo(airline2);
             }
         };
@@ -705,7 +692,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void FilterAirportsByRoutes(ActionEvent e) {
+    private void FilterAirportsByRoutesASC(ActionEvent e) {
 
         Comparator<Airport> airportRouteComparator = new Comparator<Airport>() {
             public int compare(Airport o1, Airport o2) {
@@ -713,6 +700,28 @@ public class MainController implements Initializable {
                 int airport2 = o2.getNumRoutes();
 
                 return airport2 - airport1;
+            }
+        };
+        ArrayList<Airport> sortedAirports = new ArrayList<Airport>();
+        Collections.sort(currentlyLoadedAirports, airportRouteComparator);
+        for (Airport str : currentlyLoadedAirports) {
+            sortedAirports.add(str);
+        }
+        ObservableList<Airport> sortedObservableAirports = FXCollections.observableArrayList(sortedAirports);
+        airportTable.setItems(sortedObservableAirports);
+        resetView();
+        tableView.setVisible(true);
+
+    }
+
+    @FXML
+    private void FilterAirportsByRoutesDESC(ActionEvent e) {
+
+        Comparator<Airport> airportRouteComparator = new Comparator<Airport>() {
+            public int compare(Airport o1, Airport o2) {
+                int airport1 = o1.getNumRoutes();
+                int airport2 = o2.getNumRoutes();
+                return airport1 - airport2;
             }
         };
         ArrayList<Airport> sortedAirports = new ArrayList<Airport>();
@@ -938,6 +947,11 @@ public class MainController implements Initializable {
         //noRoutes.setCellValueFactory(new PropertyValueFactory<Airport, String>("Routes"));
 
         // This sets Airports with no routes red. Alternates colours for clarity
+        setAirportsWithoutRoutes(airportTable);
+    }
+
+    public void setAirportsWithoutRoutes(TableView<Airport> airportTable) {
+
         airportTable.setRowFactory(new Callback<TableView<Airport>, TableRow<Airport>>() {
             @Override
             public TableRow<Airport> call(TableView<Airport> param) {
@@ -965,6 +979,7 @@ public class MainController implements Initializable {
                 };
             }
         });
+
     }
 
     /*Set columns of route table*/
@@ -1270,7 +1285,7 @@ public class MainController implements Initializable {
            }
         );
 
-        setRouteIds(currentlyLoadedRoutes.size());
+        //setRouteIds(currentlyLoadedRoutes.size());
         showAirlines();
         showAirports();
         showRoutes();

@@ -12,7 +12,6 @@ import javafx.scene.text.Text;
 import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
-import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Route;
 import seng202.group8.Model.Searchers.AirlineSearcher;
 import seng202.group8.Model.Searchers.AirportSearcher;
@@ -162,6 +161,7 @@ public class AddRouteViewController {
             newRoute.setSourceAirportName(source);
             newRoute.setDestinationAirportName(destination);
 
+
             AirportSearcher sourceSearcher = new AirportSearcher(mainController.getCurrentlyLoadedAirports());
             sourceSearcher.airportsOfName(newRoute.getSourceAirportName());
 
@@ -177,27 +177,28 @@ public class AddRouteViewController {
             newRoute.getDestinationAirport().setNumRoutes(newRoute.getDestinationAirport().getNumRoutes() + 1);
             newRoute.setAirline(airlineSearcher.getLoadedAirlines().get(0));
 
-            newRoute.setRouteID(mainController.getRouteIds());
-            mainController.setRouteIds(mainController.getRouteIds() + 1);
+            newRoute.setRouteID(MainController.getRouteIds() + 1);
+            MainController.setRouteIds(MainController.getRouteIds() + 1);
 
             ObservableList<Route> routes = FXCollections.observableArrayList();
             routes.add(newRoute);
 
             //Add the new route to the database here
-            Database db = new Database();
             DatabaseSaver dbSave = new DatabaseSaver();
-            Connection connSave = db.connect();
+            Connection connSave = Database.connect();
             dbSave.saveSingleRoute(connSave, newRoute);
             mainController.putInRouteHashMap(routes.get(0));
-            db.disconnect(connSave);
+            Database.disconnect(connSave);
 
             mainController.addToCurrentlyLoadedRoutes(newRoute);
             mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
+            mainController.setAirportsWithoutRoutes(mainController.airportTable);
             clearRouteErrors();
             cancelAddedRoute(e);
             mainController.resetView();
             mainController.setRouteComboBoxes();
             mainController.tableView.setVisible(true);
+            mainController.showAirlines();
         }
     }
 

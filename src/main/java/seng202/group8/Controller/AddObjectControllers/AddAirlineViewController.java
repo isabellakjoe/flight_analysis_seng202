@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
-import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Parsers.AirlineParser;
 
@@ -169,24 +168,21 @@ public class AddAirlineViewController {
             System.out.println(newAirline.getAirlineID());
             if (newAirline != null) {
                 //Add the new airport to the database here
-                Database db = new Database();
                 DatabaseSaver dbSave = new DatabaseSaver();
-                DatabaseSearcher dbSearch = new DatabaseSearcher();
-                Connection connSave = db.connect();
-                Connection connSearch = db.connect();
+                Connection connSave = Database.connect();
                 dbSave.saveAirlines(connSave, airlines);
-                db.disconnect(connSave);
-                String sql = dbSearch.buildAirlineSearch("airlineid", airlineID);
-                ObservableList<Airline> addedAirline = dbSearch.searchForAirlinesByOption(connSearch, sql);
-                mainController.addToCurrentlyLoadedAirlines(addedAirline.get(0));
-                db.disconnect(connSearch);
+                Database.disconnect(connSave);
+
+                mainController.addToCurrentlyLoadedAirlines(newAirline);
+                MainController.getAirlineHashMap().put(newAirline.getIATA(), newAirline);
             }
             mainController.airlineTable.setItems(mainController.getCurrentlyLoadedAirlines());
             mainController.resetView();
+            cancelAddedAirline(e);
             mainController.setAirlineComboBoxes();
             mainController.backToTableView(e);
         } else {
-            System.out.println("IATA NOT UNIQUE");
+            System.out.println("IATA or ICAO NOT UNIQUE");
         }
     }
 
