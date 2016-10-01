@@ -152,8 +152,6 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
             </columnResizePolicy>
         </TableView>
-        <Button fx:id="flightViewBackButton" mnemonicParsing="false" onAction="#exitFlightView" text="Back"
-                GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="8"/>
     </children>
     <padding>
         <Insets bottom="15.0" right="15.0"/>

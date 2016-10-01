@@ -14,6 +14,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
@@ -510,6 +511,8 @@ public class MainController implements Initializable {
         searchRouteViewController.setEquipmentCombobox(sortedEquipment);
         searchRouteViewController.setStopoverCombobox(stopsList);
     }
+    @FXML
+    private Tab flightTab;
 
     /* Opens a file chooser for the user to select the Flight Data file, then loads the data and switches views*/
     public void addFlightData(ActionEvent e) {
@@ -527,6 +530,8 @@ public class MainController implements Initializable {
 
                 if (flightViewController.getIsValid()) {
                     flightViewController.makeVisible();
+                    SingleSelectionModel<Tab> selectionModel = dataTabs.getSelectionModel();
+                    selectionModel.select(flightTab);
                     flightViewController.isValid = false;
 
                 } else {
@@ -795,8 +800,8 @@ public class MainController implements Initializable {
 
     /* Resets and hides most panes, giving the interface a clean slate*/
     public void resetView() {
-        tableView.setVisible(false);
-        flightViewController.makeInvisible();
+        //tableView.setVisible(false);
+        //flightViewController.makeInvisible();
         addAirportViewController.makeInvisible();
         addAirlineViewController.makeInvisible();
         addRouteViewController.makeInvisible();
