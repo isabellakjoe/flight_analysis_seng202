@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -1023,27 +1024,41 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void setGraphs(ActionEvent e){
+        graphsStartPane.setVisible(false);
+        addToAirlinesPerCountry();
+        addToAirportsPerCountry();
+        addToEquipmentPerRoute();
+        addToRoutesPerAirport();
+        graphsPane.setVisible(true);
+    }
+    @FXML
+    private GridPane graphsPane;
+    @FXML
+    private GridPane graphsStartPane;
+
+    private void hideAllGraphs(){
+        graphsStartPane.setVisible(false);
+        routesPerAirport.setVisible(false);
+        equipmentPerRoute.setVisible(false);
+        airlinePerCountry.setVisible(false);
+        airportPerCountry.setVisible(false);
+    }
+
+    @FXML
     public void setGraph(){
         String graph = graphCombo.getValue().toString();
         if (graph == "Routes per Airport"){
+            hideAllGraphs();
             routesPerAirport.setVisible(true);
-            equipmentPerRoute.setVisible(false);
-            airlinePerCountry.setVisible(false);
-            airportPerCountry.setVisible(false);
         } else if (graph == "Equipment per Routes"){
-            routesPerAirport.setVisible(false);
+            hideAllGraphs();
             equipmentPerRoute.setVisible(true);
-            airlinePerCountry.setVisible(false);
-            airportPerCountry.setVisible(false);
         } else if (graph == "Airline per Country") {
-            routesPerAirport.setVisible(false);
-            equipmentPerRoute.setVisible(false);
+            hideAllGraphs();
             airlinePerCountry.setVisible(true);
-            airportPerCountry.setVisible(false);
         } else if (graph == "Airport per Country") {
-            routesPerAirport.setVisible(false);
-            equipmentPerRoute.setVisible(false);
-            airlinePerCountry.setVisible(false);
+            hideAllGraphs();
             airportPerCountry.setVisible(true);
         }
     }
@@ -1053,16 +1068,22 @@ public class MainController implements Initializable {
      *
      */
     public void addToRoutesPerAirport() {
+        hideAllGraphs();
         routesPerAirport.setVisible(true);
-        equipmentPerRoute.setVisible(false);
-        airlinePerCountry.setVisible(false);
-        airportPerCountry.setVisible(false);
-        if (!airportTable.getItems().isEmpty() || !airportTable.getSelectionModel().isEmpty()) {
-            ObservableList<Airport> airports = FXCollections.observableArrayList();
-            ObservableList<Airport> airportsFromTable = airportTable.getSelectionModel().getSelectedItems();
-            airports.addAll(airportsFromTable);
-            setRoutesPerAirport(airports);
+        if (!currentlyLoadedAirports.isEmpty()) {
+            if (airportTable.getSelectionModel().isEmpty()){
+                setRoutesPerAirport(currentlyLoadedAirports);
+                //System.out.println("Set routes");
+            }
+            else{
+                ObservableList<Airport> airports = FXCollections.observableArrayList();
+                ObservableList<Airport> airportsFromTable = airportTable.getSelectionModel().getSelectedItems();
+                airports.addAll(airportsFromTable);
+                setRoutesPerAirport(airports);
+            }
+            //System.out.println("Selecting data tab");
             dataTabs.getSelectionModel().select(graphTab);
+            //System.out.println("Selected data tab");
         }
     }
 
@@ -1088,37 +1109,46 @@ public class MainController implements Initializable {
                 routeNum.setValue(loadedAirports.size());
             }*/
             for (int i = 0; i < loadedAirports.size(); i++) {
+                //System.out.println(i);
                 int routes = loadedAirports.get(i).getNumRoutes();
-                String name = loadedAirports.get(i).getName();
-                for (int j = 0; j < series.getData().size(); j++) {
-                    int version = 2;
-                    while (name.equals(series.getData().get(j).getXValue().split(" : ")[0])){
-                        name = name + " " + Integer.toString(version);
-                        version += 1;
+                if (routes > 0) {
+                    String name = loadedAirports.get(i).getName();
+                    for (int j = 0; j < series.getData().size(); j++) {
+                        int version = 2;
+                        while (name.equals(series.getData().get(j).getXValue().split(" : ")[0])) {
+                            name = name + " " + Integer.toString(version);
+                            version += 1;
+                        }
                     }
+                    airportNames.add(name + " : " + Integer.toString(routes));
+                    series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
                 }
-                airportNames.add(name + " : " + Integer.toString(routes));
-                series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
             }
             routePerAirportAxis.getCategories().clear();
             /*if (routeNum.getValue() > 0){*/
+            //System.out.println("Adding Categories");
             routePerAirportAxis.setCategories(FXCollections.observableArrayList(airportNames));
+            //System.out.print("Adding Series");
             routesPerAirport.getData().add(series);
+            //System.out.println("Added series");
             /*}*/
         }
     }
 
     @FXML
     public void addToAirlinesPerCountry() {
-        routesPerAirport.setVisible(false);
-        equipmentPerRoute.setVisible(false);
+        hideAllGraphs();
         airlinePerCountry.setVisible(true);
-        airportPerCountry.setVisible(false);
-        if (!airlineTable.getItems().isEmpty() || !airlineTable.getSelectionModel().isEmpty()) {
-            ObservableList<Airline> airlines = FXCollections.observableArrayList();
-            ObservableList<Airline> airlinesFromTable = airlineTable.getSelectionModel().getSelectedItems();
-            airlines.addAll(airlinesFromTable);
-            setAirlinesPerCountry(airlines);
+        if (!currentlyLoadedAirlines.isEmpty()) {
+            if (airlineTable.getSelectionModel().isEmpty()){
+                setAirlinesPerCountry(currentlyLoadedAirlines);
+            }
+            else {
+                ObservableList<Airline> airlines = FXCollections.observableArrayList();
+                ObservableList<Airline> airlinesFromTable = airlineTable.getSelectionModel().getSelectedItems();
+                airlines.addAll(airlinesFromTable);
+                setAirlinesPerCountry(airlines);
+            }
             dataTabs.getSelectionModel().select(graphTab);
         }
     }
@@ -1157,15 +1187,18 @@ public class MainController implements Initializable {
 
     @FXML
     public void addToAirportsPerCountry() {
-        routesPerAirport.setVisible(false);
-        equipmentPerRoute.setVisible(false);
-        airlinePerCountry.setVisible(false);
+        hideAllGraphs();
         airportPerCountry.setVisible(true);
-        if (!airportTable.getItems().isEmpty() || !airportTable.getSelectionModel().isEmpty()) {
-            ObservableList<Airport> airports = FXCollections.observableArrayList();
-            ObservableList<Airport> airportFromTable = airportTable.getSelectionModel().getSelectedItems();
-            airports.addAll(airportFromTable);
-            setAirportsPerCountry(airports);
+        if (!currentlyLoadedAirports.isEmpty()) {
+            if (airportTable.getSelectionModel().isEmpty()){
+                setAirportsPerCountry(currentlyLoadedAirports);
+            }
+            else {
+                ObservableList<Airport> airports = FXCollections.observableArrayList();
+                ObservableList<Airport> airportFromTable = airportTable.getSelectionModel().getSelectedItems();
+                airports.addAll(airportFromTable);
+                setAirportsPerCountry(airports);
+            }
             dataTabs.getSelectionModel().select(graphTab);
         }
     }
@@ -1206,15 +1239,18 @@ public class MainController implements Initializable {
 
     @FXML
     public void addToEquipmentPerRoute(){
+        hideAllGraphs();
         equipmentPerRoute.setVisible(true);
-        routesPerAirport.setVisible(false);
-        airlinePerCountry.setVisible(false);
-        airportPerCountry.setVisible(false);
-        if (!routeTable.getItems().isEmpty() || !routeTable.getSelectionModel().isEmpty()) {
-            ObservableList<Route> routes = FXCollections.observableArrayList();
-            ObservableList<Route> routesFromTable = routeTable.getSelectionModel().getSelectedItems();
-            routes.addAll(routesFromTable);
-            setEquipmentPerRoute(routes);
+        if (!currentlyLoadedRoutes.isEmpty()) {
+            if (routeTable.getSelectionModel().isEmpty()){
+                setEquipmentPerRoute(currentlyLoadedRoutes);
+            }
+            else {
+                ObservableList<Route> routes = FXCollections.observableArrayList();
+                ObservableList<Route> routesFromTable = routeTable.getSelectionModel().getSelectedItems();
+                routes.addAll(routesFromTable);
+                setEquipmentPerRoute(routes);
+            }
             dataTabs.getSelectionModel().select(graphTab);
         }
     }
