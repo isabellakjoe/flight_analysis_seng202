@@ -59,8 +59,8 @@ public class RouteSearcher {
         Pattern p = Pattern.compile(regex);
 
         for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getSourceAirport().getIATA() != null) {
-                Matcher m = p.matcher(loadedRoutes.get(i).getSourceAirport().getIATA());
+            if (loadedRoutes.get(i).getSourceAirport().getName() != null) {
+                Matcher m = p.matcher(loadedRoutes.get(i).getSourceAirport().getName());
                 if (m.find()) {
                     matchingRoutes.add(loadedRoutes.get(i));
                 }
@@ -90,8 +90,8 @@ public class RouteSearcher {
         Pattern p = Pattern.compile(regex);
 
         for (int i = 0; i < loadedRoutes.size(); i++){
-            if (loadedRoutes.get(i).getDestinationAirport().getIATA() != null) {
-                Matcher m = p.matcher(loadedRoutes.get(i).getDestinationAirport().getIATA());
+            if (loadedRoutes.get(i).getDestinationAirport().getName() != null) {
+                Matcher m = p.matcher(loadedRoutes.get(i).getDestinationAirport().getName());
                 if (m.find()) {
                     matchingRoutes.add(loadedRoutes.get(i));
                 }

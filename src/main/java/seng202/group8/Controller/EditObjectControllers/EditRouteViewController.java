@@ -1,7 +1,5 @@
 package seng202.group8.Controller.EditObjectControllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -195,19 +193,35 @@ public class EditRouteViewController {
         List<String> routeData = Arrays.asList(source, destination, stops, equipment);
         boolean noErrors = editRouteErrors(routeData);
 
+        if (MainController.getAirportHashMap().get(source) == null) {
+            noErrors = false;
+        } else if (MainController.getAirportHashMap().get(destination) == null) {
+            noErrors = false;
+        }
+
         if(noErrors) {
             //Delete the route from the database
-            Database db = new Database();
             DatabaseSaver dbSave = new DatabaseSaver();
-            Connection connDelete = db.connect();
+            Connection connDelete = Database.connect();
             ArrayList<Integer> ids = new ArrayList<Integer>();
             ids.add(currentRoute.getRouteID());
             dbSave.deleteRoutes(connDelete, ids);
-            db.disconnect(connDelete);
+            Database.disconnect(connDelete);
 
-            currentRoute.setSourceAirportName(source);
-            currentRoute.setDestinationAirportName(destination);
-            //Add methods to find airports as well
+            //Remove route from the GUI
+            MainController.getCurrentlyLoadedRoutes().remove(currentRoute);
+
+            currentRoute.getSourceAirport().setNumRoutes(currentRoute.getSourceAirport().getNumRoutes() - 1);
+            currentRoute.getDestinationAirport().setNumRoutes(currentRoute.getDestinationAirport().getNumRoutes() - 1);
+
+            currentRoute.setSourceAirport(MainController.getAirportHashMap().get(source));
+            currentRoute.setDestinationAirport(MainController.getAirportHashMap().get(destination));
+            currentRoute.setSourceAirportName(MainController.getAirportHashMap().get(source).getName());
+            currentRoute.setDestinationAirportName(MainController.getAirportHashMap().get(destination).getName());
+
+            MainController.getAirportHashMap().get(source).setNumRoutes(MainController.getAirportHashMap().get(source).getNumRoutes() + 1);
+            MainController.getAirportHashMap().get(destination).setNumRoutes(MainController.getAirportHashMap().get(destination).getNumRoutes() + 1);
+
             currentRoute.setStops(Integer.parseInt(stops));
 
             if (!editEquipmentField.getText().equals("None")) {
@@ -221,9 +235,13 @@ public class EditRouteViewController {
                 routeShareDisplay.setText("No");
             }
 
+            //Save the updated route to the database
+            Connection connSave = Database.connect();
+            dbSave.saveSingleRoute(connSave, currentRoute);
+            Database.disconnect(connDelete);
 
-            routeSourceDisplay.setText(currentRoute.getSourceAirportName());
-            routeDestinationDisplay.setText(currentRoute.getDestinationAirportName());
+            routeSourceDisplay.setText(currentRoute.getSourceAirport().getName());
+            routeDestinationDisplay.setText(currentRoute.getDestinationAirport().getName());
             routeStopsDisplay.setText(Integer.toString(currentRoute.getStops()));
             routeEquipmentDisplay.setText(currentRoute.getEquipment());
 
@@ -240,14 +258,13 @@ public class EditRouteViewController {
             saveRouteChangesButton.setVisible(false);
             cancelRouteChangesButton.setVisible(false);
 
-            //Save the updated route to the database
-            Connection connSave = db.connect();
-            ObservableList<Route> newRoutes = FXCollections.observableArrayList();
-            newRoutes.add(currentRoute);
-            dbSave.saveRoutes(connSave, newRoutes);
-            db.disconnect(connDelete);
+            mainController.addToCurrentlyLoadedRoutes(currentRoute);
+            mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
 
+            mainController.setAirportsWithoutRoutes(mainController.airportTable);
             mainController.setRouteComboBoxes();
+            mainController.resetView();
+            mainController.backToTableView(e);
         }
     }
 

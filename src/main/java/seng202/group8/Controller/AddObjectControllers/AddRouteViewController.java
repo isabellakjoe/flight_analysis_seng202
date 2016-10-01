@@ -198,7 +198,6 @@ public class AddRouteViewController {
             mainController.resetView();
             mainController.setRouteComboBoxes();
             mainController.tableView.setVisible(true);
-            mainController.showAirlines();
         }
     }
 
