@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -18,16 +19,19 @@ import seng202.group8.Model.Objects.Waypoint;
 import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by esa46 on 15/09/16.
  */
-public class MapViewController {
+public class MapViewController extends Component {
 
     private MainController mainController;
     private WebEngine webEngine;
+    @FXML
+    public TabPane mapViewPane;
     @FXML
     private CheckBox displayAllAirports;
     @FXML
@@ -126,6 +130,13 @@ public class MapViewController {
             jp.setSize(600, 600);
             jp.showMessageDialog(null, "No Routes to display.", "Error Message", JOptionPane.INFORMATION_MESSAGE);
             displayAllRoutes.setSelected(false);
+//            int result = jp.showOptionDialog(this, "No Routes to display. \nAdd Route Data?", "Error Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Add", "Cancel" }, JOptionPane.NO_OPTION);
+//            if (result == JOptionPane.YES_OPTION) {
+//                mainController.addRouteData(new ActionEvent());
+//                createMapRoutes(routes);
+//            } else {
+//                displayAllRoutes.setSelected(false);
+//            }
         } else {
             JOptionPane jp = new JOptionPane();
             jp.setSize(600, 600);
@@ -200,6 +211,7 @@ public class MapViewController {
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
         List routes = matchingRoutes;
         clearRoutes();
+        airportSearchBox.setText(null);
         displayAllRoutes.setSelected(false);
         displayRoutes(routes);
 
@@ -226,6 +238,7 @@ public class MapViewController {
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
         List routes = matchingRoutes;
         clearRoutes();
+        equipmentSearchBox.setText(null);
         displayAllRoutes.setSelected(false);
         displayRoutes(routes);
 
@@ -263,7 +276,10 @@ public class MapViewController {
         } else if (waypoints.isEmpty()) {
             JOptionPane jp = new JOptionPane();
             jp.setSize(600, 600);
-            jp.showMessageDialog(null, "No Flight Path to display.", "Error Message", JOptionPane.INFORMATION_MESSAGE);
+            int result = jp.showOptionDialog(this, "No Flight Path to display. \nAdd Flight Data?", "Error Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Add", "Cancel" }, JOptionPane.NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                mainController.addFlightData(new ActionEvent());
+            }
             addFlightPath.setSelected(false);
         } else {
             JOptionPane jp = new JOptionPane();
