@@ -1455,7 +1455,7 @@ public class MainController implements Initializable {
         }
     }
 
-    /** Switches to the more info pane for Airports
+    /** Switches to the more info pane for Airlines
      *
      * @param click: The click event
      */
@@ -1468,7 +1468,7 @@ public class MainController implements Initializable {
         }
     }
 
-    /** Switches to the more info pane for Airports
+    /** Switches to the more info pane for Routes
      *
      * @param click: The click event
      */
@@ -1480,6 +1480,7 @@ public class MainController implements Initializable {
             }
         }
     }
+
 
     @FXML
     public void getDistance(ActionEvent e){

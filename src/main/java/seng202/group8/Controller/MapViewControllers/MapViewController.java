@@ -283,12 +283,20 @@ public class MapViewController extends Component {
 
     }
 
+    /** Method to clear all Airports from the map
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     private void clearAllAirports(ActionEvent e) {
         clearAirports();
         displayAllAirports.setSelected(false);
     }
 
+    /** Method to clear all Routes from the map
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     private void clearAllRoutes(ActionEvent e) {
         clearRoutes();
@@ -297,7 +305,10 @@ public class MapViewController extends Component {
         airportSearchBox.setText(null);
     }
 
-
+    /** Method to display the loaded Flight on the map
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     private void displayFlightPath(ActionEvent e) {
         if (addFlightPath.isSelected()) {
@@ -308,6 +319,8 @@ public class MapViewController extends Component {
 
     }
 
+    /** Method to load the waypoints of a flight
+     */
     private void displayFlight() {
         List<Waypoint> waypoints = Flight.getWaypoints();
         if (waypoints.size() < 1000 && waypoints.size() != 0) {
@@ -333,12 +346,15 @@ public class MapViewController extends Component {
         }
     }
 
-
+    /** Method to display the flightpath waypoints on the map
+     */
     private void createFlightPath() {
         String scriptToExecute = "displayFlight(" + ToJSONArray.toJSONFlightPath() + ");";
         webEngine.executeScript(scriptToExecute);
     }
 
+    /** Method to clear all Flight waypoints on the map
+     */
     private void clearFlight() {
         String scriptToExecute = "clearFlightPaths();";
         webEngine.executeScript(scriptToExecute);
