@@ -268,7 +268,6 @@ public class EditRouteViewController {
         }
     }
 
-
     public void setRouteInfo(){
         //Changes visible pane;
         mainController.routeTable.setVisible(false);

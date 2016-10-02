@@ -34,6 +34,9 @@ import seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewContro
 import seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController;
 import seng202.group8.Model.DatabaseMethods.*;
+import seng202.group8.Model.Deleters.AirlineDeleter;
+import seng202.group8.Model.Deleters.AirportDeleter;
+import seng202.group8.Model.Deleters.RouteDeleter;
 import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
 
@@ -526,7 +529,7 @@ public class MainController implements Initializable {
                 Flight flight = load.buildFlight();
                 flightViewController.setUpFlightView(flight);
                 //Swap panes from raw data to the flight viewer
-                resetView();
+                //resetView();
 
                 if (flightViewController.getIsValid()) {
                     flightViewController.makeVisible();
@@ -800,7 +803,7 @@ public class MainController implements Initializable {
 
     /* Resets and hides most panes, giving the interface a clean slate*/
     public void resetView() {
-        //tableView.setVisible(false);
+        tableView.setVisible(false);
         //flightViewController.makeInvisible();
         addAirportViewController.makeInvisible();
         addAirlineViewController.makeInvisible();
@@ -1345,8 +1348,50 @@ public class MainController implements Initializable {
             io.printStackTrace();
         }
 
+    }
 
+    @FXML
+    public void deleteMultipleAirports(ActionEvent e) {
+        ObservableList<Airport> airports = FXCollections.observableArrayList();
+        ObservableList<Airport> airportsFromTable = airportTable.getSelectionModel().getSelectedItems();
+        airports.addAll(airportsFromTable);
+        AirportDeleter deleter = new AirportDeleter();
+        for (int i = 0; i < airports.size(); i++){
+            Airport singleAirport = airports.get(i);
+            deleter.deleteSingleAirport(singleAirport, routeHashMap, currentlyLoadedRoutes, airportHashMap, currentlyLoadedAirports);
+        }
+        resetTables();
+        airportTable.setItems(currentlyLoadedAirports);
+        routeTable.setItems(currentlyLoadedRoutes);
+    }
 
+    @FXML
+    public void deleteMultipleAirlines(ActionEvent e) {
+        ObservableList<Airline> airlines = FXCollections.observableArrayList();
+        ObservableList<Airline> airlinesFromTable = airlineTable.getSelectionModel().getSelectedItems();
+        airlines.addAll(airlinesFromTable);
+        AirlineDeleter deleter = new AirlineDeleter();
+        for (int i = 0; i < airlines.size(); i++){
+            Airline singleAirline = airlines.get(i);
+            deleter.deleteSingleAirline(singleAirline, routeHashMap, currentlyLoadedRoutes, airlineHashMap, currentlyLoadedAirlines);
+        }
+        resetTables();
+        airlineTable.setItems(currentlyLoadedAirlines);
+        routeTable.setItems(currentlyLoadedRoutes);
+    }
+
+    @FXML
+    public void deleteMultipleRoutes(ActionEvent e) {
+        ObservableList<Route> routes = FXCollections.observableArrayList();
+        ObservableList<Route> routesFromTable = routeTable.getSelectionModel().getSelectedItems();
+        routes.addAll(routesFromTable);
+        RouteDeleter deleter = new RouteDeleter();
+        for(int i = 0; i < routes.size(); i++){
+            Route singleRoute = routes.get(i);
+            deleter.deleteSingleRoute(singleRoute, getRouteHashMap(), currentlyLoadedRoutes);
+        }
+        resetTables();
+        routeTable.setItems(currentlyLoadedRoutes);
     }
 
 

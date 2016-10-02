@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -27,7 +33,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane stylesheets="@mainStyle.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
+<BorderPane stylesheets="@mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
 
      <left>
         <TabPane id="search" prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -129,6 +135,7 @@
                                     <ContextMenu fx:id="distanceMenu1">
                                        <items>
                                           <MenuItem mnemonicParsing="false" onAction="#addToAirlinesPerCountry" text="Graph Airlines per Country" />
+                                          <MenuItem mnemonicParsing="false" onAction="#deleteMultipleAirlines" text="Delete All Selected Airlines" />
                                        </items>
                                     </ContextMenu>
                                  </contextMenu>
@@ -176,6 +183,7 @@
                                         <MenuItem fx:id="getDistanceMenu" mnemonicParsing="false" onAction="#getDistance" text="Get Distance" />
                                           <MenuItem mnemonicParsing="false" onAction="#addToRoutesPerAirport" text="Graph Routes per Airport" />
                                           <MenuItem mnemonicParsing="false" onAction="#addToAirportsPerCountry" text="Graph Airports per Country" />
+                                          <MenuItem mnemonicParsing="false" onAction="#deleteMultipleAirports" text="Delete All Selected Airports" />
                                       </items>
                                     </ContextMenu>
                                  </contextMenu>
@@ -216,6 +224,7 @@
                                     <ContextMenu fx:id="routeMenu">
                                       <items>
                                         <MenuItem mnemonicParsing="false" onAction="#addToEquipmentPerRoute" text="Graph Equipment per Route" />
+                                          <MenuItem mnemonicParsing="false" onAction="#deleteMultipleRoutes" text="Delete All Selected Routes" />
                                       </items>
                                     </ContextMenu>
                                  </contextMenu>
