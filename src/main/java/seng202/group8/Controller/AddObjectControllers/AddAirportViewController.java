@@ -103,9 +103,10 @@ AddAirportViewController {
         addAirportViewPane.setVisible(false);
     }
 
-    /*
-    Clear all airport information fields and return to table view without adding airport
-    */
+    /** Clear all airport information fields and return to table view without adding airport
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     private void cancelAddedAirport(ActionEvent e) {
         clearAirportErrors();
@@ -125,8 +126,9 @@ AddAirportViewController {
         addedAirportOlsen.clear();
     }
 
-    /*
-    Read user input to create and save an airport
+    /** Read user input to create and save an airport
+     *
+     * @param e: The ActionEvent
      */
     @FXML
     private void saveAddedAirport(ActionEvent e) {
@@ -174,10 +176,14 @@ AddAirportViewController {
         }
     }
 
-    /*
-    Error check airport information fields and return a boolean of whether input is valid.
-    Show error messages for invalid input.
-    */
+    /**Error check airport information fields and return a boolean of whether input is valid.
+     * Show error messages for invalid input.
+     *
+     * @param input: A List of Airport data
+     * @return: A boolean that is True if there are enough non-empty strings in the input.
+     */
+
+
     @FXML
     public boolean addAirportError(List<String> input) {
 
@@ -282,9 +288,8 @@ AddAirportViewController {
         return filled;
     }
 
-    /*
-    Hide all error messages related to adding an airport
-    */
+    /** Hide all error messages related to adding an airport
+     */
     @FXML
     public void clearAirportErrors() {
         addAirportIDErrorEmpty.setVisible(false);
