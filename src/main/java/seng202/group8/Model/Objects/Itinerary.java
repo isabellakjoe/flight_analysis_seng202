@@ -3,6 +3,7 @@ package seng202.group8.Model.Objects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -13,23 +14,18 @@ public class Itinerary implements Serializable{
 
     private Route route;
     private ArrayList<Route> routes = new ArrayList<Route>();
-    transient ObservableList<Route> routesForTable = FXCollections.observableArrayList();
-
 
     public void addToRoutes(Route route){
         routes.add(route);
     }
 
-    public Route returnFirstRoute(){
-        return routes.get(0);
+    public ObservableList<Route> getObservableRoutes(){
+        ObservableList<Route> routes = FXCollections.observableArrayList();
+        for (int i=0; i < this.routes.size(); i++){
+            routes.add(this.routes.get(i));
+        }
+        return routes;
     }
 
-    public void setRoute(Route route){
-        this.route = route;
-    }
-
-    public Route getRoute(){
-        return this.route;
-    }
 
 }

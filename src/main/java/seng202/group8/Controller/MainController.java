@@ -73,32 +73,52 @@ public class MainController implements Initializable {
 
     private Itinerary currentlyLoadedItinerary;
 
-    /** Prompts user to save a new itinerary file
-     *
-     * @param e: The ActionEvent
+    private Itinerary lastSavedItinerary;
+
+    /**
+     * Prompts user to save a new itinerary file
+     * @param e
      */
     @FXML
     public void createItinerary(ActionEvent e){
+
         Itinerary itinerary = new Itinerary();
+
         currentlyLoadedItinerary = itinerary;
-        currentlyLoadedItinerary.addToRoutes(currentlyLoadedRoutes.get(0));
-        saveItinerary(e);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Itinerary");
+        File file = fileChooser.showSaveDialog(new Stage());
+        try{
+            FileOutputStream fileStream = new FileOutputStream(file);
+            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+            objectStream.writeObject(currentlyLoadedItinerary);
+            objectStream.flush();
+            objectStream.close();
+            fileStream.close();
+            lastSavedItinerary = currentlyLoadedItinerary;
+            itineraryWelcomePane.setVisible(false);
+            itineraryReviewPane.setVisible(false);
+            itineraryAirportPane.setVisible(true);
 
-        itineraryWelcomePane.setVisible(false);
-        itineraryReviewPane.setVisible(false);
-        itineraryAirportPane.setVisible(true);
-
-        clearItineraryTables();
-        ObservableList<Airport> matchingAirportsWithRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < currentlyLoadedAirports.size(); i++){
-            if (currentlyLoadedAirports.get(i).getNumRoutes() > 0){
-                matchingAirportsWithRoutes.add(currentlyLoadedAirports.get(i));
+            clearItineraryTables();
+            ObservableList<Airport> matchingAirportsWithRoutes = FXCollections.observableArrayList();
+            for (int i = 0; i < currentlyLoadedAirports.size(); i++){
+                if (currentlyLoadedAirports.get(i).getNumRoutes() > 0){
+                    matchingAirportsWithRoutes.add(currentlyLoadedAirports.get(i));
+                }
             }
-        }
-        itineraryAirportTable.setItems(matchingAirportsWithRoutes);
+            itineraryAirportTable.setItems(matchingAirportsWithRoutes);
 
-        SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
-        selectionModel.select(airport);
+            SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
+            selectionModel.select(airport);
+        }
+        catch(FileNotFoundException ex) {
+        }
+        catch(IOException ex) {
+        }
+        catch(NullPointerException ex){
+        }
+
     }
 
     /** Creates or overwrites itinerary file
@@ -117,13 +137,19 @@ public class MainController implements Initializable {
             objectStream.flush();
             objectStream.close();
             fileStream.close();
-            System.out.println(currentlyLoadedItinerary.returnFirstRoute().getAirlineName());
+            currentlyLoadedItinerary = lastSavedItinerary;
+            clearItineraryTables();
+            itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
+
         }
         catch(FileNotFoundException ex) {
+            System.out.println("File not found");
         }
         catch(IOException ex) {
+            System.out.println("IO exception");
         }
         catch(NullPointerException ex){
+            System.out.println("Null pointer");
         }
     }
 
@@ -142,17 +168,22 @@ public class MainController implements Initializable {
                 ObjectInputStream objectStream = new ObjectInputStream(filestream);
                 Object openedData = objectStream.readObject();
                 Itinerary itinerary = (Itinerary) openedData;
-                System.out.println(itinerary.returnFirstRoute().getAirlineName());
                 itineraryWelcomePane.setVisible(false);
                 itineraryReviewPane.setVisible(true);
                 currentlyLoadedItinerary = itinerary;
+                lastSavedItinerary = itinerary;
+                clearItineraryTables();
+                itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
             }
         }
         catch(FileNotFoundException ex){
+            System.out.print("File not found");
         }
         catch(IOException ex){
+            System.out.println("IO exception");
         }
         catch(ClassNotFoundException ex){
+            System.out.println("Null pointer");
         }
     }
 
@@ -164,6 +195,8 @@ public class MainController implements Initializable {
         itineraryAirportPane.setVisible(false);
         itineraryRoutePane.setVisible(false);
         itineraryReviewPane.setVisible(true);
+        clearItineraryTables();
+        itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
     }
 
     /** If user has selected an airport, searches for routes originating from
@@ -172,20 +205,20 @@ public class MainController implements Initializable {
      * @param e: The ActionEvent
      */
     public void itineraryFindRoutes(ActionEvent e){
-        itineraryAirportPane.setVisible(false);
-        itineraryRoutePane.setVisible(true);
-        try {
-            Airport sourceAirport = itineraryAirportTable.getSelectionModel().getSelectedItem();
+
+        Airport sourceAirport = itineraryAirportTable.getSelectionModel().getSelectedItem();
+        if (sourceAirport != null) {
             RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
             searcher.routesOfSource(sourceAirport.getName());
             ObservableList<Route> routes = searcher.getLoadedRoutes();
             clearItineraryTables();
             itineraryRouteTable.setItems(routes);
+            itineraryAirportPane.setVisible(false);
+            itineraryRoutePane.setVisible(true);
         }
-        catch (NullPointerException ex){
-            System.out.println("Must select an airport");
+        else{
+            //Error message
         }
-
     }
 
     /** Temporarily adds route to itinerary and advances through to the itinerary review pane
@@ -193,8 +226,17 @@ public class MainController implements Initializable {
      * @param e: The ActionEvent
      */
     public void itineraryAddRoute(ActionEvent e){
-        itineraryRoutePane.setVisible(false);
-        itineraryReviewPane.setVisible(true);
+        Route route = itineraryRouteTable.getSelectionModel().getSelectedItem();
+        if (route != null) {
+            currentlyLoadedItinerary.addToRoutes(route);
+            itineraryRoutePane.setVisible(false);
+            itineraryReviewPane.setVisible(true);
+            clearItineraryTables();
+            itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
+        }
+        else{
+            //SHOW ERROR MESSAGE
+        }
     }
 
     /** Cancels all unsaved itinerary changes
@@ -202,7 +244,9 @@ public class MainController implements Initializable {
      * @param e: The ActionEvent
      */
     public void itineraryCancelChanges(ActionEvent e){
-
+        currentlyLoadedItinerary = lastSavedItinerary;
+        clearItineraryTables();
+        itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
     }
 
     /**
@@ -789,7 +833,6 @@ public class MainController implements Initializable {
                     flightViewController.isValid = false;
 
                 } else {
-                    backToTableView(e);
                     JOptionPane jp = new JOptionPane();
                     jp.setSize(600, 600);
                     jp.showMessageDialog(null, "Data you are trying to add is invalid", "Error Message", JOptionPane.INFORMATION_MESSAGE);
@@ -1097,6 +1140,9 @@ public class MainController implements Initializable {
         itineraryRouteTable.getColumns().clear();
         initItineraryRouteTable();
         itineraryRouteTable.getColumns().addAll(itineraryAirport, itineraryAirline, itineraryStops);
+        itineraryReviewTable.getColumns().clear();
+        initItineraryReviewTable();
+        itineraryReviewTable.getColumns().addAll(itineraryReviewSource, itineraryReviewDestination, itineraryReviewAirline);
     }
 
     /** Switches to raw data table viewing interface
@@ -1265,10 +1311,7 @@ public class MainController implements Initializable {
     private void initItineraryReviewTable() {
         itineraryReviewSource.setCellValueFactory((new PropertyValueFactory<Route, String>("sourceAirportName")));
         itineraryReviewDestination.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
-        itineraryReviewAirline.setCellValueFactory(new PropertyValueFactory<Route, String>("routeAirlineName"));
-
-        itineraryReviewTable.setItems(currentlyLoadedRoutes);
-        System.out.print(itineraryReviewTable.getItems().get(0));
+        itineraryReviewAirline.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
     }
 
 
