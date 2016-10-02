@@ -27,5 +27,8 @@ public class Itinerary implements Serializable{
         return routes;
     }
 
+    public void removeFromRoutes(int index){
+        routes.remove(index);
+    }
 
 }

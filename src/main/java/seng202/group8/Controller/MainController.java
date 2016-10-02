@@ -280,6 +280,15 @@ public class MainController implements Initializable {
         selectionModel.select(airport);
     }
 
+    @FXML
+    private void itineraryDeleteRoute(ActionEvent e){
+        int index = itineraryReviewTable.getSelectionModel().getSelectedIndex();
+        currentlyLoadedItinerary.removeFromRoutes(index);
+        clearItineraryTables();
+        itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
+
+    }
+
 
 
     //These lists are used to display the currently loaded objects
