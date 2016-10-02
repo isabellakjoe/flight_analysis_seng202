@@ -91,7 +91,6 @@ public class MainController implements Initializable {
     @FXML
     public TableView<Airport> itineraryAirportTable;
     private Itinerary currentlyLoadedItinerary;
-    private Itinerary lastSavedItinerary;
     @FXML
     private FlightViewController flightViewController;
     @FXML
@@ -302,7 +301,8 @@ public class MainController implements Initializable {
             objectStream.flush();
             objectStream.close();
             fileStream.close();
-            lastSavedItinerary = currentlyLoadedItinerary;
+
+
             itineraryWelcomePane.setVisible(false);
             itineraryReviewPane.setVisible(false);
             itineraryAirportPane.setVisible(true);
@@ -314,7 +314,16 @@ public class MainController implements Initializable {
                     matchingAirportsWithRoutes.add(currentlyLoadedAirports.get(i));
                 }
             }
-            itineraryAirportTable.setItems(matchingAirportsWithRoutes);
+
+            ObservableList<Airport> finalList = FXCollections.observableArrayList();
+            for (int j = 0; j < matchingAirportsWithRoutes.size(); j++){
+                RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
+                searcher.routesOfSourceID(matchingAirportsWithRoutes.get(j).getAirportID());
+                if (searcher.getLoadedRoutes().size() > 0){
+                    finalList.add(matchingAirportsWithRoutes.get(j));
+                }
+            }
+            itineraryAirportTable.setItems(finalList);
 
             SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
             selectionModel.select(airport);
@@ -342,7 +351,6 @@ public class MainController implements Initializable {
             objectStream.flush();
             objectStream.close();
             fileStream.close();
-            currentlyLoadedItinerary = lastSavedItinerary;
             clearItineraryTables();
             itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
 
@@ -374,7 +382,6 @@ public class MainController implements Initializable {
                 itineraryWelcomePane.setVisible(false);
                 itineraryReviewPane.setVisible(true);
                 currentlyLoadedItinerary = itinerary;
-                lastSavedItinerary = itinerary;
                 clearItineraryTables();
                 itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
             }
@@ -440,16 +447,6 @@ public class MainController implements Initializable {
         }
     }
 
-    /**
-     * Cancels all unsaved itinerary changes
-     *
-     * @param e: The ActionEvent
-     */
-    public void itineraryCancelChanges(ActionEvent e) {
-        currentlyLoadedItinerary = lastSavedItinerary;
-        clearItineraryTables();
-        itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
-    }
 
     /**
      * Exits the itinerary view and returns to the welcome screen.
@@ -478,7 +475,16 @@ public class MainController implements Initializable {
                 matchingAirportsWithRoutes.add(currentlyLoadedAirports.get(i));
             }
         }
-        itineraryAirportTable.setItems(matchingAirportsWithRoutes);
+        ObservableList<Airport> finalList = FXCollections.observableArrayList();
+        for (int j = 0; j < matchingAirportsWithRoutes.size(); j++){
+            RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
+            searcher.routesOfSourceID(matchingAirportsWithRoutes.get(j).getAirportID());
+            if (searcher.getLoadedRoutes().size() > 0){
+                finalList.add(matchingAirportsWithRoutes.get(j));
+            }
+        }
+
+        itineraryAirportTable.setItems(finalList);
 
         SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
         selectionModel.select(airport);

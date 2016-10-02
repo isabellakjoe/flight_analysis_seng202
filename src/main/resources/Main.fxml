@@ -517,10 +517,6 @@
                                  <GridPane.margin>
                                     <Insets bottom="70.0" right="30.0" top="20.0" />
                                  </GridPane.margin></Button>
-                              <Button mnemonicParsing="false" onAction="#itineraryCancelChanges" text="Cancel Changes" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets bottom="70.0" left="30.0" top="20.0" />
-                                 </GridPane.margin></Button>
                               <Button mnemonicParsing="false" onAction="#itineraryAddNextAirport" text="Add another airport" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <GridPane.margin>
                                     <Insets bottom="20.0" left="30.0" top="60.0" />
