@@ -220,7 +220,6 @@
                             <fx:include fx:id="addRouteView" source="AddRouteView.fxml" />
                             <fx:include fx:id="addAirportView" source="AddAirportView.fxml" />
                             <fx:include fx:id="addAirlineView" source="AddAirlineView.fxml" />
-
                         </children>
                     </StackPane>
                </content>
@@ -358,11 +357,11 @@
                    <fx:include fx:id="flightView" source="FlightView.fxml" visible="false" />
                </content>
             </Tab>
-            <Tab text="Itinerary">
+            <Tab text="Itinerary" closable="false">
                <content>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <GridPane>
+                        <GridPane fx:id="itineraryWelcomePane">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -375,6 +374,63 @@
                            <children>
                               <Button mnemonicParsing="false" onAction="#createItinerary" text="Create New Itinerary" GridPane.rowIndex="1" />
                               <Button mnemonicParsing="false" onAction="#loadItinerary" text="Load Exisiting Itinerary" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                        <GridPane fx:id="itineraryRoutePane" visible="false">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#itineraryAddRoute" text="Add To Itinerary" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#itineraryCancel" text="Cancel" GridPane.rowIndex="2" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route table goes here" GridPane.rowIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Some info about selected route goes here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This pane shows routes originating from the selected airport" />
+                           </children>
+                        </GridPane>
+                        <GridPane fx:id="itineraryAirportPane" visible="false">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This pane will allow users to choose an airport" />
+                              <Button fx:id="itineraryFindRoutes" mnemonicParsing="false" onAction="#itineraryFindRoutes" text="Find Routes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#itineraryCancel" text="Cancel" GridPane.rowIndex="2" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="An airport table goes here" GridPane.rowIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Keep a bit of space free here for airport info" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <GridPane fx:id="itineraryReviewPane" visible="false">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Review the itinerary here" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Map view?" GridPane.rowIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Table of routes" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#saveItinerary" text="Save Changes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#itineraryCancelChanges" text="Cancel Changes" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#itineraryAddNextAirport" text="Add another airport" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                               <Button mnemonicParsing="false" onAction="#exitItinerary" text="All done" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>

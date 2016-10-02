@@ -59,6 +59,9 @@ public class MainController implements Initializable {
     public void createItinerary(ActionEvent e){
         Itinerary itinerary = new Itinerary();
         saveItinerary(e);
+        itineraryWelcomePane.setVisible(false);
+        itineraryReviewPane.setVisible(false);
+        itineraryAirportPane.setVisible(true);
     }
     @FXML
     public void saveItinerary(ActionEvent e){
@@ -96,6 +99,8 @@ public class MainController implements Initializable {
                 Itinerary itinerary = (Itinerary) openedData;
                 System.out.println(itinerary.returnFirstRoute().getAirline());
                 System.out.println(itinerary.getRoute().getAirlineName());
+                itineraryWelcomePane.setVisible(false);
+                itineraryReviewPane.setVisible(true);
             }
         }
         catch(FileNotFoundException ex){
@@ -106,6 +111,48 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    public GridPane itineraryWelcomePane;
+
+    @FXML
+    public GridPane itineraryAirportPane;
+
+    @FXML
+    public GridPane itineraryRoutePane;
+
+    @FXML
+    public GridPane itineraryReviewPane;
+
+
+    public void itineraryCancel(ActionEvent e){
+        itineraryAirportPane.setVisible(false);
+        itineraryRoutePane.setVisible(false);
+        itineraryReviewPane.setVisible(true);
+    }
+
+    public void itineraryFindRoutes(ActionEvent e){
+        itineraryAirportPane.setVisible(false);
+        itineraryRoutePane.setVisible(true);
+    }
+
+    public void itineraryAddRoute(ActionEvent e){
+        itineraryRoutePane.setVisible(false);
+        itineraryReviewPane.setVisible(true);
+    }
+
+    public void itineraryCancelChanges(ActionEvent e){
+
+    }
+
+    public void exitItinerary(ActionEvent e){
+        itineraryReviewPane.setVisible(false);
+        itineraryWelcomePane.setVisible(true);
+    }
+
+    public void itineraryAddNextAirport(ActionEvent e){
+        itineraryReviewPane.setVisible(false);
+        itineraryAirportPane.setVisible(true);
+    }
 
 
 
