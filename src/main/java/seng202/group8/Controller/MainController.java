@@ -259,6 +259,15 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Method to reset the database to a clean state.
+     *
+     * @param e
+     */
+    public void resetDB(ActionEvent e) {
+        /* Blank */
+        System.out.println("Implement me Callum xox");
+    }
+
     /** Method to implement Airport data into the application with error handling
      *
      * @param file: Contains Airport data
