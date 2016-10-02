@@ -262,6 +262,15 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Method to reset the database to a clean state.
+     *
+     * @param e
+     */
+    public void resetDB(ActionEvent e) {
+        /* Blank */
+        System.out.println("Implement me Callum xox");
+    }
+
     /** Method to implement Airport data into the application with error handling
      *
      * @param file: Contains Airport data
@@ -1047,13 +1056,13 @@ public class MainController implements Initializable {
                 int routes = loadedAirports.get(i).getNumRoutes();
                 if (routes > 0) {
                     String name = loadedAirports.get(i).getName();
+                    int version = 1;
                     for (int j = 0; j < series.getData().size(); j++) {
-                        int version = 2;
-                        while (name.equals(series.getData().get(j).getXValue().split(" : ")[0])) {
-                            name = name + " " + Integer.toString(version);
+                        if (name.equals(series.getData().get(j).getXValue().split(" : ")[0].split("_")[0])) {
                             version += 1;
                         }
                     }
+                    name = name + "_" + Integer.toString(version);
                     airportNames.add(name + " : " + Integer.toString(routes));
                     series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
                 }
