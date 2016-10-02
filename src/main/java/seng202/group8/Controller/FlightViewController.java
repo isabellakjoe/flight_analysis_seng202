@@ -62,16 +62,24 @@ public class FlightViewController implements Initializable {
     @FXML
     private Text bAltitude;
 
-
+    /** Method to set the visibility of the flightView
+     */
     public void makeVisible() {
         flightViewPane.setVisible(true);
     }
 
-
+    /** Method to get the validity of the loaded flight
+     *
+     * @return The boolean isValid
+     */
     public boolean getIsValid(){
         return this.isValid;
     }
 
+    /** Method to initialize the FlightView with the loaded data.
+     *
+     * @param flight: A Flight object
+     */
     public void setUpFlightView(Flight flight) {
         flightViewPane.setVisible(true);
 
@@ -122,10 +130,14 @@ public class FlightViewController implements Initializable {
         waypointLongitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("longitude"));
     }
 
+    /** Method to check a string only contains alphabet characters
+     *
+     * @param name: A string
+     * @return A boolean of true if the string contains only alphabet characters, false otherwise
+     */
     public boolean isAlpha(String name) {
         return name.matches("[a-zA-Z]+");
     }
-
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
