@@ -1075,13 +1075,13 @@ public class MainController implements Initializable {
             for (int i = 0; i < loadedAirports.size(); i++) {
                 int routes = loadedAirports.get(i).getNumRoutes();
                 String name = loadedAirports.get(i).getName();
+                int version = 1;
                 for (int j = 0; j < series.getData().size(); j++) {
-                    int version = 2;
-                    while (name.equals(series.getData().get(j).getXValue().split(" : ")[0])){
-                        name = name + " " + Integer.toString(version);
+                    if (name.equals(series.getData().get(j).getXValue().split(" : ")[0].split("_")[0])) {
                         version += 1;
                     }
                 }
+                name = name + "_" + Integer.toString(version);
                 airportNames.add(name + " : " + Integer.toString(routes));
                 series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
             }
