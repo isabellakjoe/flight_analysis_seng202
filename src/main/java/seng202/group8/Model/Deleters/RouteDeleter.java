@@ -24,8 +24,16 @@ public class RouteDeleter {
     public void deleteSingleRoute(Route route, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes) {
 
         //Remove the route from the airports count of routes
-        route.getSourceAirport().setNumRoutes(route.getSourceAirport().getNumRoutes() - 1);
-        route.getDestinationAirport().setNumRoutes(route.getDestinationAirport().getNumRoutes() - 1);
+        try {
+            route.getSourceAirport().setNumRoutes(route.getSourceAirport().getNumRoutes() - 1);
+        } catch (NullPointerException e) {
+            //Do nothing here as airport no longer exists in the application
+        }
+        try {
+            route.getDestinationAirport().setNumRoutes(route.getDestinationAirport().getNumRoutes() - 1);
+        } catch (NullPointerException e) {
+            //Do nothing here as airport no longer exists in the application
+        }
 
         //Set up the variables
         DatabaseSaver dbs = new DatabaseSaver();
