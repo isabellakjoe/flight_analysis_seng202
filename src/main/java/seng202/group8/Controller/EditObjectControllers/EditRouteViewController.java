@@ -88,8 +88,8 @@ public class EditRouteViewController {
         saveRouteChangesButton.setVisible(true);
         cancelRouteChangesButton.setVisible(true);
 
-        editSourceField.setText(currentRoute.getSourceAirportName());
-        editDestinationField.setText(currentRoute.getDestinationAirportName());
+        editSourceField.setText(currentRoute.getSourceAirport().getIATA());
+        editDestinationField.setText(currentRoute.getDestinationAirport().getIATA());
         editStopsField.setText(Integer.toString(currentRoute.getStops()));
         if (currentRoute.getEquipment() != null) {
             editEquipmentField.setText(currentRoute.getEquipment());

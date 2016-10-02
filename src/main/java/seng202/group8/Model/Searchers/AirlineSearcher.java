@@ -159,6 +159,10 @@ public class AirlineSearcher {
         loadedAirlines = matchingAirlines;
     }
 
+    /**
+     * A method to search through airlines based off of active status
+     * @param activeStatus a string containing Active or not
+     */
     public void airlinesOfActiveStatus(String activeStatus){
         System.out.println(activeStatus);
         ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();

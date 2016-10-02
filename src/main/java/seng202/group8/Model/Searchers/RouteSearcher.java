@@ -15,14 +15,26 @@ public class RouteSearcher {
 
     private ObservableList<Route> loadedRoutes = FXCollections.observableArrayList();
 
+    /**
+     * Method to overload object to pass through list of current routes
+     * @param loadedRoutes an observable list of routes.
+     */
     public RouteSearcher(ObservableList<Route> loadedRoutes) {
         this.loadedRoutes = loadedRoutes;
     }
 
+    /**
+     * Return the currently stored list of routes
+     * @return an observable list of routes
+     */
     public ObservableList<Route> getLoadedRoutes() {
         return loadedRoutes;
     }
 
+    /**
+     * A method to search through routes based off of airline name
+     * @param airline a string of an airline name to be matched
+     */
     public void routesOfAirline(String airline){
         ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
 
@@ -37,6 +49,11 @@ public class RouteSearcher {
         }
         loadedRoutes = matchingRoutes;
     }
+
+    /**
+     * A method to search through routes based off of airline id's
+     * @param airlineID an integer of an airline id to be matched
+     */
     public void routesOfAirlineID(int airlineID){
         ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
 
@@ -52,6 +69,10 @@ public class RouteSearcher {
         loadedRoutes = matchingRoutes;
     }
 
+    /**
+     * A method to search through source airports based off of name
+     * @param sourceAirportName a string of a source airport to be matched.
+     */
     public void routesOfSource(String sourceAirportName){
         ObservableList<Route> matchingRoutes = FXCollections.observableArrayList();
 
