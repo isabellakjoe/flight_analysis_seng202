@@ -209,6 +209,14 @@
                                     </ContextMenu>
                                  </contextMenu>
                                     </TableView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="*Highlighted records are airports without routes" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Text>
                               <fx:include fx:id="editRouteView" source="EditRouteView.fxml" />
                            </children>
                            <opaqueInsets>
