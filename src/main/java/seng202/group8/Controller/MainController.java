@@ -217,7 +217,7 @@ public class MainController implements Initializable {
             itineraryRoutePane.setVisible(true);
         }
         else{
-            //Error message
+            System.out.println("Must select an airport");
         }
     }
 
@@ -235,7 +235,7 @@ public class MainController implements Initializable {
             itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
         }
         else{
-            //SHOW ERROR MESSAGE
+            System.out.println("must select a route");
         }
     }
 
@@ -283,10 +283,11 @@ public class MainController implements Initializable {
     @FXML
     private void itineraryDeleteRoute(ActionEvent e){
         int index = itineraryReviewTable.getSelectionModel().getSelectedIndex();
-        currentlyLoadedItinerary.removeFromRoutes(index);
-        clearItineraryTables();
-        itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
-
+        if (index > -1) {
+            currentlyLoadedItinerary.removeFromRoutes(index);
+            clearItineraryTables();
+            itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
+        }
     }
 
 
