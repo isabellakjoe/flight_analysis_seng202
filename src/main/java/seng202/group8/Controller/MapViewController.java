@@ -36,17 +36,25 @@ public class MapViewController {
     @FXML
     private WebView webView;
 
-
+    /** Method to assign the mainController
+     *
+     * @param mainController: The MainController
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
+    /** Method to intialize the map html
+     */
     public void initMap() {
         webEngine = webView.getEngine();
         webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
     }
 
-    // Action Event for 'Display Airports' checkbox
+    /** Method to display all currently loaded airports
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     public void mapAirports(ActionEvent e) {
         if (displayAllAirports.isSelected()) {
@@ -56,7 +64,10 @@ public class MapViewController {
         }
     }
 
-    // Display markers for list of airports
+    /** Method to display markers for list of airports
+     *
+     * @param airportList: A list of Airports
+     */
     private void displayAirports(List airportList) {
         if (airportList.size() < 1000 && airportList.size() != 0) {
             showAirportMarkers(airportList);
@@ -79,7 +90,10 @@ public class MapViewController {
     }
 
 
-    // Method that clears, creates and displays airport markers
+    /** Method that clears, creates and displays airport markers
+     *
+     * @param airports: A list of Airports
+     */
     private void showAirportMarkers(List airports) {
         Iterator i = airports.iterator();
         while (i.hasNext()) {
@@ -98,11 +112,14 @@ public class MapViewController {
         }
     }
 
-    // Remove currently displayed airport markers
+    /** Method to remove currently displayed airport markers
+     */
     private void clearAirports() { webEngine.executeScript("clearMarkers()");}
 
 
-    // Action Event for 'Display Routes' checkbox
+    /** Method to display all currently loaded routes
+     * @param e: An ActionEvent
+     */
     @FXML
     public void mapRoutes(ActionEvent e) {
         if (displayAllRoutes.isSelected()) {
@@ -112,7 +129,10 @@ public class MapViewController {
         }
     }
 
-    // Method for displaying routes on map
+    /** Method for displaying routes on map
+     *
+     * @param routes: a list of Routes
+     */
     private void displayRoutes(List routes) {
         if (routes.size() < 1000 && routes.size() != 0) {
             createMapRoutes(routes);
@@ -134,7 +154,10 @@ public class MapViewController {
         }
     }
 
-    // Method that clears, creates and displays airport markers
+    /** Method that clears, creates and displays airport markers
+     *
+     * @param routes: a list of Routes
+     */
     private void createMapRoutes(List routes) {
         Iterator i = routes.iterator();
         while (i.hasNext()) {
@@ -151,6 +174,11 @@ public class MapViewController {
         }
     }
 
+    /** Method to get the coordinates of an Airport from the currently loaded airports
+     *
+     * @param airportID: A String of the Name of the airport
+     * @return The coordinates as a Double
+     */
     private double[] getCoordinates(String airportID) {
         double[] coords = {};
         List airports = mainController.getCurrentlyLoadedAirports();
@@ -167,14 +195,17 @@ public class MapViewController {
         return coords;
     }
 
-    // Remove currently displayed airport markers
+    /** Method to remove currently displayed airport markers
+     */
     private void clearRoutes() {
         webEngine.executeScript("clearRoutes()");
     }
 
 
-    // KeyEvent function that calls displayRoutesByEquipment function when input is received in text field
-    // and enter is pressed
+    /** Method that calls displayRoutesByEquipment function when input is received in text field and enter is pressed
+     *
+     * @param key: A KeyEvent
+     */
     @FXML
     private void enterEquipmentPressed( KeyEvent key) {
         if (key.getCode() == KeyCode.ENTER) {
@@ -182,7 +213,10 @@ public class MapViewController {
         }
     }
 
-
+    /** Method to display all Routes using a particular equipment
+     *
+     * @param equipment: A string representing a type of Equipment
+     */
     private void displayRoutesByEquipment(String equipment) {
 
         RouteSearcher searcher = new RouteSearcher(mainController.getCurrentlyLoadedRoutes());
@@ -199,8 +233,10 @@ public class MapViewController {
 
     }
 
-    // KeyEvent function that calls displayRoutesByAirport function when input is received in text field
-    // and enter is pressed
+    /** Method that calls displayRoutesByAirport method when input is received in text field and enter is pressed
+     *
+     * @param key
+     */
     @FXML
     private void enterAirportPressed( KeyEvent key) {
         if (key.getCode() == KeyCode.ENTER) {
@@ -208,7 +244,10 @@ public class MapViewController {
         }
     }
 
-
+    /** Method to display all routes from a specific Airport
+     *
+     * @param airport: A string name of a particular Airport
+     */
     private void displayRoutesByAirports(String airport) {
 
         RouteSearcher searcher = new RouteSearcher(mainController.getCurrentlyLoadedRoutes());
@@ -222,6 +261,4 @@ public class MapViewController {
         displayRoutes(routes);
 
     }
-
-
 }
