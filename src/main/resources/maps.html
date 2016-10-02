@@ -22,10 +22,119 @@
     var map;
     var markers = new Array();
     var paths = new Array();
-    var path;
+    var flightPath;
+    var flightPaths = new Array();
     var info;
 
     function initMap() {
+        var styledMapType = new google.maps.StyledMapType(
+                [
+                    {
+                        "featureType": "landscape",
+                        "stylers": [
+                            {
+                                "hue": "#FFBB00"
+                            },
+                            {
+                                "saturation": 43.400000000000006
+                            },
+                            {
+                                "lightness": 37.599999999999994
+                            },
+                            {
+                                "gamma": 1
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "stylers": [
+                            {
+                                "hue": "#FFC200"
+                            },
+                            {
+                                "saturation": -61.8
+                            },
+                            {
+                                "lightness": 45.599999999999994
+                            },
+                            {
+                                "gamma": 1
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "stylers": [
+                            {
+                                "hue": "#FF0300"
+                            },
+                            {
+                                "saturation": -100
+                            },
+                            {
+                                "lightness": 51.19999999999999
+                            },
+                            {
+                                "gamma": 1
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "stylers": [
+                            {
+                                "hue": "#FF0300"
+                            },
+                            {
+                                "saturation": -100
+                            },
+                            {
+                                "lightness": 52
+                            },
+                            {
+                                "gamma": 1
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "stylers": [
+                            {
+                                "hue": "#0078FF"
+                            },
+                            {
+                                "saturation": -13.200000000000003
+                            },
+                            {
+                                "lightness": 2.4000000000000057
+                            },
+                            {
+                                "gamma": 1
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "stylers": [
+                            {
+                                "hue": "#00FF6A"
+                            },
+                            {
+                                "saturation": -1.0989010989011234
+                            },
+                            {
+                                "lightness": 11.200000000000017
+                            },
+                            {
+                                "gamma": 1
+                            }
+                        ]
+                    }
+                ],
+                {name: 'Styled Map'});
+
+
         var init = {lat: 29.947130, lng: 23.961692};
 
         map = new google.maps.Map(document.getElementById('map'), {
@@ -34,12 +143,14 @@
             streetViewControl: false
         });
 
-        map.setOptions({ minZoom: 2, maxZoom: 15 });
+        map.setOptions({minZoom: 2, maxZoom: 15});
 
-        google.maps.event.addListener(map, 'center_changed', function() {
+        google.maps.event.addListener(map, 'center_changed', function () {
             checkBounds(map);
         });
 
+        map.mapTypes.set('styled_map', styledMapType);
+        map.setMapTypeId('styled_map');
 
     }
 
@@ -51,37 +162,39 @@
         var latSouth = map.getBounds().getSouthWest().lat();
         var newLat;
 
-        if(latNorth<85 && latSouth>-85)     /* in both side -> it's ok */
+        if (latNorth < 85 && latSouth > -85)     /* in both side -> it's ok */
             return;
         else {
-            if(latNorth>85 && latSouth<-85)   /* out both side -> it's ok */
+            if (latNorth > 85 && latSouth < -85)   /* out both side -> it's ok */
                 return;
             else {
-                if(latNorth>85)
-                    newLat =  map.getCenter().lat() - (latNorth-85);   /* too north, centering */
-                if(latSouth<-85)
-                    newLat =  map.getCenter().lat() - (latSouth+85);   /* too south, centering */
+                if (latNorth > 85)
+                    newLat = map.getCenter().lat() - (latNorth - 85);
+                /* too north, centering */
+                if (latSouth < -85)
+                    newLat = map.getCenter().lat() - (latSouth + 85);
+                /* too south, centering */
             }
         }
-        if(newLat) {
-            var newCenter= new google.maps.LatLng( newLat ,map.getCenter().lng() );
+        if (newLat) {
+            var newCenter = new google.maps.LatLng(newLat, map.getCenter().lng());
             map.setCenter(newCenter);
         }
     }
 
 
-//    function createInfoString(AirportId, Name, City, Country, IATA, FAA, ICAO, Lat, Lng, Alt, Time, DST, Tz) {
-//        info = '<div id="content">'+
-//                '<div id="siteNotice">'+
-//                '</div>'+
-//                'Airport Id: ' + AirportId + '\n Name: ' + Name + '\n City: ' + City + '\n Country: ' + Country +
-//                '\n IATA: ' + IATA + '\n FAA: ' + FAA + '\n ICAO: ' + ICAO + '\n Latitude: ' + Lat +
-//                '\n Longitude: ' + Lng + '\n Altitude: ' + Alt + '\n Time: ' + Time + '\n Daylight Savings Time: ' +
-//                DST + '\n Timezone: ' + Tz +
-//                '</div>'+
-//                '</div>';
-//
-//    }
+    //    function createInfoString(AirportId, Name, City, Country, IATA, FAA, ICAO, Lat, Lng, Alt, Time, DST, Tz) {
+    //        info = '<div id="content">'+
+    //                '<div id="siteNotice">'+
+    //                '</div>'+
+    //                'Airport Id: ' + AirportId + '\n Name: ' + Name + '\n City: ' + City + '\n Country: ' + Country +
+    //                '\n IATA: ' + IATA + '\n FAA: ' + FAA + '\n ICAO: ' + ICAO + '\n Latitude: ' + Lat +
+    //                '\n Longitude: ' + Lng + '\n Altitude: ' + Alt + '\n Time: ' + Time + '\n Daylight Savings Time: ' +
+    //                DST + '\n Timezone: ' + Tz +
+    //                '</div>'+
+    //                '</div>';
+    //
+    //    }
 
     function createMarker(lat, lng) {
         var latLng = {lat: lat, lng: lng};
@@ -97,8 +210,8 @@
 //            infowindow.open(map, marker);
 //        });
         /*
-        centres screen over marker, DELETE THIS AND ADD FUNCTION
-        THAT CAN BE CALLED WHEN ALL AIRPORTS ADDED FOR SPEED
+         centres screen over marker, DELETE THIS AND ADD FUNCTION
+         THAT CAN BE CALLED WHEN ALL AIRPORTS ADDED FOR SPEED
          */
         map.panTo(marker.position);
     }
@@ -126,7 +239,7 @@
         var path = new google.maps.Polyline({
             path: coords,
             geodesic: true,
-            strokeColor: '#FF0000',
+            strokeColor: "#ff3333",
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
@@ -154,6 +267,30 @@
         map.fitBounds(bounds);
     }
 
+
+    function displayFlight(flightPath) {
+        // Draw polyline for Flight Path
+        var flightPath = new google.maps.Polyline({
+            path: flightPath,
+            geodesic: true,
+            strokeColor: "#009999",
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+        flightPath.setMap(map);
+        flightPaths.push(flightPath);
+    }
+
+
+    function setFlightPaths(map) {
+        for (var i = 0; i < flightPaths.length; i++) {
+            flightPaths[i].setMap(map);
+        }
+    }
+
+    function clearFlightPaths() {
+        setFlightPaths(null);
+    }
 
 
 </script>

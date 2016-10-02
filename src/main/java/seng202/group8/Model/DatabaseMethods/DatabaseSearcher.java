@@ -36,7 +36,7 @@ public class DatabaseSearcher {
         }
     }
 
-    /* Temporary method to create an airline for a route */
+    /* Temporary method to ToJSONArray an airline for a route */
     private Airline createAirline(String airlineName, int airlineID) {
         Airline airline = new Airline();
         airline.setName(airlineName);
@@ -44,7 +44,7 @@ public class DatabaseSearcher {
         return airline;
     }
 
-    /* Temporary method to create an airport for a route */
+    /* Temporary method to ToJSONArray an airport for a route */
     private Airport createAirport(String airportCode, int airportID) {
         Airport airport = new Airport();
 

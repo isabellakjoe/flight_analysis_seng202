@@ -68,7 +68,7 @@ public class DatabaseSaver {
     }
 
     private String createAirportStatement(Airport airportToSave) {
-        // A method used to create an sql statement used to insert an airport into the database.
+        // A method used to ToJSONArray an sql statement used to insert an airport into the database.
         int id = airportToSave.getAirportID();
         String stringID = convertIntToString(id);
         String name = airportToSave.getName();
@@ -96,7 +96,7 @@ public class DatabaseSaver {
     }
 
     private String createAirlineStatement(Airline airlineToSave) {
-        //A method used to create an sql statement used to insert an airline into the database.
+        //A method used to ToJSONArray an sql statement used to insert an airline into the database.
         int id = airlineToSave.getAirlineID();
         String stringID = convertIntToString(id);
         String name = airlineToSave.getName();
@@ -120,7 +120,7 @@ public class DatabaseSaver {
         String statement;
 
         if (routeToSave.getAirline() != null && routeToSave.getSourceAirport() != null && routeToSave.getDestinationAirport() != null) {
-            //A method used to create an sql statement used to insert an route into the database.
+            //A method used to ToJSONArray an sql statement used to insert an route into the database.
             //Get the route's unique ID
             int id = routeToSave.getRouteID();
             String stringID = convertIntToString(id);

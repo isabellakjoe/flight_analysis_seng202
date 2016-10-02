@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class DatabaseUpdater {
 
     private String generateSQL(String table, String updateString, String paramID, String searchParam) {
-        // Method used to create an sql query to update values in the database
+        // Method used to ToJSONArray an sql query to update values in the database
         String sql = "UPDATE " + table + " SET " + updateString + " WHERE " + paramID + " = '" + searchParam + "';";
         return sql;
 

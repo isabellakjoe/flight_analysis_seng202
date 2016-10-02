@@ -34,7 +34,7 @@ public class FileLoader {
     }
 
     /**
-     * A method to create an ObservableList of Airports.
+     * A method to ToJSONArray an ObservableList of Airports.
      *
      * @return The created Airport ObservableList.
      */
@@ -55,7 +55,7 @@ public class FileLoader {
     }
 
     /**
-     * A method to create an ObservableList of Airlines.
+     * A method to ToJSONArray an ObservableList of Airlines.
      *
      * @return The created Airline ObservableList.
      */
@@ -76,7 +76,7 @@ public class FileLoader {
     }
 
     /**
-     * A method to create an ObservableList of Routes.
+     * A method to ToJSONArray an ObservableList of Routes.
      *
      * @return The created Routes ObservableList.
      */
@@ -101,7 +101,7 @@ public class FileLoader {
     }
 
     /**
-     * Method to create a Flight object.
+     * Method to ToJSONArray a Flight object.
      *
      * @return The Flight Object.
      */
