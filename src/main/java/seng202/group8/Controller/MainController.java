@@ -394,6 +394,14 @@ public class MainController implements Initializable {
     private TableColumn<Route, String> itineraryAirline;
     @FXML
     private TableColumn<Route, String> itineraryStops;
+    @FXML
+    private TableView<Route> itineraryReviewTable;
+    @FXML
+    private TableColumn<Route, String> itineraryReviewSource;
+    @FXML
+    private TableColumn<Route, String> itineraryReviewDestination;
+    @FXML
+    private TableColumn<Route, String> itineraryReviewAirline;
 
 
     public static ObservableList<Airline> getCurrentlyLoadedAirlines() {
@@ -1212,6 +1220,15 @@ public class MainController implements Initializable {
     }
 
 
+    private void initItineraryReviewTable() {
+        itineraryReviewSource.setCellValueFactory((new PropertyValueFactory<Route, String>("sourceAirportName")));
+        itineraryReviewDestination.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
+        itineraryReviewAirline.setCellValueFactory(new PropertyValueFactory<Route, String>("routeAirlineName"));
+
+        itineraryReviewTable.setItems(currentlyLoadedRoutes);
+        System.out.print(itineraryReviewTable.getItems().get(0));
+    }
+
 
     public void setGraphCombo() {
         graphCombo.getItems().addAll("Routes per Airport", "Equipment per Routes", "Airline per Country", "Airport per Country");
@@ -1511,6 +1528,7 @@ public class MainController implements Initializable {
         initAirlineTable();
         initAirportTable();
         initItineraryAirportTable();
+        initItineraryReviewTable();
         initRouteTable();
         setGraphCombo();
 
