@@ -297,6 +297,15 @@ public class MainController implements Initializable {
     private GridPane graphsStartPane;
     @FXML
     private Tab flightTab;
+    @FXML
+    private TableView<Airport> itineraryTable;
+    @FXML
+    private TableColumn<Airport, String> itineraryAirportName;
+    @FXML
+    private TableColumn<Airport, String> itineraryCity;
+    @FXML
+    private TableColumn<Airport, String> itineraryCountry;
+
 
     public static ObservableList<Airline> getCurrentlyLoadedAirlines() {
         return currentlyLoadedAirlines;
@@ -352,6 +361,7 @@ public class MainController implements Initializable {
     public void showAirports() {
         try {
             airportTable.setItems(currentlyLoadedAirports);
+            itineraryTable.setItems(currentlyLoadedAirports);
             setAirportComboBoxes();
         } catch (NullPointerException np) {
             System.out.println("Error Loading Airports");
@@ -1042,10 +1052,15 @@ public class MainController implements Initializable {
         altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
         timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
+        itineraryAirportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
+        itineraryCity.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
+        itineraryCountry.setCellValueFactory(new PropertyValueFactory<Airport, String>("Country"));
+
         //noRoutes.setCellValueFactory(new PropertyValueFactory<Airport, String>("Routes"));
 
         // This sets Airports with no routes red. Alternates colours for clarity
         setAirportsWithoutRoutes(airportTable);
+        setAirportsWithoutRoutes(itineraryTable);
     }
 
     public void setAirportsWithoutRoutes(TableView<Airport> airportTable) {
