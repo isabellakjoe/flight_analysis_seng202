@@ -30,6 +30,7 @@ import seng202.group8.Controller.AddObjectControllers.AddRouteViewController;
 import seng202.group8.Controller.EditObjectControllers.EditAirlineViewController;
 import seng202.group8.Controller.EditObjectControllers.EditAirportViewController;
 import seng202.group8.Controller.EditObjectControllers.EditRouteViewController;
+import seng202.group8.Controller.MapViewControllers.MapViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController;
@@ -1011,10 +1012,10 @@ public class MainController implements Initializable {
                         if (!empty) {
                             if (item.getNumRoutes() == 0) {
                                 if (isLightCoral) {
-                                    setStyle("-fx-background-color:rgba(195, 0, 0, 0.85)");
+                                    setStyle("-fx-background-color:#ffcccc");
                                     isLightCoral = false;
                                 } else {
-                                    setStyle("-fx-background-color:rgba(205, 0, 0, 0.86)");
+                                    setStyle("-fx-background-color:#ff9999");
                                     isLightCoral = true;
                                 }
 

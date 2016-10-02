@@ -12,7 +12,7 @@ public class Flight {
 
     private Airport sourceAirport;
     private Airport destinationAirport;
-    private ObservableList<Waypoint> waypoints = FXCollections.observableArrayList();
+    private static ObservableList<Waypoint> waypoints = FXCollections.observableArrayList();
 
     public Airport getSourceAirport() {
         return sourceAirport;
@@ -30,7 +30,7 @@ public class Flight {
         this.destinationAirport = destinationAirport;
     }
 
-    public ObservableList<Waypoint> getWaypoints() {
+    public static ObservableList<Waypoint> getWaypoints() {
         return waypoints;
     }
 
