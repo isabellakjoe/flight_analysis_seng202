@@ -10,7 +10,6 @@ import javafx.scene.text.Text;
 import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
-import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Parsers.AirportParser;
 
@@ -145,24 +144,18 @@ AddAirportViewController {
             airports.add(newAirport);
             if (newAirport != null) {
                 //Add the new airport to the database here
-                Database db = new Database();
                 DatabaseSaver dbSave = new DatabaseSaver();
-                DatabaseSearcher dbSearch = new DatabaseSearcher();
-                Connection connSave = db.connect();
-                Connection connSearch = db.connect();
+                Connection connSave = Database.connect();
                 dbSave.saveAirports(connSave, airports);
-                db.disconnect(connSave);
-                String sql = dbSearch.buildAirportSearch("airportid", airportID);
-                ObservableList<Airport> addedAirport = dbSearch.searchForAirportByOption(connSearch, sql);
-                db.disconnect(connSearch);
-                mainController.addToCurrentlyLoadedAirports(addedAirport.get(0));
+                Database.disconnect(connSave);
+                mainController.addToCurrentlyLoadedAirports(newAirport);
+                MainController.getAirportHashMap().put(newAirport.getIATA(), newAirport);
             }
             mainController.airportTable.setItems(mainController.getCurrentlyLoadedAirports());
-            mainController.resetView();
             mainController.setAirportComboBoxes();
+            cancelAddedAirport(e);
+            mainController.resetView();
             mainController.backToTableView(e);
-
-            System.out.println(mainController.airportTable);
         }
     }
 

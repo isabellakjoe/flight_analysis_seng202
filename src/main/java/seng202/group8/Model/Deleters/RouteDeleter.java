@@ -49,14 +49,18 @@ public class RouteDeleter {
         //ArrayList of route ids to delete from the database
         ArrayList<Integer> ids = new ArrayList<Integer>();
 
-        for (int i = 0; i < routes.size(); i++) {
+        System.out.println(routes.size());
 
-            ids.add(routes.get(i).getRouteID());
-            //Remove the route from the Observable Array
-            currentlyLoadedRoutes.remove(currentlyLoadedRoutes.indexOf(routes.get(i)));
-            //Remove the route from the Hashmap
-            routeHashMap.remove(routes.get(i).getRouteID());
+        if (routes.size() >= 1) {
+            for (int i = 0; i < routes.size(); i++) {
 
+                ids.add(routes.get(i).getRouteID());
+                //Remove the route from the Observable Array
+                currentlyLoadedRoutes.remove(routes.get(i));
+                //Remove the route from the Hashmap
+                routeHashMap.remove(routes.get(i).getRouteID());
+
+            }
         }
 
         dbs.deleteRoutes(conn, ids);

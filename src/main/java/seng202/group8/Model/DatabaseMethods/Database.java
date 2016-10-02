@@ -1,9 +1,7 @@
 package seng202.group8.Model.DatabaseMethods;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by Callum on 30/08/16.
@@ -66,6 +64,21 @@ public class Database {
         } catch (Exception e) {
             System.out.println("ERROR " + e.getClass().getName() + ": " + e.getMessage());
         }
+    }
+
+    public static int getMaxRouteID(Connection conn) {
+        int id = 0;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT max(routeid) FROM route");
+            while(result.next()) {
+                id = result.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return id;
     }
 
 

@@ -66,15 +66,6 @@ public class FlightViewController implements Initializable {
         flightViewPane.setVisible(true);
     }
 
-    public void makeInvisible() {
-        flightViewPane.setVisible(false);
-    }
-
-    @FXML
-    private void exitFlightView(ActionEvent e) {
-        flightViewPane.setVisible(false);
-        mainController.backToTableView(e);
-    }
 
     public boolean getIsValid(){
         return this.isValid;

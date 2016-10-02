@@ -15,13 +15,10 @@ import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Deleters.AirlineDeleter;
 import seng202.group8.Model.Objects.Airline;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static javax.swing.JOptionPane.YES_OPTION;
 
 /**
  * Created by esa46 on 20/09/16.
@@ -199,25 +196,42 @@ public class EditAirlineViewController {
         List<String> airlineData = Arrays.asList(alias, country);
         boolean noErrors = editAirlineErrors(airlineData);
 
+        if (MainController.getAirlineHashMap().get(IATA) != null && !IATA.equals(currentAirline.getIATA())) {
+            noErrors = false;
+        }
+        if (MainController.getAirlineHashMap().get(ICAO) != null && !ICAO.equals(currentAirline.getICAO())) {
+            noErrors = false;
+        }
+
         if(noErrors) {
-            //TODO: NEED TO CHECK UNIQUE CONSTRAINTS BEFORE ALLOWING DELETION + SAVING
             //Delete the current airline object from the database
             DatabaseSaver dbSave = new DatabaseSaver();
             Connection connDelete = Database.connect();
             ArrayList<Integer> ids = new ArrayList<Integer>();
             ids.add(currentAirline.getAirlineID());
+            //Remove the airline from the database
             dbSave.deleteAirlines(connDelete, ids);
             Database.disconnect(connDelete);
+
+            //Remove the airline from the GUI
+            MainController.getCurrentlyLoadedAirlines().remove(currentAirline);
 
 
             if (!editCallsignField.getText().equals("None")) {
                 currentAirline.setCallsign(callsign);
             }
             if (!editAirlineIATAField.getText().equals("None")) {
+                if (MainController.getAirlineHashMap().get(currentAirline.getIATA()) != null) {
+                    MainController.getAirlineHashMap().remove(currentAirline.getIATA());
+                }
                 currentAirline.setIATA(IATA);
+                MainController.getAirlineHashMap().put(IATA, currentAirline);
             }
             if (!editAirlineICAOField.getText().equals("None")) {
                 currentAirline.setICAO(ICAO);
+                if (MainController.getAirlineHashMap().get(currentAirline.getIATA()) == null) {
+                    MainController.getAirlineHashMap().put(ICAO, currentAirline);
+                }
             }
             if (!editAliasField.getText().equals("None")) {
                 currentAirline.setAlias(alias);
@@ -259,7 +273,12 @@ public class EditAirlineViewController {
             dbSave.saveAirlines(connSave, newAirlines);
             Database.disconnect(connDelete);
 
+            MainController.getCurrentlyLoadedAirlines().add(currentAirline);
+
+            mainController.airlineTable.setItems(mainController.getCurrentlyLoadedAirlines());
+            mainController.resetView();
             mainController.setAirlineComboBoxes();
+            mainController.backToTableView(e);
         }
     }
 
@@ -287,14 +306,19 @@ public class EditAirlineViewController {
 */
     public void deleteAirline(ActionEvent e){
         Airline airline = mainController.airlineTable.getSelectionModel().getSelectedItem();
-        int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airline.getName() + "?", "Delete Airline", JOptionPane.YES_NO_OPTION);
-        if(jp == YES_OPTION){
+        //int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airline.getName() + "?", "Delete Airline", JOptionPane.YES_NO_OPTION);
+        //if(jp == YES_OPTION){
             AirlineDeleter airlineDeleter = new AirlineDeleter();
             airlineDeleter.deleteSingleAirline(airline, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirlineHashMap(), MainController.getCurrentlyLoadedAirlines());
+        //}
 
-            mainController.setAirportComboBoxes();
-
-        }
+        mainController.airlineTable.setItems(mainController.getCurrentlyLoadedAirlines());
+        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
+        //Call the method here to make sure routes deleted by removal of airline
+        mainController.setAirportsWithoutRoutes(mainController.airportTable);
+        mainController.resetView();
+        mainController.setAirlineComboBoxes();
+        mainController.backToTableView(e);
 
     }
 
