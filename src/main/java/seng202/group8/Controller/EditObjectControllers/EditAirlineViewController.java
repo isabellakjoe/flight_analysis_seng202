@@ -25,9 +25,10 @@ import java.util.List;
  */
 public class EditAirlineViewController {
 
+    private MainController mainController;
+
     @FXML
     private Pane editAirlinePane;
-
     @FXML
     private Button editAirlineDataButton;
     @FXML
@@ -71,14 +72,31 @@ public class EditAirlineViewController {
     @FXML
     private Text editAirlineAliasErrorMessage;
 
-    private MainController mainController;
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void makeVisible() {
+        editAirlinePane.setVisible(true);
+    }
+
+    public void makeInvisible() {
+        editAirlinePane.setVisible(false);
+    }
+
+    /*
+    Returns to table view
+    */
     @FXML
     public void backToTableView(ActionEvent e){
         makeInvisible();
         mainController.backToTableView(e);
     }
 
+    /*
+    Loads airline information into editable text fields
+    */
     @FXML
     public void editAirlineData(ActionEvent e) {
         Airline currentAirline = mainController.airlineTable.getSelectionModel().getSelectedItem();
@@ -128,6 +146,9 @@ public class EditAirlineViewController {
 
     }
 
+    /*
+    Exits edit view without saving changes
+    */
     @FXML
     public void cancelAirlineChanges(ActionEvent e) {
         clearEditAirlineErrors();
@@ -143,13 +164,10 @@ public class EditAirlineViewController {
         editAirlineCountryField.setVisible(false);
 
     }
-    @FXML
-    private void clearEditAirlineErrors() {
-        editAirlineAliasError.setVisible(false);
-        editAirlineCountryError.setVisible(false);
-        editAirlineAliasErrorMessage.setVisible(false);
 
-    }
+    /*
+    Error checks input and displays necessary error messages
+    */
     @FXML
     private boolean editAirlineErrors(List<String> input) {
 
@@ -182,6 +200,20 @@ public class EditAirlineViewController {
 
     }
 
+    /*
+    Hides all error messages related to editing an airline
+    */
+    @FXML
+    private void clearEditAirlineErrors() {
+        editAirlineAliasError.setVisible(false);
+        editAirlineCountryError.setVisible(false);
+        editAirlineAliasErrorMessage.setVisible(false);
+
+    }
+
+    /*
+    Reads user input and makes necessary changes to the airline in the database
+    */
     @FXML
     public void saveAirlineChanges(ActionEvent e) {
         clearEditAirlineErrors();
@@ -282,6 +314,31 @@ public class EditAirlineViewController {
         }
     }
 
+    /*
+    Deletes selected airline from the database and updates table
+     */
+    @FXML
+    public void deleteAirline(ActionEvent e){
+        Airline airline = mainController.airlineTable.getSelectionModel().getSelectedItem();
+        //int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airline.getName() + "?", "Delete Airline", JOptionPane.YES_NO_OPTION);
+        //if(jp == YES_OPTION){
+        AirlineDeleter airlineDeleter = new AirlineDeleter();
+        airlineDeleter.deleteSingleAirline(airline, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirlineHashMap(), MainController.getCurrentlyLoadedAirlines());
+        //}
+
+        mainController.airlineTable.setItems(mainController.getCurrentlyLoadedAirlines());
+        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
+        //Call the method here to make sure routes deleted by removal of airline
+        mainController.setAirportsWithoutRoutes(mainController.airportTable);
+        mainController.resetTables();
+        mainController.setAirlineComboBoxes();
+        mainController.backToTableView(e);
+
+    }
+
+    /*
+    Prepares the pane showing airline information
+    */
     public void setAirlineInfo(){
         //Changes visible pane;
         mainController.airlineTable.setVisible(false);
@@ -301,36 +358,4 @@ public class EditAirlineViewController {
         }
     }
 
-/* DO NOT DELETE PLEASE!!
-
-*/
-    public void deleteAirline(ActionEvent e){
-        Airline airline = mainController.airlineTable.getSelectionModel().getSelectedItem();
-        //int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airline.getName() + "?", "Delete Airline", JOptionPane.YES_NO_OPTION);
-        //if(jp == YES_OPTION){
-            AirlineDeleter airlineDeleter = new AirlineDeleter();
-            airlineDeleter.deleteSingleAirline(airline, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirlineHashMap(), MainController.getCurrentlyLoadedAirlines());
-        //}
-
-        mainController.airlineTable.setItems(mainController.getCurrentlyLoadedAirlines());
-        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
-        //Call the method here to make sure routes deleted by removal of airline
-        mainController.setAirportsWithoutRoutes(mainController.airportTable);
-        mainController.resetView();
-        mainController.setAirlineComboBoxes();
-        mainController.backToTableView(e);
-
-    }
-
-    public void makeInvisible() {
-        editAirlinePane.setVisible(false);
-    }
-
-    public void makeVisible() {
-        editAirlinePane.setVisible(true);
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
 }

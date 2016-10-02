@@ -88,7 +88,7 @@
     <center>
       <TabPane id="view" fx:id="dataTabs">
          <tabs>
-            <Tab closable="false" text="Data View">
+            <Tab fx:id="dataTab" closable="false" text="Data View">
                <content>
                     <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="450.0" prefHeight="650.0" prefWidth="750.0">
                         <children>
@@ -326,7 +326,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                               </BarChart>
-                              <Button fx:id="analyseAllButton" mnemonicParsing="false" text="Analyse All Data" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                              <Button fx:id="analyseAllButton" mnemonicParsing="false" onAction="#setGraphs" text="Analyse All Data" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                  <GridPane.margin>
                                     <Insets bottom="70.0" left="70.0" />
                                  </GridPane.margin>

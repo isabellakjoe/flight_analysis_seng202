@@ -19,6 +19,7 @@ public class AirlineDatabaseLoader extends AirlineMethod {
      * Function to return an observable list of Airlines which have been loaded from the database
      *
      * @param conn a connection to the database
+     * @param airlineIATAHashMap a hashmap containing airlines based off of a string IATA key
      * @return an observable list of airports
      */
     public ObservableList<Airline> loadAirlines(Connection conn, HashMap<String, Airline> airlineIATAHashMap) {

@@ -66,6 +66,11 @@ public class Database {
         }
     }
 
+    /**
+     *
+     * @param conn an established connection to a database
+     * @return the highest route id integer currently in the database
+     */
     public static int getMaxRouteID(Connection conn) {
         int id = 0;
         try {

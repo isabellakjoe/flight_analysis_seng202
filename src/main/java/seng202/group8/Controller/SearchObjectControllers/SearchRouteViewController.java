@@ -48,32 +48,13 @@ public class SearchRouteViewController {
     @FXML
     private Button routeBackButton;
 
-
-    public void setCodeshareCombobox(ArrayList<String> codeshareStatuses){
-        codeshareSearch.getItems().clear();
-        codeshareSearch.getItems().setAll(codeshareStatuses);
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
-    public void setSourceCombobox(List sortedSources) {
-        sourceSearch.getItems().clear();
-        sourceSearch.getItems().setAll(sortedSources);
-    }
-
-    public void setDestinationCombobox(List sortedDestinations) {
-        destinationSearch.getItems().clear();
-        destinationSearch.getItems().setAll(sortedDestinations);
-    }
-
-    public void setEquipmentCombobox(List sortedEquipment) {
-        equipmentSearch.getItems().clear();
-        equipmentSearch.getItems().setAll(sortedEquipment);
-    }
-
-    public void setStopoverCombobox(List stopsList) {
-        stopoverSearch.getItems().clear();
-        stopoverSearch.getItems().setAll(stopsList);
-    }
-
+    /*
+    Clears all search fields and reset tables from returned results to all records
+     */
     @FXML
     private void resetRouteSearch() {
         /* Clears all search fields*/
@@ -90,15 +71,24 @@ public class SearchRouteViewController {
         mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
     }
 
+    /*
+    Changes view to allow adding a record
+     */
     @FXML
     private void switchToAddRoute(ActionEvent e){
         mainController.switchToAddRoute(e);
+        mainController.switchToDataTab();
     }
+
+    /*
+    Executes a search for a record based on multiple criteria
+     */
     @FXML
     private void routeSearch(ActionEvent e) {
         mainController.resetView();
         mainController.tableView.setVisible(true);
         mainController.routeTable.setVisible(true);
+        mainController.switchToDataTab();
 
 
         RouteSearcher searcher = new RouteSearcher(mainController.getCurrentlyLoadedRoutes());
@@ -179,6 +169,9 @@ public class SearchRouteViewController {
         mainController.routeTable.setItems(matchingRoutes);
     }
 
+    /*
+    Switches to advanced search mode with more fields available
+     */
     @FXML
     private void showRouteSearch(ActionEvent e) {
         routeAdvancedButton.setVisible(false);
@@ -193,6 +186,9 @@ public class SearchRouteViewController {
         routeAddButton.setVisible(false);
     }
 
+    /*
+    Returns to streamlined search
+     */
     @FXML
     private void routeSearchBack() {
         routeAdvancedButton.setVisible(true);
@@ -213,8 +209,44 @@ public class SearchRouteViewController {
         destinationIDSearch.clear();
     }
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+    /*
+    Sets the combo box for searching by codeshare status
+    */
+    public void setCodeshareCombobox(ArrayList<String> codeshareStatuses){
+        codeshareSearch.getItems().clear();
+        codeshareSearch.getItems().setAll(codeshareStatuses);
+    }
+
+    /*
+    Sets the combo box for searching by source airport
+    */
+    public void setSourceCombobox(List sortedSources) {
+        sourceSearch.getItems().clear();
+        sourceSearch.getItems().setAll(sortedSources);
+    }
+
+    /*
+    Sets the combo box for searching by destination airport
+    */
+    public void setDestinationCombobox(List sortedDestinations) {
+        destinationSearch.getItems().clear();
+        destinationSearch.getItems().setAll(sortedDestinations);
+    }
+
+    /*
+    Sets the combo box for searching by equipment
+    */
+    public void setEquipmentCombobox(List sortedEquipment) {
+        equipmentSearch.getItems().clear();
+        equipmentSearch.getItems().setAll(sortedEquipment);
+    }
+
+    /*
+    Sets the combo box for searching by number of stopovers
+    */
+    public void setStopoverCombobox(List stopsList) {
+        stopoverSearch.getItems().clear();
+        stopoverSearch.getItems().setAll(stopsList);
     }
 
 }

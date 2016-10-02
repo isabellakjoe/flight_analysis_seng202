@@ -45,7 +45,7 @@ public class RouteDeleterTest {
 
         currentlyLoadedRoutes = FXCollections.observableArrayList();
         currentlyLoadedRoutes.add(route);
-        routeHashMap = new HashMap<Integer, Route>();
+        routeHashMap = new HashMap<>();
         routeHashMap.put(route.getRouteID(), route);
     }
 

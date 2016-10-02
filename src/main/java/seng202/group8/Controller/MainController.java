@@ -74,7 +74,7 @@ public class MainController implements Initializable {
     public TableView<Route> routeTable;
     @FXML
     public Pane tableView;
-    private Data loadedData = null;
+
     @FXML
     private FlightViewController flightViewController;
     @FXML
@@ -265,11 +265,29 @@ public class MainController implements Initializable {
 
     /** Method to reset the database to a clean state.
      *
-     * @param e
+     * @param e action event from GUI
      */
     public void resetDB(ActionEvent e) {
-        /* Blank */
-        System.out.println("Implement me Callum xox");
+        try {
+            File f = new File("Database.db");
+            f.delete();
+        } catch (Exception f) {
+            System.out.println("Database not deleted correctly");
+        }
+        Database.createDatabase();
+        currentlyLoadedAirlines.removeAll();
+        currentlyLoadedAirports.removeAll();
+        currentlyLoadedRoutes.removeAll();
+        airlineHashMap.clear();
+        airportHashMap.clear();
+        routeHashMap.clear();
+
+        airlineTable.getItems().clear();
+        airportTable.getItems().clear();
+        routeTable.getItems().clear();
+
+        resetTables();
+
     }
 
     /** Method to implement Airport data into the application with error handling
@@ -827,7 +845,7 @@ public class MainController implements Initializable {
     }
 
     /* Clears tables and re-adds currently loaded objects to them*/
-    private void resetTables() {
+    public void resetTables() {
         airportTable.getColumns().clear();
         initAirportTable();
         airportTable.getColumns().addAll(airportID, airportName, city, airportCountry);
@@ -854,22 +872,33 @@ public class MainController implements Initializable {
         tableView.setVisible(true);
     }
 
+    @FXML
+    public Tab dataTab;
+
+    public void switchToDataTab() {
+        SingleSelectionModel<Tab> selectionModel = dataTabs.getSelectionModel();
+        selectionModel.select(dataTab);
+    }
+
     /*Switches to interface for adding an airport*/
     public void switchToAddAirport(ActionEvent e) {
         resetView();
         addAirportViewController.makeVisible();
+        switchToDataTab();
     }
 
     /*Switches to interface for adding an airline*/
     public void switchToAddAirline(ActionEvent e) {
         resetView();
         addAirlineViewController.makeVisible();
+        switchToDataTab();
     }
 
     /*Switches to interface for adding a route*/
     public void switchToAddRoute(ActionEvent e) {
         resetView();
         addRouteViewController.makeVisible();
+        switchToDataTab();
     }
 
     /*Used during initialisation to set this as main controller of all child controllers*/
@@ -975,10 +1004,10 @@ public class MainController implements Initializable {
     @FXML
     public void setGraphs(ActionEvent e){
         graphsStartPane.setVisible(false);
-        addToAirlinesPerCountry();
-        addToAirportsPerCountry();
-        addToEquipmentPerRoute();
-        addToRoutesPerAirport();
+        setAirlinesPerCountry(currentlyLoadedAirlines);
+        setAirportsPerCountry(currentlyLoadedAirports);
+        setEquipmentPerRoute(currentlyLoadedRoutes);
+        setRoutesPerAirportNoNullRoutes(currentlyLoadedAirports);
         graphsPane.setVisible(true);
     }
     /*
@@ -1038,6 +1067,42 @@ public class MainController implements Initializable {
      * @param loadedAirports: ObservableList of Airport Objects
      */
     public void setRoutesPerAirport(ObservableList<Airport> loadedAirports){
+        routesPerAirport.getData().clear();
+        if (!loadedAirports.isEmpty()) {
+            XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
+            ArrayList<String> airportNames = new ArrayList<String>();
+            airportNames.clear();
+
+            /*Collections.sort(loadedAirports, new Comparator<Airport>() {
+                @Override
+                public int compare(Airport o1, Airport o2) {
+                    return o1.getNumRoutes() - o2.getNumRoutes();
+                }
+            }.reversed());*/
+            /*if (routeNum.getValue() > loadedAirports.size()){
+                routeNum.setValue(loadedAirports.size());
+            }*/
+            for (int i = 0; i < loadedAirports.size(); i++) {
+                int routes = loadedAirports.get(i).getNumRoutes();
+                String name = loadedAirports.get(i).getName();
+                int version = 1;
+                for (int j = 0; j < series.getData().size(); j++) {
+                    if (name.equals(series.getData().get(j).getXValue().split(" : ")[0].split("_")[0])) {
+                        version += 1;
+                    }
+                }
+                name = name + "_" + Integer.toString(version);
+                airportNames.add(name + " : " + Integer.toString(routes));
+                series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
+            }
+            routePerAirportAxis.getCategories().clear();
+            /*if (routeNum.getValue() > 0){*/
+            routePerAirportAxis.setCategories(FXCollections.observableArrayList(airportNames));
+            routesPerAirport.getData().add(series);
+        }
+    }
+
+    public void setRoutesPerAirportNoNullRoutes(ObservableList<Airport> loadedAirports){
         routesPerAirport.getData().clear();
         if (!loadedAirports.isEmpty()) {
             XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();

@@ -14,6 +14,12 @@ import java.util.HashMap;
  */
 public class RouteDeleter {
 
+    /**
+     * A method to delete a single route from the database and the GUI
+     * @param route a route object
+     * @param routeHashMap a hashmap of routes
+     * @param currentlyLoadedRoutes a observable list of routes
+     */
     public void deleteSingleRoute(Route route, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes) {
 
         //Remove the route from the airports count of routes
@@ -29,7 +35,7 @@ public class RouteDeleter {
         id.add(route.getRouteID());
 
         //Remove the route from the Observable GUI Array
-        currentlyLoadedRoutes.remove(currentlyLoadedRoutes.indexOf(route));
+        currentlyLoadedRoutes.remove(currentlyLoadedRoutes.lastIndexOf(route));
 
         //Remove the route from the Hashmap
         routeHashMap.remove(route.getRouteID());
@@ -40,6 +46,12 @@ public class RouteDeleter {
 
     }
 
+    /**
+     * A method to delete a list of routes from the database and the GUI
+     * @param routes
+     * @param routeHashMap
+     * @param currentlyLoadedRoutes
+     */
     public void deleteListRoutes(ObservableList<Route> routes, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes) {
 
         //Set up the variables
@@ -49,16 +61,21 @@ public class RouteDeleter {
         //ArrayList of route ids to delete from the database
         ArrayList<Integer> ids = new ArrayList<Integer>();
 
-        System.out.println(routes.size());
-
         if (routes.size() >= 1) {
+
             for (int i = 0; i < routes.size(); i++) {
 
-                ids.add(routes.get(i).getRouteID());
-                //Remove the route from the Observable Array
-                currentlyLoadedRoutes.remove(routes.get(i));
-                //Remove the route from the Hashmap
-                routeHashMap.remove(routes.get(i).getRouteID());
+                deleteSingleRoute(routes.get(i), routeHashMap, currentlyLoadedRoutes);
+
+//                //Update the counts of the routes of each airport
+//                routes.get(i).getSourceAirport().setNumRoutes(routes.get(i).getSourceAirport().getNumRoutes() - 1);
+//                routes.get(i).getDestinationAirport().setNumRoutes(routes.get(i).getDestinationAirport().getNumRoutes() - 1);
+//
+//                ids.add(routes.get(i).getRouteID());
+//                //Remove the route from the Observable Array
+//                currentlyLoadedRoutes.remove(routes.get(i));
+//                //Remove the route from the Hashmap
+//                routeHashMap.remove(routes.get(i).getRouteID());
 
             }
         }

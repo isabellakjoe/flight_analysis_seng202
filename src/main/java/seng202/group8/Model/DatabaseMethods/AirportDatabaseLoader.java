@@ -18,6 +18,7 @@ public class AirportDatabaseLoader extends AirportMethod {
      * Method used to get a list of all the airports currently in the database
      *
      * @param conn a connection to the database
+     * @param airportIATAHashMap a hashmap containing airports with IATA key
      * @return an observable list of all the airports currently in the database
      */
     public ObservableList<Airport> loadAirport(Connection conn, HashMap<String, Airport> airportIATAHashMap) {
