@@ -286,6 +286,7 @@ public class EditRouteViewController {
 //        int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete the\n" +
 //                "route from " + route.getSourceAirportName() + "to "+ route.getDestinationAirportName() + "?", "Delete Route", JOptionPane.YES_NO_OPTION);
 //        if(jp == YES_OPTION){
+
             RouteDeleter routeDeleter = new RouteDeleter();
             routeDeleter.deleteSingleRoute(route, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes());
 //        }
@@ -293,7 +294,6 @@ public class EditRouteViewController {
         mainController.setAirportsWithoutRoutes(mainController.airportTable);
         mainController.resetView();
         mainController.backToTableView(e);
-
     }
 
     public void makeInvisible() {

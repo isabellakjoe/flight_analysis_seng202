@@ -16,6 +16,14 @@ import java.util.HashMap;
  */
 public class AirlineDeleter {
 
+    /**
+     * A method to delete a singular airline from the database and controller correctly updating all values
+     * @param airline a airline object
+     * @param routeHashMap a hashmap of routes
+     * @param currentlyLoadedRoutes a observable list of currently loaded routes
+     * @param airlineHashMap a hashmap of airlines
+     * @param currentlyLoadedAirlines an observable list of currently loaded airlines
+     */
     public void deleteSingleAirline(Airline airline, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes, HashMap<String, Airline> airlineHashMap, ObservableList<Airline> currentlyLoadedAirlines) {
 
         DatabaseSearcher dbs = new DatabaseSearcher();

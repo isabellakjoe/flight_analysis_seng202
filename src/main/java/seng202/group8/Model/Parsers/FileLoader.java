@@ -78,6 +78,8 @@ public class FileLoader {
     /**
      * A method to create an ObservableList of Routes.
      *
+     * @param airlineHashMap a hashmap of airlines with keys as IATA or ICAO values
+     * @param airportHashMap a hashmap of airports with keys as IATA or ICAO values
      * @return The created Routes ObservableList.
      */
     public ObservableList<Route> buildRoutes(HashMap<String, Airline> airlineHashMap, HashMap<String, Airport> airportHashMap) {
@@ -87,7 +89,7 @@ public class FileLoader {
         String currentString;
         Connection conn = Database.connect();
         DatabaseSaver dbSave = new DatabaseSaver();
-        int routeID = dbSave.getCurrentMaxRouteID(conn);
+        int routeID = Database.getMaxRouteID(conn);
         Database.disconnect(conn);
         while (textScanner.hasNextLine()) {
             currentString = textScanner.nextLine();

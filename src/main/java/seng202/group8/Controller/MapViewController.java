@@ -15,7 +15,6 @@ import seng202.group8.Model.Objects.Route;
 import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 

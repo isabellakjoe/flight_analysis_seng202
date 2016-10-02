@@ -264,11 +264,29 @@ public class MainController implements Initializable {
 
     /** Method to reset the database to a clean state.
      *
-     * @param e
+     * @param e action event from GUI
      */
     public void resetDB(ActionEvent e) {
-        /* Blank */
-        System.out.println("Implement me Callum xox");
+        try {
+            File f = new File("Database.db");
+            f.delete();
+        } catch (Exception f) {
+            System.out.println("Database not deleted correctly");
+        }
+        Database.createDatabase();
+        currentlyLoadedAirlines.removeAll();
+        currentlyLoadedAirports.removeAll();
+        currentlyLoadedRoutes.removeAll();
+        airlineHashMap.clear();
+        airportHashMap.clear();
+        routeHashMap.clear();
+
+        airlineTable.getItems().clear();
+        airportTable.getItems().clear();
+        routeTable.getItems().clear();
+
+        resetTables();
+
     }
 
     /** Method to implement Airport data into the application with error handling
