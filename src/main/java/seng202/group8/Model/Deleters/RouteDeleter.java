@@ -1,7 +1,6 @@
 package seng202.group8.Model.Deleters;
 
 import javafx.collections.ObservableList;
-import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Objects.Route;
@@ -36,10 +35,10 @@ public class RouteDeleter {
         id.add(route.getRouteID());
 
         //Remove the route from the Observable GUI Array
-        MainController.getCurrentlyLoadedRoutes().remove(currentlyLoadedRoutes.indexOf(route));
+        currentlyLoadedRoutes.remove(currentlyLoadedRoutes.lastIndexOf(route));
 
         //Remove the route from the Hashmap
-        MainController.getRouteHashMap().remove(route.getRouteID());
+        routeHashMap.remove(route.getRouteID());
 
         //Delete the route from the database
         dbs.deleteRoutes(conn, id);
