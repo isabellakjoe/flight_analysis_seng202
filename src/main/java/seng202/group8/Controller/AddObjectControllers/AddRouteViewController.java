@@ -66,9 +66,10 @@ public class AddRouteViewController {
         addRouteViewPane.setVisible(false);
     }
 
-    /*
-    Clear all airline information fields and return to table view without adding route
-    */
+    /** Clear all airline information fields and return to table view without adding route
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     private void cancelAddedRoute(ActionEvent e) {
         clearRouteErrors();
@@ -83,9 +84,10 @@ public class AddRouteViewController {
 
     }
 
-    /*
-    Read user input to create and save a route
-    */
+    /** Read user input to create and save a route
+     *
+     * @param e The ActionEvent
+     */
     @FXML
     private void saveAddedRoute(ActionEvent e) {
         clearRouteErrors();
@@ -148,10 +150,12 @@ public class AddRouteViewController {
         }
     }
 
-    /*
-    Error check route information fields and return a boolean of whether input is valid.
-    Show error messages for invalid input.
-    */
+    /**  Error check route information fields and return a boolean of whether input is valid.
+     * Show error messages for invalid input.
+     *
+     * @param input: A List of Route data
+     * @return A boolean that is True if there are enough non-empty strings in the input.
+     */
     @FXML
     private boolean addRouteError(List<String> input) {
 
@@ -206,9 +210,8 @@ public class AddRouteViewController {
 
     }
 
-    /*
-    Hide all error messages related to adding a route
-    */
+    /** Hide all error messages related to adding a route
+     */
     @FXML
     private void clearRouteErrors() {
 

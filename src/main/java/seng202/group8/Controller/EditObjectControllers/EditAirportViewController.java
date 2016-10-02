@@ -114,18 +114,20 @@ public class EditAirportViewController {
         editAirportPane.setVisible(false);
     }
 
-    /*
-    Returns to table view
-    */
+    /** Returns to table view
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     public void backToTableView(ActionEvent e){
         makeInvisible();
         mainController.backToTableView(e);
     }
 
-    /*
-    Loads airport information into editable text fields
-    */
+    /** Loads airport information into editable text fields
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     public void editAirportData(ActionEvent e) {
         Airport currentAirport = mainController.airportTable.getSelectionModel().getSelectedItem();
@@ -171,9 +173,10 @@ public class EditAirportViewController {
         editAltitudeField.setText(Double.toString(currentAirport.getAltitude()));
     }
 
-    /*
-    Exits edit view without saving changes
-    */
+    /** Exits edit view without saving changes
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     public void cancelAirportChanges(ActionEvent e) {
         clearEditAirportErrors();
@@ -195,9 +198,11 @@ public class EditAirportViewController {
 
     }
 
-    /*
-    Error checks input and displays necessary error messages
-    */
+    /** Error checks input and displays necessary error messages
+     *
+     * @param input: A List of Aiport data
+     * @return A boolean that is True if there are enough non-empty strings in the input.
+     */
     @FXML
     private boolean editAirportErrors(List<String> input){
         boolean filled = false;
@@ -287,9 +292,8 @@ public class EditAirportViewController {
 
     }
 
-    /*
-    Hides all error messages related to editing an airport
-    */
+    /** Hides all error messages related to editing an airport
+     */
     @FXML
     public void clearEditAirportErrors() {
         editAirportFAAError.setVisible(false);
@@ -306,9 +310,10 @@ public class EditAirportViewController {
 
     }
 
-    /*
-    Reads user input and makes necessary changes to the airport in the database
-    */
+    /** Reads user input and makes necessary changes to the airport in the database
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     public void saveAirportChanges(ActionEvent e) {
         clearEditAirportErrors();
@@ -434,8 +439,9 @@ public class EditAirportViewController {
         }
     }
 
-    /*
-    Deletes selected airport from the database and updates table
+    /** Deletes selected airport from the database and updates table
+     *
+     * @param e: The ActionEvent
      */
     @FXML
     public void deleteAirport(ActionEvent e){
@@ -455,9 +461,8 @@ public class EditAirportViewController {
 
     }
 
-    /*
-    Prepares the pane showing airport information
-    */
+    /** Prepares the pane showing airport information
+     */
     public void setAirportInfo(){
         //Changes visible pane;
         mainController.airportTable.setVisible(false);
