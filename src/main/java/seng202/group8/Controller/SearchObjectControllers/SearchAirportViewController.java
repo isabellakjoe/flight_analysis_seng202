@@ -210,7 +210,7 @@ public class SearchAirportViewController {
                 matchingAirportsWithRoutes.add(matchingAirports.get(i));
             }
         }
-        mainController.clearItineraryTable();
+        mainController.clearItineraryTables();
         mainController.airportTable.setItems(matchingAirports);
         mainController.itineraryAirportTable.setItems(matchingAirportsWithRoutes);
     }

@@ -35,11 +35,10 @@ import seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewContro
 import seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController;
 import seng202.group8.Model.DatabaseMethods.*;
-import seng202.group8.Model.Deleters.AirlineDeleter;
-import seng202.group8.Model.Deleters.AirportDeleter;
-import seng202.group8.Model.Deleters.RouteDeleter;
+import seng202.group8.Model.Deleters.*;
 import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
+import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
 import java.io.*;
@@ -53,11 +52,24 @@ import java.util.*;
 
 public class MainController implements Initializable {
 
-    private boolean isEditingItinerary = false;
 
-    public boolean getIsEditingItinerary(){
-        return isEditingItinerary;
-    }
+    @FXML
+    public GridPane itineraryWelcomePane;
+
+    @FXML
+    public GridPane itineraryAirportPane;
+
+    @FXML
+    public GridPane itineraryRoutePane;
+
+    @FXML
+    public GridPane itineraryReviewPane;
+
+    @FXML
+    public Tab airport;
+
+    @FXML
+    public TabPane search;
 
     private Itinerary currentlyLoadedItinerary;
 
@@ -75,6 +87,16 @@ public class MainController implements Initializable {
         itineraryWelcomePane.setVisible(false);
         itineraryReviewPane.setVisible(false);
         itineraryAirportPane.setVisible(true);
+
+        clearItineraryTables();
+        ObservableList<Airport> matchingAirportsWithRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < currentlyLoadedAirports.size(); i++){
+            if (currentlyLoadedAirports.get(i).getNumRoutes() > 0){
+                matchingAirportsWithRoutes.add(currentlyLoadedAirports.get(i));
+            }
+        }
+        itineraryAirportTable.setItems(matchingAirportsWithRoutes);
+
         SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
         selectionModel.select(airport);
     }
@@ -99,6 +121,8 @@ public class MainController implements Initializable {
         catch(FileNotFoundException ex) {
         }
         catch(IOException ex) {
+        }
+        catch(NullPointerException ex){
         }
     }
 
@@ -131,24 +155,6 @@ public class MainController implements Initializable {
         }
     }
 
-    @FXML
-    public GridPane itineraryWelcomePane;
-
-    @FXML
-    public GridPane itineraryAirportPane;
-
-    @FXML
-    public GridPane itineraryRoutePane;
-
-    @FXML
-    public GridPane itineraryReviewPane;
-
-    @FXML
-    public Tab airport;
-
-    @FXML
-    public TabPane search;
-
     /**
      * Cancels currently selected airport and/or route and returns to itinerary review pane
      * @param e
@@ -167,6 +173,18 @@ public class MainController implements Initializable {
     public void itineraryFindRoutes(ActionEvent e){
         itineraryAirportPane.setVisible(false);
         itineraryRoutePane.setVisible(true);
+        try {
+            Airport sourceAirport = itineraryAirportTable.getSelectionModel().getSelectedItem();
+            RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
+            searcher.routesOfSource(sourceAirport.getName());
+            ObservableList<Route> routes = searcher.getLoadedRoutes();
+            clearItineraryTables();
+            itineraryRouteTable.setItems(routes);
+        }
+        catch (NullPointerException ex){
+            System.out.println("Must select an airport");
+        }
+
     }
 
     /**
@@ -203,6 +221,16 @@ public class MainController implements Initializable {
     public void itineraryAddNextAirport(ActionEvent e){
         itineraryReviewPane.setVisible(false);
         itineraryAirportPane.setVisible(true);
+
+        clearItineraryTables();
+        ObservableList<Airport> matchingAirportsWithRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < currentlyLoadedAirports.size(); i++){
+            if (currentlyLoadedAirports.get(i).getNumRoutes() > 0){
+                matchingAirportsWithRoutes.add(currentlyLoadedAirports.get(i));
+            }
+        }
+        itineraryAirportTable.setItems(matchingAirportsWithRoutes);
+
         SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
         selectionModel.select(airport);
     }
@@ -422,7 +450,6 @@ public class MainController implements Initializable {
     public void showAirports() {
         try {
             airportTable.setItems(currentlyLoadedAirports);
-            itineraryAirportTable.setItems(currentlyLoadedAirports);
             setAirportComboBoxes();
         } catch (NullPointerException np) {
             System.out.println("Error Loading Airports");
@@ -1035,10 +1062,13 @@ public class MainController implements Initializable {
         routeTable.setItems(currentlyLoadedRoutes);
     }
 
-    public void clearItineraryTable(){
+    public void clearItineraryTables(){
         itineraryAirportTable.getColumns().clear();
         initItineraryAirportTable();
         itineraryAirportTable.getColumns().addAll(itineraryAirportName, itineraryCity, itineraryCountry);
+        itineraryRouteTable.getColumns().clear();
+        initItineraryRouteTable();
+        itineraryRouteTable.getColumns().addAll(itineraryAirport, itineraryAirline, itineraryStops);
     }
 
     /* Switches to raw data table viewing interface*/
@@ -1166,20 +1196,22 @@ public class MainController implements Initializable {
     }
 
     /*Set columns of route table*/
-    private void initRouteTable(){
+    private void initRouteTable() {
         routeAirlineName.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
         source.setCellValueFactory(new PropertyValueFactory<Route, String>("sourceAirportName"));
         destination.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
         codeshare.setCellValueFactory(new PropertyValueFactory<Route, String>("codeshareString"));
         stops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
         equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
+    }
 
-        //initialising itinerary table
+    private void initItineraryRouteTable(){
         itineraryAirport.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
         itineraryAirline.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
         itineraryStops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
-        itineraryRouteTable.setItems(currentlyLoadedRoutes);
     }
+
+
 
     public void setGraphCombo() {
         graphCombo.getItems().addAll("Routes per Airport", "Equipment per Routes", "Airline per Country", "Airport per Country");
