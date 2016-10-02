@@ -55,10 +55,20 @@ public class AddRouteViewController {
     @FXML
     private Text addRouteStopsErrorType;
 
+
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
+    public void makeVisible() {addRouteViewPane.setVisible(true);}
+
+    public void makeInvisible() {
+        addRouteViewPane.setVisible(false);
+    }
+
+    /*
+    Clear all airline information fields and return to table view without adding route
+    */
     @FXML
     private void cancelAddedRoute(ActionEvent e) {
         clearRouteErrors();
@@ -73,72 +83,9 @@ public class AddRouteViewController {
 
     }
 
-    @FXML
-    private boolean addRouteError(List<String> input) {
-
-        boolean filled = false;
-        int size = input.size();
-
-
-        int count = 0;
-        for (int i = 0; i < size; i++) {
-            String current = input.get(i);
-
-            if (current == null || current.equals("")) {
-
-                switch (i) {
-                    case 0:
-                        addRouteStopsErrorEmpty.setVisible(true);
-                        break;
-                    case 1:
-                        addRouteEquipErrorEmpty.setVisible(true);
-                        break;
-                    case 2:
-                        addRouteAirlineErrorEmpty.setVisible(true);
-                        break;
-                    case 3:
-                        addRouteSourceErrorEmpty.setVisible(true);
-                        break;
-                    case 4:
-                        addRouteDestErrorEmpty.setVisible(true);
-                        break;
-                }
-            } else {
-                count += 1;
-            }
-
-            if ((i == 0) && !(current.equals(""))) {
-
-                try {
-                    Integer.parseInt(input.get(i));
-                    count += 1;
-
-                } catch (NumberFormatException e) {
-                    addRouteStopsErrorType.setVisible(true);
-                }
-            }
-        }
-
-
-        if (count == 6) {
-            filled = true;
-        }
-        return filled;
-
-    }
-
-    @FXML
-    private void clearRouteErrors() {
-
-        addRouteStopsErrorEmpty.setVisible(false);
-        addRouteEquipErrorEmpty.setVisible(false);
-        addRouteAirlineErrorEmpty.setVisible(false);
-        addRouteSourceErrorEmpty.setVisible(false);
-        addRouteDestErrorEmpty.setVisible(false);
-        addRouteStopsErrorType.setVisible(false);
-
-    }
-
+    /*
+    Read user input to create and save a route
+    */
     @FXML
     private void saveAddedRoute(ActionEvent e) {
         clearRouteErrors();
@@ -201,9 +148,77 @@ public class AddRouteViewController {
         }
     }
 
-    public void makeInvisible() {
-        addRouteViewPane.setVisible(false);
+    /*
+    Error check route information fields and return a boolean of whether input is valid.
+    Show error messages for invalid input.
+    */
+    @FXML
+    private boolean addRouteError(List<String> input) {
+
+        boolean filled = false;
+        int size = input.size();
+
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            String current = input.get(i);
+
+            if (current == null || current.equals("")) {
+
+                switch (i) {
+                    case 0:
+                        addRouteStopsErrorEmpty.setVisible(true);
+                        break;
+                    case 1:
+                        addRouteEquipErrorEmpty.setVisible(true);
+                        break;
+                    case 2:
+                        addRouteAirlineErrorEmpty.setVisible(true);
+                        break;
+                    case 3:
+                        addRouteSourceErrorEmpty.setVisible(true);
+                        break;
+                    case 4:
+                        addRouteDestErrorEmpty.setVisible(true);
+                        break;
+                }
+            } else {
+                count += 1;
+            }
+
+            if ((i == 0) && !(current.equals(""))) {
+
+                try {
+                    Integer.parseInt(input.get(i));
+                    count += 1;
+
+                } catch (NumberFormatException e) {
+                    addRouteStopsErrorType.setVisible(true);
+                }
+            }
+        }
+
+
+        if (count == 6) {
+            filled = true;
+        }
+        return filled;
+
     }
 
-    public void makeVisible() {addRouteViewPane.setVisible(true);}
+    /*
+    Hide all error messages related to adding a route
+    */
+    @FXML
+    private void clearRouteErrors() {
+
+        addRouteStopsErrorEmpty.setVisible(false);
+        addRouteEquipErrorEmpty.setVisible(false);
+        addRouteAirlineErrorEmpty.setVisible(false);
+        addRouteSourceErrorEmpty.setVisible(false);
+        addRouteDestErrorEmpty.setVisible(false);
+        addRouteStopsErrorType.setVisible(false);
+
+    }
+
 }
