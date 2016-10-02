@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class SearchAirlineViewController {
 
+    private MainController mainController;
+
     @FXML
     private Button airlineAddButton;
     @FXML
@@ -44,8 +46,15 @@ public class SearchAirlineViewController {
     private ComboBox airlineCountrySearch;
     @FXML
     private ComboBox airlineActiveSearch;
-    private MainController mainController;
 
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    /*
+    Clears all search fields and reset tables from returned results to all records
+     */
     @FXML
     private void resetAirlineSearch(){
         /* Clears all search fields*/
@@ -61,12 +70,15 @@ public class SearchAirlineViewController {
         mainController.airlineTable.setItems(mainController.getCurrentlyLoadedAirlines());
     }
 
-
+    /*
+    Executes a search for a record based on multiple criteria
+     */
     @FXML
     private void airlineSearch(ActionEvent e) {
         mainController.resetView();
         mainController.tableView.setVisible(true);
         mainController.airlineTable.setVisible(true);
+        mainController.switchToDataTab();
         AirlineSearcher searcher = new AirlineSearcher(mainController.getCurrentlyLoadedAirlines());
 
         String airlineID = airlineIDSearch.getText();
@@ -115,7 +127,9 @@ public class SearchAirlineViewController {
         mainController.airlineTable.setItems(matchingAirlines);
     }
 
-
+    /*
+    Switches to advanced search mode with more fields available
+     */
     @FXML
     private void showAirlineSearch(ActionEvent e) {
         airlineAdvancedButton.setVisible(false);
@@ -128,8 +142,12 @@ public class SearchAirlineViewController {
         airlineSearchButton.setLayoutY(415);
         resetAirlineSearch.setLayoutY(415);
         airlineAddButton.setVisible(false);
+        mainController.switchToDataTab();
     }
 
+    /*
+    Returns to streamlined search
+     */
     @FXML
     private void airlineSearchBack() {
         airlineAdvancedButton.setVisible(true);
@@ -148,26 +166,28 @@ public class SearchAirlineViewController {
         airlineCallsignSearch.clear();
     }
 
+    /*
+    Changes view to allow adding a record
+     */
     @FXML
     private void switchToAddAirline(ActionEvent e) {
         mainController.switchToAddAirline(e);
     }
 
-
-
-
-
+    /*
+    Sets the combo box for searching by active status
+     */
     public void setActiveCombobox(ArrayList<String> activeStatuses) {
         airlineActiveSearch.getItems().clear();
         airlineActiveSearch.getItems().setAll(activeStatuses);
     }
 
+    /*
+    Sets the combo box for searching by active status
+     */
     public void setCountryCombobox(List sortedCountries){
         airlineCountrySearch.getItems().clear();
         airlineCountrySearch.getItems().setAll(sortedCountries);
     }
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
 }

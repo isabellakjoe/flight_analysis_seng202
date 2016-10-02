@@ -15,31 +15,79 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<Tab fx:id="mapViewPane" closable="false" text="Map View" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MapViewController">
+<Tab closable="false" text="Map View" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MapViewControllers.MapViewController">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <children>
                 <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <Pane layoutX="535.0" layoutY="30.0" prefHeight="214.0" prefWidth="148.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                    <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7f7f780" height="214.0" mouseTransparent="true" stroke="#f5f7f8" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE" width="148.0" />
-                        <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Display:">
-                            <font>
-                                <Font size="14.0" />
-                            </font></Text>
-                        <CheckBox fx:id="displayAllAirports" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#mapAirports" text="All Airports" />
-                        <CheckBox fx:id="displayAllRoutes" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" onAction="#mapRoutes" text="All Routes" />
-                        <Text layoutX="14.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Routes using this" />
-                  <Text layoutX="14.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="equipment:" />
-                        <TextField fx:id="equipmentSearchBox" layoutX="14.0" layoutY="122.0" onKeyPressed="#enterEquipmentPressed" prefWidth="125.0" promptText="e.g. 747" />
-                        <Text layoutX="14.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Routes out of an" />
-                  <Text layoutX="14.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport:" />
-                        <TextField fx:id="airportSearchBox" layoutX="12.0" layoutY="181.0" onKeyPressed="#enterAirportPressed" prefWidth="125.0" promptText="e.g. Auckland" />
-                    </children>
-                </Pane>
+            <Pane prefHeight="305.0" prefWidth="148.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7f7f780" height="305.0" mouseTransparent="true" stroke="#f5f7f8" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE" width="148.0" />
+                  <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Display:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <CheckBox fx:id="displayAllAirports" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#mapAirports" text="All Airports">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </CheckBox>
+                  <CheckBox fx:id="displayAllRoutes" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#mapRoutes" text="All Routes">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </CheckBox>
+                  <Text layoutX="14.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Routes using this">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="14.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="equipment:">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="equipmentSearchBox" layoutX="14.0" layoutY="142.0" onKeyPressed="#enterEquipmentPressed" opacity="0.75" prefWidth="120.0" promptText="e.g. 747">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </TextField>
+                  <Text layoutX="14.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Routes out of an">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="14.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport:">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="airportSearchBox" layoutX="14.0" layoutY="201.0" onKeyPressed="#enterAirportPressed" opacity="0.75" prefWidth="120.0" promptText="e.g. Auckland">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="clearAllAirports" layoutX="14.0" layoutY="235.0" mnemonicParsing="false" onAction="#clearAllAirports" opacity="0.75" prefWidth="120.0" text="Clear Airports">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="clearAllRoutes" layoutX="14.0" layoutY="267.0" mnemonicParsing="false" onAction="#clearAllRoutes" opacity="0.75" prefWidth="120.0" text="Clear Routes">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
+                  <CheckBox fx:id="addFlightPath" layoutX="14.0" layoutY="89.0" mnemonicParsing="false" onAction="#displayFlightPath" text="Flight Path">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </CheckBox>
+               </children>
+            </Pane>
             </children>
             <padding>
-                <Insets bottom="15.0" right="15.0" top="15.0" />
+                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </padding>
         </AnchorPane>
     </content>

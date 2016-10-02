@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class EditRouteViewController {
 
+    private MainController mainController;
+
     @FXML
     private Pane editRoutePane;
     @FXML
@@ -64,14 +66,31 @@ public class EditRouteViewController {
     @FXML
     private Text editRouteEquipError;
 
-    private MainController mainController;
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void makeVisible() {
+        editRoutePane.setVisible(true);
+    }
+
+    public void makeInvisible() {
+        editRoutePane.setVisible(false);
+    }
+
+    /*
+    Returns to table view
+     */
     @FXML
     public void backToTableView(ActionEvent e){
         makeInvisible();
         mainController.backToTableView(e);
     }
 
+    /*
+    Loads route information into editable text fields
+     */
     @FXML
     public void editRouteData(ActionEvent e) {
         Route currentRoute = mainController.routeTable.getSelectionModel().getSelectedItem();
@@ -88,8 +107,8 @@ public class EditRouteViewController {
         saveRouteChangesButton.setVisible(true);
         cancelRouteChangesButton.setVisible(true);
 
-        editSourceField.setText(currentRoute.getSourceAirportName());
-        editDestinationField.setText(currentRoute.getDestinationAirportName());
+        editSourceField.setText(currentRoute.getSourceAirport().getIATA());
+        editDestinationField.setText(currentRoute.getDestinationAirport().getIATA());
         editStopsField.setText(Integer.toString(currentRoute.getStops()));
         if (currentRoute.getEquipment() != null) {
             editEquipmentField.setText(currentRoute.getEquipment());
@@ -103,6 +122,9 @@ public class EditRouteViewController {
         }
     }
 
+    /*
+    Exits edit view without saving changes
+     */
     @FXML
     public void cancelRouteChanges(ActionEvent e) {
         clearEditRouteErrors();
@@ -119,6 +141,9 @@ public class EditRouteViewController {
         routeShareDisplay.setVisible(true);
     }
 
+    /*
+    Error checks input and displays necessary error messages
+     */
     @FXML
     private boolean editRouteErrors(List<String> input) {
 
@@ -171,15 +196,20 @@ public class EditRouteViewController {
 
     }
 
+    /*
+    Hides all error messages related to editing a route
+     */
     @FXML
     private void clearEditRouteErrors() {
         editRouteSourceError.setVisible(false);
         editRouteDestError.setVisible(false);
         editRouteStopsError.setVisible(false);
         editRouteEquipError.setVisible(false);
-
     }
 
+    /*
+    Reads user input and makes necessary changes to the route in the database
+     */
     @FXML
     public void saveRouteChanges(ActionEvent e) {
         clearEditRouteErrors();
@@ -268,6 +298,25 @@ public class EditRouteViewController {
         }
     }
 
+    /*
+    Deletes selected route from the database and updates table
+     */
+    @FXML
+    public void deleteRoute(ActionEvent e){
+        Route route = mainController.routeTable.getSelectionModel().getSelectedItems().get(0);
+        RouteDeleter routeDeleter = new RouteDeleter();
+        routeDeleter.deleteSingleRoute(route, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes());
+        System.out.println("Loaded Routes Size: " + Integer.toString(MainController.getCurrentlyLoadedRoutes().size()));
+
+        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
+        mainController.setAirportsWithoutRoutes(mainController.airportTable);
+        mainController.resetTables();
+        mainController.backToTableView(e);
+    }
+
+    /*
+    Prepares the pane showing route information
+     */
     public void setRouteInfo(){
         //Changes visible pane;
         mainController.routeTable.setVisible(false);
@@ -280,33 +329,5 @@ public class EditRouteViewController {
         routeShareDisplay.setText(mainController.routeTable.getSelectionModel().getSelectedItem().getCodeshareString());
         routeStopsDisplay.setText(Integer.toString(mainController.routeTable.getSelectionModel().getSelectedItem().getStops()));
     }
-
-    public void deleteRoute(ActionEvent e){
-        Route route = mainController.routeTable.getSelectionModel().getSelectedItems().get(0);
-//        int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete the\n" +
-//                "route from " + route.getSourceAirportName() + "to "+ route.getDestinationAirportName() + "?", "Delete Route", JOptionPane.YES_NO_OPTION);
-//        if(jp == YES_OPTION){
-            RouteDeleter routeDeleter = new RouteDeleter();
-            routeDeleter.deleteSingleRoute(route, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes());
-//        }
-        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
-        mainController.setAirportsWithoutRoutes(mainController.airportTable);
-        mainController.resetView();
-        mainController.backToTableView(e);
-
-    }
-
-    public void makeInvisible() {
-        editRoutePane.setVisible(false);
-    }
-
-    public void makeVisible() {
-        editRoutePane.setVisible(true);
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
 
 }

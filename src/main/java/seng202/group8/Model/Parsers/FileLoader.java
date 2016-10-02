@@ -34,7 +34,7 @@ public class FileLoader {
     }
 
     /**
-     * A method to create an ObservableList of Airports.
+     * A method to ToJSONArray an ObservableList of Airports.
      *
      * @return The created Airport ObservableList.
      */
@@ -55,7 +55,7 @@ public class FileLoader {
     }
 
     /**
-     * A method to create an ObservableList of Airlines.
+     * A method to ToJSONArray an ObservableList of Airlines.
      *
      * @return The created Airline ObservableList.
      */
@@ -76,8 +76,10 @@ public class FileLoader {
     }
 
     /**
-     * A method to create an ObservableList of Routes.
+     * A method to ToJSONArray an ObservableList of Routes.
      *
+     * @param airlineHashMap a hashmap of airlines with keys as IATA or ICAO values
+     * @param airportHashMap a hashmap of airports with keys as IATA or ICAO values
      * @return The created Routes ObservableList.
      */
     public ObservableList<Route> buildRoutes(HashMap<String, Airline> airlineHashMap, HashMap<String, Airport> airportHashMap) {
@@ -87,7 +89,7 @@ public class FileLoader {
         String currentString;
         Connection conn = Database.connect();
         DatabaseSaver dbSave = new DatabaseSaver();
-        int routeID = dbSave.getCurrentMaxRouteID(conn);
+        int routeID = Database.getMaxRouteID(conn);
         Database.disconnect(conn);
         while (textScanner.hasNextLine()) {
             currentString = textScanner.nextLine();
@@ -101,7 +103,7 @@ public class FileLoader {
     }
 
     /**
-     * Method to create a Flight object.
+     * Method to ToJSONArray a Flight object.
      *
      * @return The Flight Object.
      */

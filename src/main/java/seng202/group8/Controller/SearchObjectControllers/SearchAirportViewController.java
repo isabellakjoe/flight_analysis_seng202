@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class SearchAirportViewController {
 
+    private MainController mainController;
     @FXML
     private Button airportAddButton;
     @FXML
@@ -53,13 +54,13 @@ public class SearchAirportViewController {
     private TextField airportDSTSearch;
 
 
-    private MainController mainController;
-
-    public void setCountryCombobox(List sortedCountries){
-        airportCountrySearch.getItems().clear();
-        airportCountrySearch.getItems().setAll(sortedCountries);
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
+    /*
+    Clears all search fields and reset tables from returned results to all records
+     */
     @FXML
     private void resetAirportSearch(){
         /* Clears all search fields*/
@@ -79,6 +80,9 @@ public class SearchAirportViewController {
         mainController.airportTable.setItems(mainController.getCurrentlyLoadedAirports());
     }
 
+    /*
+    Returns to streamlined search
+     */
     @FXML
     private void airportSearchBack() {
         airportAdvancedButton.setVisible(true);
@@ -107,6 +111,9 @@ public class SearchAirportViewController {
         airportDSTSearch.clear();
     }
 
+    /*
+    Switches to advanced search mode with more fields available
+     */
     @FXML
     private void showAirportSearch(ActionEvent e) {
         airportAdvancedButton.setVisible(false);
@@ -126,8 +133,12 @@ public class SearchAirportViewController {
         airportAddButton.setVisible(false);
     }
 
+    /*
+    Executes a search for a record based on multiple criteria
+     */
     @FXML
     private void airportSearch(ActionEvent e) {
+        mainController.switchToDataTab();
         mainController.backToTableView(e);
         AirportSearcher searcher = new AirportSearcher(mainController.getCurrentlyLoadedAirports());
         String airportID = airportIDSearch.getText();
@@ -195,11 +206,21 @@ public class SearchAirportViewController {
         mainController.airportTable.setItems(matchingAirports);
     }
 
+    /*
+    Changes view to allow adding a record
+     */
     @FXML
     private void switchToAddAirport(ActionEvent e) {
         mainController.switchToAddAirport(e);
+        mainController.switchToDataTab();
     }
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+
+    /*
+    Sets the combo box for searching by country
+    */
+    public void setCountryCombobox(List sortedCountries){
+        airportCountrySearch.getItems().clear();
+        airportCountrySearch.getItems().setAll(sortedCountries);
     }
+
 }

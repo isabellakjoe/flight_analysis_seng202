@@ -25,7 +25,6 @@ AddAirportViewController {
 
     private MainController mainController;
 
-
     @FXML
     private Text addAirportIDErrorEmpty;
     @FXML
@@ -64,7 +63,6 @@ AddAirportViewController {
     private Text addAirportTimeErrorType;
     @FXML
     private Text addAirportDSTErrorType;
-
     @FXML
     private Pane addAirportViewPane;
     @FXML
@@ -93,7 +91,21 @@ AddAirportViewController {
     private TextField addedAirportOlsen;
 
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
+    public void makeVisible() {
+        addAirportViewPane.setVisible(true);
+    }
+
+    public void makeInvisible() {
+        addAirportViewPane.setVisible(false);
+    }
+
+    /*
+    Clear all airport information fields and return to table view without adding airport
+    */
     @FXML
     private void cancelAddedAirport(ActionEvent e) {
         clearAirportErrors();
@@ -113,6 +125,9 @@ AddAirportViewController {
         addedAirportOlsen.clear();
     }
 
+    /*
+    Read user input to create and save an airport
+     */
     @FXML
     private void saveAddedAirport(ActionEvent e) {
         clearAirportErrors();
@@ -159,30 +174,10 @@ AddAirportViewController {
         }
     }
 
-    @FXML
-    public void clearAirportErrors() {
-        addAirportIDErrorEmpty.setVisible(false);
-        addAirportNameErrorEmpty.setVisible(false);
-        addAirportCityErrorEmpty.setVisible(false);
-        addAirportCountryErrorEmpty.setVisible(false);
-        addAirportCodeErrorEmpty.setVisible(false);
-        addAirportICAOErrorEmpty.setVisible(false);
-        addAirportLatErrorEmpty.setVisible(false);
-        addAirportLongErrorEmpty.setVisible(false);
-        addAirportAltErrorEmpty.setVisible(false);
-        addAirportTimeErrorEmpty.setVisible(false);
-        addAirportDSTErrorEmpty.setVisible(false);
-        addAirportOlsenErrorEmpty.setVisible(false);
-
-        addAirportIDErrorType.setVisible(false);
-        addAirportCodeErrorType.setVisible(false);
-        addAirportAltErrorType.setVisible(false);
-        addAirportTimeErrorType.setVisible(false);
-        addAirportDSTErrorType.setVisible(false);
-        addAirportLatErrorType.setVisible(false);
-        addAirportLongErrorType.setVisible(false);
-    }
-
+    /*
+    Error check airport information fields and return a boolean of whether input is valid.
+    Show error messages for invalid input.
+    */
     @FXML
     public boolean addAirportError(List<String> input) {
 
@@ -279,26 +274,38 @@ AddAirportViewController {
             if(i == 4 && (current.length() < 3 || current.length() > 4) && !(current.equals(""))){
                 addAirportCodeErrorType.setVisible(true);
             }
-
         }
 
         if (count == 17) {
             filled = true;
         }
         return filled;
-
     }
 
+    /*
+    Hide all error messages related to adding an airport
+    */
+    @FXML
+    public void clearAirportErrors() {
+        addAirportIDErrorEmpty.setVisible(false);
+        addAirportNameErrorEmpty.setVisible(false);
+        addAirportCityErrorEmpty.setVisible(false);
+        addAirportCountryErrorEmpty.setVisible(false);
+        addAirportCodeErrorEmpty.setVisible(false);
+        addAirportICAOErrorEmpty.setVisible(false);
+        addAirportLatErrorEmpty.setVisible(false);
+        addAirportLongErrorEmpty.setVisible(false);
+        addAirportAltErrorEmpty.setVisible(false);
+        addAirportTimeErrorEmpty.setVisible(false);
+        addAirportDSTErrorEmpty.setVisible(false);
+        addAirportOlsenErrorEmpty.setVisible(false);
 
-    public void makeInvisible() {
-        addAirportViewPane.setVisible(false);
-    }
-
-    public void makeVisible() {
-        addAirportViewPane.setVisible(true);
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+        addAirportIDErrorType.setVisible(false);
+        addAirportCodeErrorType.setVisible(false);
+        addAirportAltErrorType.setVisible(false);
+        addAirportTimeErrorType.setVisible(false);
+        addAirportDSTErrorType.setVisible(false);
+        addAirportLatErrorType.setVisible(false);
+        addAirportLongErrorType.setVisible(false);
     }
 }

@@ -6,7 +6,6 @@ import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -24,26 +23,6 @@ public class DatabaseSaver {
             return airport.getIATA();
         }
 
-    }
-
-    public int getCurrentMaxRouteID(Connection conn) {
-        int max = -1;
-        try {
-            Statement stmt = conn.createStatement();
-            String sql = "select max(routeid) from route;";
-            ResultSet result = stmt.executeQuery(sql);
-            while (result.next()) {
-                max = result.getInt(0);
-            }
-        } catch (SQLException e) {
-            max = 1;
-        }
-
-        if (max < 0) {
-            max = 1;
-        }
-
-        return max;
     }
 
     private String convertIntToString(int toConvert) {
@@ -68,7 +47,7 @@ public class DatabaseSaver {
     }
 
     private String createAirportStatement(Airport airportToSave) {
-        // A method used to create an sql statement used to insert an airport into the database.
+        // A method used to ToJSONArray an sql statement used to insert an airport into the database.
         int id = airportToSave.getAirportID();
         String stringID = convertIntToString(id);
         String name = airportToSave.getName();
@@ -96,7 +75,7 @@ public class DatabaseSaver {
     }
 
     private String createAirlineStatement(Airline airlineToSave) {
-        //A method used to create an sql statement used to insert an airline into the database.
+        //A method used to ToJSONArray an sql statement used to insert an airline into the database.
         int id = airlineToSave.getAirlineID();
         String stringID = convertIntToString(id);
         String name = airlineToSave.getName();
@@ -120,7 +99,7 @@ public class DatabaseSaver {
         String statement;
 
         if (routeToSave.getAirline() != null && routeToSave.getSourceAirport() != null && routeToSave.getDestinationAirport() != null) {
-            //A method used to create an sql statement used to insert an route into the database.
+            //A method used to ToJSONArray an sql statement used to insert an route into the database.
             //Get the route's unique ID
             int id = routeToSave.getRouteID();
             String stringID = convertIntToString(id);
@@ -225,7 +204,7 @@ public class DatabaseSaver {
     }
 
     /**
-     * A method which takes an sql query and executes an update to the database to add Route objects
+     * A method which is used to save all of the routes in a observable list
      *
      * @param conn      a static connection to a database
      * @param routeList an observable list of routes
@@ -238,6 +217,12 @@ public class DatabaseSaver {
 
     }
 
+    /**
+     * A method which is used to save a single route to the database
+     *
+     * @param conn a static connection to the database
+     * @param route a route object to be saved to the database
+     */
     public void saveSingleRoute(Connection conn, Route route) {
 
         try {

@@ -24,6 +24,8 @@ import java.util.List;
  */
 public class EditAirportViewController {
 
+    private MainController mainController;
+
     @FXML
     private Pane editAirportPane;
     @FXML
@@ -100,14 +102,30 @@ public class EditAirportViewController {
     private Text editAirportAltError;
 
 
-    private MainController mainController;
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
+    public void makeVisible() {
+        editAirportPane.setVisible(true);
+    }
+
+    public void makeInvisible() {
+        editAirportPane.setVisible(false);
+    }
+
+    /*
+    Returns to table view
+    */
     @FXML
     public void backToTableView(ActionEvent e){
         makeInvisible();
         mainController.backToTableView(e);
     }
 
+    /*
+    Loads airport information into editable text fields
+    */
     @FXML
     public void editAirportData(ActionEvent e) {
         Airport currentAirport = mainController.airportTable.getSelectionModel().getSelectedItem();
@@ -153,6 +171,9 @@ public class EditAirportViewController {
         editAltitudeField.setText(Double.toString(currentAirport.getAltitude()));
     }
 
+    /*
+    Exits edit view without saving changes
+    */
     @FXML
     public void cancelAirportChanges(ActionEvent e) {
         clearEditAirportErrors();
@@ -174,21 +195,9 @@ public class EditAirportViewController {
 
     }
 
-    @FXML
-    public void clearEditAirportErrors() {
-        editAirportFAAError.setVisible(false);
-        editAirportIATAError.setVisible(false);
-        editAirportICAOError.setVisible(false);
-        editAirportTimeError.setVisible(false);
-        editAirportDSTError.setVisible(false);
-        editAirportCountryError.setVisible(false);
-        editAirportCityError.setVisible(false);
-        editAirportLongError.setVisible(false);
-        editAirportLatError.setVisible(false);
-        editAirportAltError.setVisible(false);
-
-
-    }
+    /*
+    Error checks input and displays necessary error messages
+    */
     @FXML
     private boolean editAirportErrors(List<String> input){
         boolean filled = false;
@@ -278,6 +287,28 @@ public class EditAirportViewController {
 
     }
 
+    /*
+    Hides all error messages related to editing an airport
+    */
+    @FXML
+    public void clearEditAirportErrors() {
+        editAirportFAAError.setVisible(false);
+        editAirportIATAError.setVisible(false);
+        editAirportICAOError.setVisible(false);
+        editAirportTimeError.setVisible(false);
+        editAirportDSTError.setVisible(false);
+        editAirportCountryError.setVisible(false);
+        editAirportCityError.setVisible(false);
+        editAirportLongError.setVisible(false);
+        editAirportLatError.setVisible(false);
+        editAirportAltError.setVisible(false);
+
+
+    }
+
+    /*
+    Reads user input and makes necessary changes to the airport in the database
+    */
     @FXML
     public void saveAirportChanges(ActionEvent e) {
         clearEditAirportErrors();
@@ -403,8 +434,30 @@ public class EditAirportViewController {
         }
     }
 
+    /*
+    Deletes selected airport from the database and updates table
+     */
+    @FXML
+    public void deleteAirport(ActionEvent e){
+        Airport airport = mainController.airportTable.getSelectionModel().getSelectedItems().get(0);
+        //int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airport.getName() + "?", "Delete Airport", JOptionPane.YES_NO_OPTION);
+        //if(jp == YES_OPTION){
+        AirportDeleter airportDeleter = new AirportDeleter();
+        airportDeleter.deleteSingleAirport(airport, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirportHashMap(), MainController.getCurrentlyLoadedAirports());
+        //}
 
+        mainController.airportTable.setItems(mainController.getCurrentlyLoadedAirports());
+        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
+        mainController.setAirportsWithoutRoutes(mainController.airportTable);
+        mainController.setAirportComboBoxes();
+        mainController.resetTables();
+        mainController.backToTableView(e);
 
+    }
+
+    /*
+    Prepares the pane showing airport information
+    */
     public void setAirportInfo(){
         //Changes visible pane;
         mainController.airportTable.setVisible(false);
@@ -422,35 +475,6 @@ public class EditAirportViewController {
         airportLatitudeDisplay.setText(Double.toString(mainController.airportTable.getSelectionModel().getSelectedItem().getLatitude()));
         airportLongitudeDisplay.setText(Double.toString(mainController.airportTable.getSelectionModel().getSelectedItem().getLongitude()));
         airportAltitudeDisplay.setText(Double.toString(mainController.airportTable.getSelectionModel().getSelectedItem().getAltitude()));
-    }
-
-
-    public void deleteAirport(ActionEvent e){
-        Airport airport = mainController.airportTable.getSelectionModel().getSelectedItems().get(0);
-        //int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airport.getName() + "?", "Delete Airport", JOptionPane.YES_NO_OPTION);
-        //if(jp == YES_OPTION){
-            AirportDeleter airportDeleter = new AirportDeleter();
-            airportDeleter.deleteSingleAirport(airport, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirportHashMap(), MainController.getCurrentlyLoadedAirports());
-        //}
-
-        mainController.airportTable.setItems(mainController.getCurrentlyLoadedAirports());
-        mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
-        mainController.setAirportsWithoutRoutes(mainController.airportTable);
-        mainController.setAirportComboBoxes();
-        mainController.resetView();
-        mainController.backToTableView(e);
-
-    }
-    public void makeInvisible() {
-        editAirportPane.setVisible(false);
-    }
-
-    public void makeVisible() {
-        editAirportPane.setVisible(true);
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 
 }

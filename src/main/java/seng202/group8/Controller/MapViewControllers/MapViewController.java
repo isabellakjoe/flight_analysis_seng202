@@ -1,4 +1,4 @@
-package seng202.group8.Controller;
+package seng202.group8.Controller.MapViewControllers;
 
 
 import javafx.collections.ObservableList;
@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -15,8 +16,11 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import seng202.group8.Controller.MainController;
 import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Flight;
 import seng202.group8.Model.Objects.Route;
+import seng202.group8.Model.Objects.Waypoint;
 import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
@@ -28,14 +32,18 @@ import java.util.List;
 /**
  * Created by esa46 on 15/09/16.
  */
-public class MapViewController {
+public class MapViewController extends Component {
 
     private MainController mainController;
     private WebEngine webEngine;
     @FXML
+    public TabPane mapViewPane;
+    @FXML
     private CheckBox displayAllAirports;
     @FXML
     private CheckBox displayAllRoutes;
+    @FXML
+    private CheckBox addFlightPath;
     @FXML
     private TextField equipmentSearchBox;
     @FXML
@@ -158,6 +166,13 @@ public class MapViewController {
             jp.setSize(600, 600);
             jp.showMessageDialog(null, "No Routes to display.", "Error Message", JOptionPane.INFORMATION_MESSAGE);
             displayAllRoutes.setSelected(false);
+//            int result = jp.showOptionDialog(this, "No Routes to display. \nAdd Route Data?", "Error Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Add", "Cancel" }, JOptionPane.NO_OPTION);
+//            if (result == JOptionPane.YES_OPTION) {
+//                mainController.addRouteData(new ActionEvent());
+//                createMapRoutes(routes);
+//            } else {
+//                displayAllRoutes.setSelected(false);
+//            }
         } else {
             JOptionPane jp = new JOptionPane();
             jp.setSize(600, 600);
@@ -204,7 +219,7 @@ public class MapViewController {
         return coords;
     }
 
-    // Remove currently displayed airport markers
+    // Remove currently displayed paths
     private void clearRoutes() {
         webEngine.executeScript("clearRoutes()");
     }
@@ -231,7 +246,9 @@ public class MapViewController {
 
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
         List routes = matchingRoutes;
-
+        clearRoutes();
+        airportSearchBox.setText(null);
+        displayAllRoutes.setSelected(false);
         displayRoutes(routes);
 
     }
@@ -256,8 +273,72 @@ public class MapViewController {
 
         ObservableList<Route> matchingRoutes = searcher.getLoadedRoutes();
         List routes = matchingRoutes;
+        clearRoutes();
+        equipmentSearchBox.setText(null);
+        displayAllRoutes.setSelected(false);
         displayRoutes(routes);
 
+    }
+
+    @FXML
+    private void clearAllAirports(ActionEvent e) {
+        clearAirports();
+        displayAllAirports.setSelected(false);
+    }
+
+    @FXML
+    private void clearAllRoutes(ActionEvent e) {
+        clearRoutes();
+        displayAllRoutes.setSelected(false);
+        equipmentSearchBox.setText(null);
+        airportSearchBox.setText(null);
+    }
+
+
+    @FXML
+    private void displayFlightPath(ActionEvent e) {
+        if (addFlightPath.isSelected()) {
+            displayFlight();
+        } else {
+            clearFlight();
+        }
+
+    }
+
+    private void displayFlight() {
+        List<Waypoint> waypoints = Flight.getWaypoints();
+        if (waypoints.size() < 1000 && waypoints.size() != 0) {
+            createFlightPath();
+        } else if (waypoints.isEmpty()) {
+            JOptionPane jp = new JOptionPane();
+            jp.setSize(600, 600);
+            int result = jp.showOptionDialog(this, "No Flight Path to display. \nAdd Flight Data?", "Error Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Add", "Cancel" }, JOptionPane.NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                mainController.addFlightData(new ActionEvent());
+            }
+            addFlightPath.setSelected(false);
+        } else {
+            JOptionPane jp = new JOptionPane();
+            jp.setSize(600, 600);
+            JLabel msgLabel = new JLabel("Are you sure you want to display a Flight Path with " +  waypoints.size() + " stops? \nThis may take a while...", JLabel.CENTER);
+            int reply = jp.showConfirmDialog(null, msgLabel, "Error Message", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                createFlightPath();
+            } else {
+                addFlightPath.setSelected(false);
+            }
+        }
+    }
+
+
+    private void createFlightPath() {
+        String scriptToExecute = "displayFlight(" + ToJSONArray.toJSONFlightPath() + ");";
+        webEngine.executeScript(scriptToExecute);
+    }
+
+    private void clearFlight() {
+        String scriptToExecute = "clearFlightPaths();";
+        webEngine.executeScript(scriptToExecute);
     }
 
 
