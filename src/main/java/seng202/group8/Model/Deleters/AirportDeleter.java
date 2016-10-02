@@ -1,6 +1,8 @@
 package seng202.group8.Model.Deleters;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.DatabaseMethods.DatabaseSearcher;
@@ -35,8 +37,13 @@ public class AirportDeleter {
         //Get all routes associated with this airport
         String sql = dbs.buildRouteSearch("sourceid", Integer.toString(airport.getAirportID()));
         sql = dbs.addAdditionalLikeOption(sql, "route", "destinationid", Integer.toString(airport.getAirportID()));
-        ObservableList<Route> routesToDelete = dbs.searchRouteByOption(connSearch, sql);
+        ObservableList<Route> routesFromDatabase = dbs.searchRouteByOption(connSearch, sql);
         Database.disconnect(connSearch);
+        ObservableList<Route> routesToDelete = FXCollections.observableArrayList();
+
+        for (int i = 0; i < routesFromDatabase.size(); i++) {
+            routesToDelete.add(MainController.getRouteHashMap().get(routesFromDatabase.get(i).getRouteID()));
+        }
 
         //Delete the routes from the app
         RouteDeleter rd = new RouteDeleter();
@@ -47,7 +54,7 @@ public class AirportDeleter {
         id.add(airport.getAirportID());
 
         //Remove the airport from the current observable list of integers
-        currentlyLoadedAirports.remove(currentlyLoadedAirports.indexOf(airport));
+        currentlyLoadedAirports.remove(currentlyLoadedAirports);
 
         //Remove the airport from the current hashmap
         if (airport.getCountry().equals("United States")) {

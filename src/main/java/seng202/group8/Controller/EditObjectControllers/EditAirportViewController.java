@@ -437,7 +437,7 @@ public class EditAirportViewController {
         mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
         mainController.setAirportsWithoutRoutes(mainController.airportTable);
         mainController.setAirportComboBoxes();
-        mainController.resetView();
+        mainController.resetTables();
         mainController.backToTableView(e);
 
     }

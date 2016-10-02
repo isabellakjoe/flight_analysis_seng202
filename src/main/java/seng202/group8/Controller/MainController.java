@@ -844,7 +844,7 @@ public class MainController implements Initializable {
     }
 
     /* Clears tables and re-adds currently loaded objects to them*/
-    private void resetTables() {
+    public void resetTables() {
         airportTable.getColumns().clear();
         initAirportTable();
         airportTable.getColumns().addAll(airportID, airportName, city, airportCountry);

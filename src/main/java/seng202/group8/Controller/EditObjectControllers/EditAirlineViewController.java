@@ -312,14 +312,11 @@ public class EditAirlineViewController {
             airlineDeleter.deleteSingleAirline(airline, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes(), MainController.getAirlineHashMap(), MainController.getCurrentlyLoadedAirlines());
         //}
 
-        System.out.println("Deleted Airline + Route");
-        System.out.println(MainController.getCurrentlyLoadedRoutes().size());
-
         mainController.airlineTable.setItems(mainController.getCurrentlyLoadedAirlines());
         mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
         //Call the method here to make sure routes deleted by removal of airline
         mainController.setAirportsWithoutRoutes(mainController.airportTable);
-        mainController.resetView();
+        mainController.resetTables();
         mainController.setAirlineComboBoxes();
         mainController.backToTableView(e);
 

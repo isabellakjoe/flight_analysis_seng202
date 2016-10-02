@@ -290,9 +290,12 @@ public class EditRouteViewController {
             RouteDeleter routeDeleter = new RouteDeleter();
             routeDeleter.deleteSingleRoute(route, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes());
 //        }
+
+        System.out.println("Loaded Routes Size: " + Integer.toString(MainController.getCurrentlyLoadedRoutes().size()));
+
         mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
         mainController.setAirportsWithoutRoutes(mainController.airportTable);
-        mainController.resetView();
+        mainController.resetTables();
         mainController.backToTableView(e);
     }
 

@@ -1,6 +1,7 @@
 package seng202.group8.Model.Deleters;
 
 import javafx.collections.ObservableList;
+import seng202.group8.Controller.MainController;
 import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Objects.Route;
@@ -35,10 +36,10 @@ public class RouteDeleter {
         id.add(route.getRouteID());
 
         //Remove the route from the Observable GUI Array
-        currentlyLoadedRoutes.remove(currentlyLoadedRoutes.indexOf(route));
+        MainController.getCurrentlyLoadedRoutes().remove(currentlyLoadedRoutes.indexOf(route));
 
         //Remove the route from the Hashmap
-        routeHashMap.remove(route.getRouteID());
+        MainController.getRouteHashMap().remove(route.getRouteID());
 
         //Delete the route from the database
         dbs.deleteRoutes(conn, id);
@@ -65,15 +66,17 @@ public class RouteDeleter {
 
             for (int i = 0; i < routes.size(); i++) {
 
-                //Update the counts of the routes of each airport
-                routes.get(i).getSourceAirport().setNumRoutes(routes.get(i).getSourceAirport().getNumRoutes() - 1);
-                routes.get(i).getDestinationAirport().setNumRoutes(routes.get(i).getDestinationAirport().getNumRoutes() - 1);
+                deleteSingleRoute(routes.get(i), routeHashMap, currentlyLoadedRoutes);
 
-                ids.add(routes.get(i).getRouteID());
-                //Remove the route from the Observable Array
-                currentlyLoadedRoutes.remove(routes.get(i));
-                //Remove the route from the Hashmap
-                routeHashMap.remove(routes.get(i).getRouteID());
+//                //Update the counts of the routes of each airport
+//                routes.get(i).getSourceAirport().setNumRoutes(routes.get(i).getSourceAirport().getNumRoutes() - 1);
+//                routes.get(i).getDestinationAirport().setNumRoutes(routes.get(i).getDestinationAirport().getNumRoutes() - 1);
+//
+//                ids.add(routes.get(i).getRouteID());
+//                //Remove the route from the Observable Array
+//                currentlyLoadedRoutes.remove(routes.get(i));
+//                //Remove the route from the Hashmap
+//                routeHashMap.remove(routes.get(i).getRouteID());
 
             }
         }
