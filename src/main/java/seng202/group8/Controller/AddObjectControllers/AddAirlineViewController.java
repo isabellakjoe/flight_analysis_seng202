@@ -67,8 +67,9 @@ public class AddAirlineViewController {
         addAirlineViewPane.setVisible(false);
     }
 
-    /*
-    Clear all airline information fields and return to table view without adding airline
+    /** Clear all airline information fields and return to table view without adding airline
+     *
+     * @param e: The ActionEvent
      */
     @FXML
     private void cancelAddedAirline(ActionEvent e) {
@@ -85,8 +86,9 @@ public class AddAirlineViewController {
         addedAirlineActive.setSelected(false);
     }
 
-    /*
-    Read user input to create and save an airline
+    /** Read user input to create and save an airline
+     *
+     * @param e: The ActionEvent
      */
     @FXML
     private void saveAddedAirline(ActionEvent e) {
@@ -134,10 +136,12 @@ public class AddAirlineViewController {
         }
     }
 
-    /*
-    Error check airline information fields and return a boolean of whether input is valid.
-    Show error messages for invalid input.
-    */
+    /** Error check airline information fields and return a boolean of whether input is valid.
+     *  Show error messages for invalid input.
+     *
+     * @param input: A list of Strings
+     * @return: A boolean that is True if there are enough non-empty strings in the input.
+     */
     @FXML
     private boolean addAirlineError(List<String> input) {
 
@@ -182,8 +186,7 @@ public class AddAirlineViewController {
         return filled;
     }
 
-    /*
-    Hide all error messages related to adding an airline
+    /** Hide all error messages related to adding an airline
      */
     @FXML
     private void clearAirlineErrors() {

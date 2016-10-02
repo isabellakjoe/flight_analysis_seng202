@@ -79,8 +79,9 @@ public class EditRouteViewController {
         editRoutePane.setVisible(false);
     }
 
-    /*
-    Returns to table view
+    /** Returns to table view
+     *
+     * @param e: The ActionEvent
      */
     @FXML
     public void backToTableView(ActionEvent e){
@@ -88,8 +89,9 @@ public class EditRouteViewController {
         mainController.backToTableView(e);
     }
 
-    /*
-    Loads route information into editable text fields
+    /** Loads route information into editable text fields
+     *
+     * @param e The AvtionEvent
      */
     @FXML
     public void editRouteData(ActionEvent e) {
@@ -122,8 +124,9 @@ public class EditRouteViewController {
         }
     }
 
-    /*
-    Exits edit view without saving changes
+    /** Exits edit view without saving changes
+     *
+     * @param e: The ActionEvent
      */
     @FXML
     public void cancelRouteChanges(ActionEvent e) {
@@ -141,8 +144,10 @@ public class EditRouteViewController {
         routeShareDisplay.setVisible(true);
     }
 
-    /*
-    Error checks input and displays necessary error messages
+    /** Error checks input and displays necessary error messages
+     *
+     * @param input: A List of Route data
+     * @return A boolean that is True if there are enough non-empty strings in the input.
      */
     @FXML
     private boolean editRouteErrors(List<String> input) {
@@ -196,8 +201,7 @@ public class EditRouteViewController {
 
     }
 
-    /*
-    Hides all error messages related to editing a route
+    /** Hides all error messages related to editing a route
      */
     @FXML
     private void clearEditRouteErrors() {
@@ -207,8 +211,9 @@ public class EditRouteViewController {
         editRouteEquipError.setVisible(false);
     }
 
-    /*
-    Reads user input and makes necessary changes to the route in the database
+    /** Reads user input and makes necessary changes to the route in the database
+     *
+     * @param e: The ActionEvent
      */
     @FXML
     public void saveRouteChanges(ActionEvent e) {
