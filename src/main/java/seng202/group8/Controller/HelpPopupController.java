@@ -43,12 +43,21 @@ public class HelpPopupController {
     @FXML
     public Button helpPopupOKButton;
 
+    /** method to close the popup window
+     *
+     * @param e: The ActionEvent
+     */
     @FXML
     public void closePopup(ActionEvent e){
         Stage stage = (Stage) helpPopupOKButton.getScene().getWindow();
         stage.close();
     }
 
+    /** Method to setup and display the popup window
+     *
+     * @param stage: The stage of the popup window
+     * @param type: A string representing the selected popup type
+     */
     public void setUp(Stage stage, String type){
         if (type.equals("add")) {
             stage.setTitle("How to Add Data");

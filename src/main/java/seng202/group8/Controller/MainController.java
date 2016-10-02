@@ -53,16 +53,35 @@ import java.util.*;
 
 public class MainController implements Initializable {
 
+    private boolean isEditingItinerary = false;
 
+    public boolean getIsEditingItinerary(){
+        return isEditingItinerary;
+    }
 
+    private Itinerary currentlyLoadedItinerary;
+
+    /**
+     * Prompts user to save a new itinerary file
+     * @param e
+     */
     @FXML
     public void createItinerary(ActionEvent e){
         Itinerary itinerary = new Itinerary();
+        currentlyLoadedItinerary = itinerary;
+        currentlyLoadedItinerary.addToRoutes(currentlyLoadedRoutes.get(0));
         saveItinerary(e);
+
         itineraryWelcomePane.setVisible(false);
         itineraryReviewPane.setVisible(false);
         itineraryAirportPane.setVisible(true);
+        SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
+        selectionModel.select(airport);
     }
+
+    /**
+     * Creates or overwrites itinerary file
+     */
     @FXML
     public void saveItinerary(ActionEvent e){
         FileChooser fileChooser = new FileChooser();
@@ -71,14 +90,11 @@ public class MainController implements Initializable {
         try{
             FileOutputStream fileStream = new FileOutputStream(file);
             ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
-            Itinerary itinerary = new Itinerary();
-            itinerary.addToRoutes(currentlyLoadedRoutes.get(0));
-            itinerary.setRoute(currentlyLoadedRoutes.get(0));
-            objectStream.writeObject(itinerary);
+            objectStream.writeObject(currentlyLoadedItinerary);
             objectStream.flush();
             objectStream.close();
             fileStream.close();
-            System.out.println(itinerary.returnFirstRoute().getAirline());
+            System.out.println(currentlyLoadedItinerary.returnFirstRoute().getAirlineName());
         }
         catch(FileNotFoundException ex) {
         }
@@ -86,6 +102,10 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Loads existing itinerary
+     * @param e
+     */
     @FXML
     public void loadItinerary(ActionEvent e){
         try {
@@ -97,10 +117,10 @@ public class MainController implements Initializable {
                 ObjectInputStream objectStream = new ObjectInputStream(filestream);
                 Object openedData = objectStream.readObject();
                 Itinerary itinerary = (Itinerary) openedData;
-                System.out.println(itinerary.returnFirstRoute().getAirline());
-                System.out.println(itinerary.getRoute().getAirlineName());
+                System.out.println(itinerary.returnFirstRoute().getAirlineName());
                 itineraryWelcomePane.setVisible(false);
                 itineraryReviewPane.setVisible(true);
+                currentlyLoadedItinerary = itinerary;
             }
         }
         catch(FileNotFoundException ex){
@@ -123,35 +143,68 @@ public class MainController implements Initializable {
     @FXML
     public GridPane itineraryReviewPane;
 
+    @FXML
+    public Tab airport;
 
+    @FXML
+    public TabPane search;
+
+    /**
+     * Cancels currently selected airport and/or route and returns to itinerary review pane
+     * @param e
+     */
     public void itineraryCancel(ActionEvent e){
         itineraryAirportPane.setVisible(false);
         itineraryRoutePane.setVisible(false);
         itineraryReviewPane.setVisible(true);
     }
 
+    /**
+     * If user has selected an airport, searches for routes originating from
+     * this airport and advances through to the addRoutes pane
+     * @param e
+     */
     public void itineraryFindRoutes(ActionEvent e){
         itineraryAirportPane.setVisible(false);
         itineraryRoutePane.setVisible(true);
     }
 
+    /**
+     * Temporarily adds route to itinerary and advances through to the itinerary review pane
+     * @param e
+     */
     public void itineraryAddRoute(ActionEvent e){
         itineraryRoutePane.setVisible(false);
         itineraryReviewPane.setVisible(true);
     }
 
+    /**
+     * Cancels all unsaved itinerary changes
+     * @param e
+     */
     public void itineraryCancelChanges(ActionEvent e){
 
     }
 
+    /**
+     * Exits the itinerary view and returns to the welcome screen.
+     * All unsaved changes are lost.
+     * @param e
+     */
     public void exitItinerary(ActionEvent e){
         itineraryReviewPane.setVisible(false);
         itineraryWelcomePane.setVisible(true);
     }
 
+    /**
+     * Returns to view for choosing next airport to add to the itinerary.
+     * @param e
+     */
     public void itineraryAddNextAirport(ActionEvent e){
         itineraryReviewPane.setVisible(false);
         itineraryAirportPane.setVisible(true);
+        SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
+        selectionModel.select(airport);
     }
 
 
@@ -298,7 +351,7 @@ public class MainController implements Initializable {
     @FXML
     private Tab flightTab;
     @FXML
-    private TableView<Airport> itineraryTable;
+    public TableView<Airport> itineraryAirportTable;
     @FXML
     private TableColumn<Airport, String> itineraryAirportName;
     @FXML
@@ -369,7 +422,7 @@ public class MainController implements Initializable {
     public void showAirports() {
         try {
             airportTable.setItems(currentlyLoadedAirports);
-            itineraryTable.setItems(currentlyLoadedAirports);
+            itineraryAirportTable.setItems(currentlyLoadedAirports);
             setAirportComboBoxes();
         } catch (NullPointerException np) {
             System.out.println("Error Loading Airports");
@@ -982,6 +1035,12 @@ public class MainController implements Initializable {
         routeTable.setItems(currentlyLoadedRoutes);
     }
 
+    public void clearItineraryTable(){
+        itineraryAirportTable.getColumns().clear();
+        initItineraryAirportTable();
+        itineraryAirportTable.getColumns().addAll(itineraryAirportName, itineraryCity, itineraryCountry);
+    }
+
     /* Switches to raw data table viewing interface*/
     public void backToTableView(ActionEvent e) {
         resetView();
@@ -1060,14 +1119,17 @@ public class MainController implements Initializable {
         altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
         timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
-        itineraryAirportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
-        itineraryCity.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
-        itineraryCountry.setCellValueFactory(new PropertyValueFactory<Airport, String>("Country"));
-
         //noRoutes.setCellValueFactory(new PropertyValueFactory<Airport, String>("Routes"));
 
         // This sets Airports with no routes red. Alternates colours for clarity
         setAirportsWithoutRoutes(airportTable);
+        setAirportsWithoutRoutes(itineraryAirportTable);
+    }
+
+    private void initItineraryAirportTable(){
+        itineraryAirportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
+        itineraryCity.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
+        itineraryCountry.setCellValueFactory(new PropertyValueFactory<Airport, String>("Country"));
     }
 
 
@@ -1416,6 +1478,7 @@ public class MainController implements Initializable {
         setMainControllers();
         initAirlineTable();
         initAirportTable();
+        initItineraryAirportTable();
         initRouteTable();
         setGraphCombo();
 
@@ -1469,7 +1532,7 @@ public class MainController implements Initializable {
         }
     }
 
-    /** Switches to the more info pane for Airports
+    /** Switches to the more info pane for Airlines
      *
      * @param click: The click event
      */
@@ -1482,7 +1545,7 @@ public class MainController implements Initializable {
         }
     }
 
-    /** Switches to the more info pane for Airports
+    /** Switches to the more info pane for Routes
      *
      * @param click: The click event
      */
@@ -1494,6 +1557,7 @@ public class MainController implements Initializable {
             }
         }
     }
+
 
     @FXML
     public void getDistance(ActionEvent e){
