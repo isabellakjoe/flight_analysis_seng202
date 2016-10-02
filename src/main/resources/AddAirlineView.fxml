@@ -112,9 +112,41 @@
                 <Insets bottom="10.0" />
             </GridPane.margin>
         </Text>
+      <Text fx:id="addAirlineIATAErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter an IATA." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="10.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="addAirlineICAOErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter an ICAO" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="10.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="addAirlineIATAErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. This IATA is not unique. PLease Re-enter a new one." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="10.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="addAirlineICAOErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. This ICAO is not unique. \nPlease re-enter a new one." visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="10.0" />
+         </GridPane.margin>
+      </Text>
     </children>
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="80.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="91.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="110.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="20.0" prefWidth="181.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="20.0" prefWidth="77.0" />

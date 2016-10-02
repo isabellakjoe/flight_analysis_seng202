@@ -72,29 +72,53 @@
                 <Insets left="50.0" />
             </GridPane.margin>
         </TextField>
-        <Text fx:id="addRouteEquipErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter equipment codes." visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+        <Text fx:id="addRouteEquipErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter equipment codes." visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
             <font>
                 <Font size="10.0" />
             </font>
             <GridPane.margin>
-                <Insets bottom="20.0" />
+                <Insets bottom="20.0" left="50.0" />
             </GridPane.margin>
         </Text>
-        <Text fx:id="addRouteStopsErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter stops." visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+        <Text fx:id="addRouteStopsErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please enter stops." visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
             <font>
                 <Font size="10.0" />
             </font>
             <GridPane.margin>
-                <Insets bottom="20.0" />
+                <Insets bottom="20.0" left="50.0" />
             </GridPane.margin>
         </Text>
-        <Text fx:id="addRouteStopsErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Number of stops must be an integer." visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+        <Text fx:id="addRouteStopsErrorType" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Number of stops must be an integer." visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
             <font>
                 <Font size="10.0" />
             </font>
             <GridPane.margin>
-                <Insets bottom="20.0" />
+                <Insets bottom="20.0" left="50.0" />
             </GridPane.margin>
         </Text>
+      <Text fx:id="addRouteAirlineErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select an Airline.." visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="20.0" right="47.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="addRouteSourceErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select a source." visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="20.0" right="55.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="addRouteDestErrorEmpty" fill="#fc0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Error. Please select a destination." visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="20.0" right="32.0" />
+         </GridPane.margin>
+      </Text>
     </children>
 </GridPane>

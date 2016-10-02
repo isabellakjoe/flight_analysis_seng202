@@ -48,11 +48,21 @@ public class AddAirlineViewController {
     @FXML
     private Text addAirlineNameErrorEmpty;
     @FXML
+    private Text addAirlineIATAErrorEmpty;
+    @FXML
+    private Text addAirlineICAOErrorEmpty;
+    @FXML
     private Text addAirlineAliasErrorEmpty;
     @FXML
     private Text addAirlineCountryErrorEmpty;
     @FXML
     private Text addAirlineIDErrorType;
+    @FXML
+    private Text addAirlineIATAErrorType;
+    @FXML
+    private Text addAirlineICAOErrorType;
+
+
 
 
     public void setMainController(MainController mainController) {
@@ -107,7 +117,7 @@ public class AddAirlineViewController {
         }
 
         String data = airlineID + ',' + name + ',' + alias + ',' + IATA + ',' + ICAO + ',' + callsign + ',' + country + ',' + isActive;
-        List<String> notNullData = Arrays.asList(airlineID, name, alias, country);
+        List<String> notNullData = Arrays.asList(airlineID, name, alias, country, IATA, ICAO);
 
         boolean noErrors = addAirlineError(notNullData);
 
@@ -115,7 +125,7 @@ public class AddAirlineViewController {
             ObservableList<Airline> airlines = FXCollections.observableArrayList();
             Airline newAirline = parser.createSingleAirline(data);
             airlines.add(newAirline);
-            System.out.println(newAirline.getAirlineID());
+
             if (newAirline != null) {
                 //Add the new airport to the database here
                 DatabaseSaver dbSave = new DatabaseSaver();
@@ -131,8 +141,13 @@ public class AddAirlineViewController {
             cancelAddedAirline(e);
             mainController.setAirlineComboBoxes();
             mainController.backToTableView(e);
-        } else {
-            System.out.println("IATA or ICAO NOT UNIQUE");
+        } else if (noErrors && mainController.getAirlineHashMap().get(IATA) == null){
+            System.out.println("ICAO NOT UNIQUE");
+            addAirlineICAOErrorType.setVisible(true);
+
+        }else if (noErrors && mainController.getAirlineHashMap().get(ICAO) == null){
+            System.out.println("IATA NOT UNIQUE");
+            addAirlineIATAErrorType.setVisible(true);
         }
     }
 
@@ -165,6 +180,12 @@ public class AddAirlineViewController {
                     case 3:
                         addAirlineCountryErrorEmpty.setVisible(true);
                         break;
+                    case 4:
+                        addAirlineIATAErrorEmpty.setVisible(true);
+                        break;
+                    case 5:
+                        addAirlineICAOErrorEmpty.setVisible(true);
+                        break;
                 }
             } else {
                 count += 1;
@@ -180,7 +201,7 @@ public class AddAirlineViewController {
                 }
             }
         }
-        if (count == 5) {
+        if (count == 7) {
             filled = true;
         }
         return filled;
@@ -194,7 +215,11 @@ public class AddAirlineViewController {
         addAirlineNameErrorEmpty.setVisible(false);
         addAirlineAliasErrorEmpty.setVisible(false);
         addAirlineCountryErrorEmpty.setVisible(false);
+        addAirlineIATAErrorEmpty.setVisible(false);
+        addAirlineICAOErrorEmpty.setVisible(false);
         addAirlineIDErrorType.setVisible(false);
+        addAirlineIATAErrorType.setVisible(false);
+        addAirlineICAOErrorType.setVisible(false);
     }
 
 }

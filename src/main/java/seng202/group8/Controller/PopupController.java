@@ -68,6 +68,7 @@ public class PopupController {
 
 
 
+
     public void setUpYesNo(Stage stage, List list, String type){
         resetPopup();
         stage.setTitle("WARNING!");
