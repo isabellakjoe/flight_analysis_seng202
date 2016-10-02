@@ -47,13 +47,67 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.*;
 
-
 /**
  * Created by esa46 on 19/08/16.
  */
 
-
 public class MainController implements Initializable {
+
+
+
+    @FXML
+    public void createItinerary(ActionEvent e){
+        Itinerary itinerary = new Itinerary();
+        saveItinerary(e);
+    }
+    @FXML
+    public void saveItinerary(ActionEvent e){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Itinerary");
+        File file = fileChooser.showSaveDialog(new Stage());
+        try{
+            FileOutputStream fileStream = new FileOutputStream(file);
+            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+            Itinerary itinerary = new Itinerary();
+            itinerary.addToRoutes(currentlyLoadedRoutes.get(0));
+            itinerary.setRoute(currentlyLoadedRoutes.get(0));
+            objectStream.writeObject(itinerary);
+            objectStream.flush();
+            objectStream.close();
+            fileStream.close();
+            System.out.println(itinerary.returnFirstRoute().getAirline());
+        }
+        catch(FileNotFoundException ex) {
+        }
+        catch(IOException ex) {
+        }
+    }
+
+    @FXML
+    public void loadItinerary(ActionEvent e){
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Load Itinerary"); //Text in the window header
+            File file = fileChooser.showOpenDialog(new Stage());
+            if (file != null) {
+                FileInputStream filestream = new FileInputStream(file);
+                ObjectInputStream objectStream = new ObjectInputStream(filestream);
+                Object openedData = objectStream.readObject();
+                Itinerary itinerary = (Itinerary) openedData;
+                System.out.println(itinerary.returnFirstRoute().getAirline());
+                System.out.println(itinerary.getRoute().getAirlineName());
+            }
+        }
+        catch(FileNotFoundException ex){
+        }
+        catch(IOException ex){
+        }
+        catch(ClassNotFoundException ex){
+        }
+    }
+
+
+
 
     //These lists are used to display the currently loaded objects
     private static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
@@ -74,7 +128,8 @@ public class MainController implements Initializable {
     public TableView<Route> routeTable;
     @FXML
     public Pane tableView;
-
+    @FXML
+    public Tab dataTab;
     @FXML
     private FlightViewController flightViewController;
     @FXML
@@ -193,6 +248,8 @@ public class MainController implements Initializable {
     private GridPane graphsPane;
     @FXML
     private GridPane graphsStartPane;
+    @FXML
+    private Tab flightTab;
 
     public static ObservableList<Airline> getCurrentlyLoadedAirlines() {
         return currentlyLoadedAirlines;
@@ -542,8 +599,6 @@ public class MainController implements Initializable {
         searchRouteViewController.setEquipmentCombobox(sortedEquipment);
         searchRouteViewController.setStopoverCombobox(stopsList);
     }
-    @FXML
-    private Tab flightTab;
 
     /* Opens a file chooser for the user to select the Flight Data file, then loads the data and switches views*/
     public void addFlightData(ActionEvent e) {
@@ -872,9 +927,6 @@ public class MainController implements Initializable {
         tableView.setVisible(true);
     }
 
-    @FXML
-    public Tab dataTab;
-
     public void switchToDataTab() {
         SingleSelectionModel<Tab> selectionModel = dataTabs.getSelectionModel();
         selectionModel.select(dataTab);
@@ -997,7 +1049,7 @@ public class MainController implements Initializable {
     }
 
 
-    /*
+    /**
     Initialises all graphs. If items are selected in the data tables these items will be analysed,
     otherwise all loaded data is used.
      */
@@ -1281,12 +1333,7 @@ public class MainController implements Initializable {
         }
     }
 
-
-
     //-----------------------------------------------------------------------------------------------------------------
-
-
-
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {

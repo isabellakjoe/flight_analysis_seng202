@@ -6,32 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane stylesheets="@mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
 
@@ -88,7 +62,7 @@
     <center>
       <TabPane id="view" fx:id="dataTabs">
          <tabs>
-            <Tab fx:id="dataTab" closable="false" text="Data View">
+            <Tab fx:id="dataTab" closable="false" text="Data">
                <content>
                     <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="450.0" prefHeight="650.0" prefWidth="750.0">
                         <children>
@@ -252,7 +226,7 @@
                </content>
             </Tab>
              <fx:include fx:id="mapView" source="MapView.fxml" />
-            <Tab fx:id="graphTab" closable="false" text="Graph View">
+            <Tab fx:id="graphTab" closable="false" text="Graph">
                <content>
                   <StackPane>
                      <children>
@@ -382,6 +356,29 @@
             <Tab fx:id="flightTab" closable="false" text="Flight View">
                <content>
                    <fx:include fx:id="flightView" source="FlightView.fxml" visible="false" />
+               </content>
+            </Tab>
+            <Tab text="Itinerary">
+               <content>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#createItinerary" text="Create New Itinerary" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#loadItinerary" text="Load Exisiting Itinerary" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </StackPane>
                </content>
             </Tab>
          </tabs>
