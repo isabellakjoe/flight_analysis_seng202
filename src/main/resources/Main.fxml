@@ -10,14 +10,14 @@
 <BorderPane stylesheets="@mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.MainController">
 
      <left>
-        <TabPane id="search" prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <TabPane fx:id="search" prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Route">
                     <content>
                         <fx:include fx:id="searchRouteView" source="SearchRouteView.fxml" />
                     </content>
                 </Tab>
-                <Tab text="Airport">
+                <Tab fx:id= "airport" text="Airport">
                     <content>
                         <fx:include fx:id="searchAirportView" source="SearchAirportView.fxml" />
                     </content>
@@ -419,6 +419,21 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route table goes here" GridPane.rowIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Some info about selected route goes here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This pane shows routes originating from the selected airport" />
+                              <TableView fx:id="itineraryRouteTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                <columns>
+                                  <TableColumn fx:id="itineraryAirport" prefWidth="75.0" text="Airport" />
+                                    <TableColumn fx:id="itineraryAirline" prefWidth="75.0" text="Airline" />
+                                    <TableColumn fx:id="itineraryStops" prefWidth="75.0" text="Stops" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Destination:" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </GridPane>
                         <GridPane fx:id="itineraryAirportPane" visible="false">
@@ -437,7 +452,7 @@
                               <Button mnemonicParsing="false" onAction="#itineraryCancel" text="Cancel" GridPane.rowIndex="2" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="An airport table goes here" GridPane.rowIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Keep a bit of space free here for airport info" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TableView fx:id="itineraryTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                              <TableView fx:id="itineraryAirportTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                 <columns>
                                   <TableColumn fx:id="itineraryAirportName" prefWidth="75.0" text="Name" />
                                     <TableColumn fx:id="itineraryCity" prefWidth="75.0" text="City" />

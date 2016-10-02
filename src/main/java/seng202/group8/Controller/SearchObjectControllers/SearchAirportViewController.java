@@ -1,5 +1,6 @@
 package seng202.group8.Controller.SearchObjectControllers;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -138,7 +139,7 @@ public class SearchAirportViewController {
      */
     @FXML
     private void airportSearch(ActionEvent e) {
-        mainController.switchToDataTab();
+        //mainController.switchToDataTab();
         mainController.backToTableView(e);
         AirportSearcher searcher = new AirportSearcher(mainController.getCurrentlyLoadedAirports());
         String airportID = airportIDSearch.getText();
@@ -203,7 +204,15 @@ public class SearchAirportViewController {
         }
 
         ObservableList<Airport> matchingAirports = searcher.getLoadedAirports();
+        ObservableList<Airport> matchingAirportsWithRoutes = FXCollections.observableArrayList();
+        for (int i = 0; i < matchingAirports.size(); i++){
+            if (matchingAirports.get(i).getNumRoutes() > 0){
+                matchingAirportsWithRoutes.add(matchingAirports.get(i));
+            }
+        }
+        mainController.clearItineraryTables();
         mainController.airportTable.setItems(matchingAirports);
+        mainController.itineraryAirportTable.setItems(matchingAirportsWithRoutes);
     }
 
     /*
