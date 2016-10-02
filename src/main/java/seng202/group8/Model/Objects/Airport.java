@@ -129,10 +129,13 @@ public class Airport implements Serializable {
         this.olsonTimezone = olsonTimezone;
     }
 
-    public void setNumRoutes(int num) {this.numRoutes = num;}
+    public int getNumRoutes() {
+        return numRoutes;
+    }
 
-    public int getNumRoutes () {return numRoutes;}
-
+    public void setNumRoutes(int num) {
+        this.numRoutes = num;
+    }
 
     /**
      * Method that calculates distance (in km, rounded to nearest 100km) to second airport
@@ -140,7 +143,7 @@ public class Airport implements Serializable {
      * @param airport being measured to
      * @return distanceKm (double)
      */
-    public double calculateDistanceTo(Airport airport){
+    public double calculateDistanceTo(Airport airport) {
         double distanceKm;
         double earthRadiusKm = 6371;
         double latDiff = Math.toRadians(airport.getLatitude() - this.getLatitude());

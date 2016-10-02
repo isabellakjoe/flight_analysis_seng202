@@ -4,10 +4,9 @@ import java.io.Serializable;
 
 /**
  * Created by esa46 on 19/08/16.
- * <p>
  * Airline object class.
  */
-public class Airline implements Serializable{
+public class Airline implements Serializable {
 
     private int airlineID;
     private String name;

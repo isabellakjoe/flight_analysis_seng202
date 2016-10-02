@@ -1,13 +1,10 @@
 package seng202.group8.Model.Parsers;
 
-import seng202.group8.Model.DatabaseMethods.Database;
-import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Route;
 import seng202.group8.Model.Objects.RouteMethod;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,7 +49,8 @@ public class RouteParser extends RouteMethod {
 
     /* Public method which is used to ToJSONArray a single route */
 
-    /** Method to ToJSONArray a Route Object.
+    /**
+     * Method to ToJSONArray a Route Object.
      *
      * @param input: String of Route data.
      * @return A Route Object or null if the input is null.

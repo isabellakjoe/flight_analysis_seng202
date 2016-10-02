@@ -16,8 +16,9 @@ public class RouteDeleter {
 
     /**
      * A method to delete a single route from the database and the GUI
-     * @param route a route object
-     * @param routeHashMap a hashmap of routes
+     *
+     * @param route                 a route object
+     * @param routeHashMap          a hashmap of routes
      * @param currentlyLoadedRoutes a observable list of routes
      */
     public void deleteSingleRoute(Route route, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes) {
@@ -48,6 +49,7 @@ public class RouteDeleter {
 
     /**
      * A method to delete a list of routes from the database and the GUI
+     *
      * @param routes
      * @param routeHashMap
      * @param currentlyLoadedRoutes

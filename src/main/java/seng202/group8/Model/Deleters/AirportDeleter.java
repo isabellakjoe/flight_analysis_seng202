@@ -20,10 +20,11 @@ public class AirportDeleter {
 
     /**
      * A method to delete a singular airport from the database and controller correctly updating all values
-     * @param airport a airport object
-     * @param routeHashMap a hashmap of routes
-     * @param currentlyLoadedRoutes a observable list of currently loaded routes
-     * @param airportHashMap a hashmap of airports
+     *
+     * @param airport                 a airport object
+     * @param routeHashMap            a hashmap of routes
+     * @param currentlyLoadedRoutes   a observable list of currently loaded routes
+     * @param airportHashMap          a hashmap of airports
      * @param currentlyLoadedAirports a observable list of currently loaded airports
      */
     public void deleteSingleAirport(Airport airport, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes, HashMap<String, Airport> airportHashMap, ObservableList<Airport> currentlyLoadedAirports) {

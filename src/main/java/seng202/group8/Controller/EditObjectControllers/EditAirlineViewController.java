@@ -85,17 +85,19 @@ public class EditAirlineViewController {
         editAirlinePane.setVisible(false);
     }
 
-    /** Returns to table view
+    /**
+     * Returns to table view
      *
      * @param e: The ActionEvent
      */
     @FXML
-    public void backToTableView(ActionEvent e){
+    public void backToTableView(ActionEvent e) {
         makeInvisible();
         mainController.backToTableView(e);
     }
 
-    /** Loads airline information into editable text fields
+    /**
+     * Loads airline information into editable text fields
      *
      * @param e: The ActionEvent
      */
@@ -148,7 +150,8 @@ public class EditAirlineViewController {
 
     }
 
-    /** Exits edit view without saving changes
+    /**
+     * Exits edit view without saving changes
      *
      * @param e: The ActionEvent
      */
@@ -168,7 +171,8 @@ public class EditAirlineViewController {
 
     }
 
-    /** Error checks input and displays necessary error messages
+    /**
+     * Error checks input and displays necessary error messages
      *
      * @param input: A List of Airline data
      * @return A boolean that is True if there are enough non-empty strings in the input.
@@ -205,7 +209,8 @@ public class EditAirlineViewController {
 
     }
 
-    /** Hides all error messages related to editing an airline
+    /**
+     * Hides all error messages related to editing an airline
      */
     @FXML
     private void clearEditAirlineErrors() {
@@ -215,7 +220,8 @@ public class EditAirlineViewController {
 
     }
 
-    /** Reads user input and makes necessary changes to the airline in the database
+    /**
+     * Reads user input and makes necessary changes to the airline in the database
      *
      * @param e: The ActionEvent
      */
@@ -240,7 +246,7 @@ public class EditAirlineViewController {
             noErrors = false;
         }
 
-        if(noErrors) {
+        if (noErrors) {
             //Delete the current airline object from the database
             DatabaseSaver dbSave = new DatabaseSaver();
             Connection connDelete = Database.connect();
@@ -319,12 +325,13 @@ public class EditAirlineViewController {
         }
     }
 
-    /** Deletes selected airline from the database and updates table
+    /**
+     * Deletes selected airline from the database and updates table
      *
      * @param e: The ActionEvent
      */
     @FXML
-    public void deleteAirline(ActionEvent e){
+    public void deleteAirline(ActionEvent e) {
         Airline airline = mainController.airlineTable.getSelectionModel().getSelectedItem();
         //int jp = JOptionPane.showConfirmDialog(null, "WARNING!\nAre you sure you would like to delete " + airline.getName() + "?", "Delete Airline", JOptionPane.YES_NO_OPTION);
         //if(jp == YES_OPTION){
@@ -342,9 +349,10 @@ public class EditAirlineViewController {
 
     }
 
-    /**  Prepares the pane showing airline information
+    /**
+     * Prepares the pane showing airline information
      */
-    public void setAirlineInfo(){
+    public void setAirlineInfo() {
         //Changes visible pane;
         mainController.airlineTable.setVisible(false);
         editAirlinePane.setVisible(true);

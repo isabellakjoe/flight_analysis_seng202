@@ -79,17 +79,19 @@ public class EditRouteViewController {
         editRoutePane.setVisible(false);
     }
 
-    /** Returns to table view
+    /**
+     * Returns to table view
      *
      * @param e: The ActionEvent
      */
     @FXML
-    public void backToTableView(ActionEvent e){
+    public void backToTableView(ActionEvent e) {
         makeInvisible();
         mainController.backToTableView(e);
     }
 
-    /** Loads route information into editable text fields
+    /**
+     * Loads route information into editable text fields
      *
      * @param e The AvtionEvent
      */
@@ -124,7 +126,8 @@ public class EditRouteViewController {
         }
     }
 
-    /** Exits edit view without saving changes
+    /**
+     * Exits edit view without saving changes
      *
      * @param e: The ActionEvent
      */
@@ -144,7 +147,8 @@ public class EditRouteViewController {
         routeShareDisplay.setVisible(true);
     }
 
-    /** Error checks input and displays necessary error messages
+    /**
+     * Error checks input and displays necessary error messages
      *
      * @param input: A List of Route data
      * @return A boolean that is True if there are enough non-empty strings in the input.
@@ -201,7 +205,8 @@ public class EditRouteViewController {
 
     }
 
-    /** Hides all error messages related to editing a route
+    /**
+     * Hides all error messages related to editing a route
      */
     @FXML
     private void clearEditRouteErrors() {
@@ -211,7 +216,8 @@ public class EditRouteViewController {
         editRouteEquipError.setVisible(false);
     }
 
-    /** Reads user input and makes necessary changes to the route in the database
+    /**
+     * Reads user input and makes necessary changes to the route in the database
      *
      * @param e: The ActionEvent
      */
@@ -234,7 +240,7 @@ public class EditRouteViewController {
             noErrors = false;
         }
 
-        if(noErrors) {
+        if (noErrors) {
             //Delete the route from the database
             DatabaseSaver dbSave = new DatabaseSaver();
             Connection connDelete = Database.connect();
@@ -307,7 +313,7 @@ public class EditRouteViewController {
     Deletes selected route from the database and updates table
      */
     @FXML
-    public void deleteRoute(ActionEvent e){
+    public void deleteRoute(ActionEvent e) {
         Route route = mainController.routeTable.getSelectionModel().getSelectedItems().get(0);
         RouteDeleter routeDeleter = new RouteDeleter();
         routeDeleter.deleteSingleRoute(route, MainController.getRouteHashMap(), MainController.getCurrentlyLoadedRoutes());
@@ -322,7 +328,7 @@ public class EditRouteViewController {
     /*
     Prepares the pane showing route information
      */
-    public void setRouteInfo(){
+    public void setRouteInfo() {
         //Changes visible pane;
         mainController.routeTable.setVisible(false);
         editRoutePane.setVisible(true);

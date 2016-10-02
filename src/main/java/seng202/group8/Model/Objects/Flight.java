@@ -10,9 +10,17 @@ import javafx.collections.ObservableList;
  */
 public class Flight {
 
+    private static ObservableList<Waypoint> waypoints = FXCollections.observableArrayList();
     private Airport sourceAirport;
     private Airport destinationAirport;
-    private static ObservableList<Waypoint> waypoints = FXCollections.observableArrayList();
+
+    public static ObservableList<Waypoint> getWaypoints() {
+        return waypoints;
+    }
+
+    public void setWaypoints(ObservableList<Waypoint> waypoints) {
+        this.waypoints = waypoints;
+    }
 
     public Airport getSourceAirport() {
         return sourceAirport;
@@ -28,14 +36,6 @@ public class Flight {
 
     public void setDestinationAirport(Airport destinationAirport) {
         this.destinationAirport = destinationAirport;
-    }
-
-    public static ObservableList<Waypoint> getWaypoints() {
-        return waypoints;
-    }
-
-    public void setWaypoints(ObservableList<Waypoint> waypoints) {
-        this.waypoints = waypoints;
     }
 
 }

@@ -22,7 +22,5 @@ public class AirportTest {
         Airport airport2 = parser.createSingleAirport(testAirport2);
         double distance = airport1.calculateDistanceTo(airport2);
         assertEquals(distance, 13153, 50);
-
-
     }
 }

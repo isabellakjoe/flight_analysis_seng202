@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import seng202.group8.Model.Objects.Flight;
 import seng202.group8.Model.Objects.Waypoint;
 
-import java.util.Collections;
 import java.util.Iterator;
 
 
@@ -25,5 +24,5 @@ public class ToJSONArray {
         }
         stringBuilder.append("]");
         return stringBuilder.toString();
-        }
     }
+}

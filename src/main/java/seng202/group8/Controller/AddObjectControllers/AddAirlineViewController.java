@@ -63,8 +63,6 @@ public class AddAirlineViewController {
     private Text addAirlineICAOErrorType;
 
 
-
-
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
@@ -77,7 +75,8 @@ public class AddAirlineViewController {
         addAirlineViewPane.setVisible(false);
     }
 
-    /** Clear all airline information fields and return to table view without adding airline
+    /**
+     * Clear all airline information fields and return to table view without adding airline
      *
      * @param e: The ActionEvent
      */
@@ -86,6 +85,7 @@ public class AddAirlineViewController {
         clearAirlineErrors();
         makeInvisible();
         mainController.backToTableView(e);
+        //Clear all text fields
         addedAirlineName.clear();
         addedAirlineID.clear();
         addedAirlineCountry.clear();
@@ -96,7 +96,8 @@ public class AddAirlineViewController {
         addedAirlineActive.setSelected(false);
     }
 
-    /** Read user input to create and save an airline
+    /**
+     * Read user input to create and save an airline
      *
      * @param e: The ActionEvent
      */
@@ -141,18 +142,19 @@ public class AddAirlineViewController {
             cancelAddedAirline(e);
             mainController.setAirlineComboBoxes();
             mainController.backToTableView(e);
-        } else if (noErrors && mainController.getAirlineHashMap().get(IATA) == null){
+        } else if (noErrors && mainController.getAirlineHashMap().get(IATA) == null) {
             System.out.println("ICAO NOT UNIQUE");
             addAirlineICAOErrorType.setVisible(true);
 
-        }else if (noErrors && mainController.getAirlineHashMap().get(ICAO) == null){
+        } else if (noErrors && mainController.getAirlineHashMap().get(ICAO) == null) {
             System.out.println("IATA NOT UNIQUE");
             addAirlineIATAErrorType.setVisible(true);
         }
     }
 
-    /** Error check airline information fields and return a boolean of whether input is valid.
-     *  Show error messages for invalid input.
+    /**
+     * Error check airline information fields and return a boolean of whether input is valid.
+     * Show error messages for invalid input.
      *
      * @param input: A list of Strings
      * @return: A boolean that is True if there are enough non-empty strings in the input.
@@ -207,7 +209,8 @@ public class AddAirlineViewController {
         return filled;
     }
 
-    /** Hide all error messages related to adding an airline
+    /**
+     * Hide all error messages related to adding an airline
      */
     @FXML
     private void clearAirlineErrors() {

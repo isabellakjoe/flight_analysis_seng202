@@ -164,8 +164,7 @@ public class DatabaseSaver {
                 String sql = createAirportStatement(airportList.get(i));
                 try {
                     stmt.executeUpdate(sql);
-                }
-                catch (java.sql.SQLException e){
+                } catch (java.sql.SQLException e) {
                     System.out.print("Airport being added includes non unique data.\n");
                 }
             }
@@ -190,8 +189,7 @@ public class DatabaseSaver {
                 String sql = createAirlineStatement(airlineList.get(i));
                 try {
                     stmt.executeUpdate(sql);
-                }
-                catch (java.sql.SQLException e){
+                } catch (java.sql.SQLException e) {
                     System.out.print("Airline being added includes non unique data.\n");
                 }
             }
@@ -220,7 +218,7 @@ public class DatabaseSaver {
     /**
      * A method which is used to save a single route to the database
      *
-     * @param conn a static connection to the database
+     * @param conn  a static connection to the database
      * @param route a route object to be saved to the database
      */
     public void saveSingleRoute(Connection conn, Route route) {

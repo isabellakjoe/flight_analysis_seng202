@@ -1,8 +1,6 @@
 package seng202.group8.Controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -62,21 +60,24 @@ public class FlightViewController implements Initializable {
     @FXML
     private Text bAltitude;
 
-    /** Method to set the visibility of the flightView
+    /**
+     * Method to set the visibility of the flightView
      */
     public void makeVisible() {
         flightViewPane.setVisible(true);
     }
 
-    /** Method to get the validity of the loaded flight
+    /**
+     * Method to get the validity of the loaded flight
      *
      * @return The boolean isValid
      */
-    public boolean getIsValid(){
+    public boolean getIsValid() {
         return this.isValid;
     }
 
-    /** Method to initialize the FlightView with the loaded data.
+    /**
+     * Method to initialize the FlightView with the loaded data.
      *
      * @param flight: A Flight object
      */
@@ -130,7 +131,8 @@ public class FlightViewController implements Initializable {
         waypointLongitude.setCellValueFactory(new PropertyValueFactory<Waypoint, String>("longitude"));
     }
 
-    /** Method to check a string only contains alphabet characters
+    /**
+     * Method to check a string only contains alphabet characters
      *
      * @param name: A string
      * @return A boolean of true if the string contains only alphabet characters, false otherwise
@@ -142,4 +144,5 @@ public class FlightViewController implements Initializable {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
 }

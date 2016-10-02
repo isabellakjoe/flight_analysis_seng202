@@ -37,29 +37,30 @@ public class PopupController {
     private boolean isFlight = false;
 
     @FXML
-    private void resetPopup(){
+    private void resetPopup() {
 
         popupCancelButton.setVisible(false);
         popupYesButton.setVisible(false);
         popupOkButton.setVisible(true);
     }
+
     @FXML
-    public void closePopup(ActionEvent e){
+    public void closePopup(ActionEvent e) {
         Stage stage = (Stage) popupOkButton.getScene().getWindow();
         stage.close();
 
     }
 
     @FXML
-    public void yesPressed(ActionEvent e){
+    public void yesPressed(ActionEvent e) {
         Stage stage = (Stage) popupYesButton.getScene().getWindow();
-        if(isAirport) {
+        if (isAirport) {
             mapViewController.showAirportMarkers(mainController.getCurrentlyLoadedAirports());
             isAirport = false;
-        } else if(isRoute){
+        } else if (isRoute) {
             mapViewController.createMapRoutes(mainController.getCurrentlyLoadedRoutes());
             isRoute = false;
-        } else if(isFlight){
+        } else if (isFlight) {
             mapViewController.createFlightPath();
         }
         stage.close();
@@ -67,32 +68,30 @@ public class PopupController {
     }
 
 
-
-
-    public void setUpYesNo(Stage stage, List list, String type){
+    public void setUpYesNo(Stage stage, List list, String type) {
         resetPopup();
         stage.setTitle("WARNING!");
 
         popupOkButton.setVisible(false);
         popupYesButton.setVisible(true);
         popupCancelButton.setVisible(true);
-        if(type == "airport") {
+        if (type == "airport") {
             popupText1.setText("Are you sure you want to display " + list.size() + " airports? ");
             popupText2.setText("This may take a while...");
             isAirport = true;
-        } else if(type == "route"){
+        } else if (type == "route") {
             popupText1.setText("Are you sure you want to display " + list.size() + " routes? ");
             popupText2.setText("This may take a while...");
             isRoute = true;
-        } else if(type == "flight"){
-            popupText1.setText("Are you sure you want to display a Flight Path with " +  list.size() + " stops?");
+        } else if (type == "flight") {
+            popupText1.setText("Are you sure you want to display a Flight Path with " + list.size() + " stops?");
             popupText2.setText("This may take a while...");
             isFlight = true;
         }
     }
 
 
-    public void setUpEmptyRoutes(Stage stage){
+    public void setUpEmptyRoutes(Stage stage) {
         resetPopup();
         stage.setTitle("Error Message");
 
@@ -101,7 +100,7 @@ public class PopupController {
 
     }
 
-    public void setUpEmptyAirports(Stage stage){
+    public void setUpEmptyAirports(Stage stage) {
         resetPopup();
         stage.setTitle("Error Message");
 
@@ -110,7 +109,7 @@ public class PopupController {
     }
 
 
-    public void setUpEmptyFlights(Stage stage){
+    public void setUpEmptyFlights(Stage stage) {
         resetPopup();
         stage.setTitle("Error Message");
         popupText1.setText("No Flight Path to display.\nPlease Load Flight Data");
@@ -118,7 +117,7 @@ public class PopupController {
     }
 
 
-    public void setUpDistance(Stage stage, String airport1, String airport2, Double distance){
+    public void setUpDistance(Stage stage, String airport1, String airport2, Double distance) {
         resetPopup();
         stage.setTitle("Get Distance");
 

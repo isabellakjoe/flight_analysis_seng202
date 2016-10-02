@@ -29,14 +29,13 @@ public class FileLoaderTest {
 
     HashMap<String, Airline> airlineHashMap;
     HashMap<String, Airport> airportHashMap;
+    private ArrayList<String> auck = new ArrayList<String>(Arrays.asList("2006", "Auckland Intl", "Auckland", "New Zealand", "AKL", "NZAA", "-37.008056", "174.791667", "23", "12", "Z", "Pacific/Auckland"));
 
     @Before
     public void intialise() {
         airlineHashMap = new HashMap<String, Airline>();
         airportHashMap = new HashMap<String, Airport>();
     }
-
-    private ArrayList<String> auck = new ArrayList<String>(Arrays.asList("2006", "Auckland Intl", "Auckland", "New Zealand", "AKL", "NZAA", "-37.008056", "174.791667", "23", "12", "Z", "Pacific/Auckland"));
 
     @Ignore
     public void buildAirportsTest() throws FileNotFoundException {

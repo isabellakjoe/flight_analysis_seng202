@@ -75,7 +75,7 @@ public class SearchRouteViewController {
     Changes view to allow adding a record
      */
     @FXML
-    private void switchToAddRoute(ActionEvent e){
+    private void switchToAddRoute(ActionEvent e) {
         mainController.switchToAddRoute(e);
         mainController.switchToDataTab();
     }
@@ -160,7 +160,7 @@ public class SearchRouteViewController {
 
         //This is a patch for deliverable two, needs to be implemented properly in the loader class at some point
 
-        for (Route route: matchingRoutes) {
+        for (Route route : matchingRoutes) {
             route.setAirlineName(route.getAirline().getName());
             route.setSourceAirportName(route.getSourceAirport().getName());
             route.setDestinationAirportName(route.getDestinationAirport().getName());
@@ -212,7 +212,7 @@ public class SearchRouteViewController {
     /*
     Sets the combo box for searching by codeshare status
     */
-    public void setCodeshareCombobox(ArrayList<String> codeshareStatuses){
+    public void setCodeshareCombobox(ArrayList<String> codeshareStatuses) {
         codeshareSearch.getItems().clear();
         codeshareSearch.getItems().setAll(codeshareStatuses);
     }

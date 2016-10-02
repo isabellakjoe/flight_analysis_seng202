@@ -38,8 +38,6 @@ public class AirlineDeleterTest {
 
         currentlyLoadedAirlines.add(airline);
         airlineHashMap.put(airline.getIATA(), airline);
-
-
     }
 
     @Test

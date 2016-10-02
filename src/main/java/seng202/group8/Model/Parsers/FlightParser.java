@@ -102,7 +102,8 @@ public class FlightParser {
         return resultWaypoint;
     }
 
-    /** Method to split a string of Route Data at each comma.
+    /**
+     * Method to split a string of Route Data at each comma.
      *
      * @param inputRoute: A string of Route Data.
      * @return An ArrayList of Route Data.
@@ -112,7 +113,8 @@ public class FlightParser {
         return new ArrayList<String>(Arrays.asList(inputRoute.split(",")));
     }
 
-    /** Method to convert a String of numbers to a Float.
+    /**
+     * Method to convert a String of numbers to a Float.
      *
      * @param inputNum: A number in String form.
      * @return The number as a Float or -1 if the string is not a number.
@@ -125,7 +127,8 @@ public class FlightParser {
         }
     }
 
-    /** Method to convert a String of numbers to a Integer.
+    /**
+     * Method to convert a String of numbers to a Integer.
      *
      * @param inputNum: A number in String form.
      * @return The number as an Integer or -1 if the string is not a number.

@@ -24,11 +24,8 @@ import seng202.group8.Model.Objects.Route;
 import seng202.group8.Model.Objects.Waypoint;
 import seng202.group8.Model.Searchers.RouteSearcher;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,10 +34,10 @@ import java.util.List;
  */
 public class MapViewController extends Component {
 
-    private MainController mainController;
-    private WebEngine webEngine;
     @FXML
     public TabPane mapViewPane;
+    private MainController mainController;
+    private WebEngine webEngine;
     @FXML
     private CheckBox displayAllAirports;
     @FXML
@@ -54,7 +51,8 @@ public class MapViewController extends Component {
     @FXML
     private WebView webView;
 
-    /** Method to assign the mainController
+    /**
+     * Method to assign the mainController
      *
      * @param mainController: The MainController
      */
@@ -62,14 +60,16 @@ public class MapViewController extends Component {
         this.mainController = mainController;
     }
 
-    /** Method to intialize the map html
+    /**
+     * Method to intialize the map html
      */
     public void initMap() {
         webEngine = webView.getEngine();
         webEngine.load(getClass().getClassLoader().getResource("maps.html").toExternalForm());
     }
 
-    /** Method to display all currently loaded airports
+    /**
+     * Method to display all currently loaded airports
      *
      * @param e: The ActionEvent
      */
@@ -82,7 +82,8 @@ public class MapViewController extends Component {
         }
     }
 
-    /** Method to display markers for list of airports
+    /**
+     * Method to display markers for list of airports
      *
      * @param airportList: A list of Airports
      */
@@ -107,7 +108,7 @@ public class MapViewController extends Component {
                 stage.show();
 
 
-            }catch(IOException io){
+            } catch (IOException io) {
                 io.printStackTrace();
             }
 
@@ -131,7 +132,7 @@ public class MapViewController extends Component {
                 stage.show();
 
 
-            }catch(IOException io){
+            } catch (IOException io) {
                 io.printStackTrace();
             }
 
@@ -139,7 +140,8 @@ public class MapViewController extends Component {
     }
 
 
-    /** Method that clears, creates and displays airport markers
+    /**
+     * Method that clears, creates and displays airport markers
      *
      * @param airports: A list of Airports
      */
@@ -161,12 +163,17 @@ public class MapViewController extends Component {
         }
     }
 
-    /** Method to remove currently displayed airport markers
+    /**
+     * Method to remove currently displayed airport markers
      */
-    private void clearAirports() { webEngine.executeScript("clearMarkers()");}
+    private void clearAirports() {
+        webEngine.executeScript("clearMarkers()");
+    }
 
 
-    /** Method to display all currently loaded routes
+    /**
+     * Method to display all currently loaded routes
+     *
      * @param e: An ActionEvent
      */
     @FXML
@@ -178,7 +185,8 @@ public class MapViewController extends Component {
         }
     }
 
-    /** Method for displaying routes on map
+    /**
+     * Method for displaying routes on map
      *
      * @param routes: a list of Routes
      */
@@ -202,7 +210,7 @@ public class MapViewController extends Component {
                 stage.show();
 
 
-            }catch(IOException io){
+            } catch (IOException io) {
                 io.printStackTrace();
             }
 
@@ -232,14 +240,15 @@ public class MapViewController extends Component {
                 stage.show();
 
 
-            }catch(IOException io){
+            } catch (IOException io) {
                 io.printStackTrace();
             }
 
         }
     }
 
-    /** Method that clears, creates and displays airport markers
+    /**
+     * Method that clears, creates and displays airport markers
      *
      * @param routes: a list of Routes
      */
@@ -259,7 +268,8 @@ public class MapViewController extends Component {
         }
     }
 
-    /** Method to get the coordinates of an Airport from the currently loaded airports
+    /**
+     * Method to get the coordinates of an Airport from the currently loaded airports
      *
      * @param airportID: A String of the Name of the airport
      * @return The coordinates as a Double
@@ -268,37 +278,40 @@ public class MapViewController extends Component {
         double[] coords = {};
         List airports = mainController.getCurrentlyLoadedAirports();
         Iterator i = airports.iterator();
-        while(i.hasNext()) {
+        while (i.hasNext()) {
             Airport airport = (Airport) i.next();
             if (airport.getName() == airportID) {
                 double lat = airport.getLatitude();
                 double lng = airport.getLongitude();
-                coords = new double[] {lat, lng};
+                coords = new double[]{lat, lng};
                 break;
             }
         }
         return coords;
     }
 
-    /** Method to remove currently displayed paths
+    /**
+     * Method to remove currently displayed paths
      */
     private void clearRoutes() {
         webEngine.executeScript("clearRoutes()");
     }
 
 
-    /** Method that calls displayRoutesByEquipment function when input is received in text field and enter is pressed
+    /**
+     * Method that calls displayRoutesByEquipment function when input is received in text field and enter is pressed
      *
      * @param key: A KeyEvent
      */
     @FXML
-    private void enterEquipmentPressed( KeyEvent key) {
+    private void enterEquipmentPressed(KeyEvent key) {
         if (key.getCode() == KeyCode.ENTER) {
             displayRoutesByEquipment(equipmentSearchBox.getText());
         }
     }
 
-    /** Method to display all Routes using a particular equipment
+    /**
+     * Method to display all Routes using a particular equipment
      *
      * @param equipment: A string representing a type of Equipment
      */
@@ -320,18 +333,20 @@ public class MapViewController extends Component {
 
     }
 
-    /** Method that calls displayRoutesByAirport method when input is received in text field and enter is pressed
+    /**
+     * Method that calls displayRoutesByAirport method when input is received in text field and enter is pressed
      *
      * @param key
      */
     @FXML
-    private void enterAirportPressed( KeyEvent key) {
+    private void enterAirportPressed(KeyEvent key) {
         if (key.getCode() == KeyCode.ENTER) {
             displayRoutesByAirports(airportSearchBox.getText());
         }
     }
 
-    /** Method to display all routes from a specific Airport
+    /**
+     * Method to display all routes from a specific Airport
      *
      * @param airport: A string name of a particular Airport
      */
@@ -352,7 +367,8 @@ public class MapViewController extends Component {
 
     }
 
-    /** Method to clear all Airports from the map
+    /**
+     * Method to clear all Airports from the map
      *
      * @param e: The ActionEvent
      */
@@ -362,7 +378,8 @@ public class MapViewController extends Component {
         displayAllAirports.setSelected(false);
     }
 
-    /** Method to clear all Routes from the map
+    /**
+     * Method to clear all Routes from the map
      *
      * @param e: The ActionEvent
      */
@@ -374,7 +391,8 @@ public class MapViewController extends Component {
         airportSearchBox.setText(null);
     }
 
-    /** Method to display the loaded Flight on the map
+    /**
+     * Method to display the loaded Flight on the map
      *
      * @param e: The ActionEvent
      */
@@ -388,7 +406,8 @@ public class MapViewController extends Component {
 
     }
 
-    /** Method to load the waypoints of a flight
+    /**
+     * Method to load the waypoints of a flight
      */
     private void displayFlight() {
         List<Waypoint> waypoints = Flight.getWaypoints();
@@ -411,7 +430,7 @@ public class MapViewController extends Component {
                 stage.show();
 
 
-            }catch(IOException io){
+            } catch (IOException io) {
                 io.printStackTrace();
             }
 
@@ -433,21 +452,23 @@ public class MapViewController extends Component {
                 stage.show();
 
 
-            }catch(IOException io){
+            } catch (IOException io) {
                 io.printStackTrace();
             }
 
         }
     }
 
-    /** Method to display the flightpath waypoints on the map
+    /**
+     * Method to display the flightpath waypoints on the map
      */
     public void createFlightPath() {
         String scriptToExecute = "displayFlight(" + ToJSONArray.toJSONFlightPath() + ");";
         webEngine.executeScript(scriptToExecute);
     }
 
-    /** Method to clear all Flight waypoints on the map
+    /**
+     * Method to clear all Flight waypoints on the map
      */
     private void clearFlight() {
         String scriptToExecute = "clearFlightPaths();";

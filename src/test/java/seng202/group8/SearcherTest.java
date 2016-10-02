@@ -13,11 +13,9 @@ import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.DatabaseSaver;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
-import seng202.group8.Model.Objects.Route;
 import seng202.group8.Model.Parsers.FileLoader;
 import seng202.group8.Model.Searchers.AirlineSearcher;
 import seng202.group8.Model.Searchers.AirportSearcher;
-import seng202.group8.Model.Searchers.RouteSearcher;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -106,27 +104,5 @@ public class SearcherTest {
         Airport expectedAirport = airports.get(0);
         assertEquals(returnedAirport.getAltitude(), expectedAirport.getAltitude(), 1e-3);
     }
-
-
-    /**
-
-    @Test
-    public void routeSearchTest() throws FileNotFoundException {
-        FileLoader loader = new FileLoader(new BufferedReader(new FileReader("SearchTestRoutes.txt")));
-        ObservableList<Route> routes = loader.buildRoutes();
-        dbSave.saveRoutes(conn, routes);
-        RouteSearcher searcher = new RouteSearcher(routes);
-        searcher.routesOfSource("AOR");
-        searcher.routesOfDestination("KUN");
-        searcher.routesOfCodeshare("Codeshare");
-        searcher.routesOfStops(11);
-        Route returnedRoute = searcher.getLoadedRoutes().get(0);
-        Route expectedRoute = routes.get(0);
-        assertEquals(returnedRoute.getStops(), expectedRoute.getStops());
-    }
-
-
-    */
-
 
 }

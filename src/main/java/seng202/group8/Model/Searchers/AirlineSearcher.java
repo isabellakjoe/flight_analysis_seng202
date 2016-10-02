@@ -16,6 +16,7 @@ public class AirlineSearcher {
 
     /**
      * Set the current list of loaded airlines within the object
+     *
      * @param loadedAirlines a observable list of airlines
      */
     public AirlineSearcher(ObservableList<Airline> loadedAirlines) {
@@ -24,6 +25,7 @@ public class AirlineSearcher {
 
     /**
      * Get the list of airlines from the instance of the object
+     *
      * @return an observable list of airlines
      */
     public ObservableList<Airline> getLoadedAirlines() {
@@ -32,6 +34,7 @@ public class AirlineSearcher {
 
     /**
      * A method to search through the list of airlines based off of ID integer
+     *
      * @param airlineID a string representation of the airline id
      */
     public void airlinesOfID(String airlineID) {
@@ -52,6 +55,7 @@ public class AirlineSearcher {
 
     /**
      * A method to search through a list of airlines by an airline name
+     *
      * @param name a string containing a name which is to be matched
      */
     public void airlinesOfName(String name) {
@@ -71,6 +75,7 @@ public class AirlineSearcher {
 
     /**
      * A method to search through airlines by alias
+     *
      * @param alias a string containing the alias to be matched
      */
     public void airlinesOfAlias(String alias) {
@@ -90,6 +95,7 @@ public class AirlineSearcher {
 
     /**
      * A method to search through airlines based off of iata
+     *
      * @param IATA a string containing the iata to be matched
      */
     public void airlinesOfIATA(String IATA) {
@@ -109,6 +115,7 @@ public class AirlineSearcher {
 
     /**
      * A method to search through airlines based off of icao
+     *
      * @param ICAO a string containing the icao to be matched
      */
     public void airlinesOfICAO(String ICAO) {
@@ -128,6 +135,7 @@ public class AirlineSearcher {
 
     /**
      * A method to search through airlines based off of callsign
+     *
      * @param callsign a string containg the callsign to be matched
      */
     public void airlinesOfCallsign(String callsign) {
@@ -147,6 +155,7 @@ public class AirlineSearcher {
 
     /**
      * A method to search through airlines based off of country
+     *
      * @param country a string containing the country to be matched
      */
     public void airlinesOfCountry(String country) {
@@ -161,20 +170,20 @@ public class AirlineSearcher {
 
     /**
      * A method to search through airlines based off of active status
+     *
      * @param activeStatus a string containing Active or not
      */
-    public void airlinesOfActiveStatus(String activeStatus){
+    public void airlinesOfActiveStatus(String activeStatus) {
         System.out.println(activeStatus);
         ObservableList<Airline> matchingAirlines = FXCollections.observableArrayList();
         boolean isActive = activeStatus.equals("Active");
-        for (int i = 0; i < loadedAirlines.size(); i++){
-            if (loadedAirlines.get(i).isActive() == isActive){
+        for (int i = 0; i < loadedAirlines.size(); i++) {
+            if (loadedAirlines.get(i).isActive() == isActive) {
                 matchingAirlines.add(loadedAirlines.get(i));
             }
         }
         loadedAirlines = matchingAirlines;
     }
-
 
 
 }

@@ -67,7 +67,6 @@ public class Database {
     }
 
     /**
-     *
      * @param conn an established connection to a database
      * @return the highest route id integer currently in the database
      */
@@ -76,7 +75,7 @@ public class Database {
         try {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("SELECT max(routeid) FROM route");
-            while(result.next()) {
+            while (result.next()) {
                 id = result.getInt(1);
             }
         } catch (SQLException e) {

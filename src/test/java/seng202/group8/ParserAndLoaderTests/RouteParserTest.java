@@ -22,6 +22,8 @@ public class RouteParserTest {
     Airline air;
     Airport src;
     Airport dest;
+    /* String containing IATA information */
+    private String routeString = "2B,410,AER,2965,KZN,2990,Y,10,CR2";
 
     @Before
     public void intialise() {
@@ -42,9 +44,6 @@ public class RouteParserTest {
         airportHashMap.put("AER", src);
         airportHashMap.put("KZN", dest);
     }
-
-    /* String containing IATA information */
-    private String routeString = "2B,410,AER,2965,KZN,2990,Y,10,CR2";
 
     @Test
     /* Test to see if the airline is added correctly to a route object */

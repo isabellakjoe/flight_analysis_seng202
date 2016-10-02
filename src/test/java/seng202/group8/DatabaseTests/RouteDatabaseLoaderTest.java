@@ -13,8 +13,6 @@ import seng202.group8.Model.Objects.Route;
 import java.sql.Connection;
 import java.util.HashMap;
 
-import static junit.framework.TestCase.assertTrue;
-
 /**
  * Created by Callum on 25/08/16.
  */
@@ -42,25 +40,6 @@ public class RouteDatabaseLoaderTest {
     @After
     public void teardown() {
         db.disconnect(conn);
-    }
-
-    @Test
-    public void testAllRoutesLoadCorrectly() {
-        //ObservableList<Route> routes = dbr.loadRoutes(conn, routeHashMap, airlineHashMap, airportHashMap);
-        //Currently 17 routes in the test database
-        //assertTrue(17 == routes.size());
-    }
-
-    @Test
-    public void testRouteLoads() {
-        //ObservableList<Route> routes = dbr.loadRoutes(conn, routeHashMap, airlineHashMap, airportHashMap);
-        //Route testRoute = new Route();
-        //for (Route route : routes) {
-            //if (route.getRouteID() == 500) {
-                //testRoute = route;
-            //}
-        //}
-        //assertTrue(testRoute.getSourceAirport().getAirportID() == 1824);
     }
 
 }

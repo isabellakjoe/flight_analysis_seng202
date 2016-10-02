@@ -26,16 +26,15 @@ import java.util.List;
  */
 public class AddRouteViewController {
 
-    private MainController mainController;
-
-    @FXML
-    private GridPane addRouteViewPane;
     @FXML
     public ComboBox addedRouteAirline;
     @FXML
     public ComboBox addedRouteSource;
     @FXML
     public ComboBox addedRouteDestination;
+    private MainController mainController;
+    @FXML
+    private GridPane addRouteViewPane;
     @FXML
     private TextField addedRouteEquipment;
     @FXML
@@ -60,13 +59,16 @@ public class AddRouteViewController {
         this.mainController = mainController;
     }
 
-    public void makeVisible() {addRouteViewPane.setVisible(true);}
+    public void makeVisible() {
+        addRouteViewPane.setVisible(true);
+    }
 
     public void makeInvisible() {
         addRouteViewPane.setVisible(false);
     }
 
-    /** Clear all airline information fields and return to table view without adding route
+    /**
+     * Clear all airline information fields and return to table view without adding route
      *
      * @param e: The ActionEvent
      */
@@ -84,7 +86,8 @@ public class AddRouteViewController {
 
     }
 
-    /** Read user input to create and save a route
+    /**
+     * Read user input to create and save a route
      *
      * @param e The ActionEvent
      */
@@ -150,7 +153,8 @@ public class AddRouteViewController {
         }
     }
 
-    /**  Error check route information fields and return a boolean of whether input is valid.
+    /**
+     * Error check route information fields and return a boolean of whether input is valid.
      * Show error messages for invalid input.
      *
      * @param input: A List of Route data
@@ -210,7 +214,8 @@ public class AddRouteViewController {
 
     }
 
-    /** Hide all error messages related to adding a route
+    /**
+     * Hide all error messages related to adding a route
      */
     @FXML
     private void clearRouteErrors() {

@@ -63,7 +63,7 @@ public class SearchAirportViewController {
     Clears all search fields and reset tables from returned results to all records
      */
     @FXML
-    private void resetAirportSearch(){
+    private void resetAirportSearch() {
         /* Clears all search fields*/
         airportCountrySearch.setValue(null);
         airportIDSearch.clear();
@@ -139,7 +139,6 @@ public class SearchAirportViewController {
      */
     @FXML
     private void airportSearch(ActionEvent e) {
-        //mainController.switchToDataTab();
         mainController.backToTableView(e);
         AirportSearcher searcher = new AirportSearcher(mainController.getCurrentlyLoadedAirports());
         String airportID = airportIDSearch.getText();
@@ -205,8 +204,8 @@ public class SearchAirportViewController {
 
         ObservableList<Airport> matchingAirports = searcher.getLoadedAirports();
         ObservableList<Airport> matchingAirportsWithRoutes = FXCollections.observableArrayList();
-        for (int i = 0; i < matchingAirports.size(); i++){
-            if (matchingAirports.get(i).getNumRoutes() > 0){
+        for (int i = 0; i < matchingAirports.size(); i++) {
+            if (matchingAirports.get(i).getNumRoutes() > 0) {
                 matchingAirportsWithRoutes.add(matchingAirports.get(i));
             }
         }
@@ -227,7 +226,7 @@ public class SearchAirportViewController {
     /*
     Sets the combo box for searching by country
     */
-    public void setCountryCombobox(List sortedCountries){
+    public void setCountryCombobox(List sortedCountries) {
         airportCountrySearch.getItems().clear();
         airportCountrySearch.getItems().setAll(sortedCountries);
     }

@@ -20,8 +20,8 @@ public class RouteDatabaseLoader extends RouteMethod {
     /**
      * A Method used to load all routes from the database
      *
-     * @param conn a static connection to the database
-     * @param routeHashMap a hashmap storing routes based off of unique ID's predifined by the operation of the app
+     * @param conn           a static connection to the database
+     * @param routeHashMap   a hashmap storing routes based off of unique ID's predifined by the operation of the app
      * @param airlineHashMap a hashmap storing airlines based off of unique IATA/ICAO fields
      * @param airportHashMap a hashmap storing airports based off of uique IATA/ICAO fields
      * @return a observable list of all routes in the database
@@ -48,7 +48,7 @@ public class RouteDatabaseLoader extends RouteMethod {
                     int numSrcRoutes = airportHashMap.get(result.getString("sourceairport")).getNumRoutes() + 1;
                     airportHashMap.get(result.getString("sourceairport")).setNumRoutes(numSrcRoutes);
                 } else {
-                    
+
                     continue;
                 }
                 if (airportHashMap.get(result.getString("destinationairport")) instanceof Airport) {

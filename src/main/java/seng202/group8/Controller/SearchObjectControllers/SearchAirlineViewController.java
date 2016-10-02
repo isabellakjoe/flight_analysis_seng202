@@ -56,7 +56,7 @@ public class SearchAirlineViewController {
     Clears all search fields and reset tables from returned results to all records
      */
     @FXML
-    private void resetAirlineSearch(){
+    private void resetAirlineSearch() {
         /* Clears all search fields*/
         airlineCountrySearch.setValue(null);
         airlineActiveSearch.setValue(null);
@@ -185,7 +185,7 @@ public class SearchAirlineViewController {
     /*
     Sets the combo box for searching by active status
      */
-    public void setCountryCombobox(List sortedCountries){
+    public void setCountryCombobox(List sortedCountries) {
         airlineCountrySearch.getItems().clear();
         airlineCountrySearch.getItems().setAll(sortedCountries);
     }

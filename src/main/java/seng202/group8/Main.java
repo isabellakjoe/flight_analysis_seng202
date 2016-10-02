@@ -17,7 +17,6 @@ import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.RouteDatabaseLoader;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
-import seng202.group8.Model.Objects.Flight;
 import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;
@@ -42,13 +41,13 @@ public class Main extends Application {
 
         ObservableList<Airline> savedAirlines = airlineLoader.loadAirlines(airlineConn, MainController.getAirlineHashMap());
         Database.disconnect(airlineConn);
-        for (Airline airline: savedAirlines) {
+        for (Airline airline : savedAirlines) {
             MainController.getCurrentlyLoadedAirlines().add(airline);
         }
 
         ObservableList<Airport> savedAirports = airportLoader.loadAirport(airportConn, MainController.getAirportHashMap());
         Database.disconnect(airportConn);
-        for (Airport airport: savedAirports) {
+        for (Airport airport : savedAirports) {
             MainController.addToCurrentlyLoadedAirports(airport);
         }
 
@@ -56,7 +55,7 @@ public class Main extends Application {
         Database.disconnect(routeConn);
         MainController.setRouteIds(Database.getMaxRouteID(idConn));
         Database.disconnect(idConn);
-        for (Route route: savedRoutes) {
+        for (Route route : savedRoutes) {
             MainController.addToCurrentlyLoadedRoutes(route);
         }
 

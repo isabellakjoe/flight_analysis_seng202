@@ -336,7 +336,7 @@
                   </StackPane>
                </content>
             </Tab>
-            <Tab fx:id="flightTab" closable="false" text="Flight View">
+            <Tab fx:id="flightTab" closable="false" text="Flight">
                <content>
                    <StackPane prefHeight="150.0" prefWidth="200.0">
                         <children>

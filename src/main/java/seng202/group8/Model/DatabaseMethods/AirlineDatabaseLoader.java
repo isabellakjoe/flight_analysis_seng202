@@ -18,7 +18,7 @@ public class AirlineDatabaseLoader extends AirlineMethod {
     /**
      * Function to return an observable list of Airlines which have been loaded from the database
      *
-     * @param conn a connection to the database
+     * @param conn               a connection to the database
      * @param airlineIATAHashMap a hashmap containing airlines based off of a string IATA key
      * @return an observable list of airports
      */
@@ -42,7 +42,7 @@ public class AirlineDatabaseLoader extends AirlineMethod {
                 airlines.add(loadedAirline);
                 if (loadedAirline.getIATA() != null) {
                     airlineIATAHashMap.put(loadedAirline.getIATA(), loadedAirline);
-                } else if (loadedAirline.getICAO() != null){
+                } else if (loadedAirline.getICAO() != null) {
                     airlineIATAHashMap.put(loadedAirline.getICAO(), loadedAirline);
                 }
             }
