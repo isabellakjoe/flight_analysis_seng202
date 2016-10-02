@@ -305,6 +305,14 @@ public class MainController implements Initializable {
     private TableColumn<Airport, String> itineraryCity;
     @FXML
     private TableColumn<Airport, String> itineraryCountry;
+    @FXML
+    private TableView<Route> itineraryRouteTable;
+    @FXML
+    private TableColumn<Route, String> itineraryAirport;
+    @FXML
+    private TableColumn<Route, String> itineraryAirline;
+    @FXML
+    private TableColumn<Route, String> itineraryStops;
 
 
     public static ObservableList<Airline> getCurrentlyLoadedAirlines() {
@@ -1060,8 +1068,8 @@ public class MainController implements Initializable {
 
         // This sets Airports with no routes red. Alternates colours for clarity
         setAirportsWithoutRoutes(airportTable);
-        setAirportsWithoutRoutes(itineraryTable);
     }
+
 
     public void setAirportsWithoutRoutes(TableView<Airport> airportTable) {
 
@@ -1103,6 +1111,12 @@ public class MainController implements Initializable {
         codeshare.setCellValueFactory(new PropertyValueFactory<Route, String>("codeshareString"));
         stops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
         equipment.setCellValueFactory(new PropertyValueFactory<Route, String>("equipment"));
+
+        //initialising itinerary table
+        itineraryAirport.setCellValueFactory(new PropertyValueFactory<Route, String>("destinationAirportName"));
+        itineraryAirline.setCellValueFactory(new PropertyValueFactory<Route, String>("airlineName"));
+        itineraryStops.setCellValueFactory(new PropertyValueFactory<Route, String>("stops"));
+        itineraryRouteTable.setItems(currentlyLoadedRoutes);
     }
 
     public void setGraphCombo() {

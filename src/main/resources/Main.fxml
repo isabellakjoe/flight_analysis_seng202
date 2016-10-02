@@ -419,6 +419,21 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route table goes here" GridPane.rowIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Some info about selected route goes here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This pane shows routes originating from the selected airport" />
+                              <TableView fx:id="itineraryRouteTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                <columns>
+                                  <TableColumn fx:id="itineraryAirport" prefWidth="75.0" text="Airport" />
+                                    <TableColumn fx:id="itineraryAirline" prefWidth="75.0" text="Airline" />
+                                    <TableColumn fx:id="itineraryStops" prefWidth="75.0" text="Stops" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Destination:" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </GridPane>
                         <GridPane fx:id="itineraryAirportPane" visible="false">
