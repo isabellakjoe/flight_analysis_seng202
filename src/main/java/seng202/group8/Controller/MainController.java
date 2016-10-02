@@ -1314,9 +1314,25 @@ public class MainController implements Initializable {
             Airport airport2 = airportTable.getSelectionModel().getSelectedItems().get(1);
 
             double distance = airport1.calculateDistanceTo(airport2);
-            JOptionPane jp = new JOptionPane();
-            jp.setSize(700, 600);
-            jp.showMessageDialog(null, "From "+airport1.getName()+" to "+airport2.getName() + "\nThe distance is "+distance+" km.", "Calculated Distance", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/popup.fxml"));
+
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+
+                PopupController cont = loader.getController();
+                cont.setUpDistance(stage, airport1.getName(), airport2.getName(), distance);
+                stage.initModality(Modality.APPLICATION_MODAL);
+
+                stage.setScene(new Scene(root));
+
+                stage.show();
+
+
+            }catch(IOException io){
+                io.printStackTrace();
+            }
         }
     }
 

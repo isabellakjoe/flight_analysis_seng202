@@ -38,9 +38,9 @@
      <left>
         <TabPane id="search" prefHeight="651.0" prefWidth="277.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
-                <Tab text="Route">
+                <Tab text="Airline">
                     <content>
-                        <fx:include fx:id="searchRouteView" source="SearchRouteView.fxml" />
+                <fx:include fx:id="searchAirlineView" source="SearchAirlineView.fxml" />
                     </content>
                 </Tab>
                 <Tab text="Airport">
@@ -48,9 +48,9 @@
                         <fx:include fx:id="searchAirportView" source="SearchAirportView.fxml" />
                     </content>
                 </Tab>
-                <Tab text="Airline">
+                <Tab text="Route">
                     <content>
-                <fx:include fx:id="searchAirlineView" source="SearchAirlineView.fxml" />
+                        <fx:include fx:id="searchRouteView" source="SearchRouteView.fxml" />
                     </content>
                 </Tab>
             </tabs>
