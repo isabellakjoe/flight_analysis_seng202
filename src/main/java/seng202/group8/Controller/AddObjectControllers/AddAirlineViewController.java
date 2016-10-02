@@ -67,6 +67,9 @@ public class AddAirlineViewController {
         addAirlineViewPane.setVisible(false);
     }
 
+    /*
+    Clear all airline information fields and return to table view without adding airline
+     */
     @FXML
     private void cancelAddedAirline(ActionEvent e) {
         clearAirlineErrors();
@@ -82,64 +85,9 @@ public class AddAirlineViewController {
         addedAirlineActive.setSelected(false);
     }
 
-    @FXML
-    private boolean addAirlineError(List<String> input) {
-
-        boolean filled = false;
-        int size = input.size();
-
-
-        int count = 0;
-        for (int i = 0; i < size; i++) {
-            String current = input.get(i);
-            if (current.equals("")) {
-                switch (i) {
-                    case 0:
-                        addAirlineIDErrorEmpty.setVisible(true);
-                        break;
-                    case 1:
-                        addAirlineNameErrorEmpty.setVisible(true);
-                        break;
-                    case 2:
-                        addAirlineAliasErrorEmpty.setVisible(true);
-                        break;
-                    case 3:
-                        addAirlineCountryErrorEmpty.setVisible(true);
-                        break;
-                }
-            } else {
-                count += 1;
-            }
-
-            if ((i == 0) && !(current.equals(""))) {
-
-                try {
-                    Integer.parseInt(input.get(i));
-                    count += 1;
-
-                } catch (NumberFormatException e) {
-                    addAirlineIDErrorType.setVisible(true);
-                }
-            }
-        }
-
-
-        if (count == 5) {
-            filled = true;
-        }
-        return filled;
-
-    }
-
-    @FXML
-    private void clearAirlineErrors() {
-        addAirlineIDErrorEmpty.setVisible(false);
-        addAirlineNameErrorEmpty.setVisible(false);
-        addAirlineAliasErrorEmpty.setVisible(false);
-        addAirlineCountryErrorEmpty.setVisible(false);
-        addAirlineIDErrorType.setVisible(false);
-    }
-
+    /*
+    Read user input to create and save an airline
+     */
     @FXML
     private void saveAddedAirline(ActionEvent e) {
         clearAirlineErrors();
@@ -186,5 +134,64 @@ public class AddAirlineViewController {
         }
     }
 
+    /*
+    Error check airline information fields and return a boolean of whether input is valid.
+    Show error messages for invalid input.
+    */
+    @FXML
+    private boolean addAirlineError(List<String> input) {
+
+        boolean filled = false;
+        int size = input.size();
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            String current = input.get(i);
+            if (current.equals("")) {
+                switch (i) {
+                    case 0:
+                        addAirlineIDErrorEmpty.setVisible(true);
+                        break;
+                    case 1:
+                        addAirlineNameErrorEmpty.setVisible(true);
+                        break;
+                    case 2:
+                        addAirlineAliasErrorEmpty.setVisible(true);
+                        break;
+                    case 3:
+                        addAirlineCountryErrorEmpty.setVisible(true);
+                        break;
+                }
+            } else {
+                count += 1;
+            }
+            if ((i == 0) && !(current.equals(""))) {
+
+                try {
+                    Integer.parseInt(input.get(i));
+                    count += 1;
+
+                } catch (NumberFormatException e) {
+                    addAirlineIDErrorType.setVisible(true);
+                }
+            }
+        }
+        if (count == 5) {
+            filled = true;
+        }
+        return filled;
+    }
+
+    /*
+    Hide all error messages related to adding an airline
+     */
+    @FXML
+    private void clearAirlineErrors() {
+        addAirlineIDErrorEmpty.setVisible(false);
+        addAirlineNameErrorEmpty.setVisible(false);
+        addAirlineAliasErrorEmpty.setVisible(false);
+        addAirlineCountryErrorEmpty.setVisible(false);
+        addAirlineIDErrorType.setVisible(false);
+    }
 
 }

@@ -30,6 +30,7 @@ import seng202.group8.Controller.AddObjectControllers.AddRouteViewController;
 import seng202.group8.Controller.EditObjectControllers.EditAirlineViewController;
 import seng202.group8.Controller.EditObjectControllers.EditAirportViewController;
 import seng202.group8.Controller.EditObjectControllers.EditRouteViewController;
+import seng202.group8.Controller.MapViewControllers.MapViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchAirlineViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController;
 import seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController;
@@ -46,13 +47,114 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.*;
 
-
 /**
  * Created by esa46 on 19/08/16.
  */
 
-
 public class MainController implements Initializable {
+
+
+
+    @FXML
+    public void createItinerary(ActionEvent e){
+        Itinerary itinerary = new Itinerary();
+        saveItinerary(e);
+        itineraryWelcomePane.setVisible(false);
+        itineraryReviewPane.setVisible(false);
+        itineraryAirportPane.setVisible(true);
+    }
+    @FXML
+    public void saveItinerary(ActionEvent e){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Itinerary");
+        File file = fileChooser.showSaveDialog(new Stage());
+        try{
+            FileOutputStream fileStream = new FileOutputStream(file);
+            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+            Itinerary itinerary = new Itinerary();
+            itinerary.addToRoutes(currentlyLoadedRoutes.get(0));
+            itinerary.setRoute(currentlyLoadedRoutes.get(0));
+            objectStream.writeObject(itinerary);
+            objectStream.flush();
+            objectStream.close();
+            fileStream.close();
+            System.out.println(itinerary.returnFirstRoute().getAirline());
+        }
+        catch(FileNotFoundException ex) {
+        }
+        catch(IOException ex) {
+        }
+    }
+
+    @FXML
+    public void loadItinerary(ActionEvent e){
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Load Itinerary"); //Text in the window header
+            File file = fileChooser.showOpenDialog(new Stage());
+            if (file != null) {
+                FileInputStream filestream = new FileInputStream(file);
+                ObjectInputStream objectStream = new ObjectInputStream(filestream);
+                Object openedData = objectStream.readObject();
+                Itinerary itinerary = (Itinerary) openedData;
+                System.out.println(itinerary.returnFirstRoute().getAirline());
+                System.out.println(itinerary.getRoute().getAirlineName());
+                itineraryWelcomePane.setVisible(false);
+                itineraryReviewPane.setVisible(true);
+            }
+        }
+        catch(FileNotFoundException ex){
+        }
+        catch(IOException ex){
+        }
+        catch(ClassNotFoundException ex){
+        }
+    }
+
+    @FXML
+    public GridPane itineraryWelcomePane;
+
+    @FXML
+    public GridPane itineraryAirportPane;
+
+    @FXML
+    public GridPane itineraryRoutePane;
+
+    @FXML
+    public GridPane itineraryReviewPane;
+
+
+    public void itineraryCancel(ActionEvent e){
+        itineraryAirportPane.setVisible(false);
+        itineraryRoutePane.setVisible(false);
+        itineraryReviewPane.setVisible(true);
+    }
+
+    public void itineraryFindRoutes(ActionEvent e){
+        itineraryAirportPane.setVisible(false);
+        itineraryRoutePane.setVisible(true);
+    }
+
+    public void itineraryAddRoute(ActionEvent e){
+        itineraryRoutePane.setVisible(false);
+        itineraryReviewPane.setVisible(true);
+    }
+
+    public void itineraryCancelChanges(ActionEvent e){
+
+    }
+
+    public void exitItinerary(ActionEvent e){
+        itineraryReviewPane.setVisible(false);
+        itineraryWelcomePane.setVisible(true);
+    }
+
+    public void itineraryAddNextAirport(ActionEvent e){
+        itineraryReviewPane.setVisible(false);
+        itineraryAirportPane.setVisible(true);
+    }
+
+
 
     //These lists are used to display the currently loaded objects
     private static ObservableList<Airline> currentlyLoadedAirlines = FXCollections.observableArrayList();
@@ -73,7 +175,8 @@ public class MainController implements Initializable {
     public TableView<Route> routeTable;
     @FXML
     public Pane tableView;
-    private Data loadedData = null;
+    @FXML
+    public Tab dataTab;
     @FXML
     private FlightViewController flightViewController;
     @FXML
@@ -192,6 +295,17 @@ public class MainController implements Initializable {
     private GridPane graphsPane;
     @FXML
     private GridPane graphsStartPane;
+    @FXML
+    private Tab flightTab;
+    @FXML
+    private TableView<Airport> itineraryTable;
+    @FXML
+    private TableColumn<Airport, String> itineraryAirportName;
+    @FXML
+    private TableColumn<Airport, String> itineraryCity;
+    @FXML
+    private TableColumn<Airport, String> itineraryCountry;
+
 
     public static ObservableList<Airline> getCurrentlyLoadedAirlines() {
         return currentlyLoadedAirlines;
@@ -247,6 +361,7 @@ public class MainController implements Initializable {
     public void showAirports() {
         try {
             airportTable.setItems(currentlyLoadedAirports);
+            itineraryTable.setItems(currentlyLoadedAirports);
             setAirportComboBoxes();
         } catch (NullPointerException np) {
             System.out.println("Error Loading Airports");
@@ -541,8 +656,6 @@ public class MainController implements Initializable {
         searchRouteViewController.setEquipmentCombobox(sortedEquipment);
         searchRouteViewController.setStopoverCombobox(stopsList);
     }
-    @FXML
-    private Tab flightTab;
 
     /* Opens a file chooser for the user to select the Flight Data file, then loads the data and switches views*/
     public void addFlightData(ActionEvent e) {
@@ -871,22 +984,30 @@ public class MainController implements Initializable {
         tableView.setVisible(true);
     }
 
+    public void switchToDataTab() {
+        SingleSelectionModel<Tab> selectionModel = dataTabs.getSelectionModel();
+        selectionModel.select(dataTab);
+    }
+
     /*Switches to interface for adding an airport*/
     public void switchToAddAirport(ActionEvent e) {
         resetView();
         addAirportViewController.makeVisible();
+        switchToDataTab();
     }
 
     /*Switches to interface for adding an airline*/
     public void switchToAddAirline(ActionEvent e) {
         resetView();
         addAirlineViewController.makeVisible();
+        switchToDataTab();
     }
 
     /*Switches to interface for adding a route*/
     public void switchToAddRoute(ActionEvent e) {
         resetView();
         addRouteViewController.makeVisible();
+        switchToDataTab();
     }
 
     /*Used during initialisation to set this as main controller of all child controllers*/
@@ -931,10 +1052,15 @@ public class MainController implements Initializable {
         altitude.setCellValueFactory(new PropertyValueFactory<Airport, String>("Altitude"));
         timezone.setCellValueFactory(new PropertyValueFactory<Airport, String>("Timezone"));
         DST.setCellValueFactory(new PropertyValueFactory<Airport, String>("DST"));
+        itineraryAirportName.setCellValueFactory(new PropertyValueFactory<Airport, String>("Name"));
+        itineraryCity.setCellValueFactory(new PropertyValueFactory<Airport, String>("City"));
+        itineraryCountry.setCellValueFactory(new PropertyValueFactory<Airport, String>("Country"));
+
         //noRoutes.setCellValueFactory(new PropertyValueFactory<Airport, String>("Routes"));
 
         // This sets Airports with no routes red. Alternates colours for clarity
         setAirportsWithoutRoutes(airportTable);
+        setAirportsWithoutRoutes(itineraryTable);
     }
 
     public void setAirportsWithoutRoutes(TableView<Airport> airportTable) {
@@ -948,10 +1074,10 @@ public class MainController implements Initializable {
                         if (!empty) {
                             if (item.getNumRoutes() == 0) {
                                 if (isLightCoral) {
-                                    setStyle("-fx-background-color:rgba(195, 0, 0, 0.85)");
+                                    setStyle("-fx-background-color:#ffcccc");
                                     isLightCoral = false;
                                 } else {
-                                    setStyle("-fx-background-color:rgba(205, 0, 0, 0.86)");
+                                    setStyle("-fx-background-color:#ff9999");
                                     isLightCoral = true;
                                 }
 
@@ -985,17 +1111,17 @@ public class MainController implements Initializable {
     }
 
 
-    /*
+    /**
     Initialises all graphs. If items are selected in the data tables these items will be analysed,
     otherwise all loaded data is used.
      */
     @FXML
     public void setGraphs(ActionEvent e){
         graphsStartPane.setVisible(false);
-        addToAirlinesPerCountry();
-        addToAirportsPerCountry();
-        addToEquipmentPerRoute();
-        addToRoutesPerAirport();
+        setAirlinesPerCountry(currentlyLoadedAirlines);
+        setAirportsPerCountry(currentlyLoadedAirports);
+        setEquipmentPerRoute(currentlyLoadedRoutes);
+        setRoutesPerAirportNoNullRoutes(currentlyLoadedAirports);
         graphsPane.setVisible(true);
     }
     /*
@@ -1055,6 +1181,42 @@ public class MainController implements Initializable {
      * @param loadedAirports: ObservableList of Airport Objects
      */
     public void setRoutesPerAirport(ObservableList<Airport> loadedAirports){
+        routesPerAirport.getData().clear();
+        if (!loadedAirports.isEmpty()) {
+            XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
+            ArrayList<String> airportNames = new ArrayList<String>();
+            airportNames.clear();
+
+            /*Collections.sort(loadedAirports, new Comparator<Airport>() {
+                @Override
+                public int compare(Airport o1, Airport o2) {
+                    return o1.getNumRoutes() - o2.getNumRoutes();
+                }
+            }.reversed());*/
+            /*if (routeNum.getValue() > loadedAirports.size()){
+                routeNum.setValue(loadedAirports.size());
+            }*/
+            for (int i = 0; i < loadedAirports.size(); i++) {
+                int routes = loadedAirports.get(i).getNumRoutes();
+                String name = loadedAirports.get(i).getName();
+                int version = 1;
+                for (int j = 0; j < series.getData().size(); j++) {
+                    if (name.equals(series.getData().get(j).getXValue().split(" : ")[0].split("_")[0])) {
+                        version += 1;
+                    }
+                }
+                name = name + "_" + Integer.toString(version);
+                airportNames.add(name + " : " + Integer.toString(routes));
+                series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
+            }
+            routePerAirportAxis.getCategories().clear();
+            /*if (routeNum.getValue() > 0){*/
+            routePerAirportAxis.setCategories(FXCollections.observableArrayList(airportNames));
+            routesPerAirport.getData().add(series);
+        }
+    }
+
+    public void setRoutesPerAirportNoNullRoutes(ObservableList<Airport> loadedAirports){
         routesPerAirport.getData().clear();
         if (!loadedAirports.isEmpty()) {
             XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
@@ -1233,12 +1395,7 @@ public class MainController implements Initializable {
         }
     }
 
-
-
     //-----------------------------------------------------------------------------------------------------------------
-
-
-
     //Sets Table Cells in Airline Table Viewer to Airline attributes
     @FXML
     public void initialize(URL location, ResourceBundle resources) {

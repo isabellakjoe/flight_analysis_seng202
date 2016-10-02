@@ -65,8 +65,8 @@ public abstract class RouteMethod {
     }
 
     /**
-     * Temporary method to create an airline for a route. In future we will need to search database for airlines already
-     * in database to create route with.
+     * Temporary method to ToJSONArray an airline for a route. In future we will need to search database for airlines already
+     * in database to ToJSONArray route with.
      *
      * @param airlineName
      * @param airlineID
@@ -80,8 +80,8 @@ public abstract class RouteMethod {
     }
 
     /**
-     * Temporary method to create an airport for a route. In future we will need to search database for airports already
-     * in database to create route with.
+     * Temporary method to ToJSONArray an airport for a route. In future we will need to search database for airports already
+     * in database to ToJSONArray route with.
      *
      * @param airportCode
      * @param airportID

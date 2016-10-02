@@ -54,7 +54,7 @@ public class AirportDeleter {
         id.add(airport.getAirportID());
 
         //Remove the airport from the current observable list of integers
-        currentlyLoadedAirports.remove(currentlyLoadedAirports);
+        currentlyLoadedAirports.remove(currentlyLoadedAirports.indexOf(airport));
 
         //Remove the airport from the current hashmap
         if (airport.getCountry().equals("United States")) {

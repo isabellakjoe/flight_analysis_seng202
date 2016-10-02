@@ -17,6 +17,7 @@ import seng202.group8.Model.DatabaseMethods.Database;
 import seng202.group8.Model.DatabaseMethods.RouteDatabaseLoader;
 import seng202.group8.Model.Objects.Airline;
 import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Flight;
 import seng202.group8.Model.Objects.Route;
 
 import java.sql.Connection;

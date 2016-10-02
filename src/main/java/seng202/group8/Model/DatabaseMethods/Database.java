@@ -88,7 +88,7 @@ public class Database {
 
 
     /**
-     * A method to create the database for the application. Should be run on first launch of the application.
+     * A method to ToJSONArray the database for the application. Should be run on first launch of the application.
      * Tests whether a database already exists in the file system, if so deletes it and creates a new database
      * to be used as a form of memory for the application.
      */
