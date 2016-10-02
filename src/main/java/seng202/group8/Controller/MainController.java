@@ -282,6 +282,8 @@ public class MainController implements Initializable {
     @FXML
     private SearchAirportViewController searchAirportViewController;
     @FXML
+    private PopupController popupController;
+    @FXML
     private TableColumn<Airline, String> airlineID;
     @FXML
     private TableColumn<Airline, String> airlineName;

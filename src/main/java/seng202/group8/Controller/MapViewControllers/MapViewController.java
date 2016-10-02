@@ -17,6 +17,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng202.group8.Controller.MainController;
+import seng202.group8.Controller.PopupController;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Flight;
 import seng202.group8.Model.Objects.Route;
@@ -24,6 +25,7 @@ import seng202.group8.Model.Objects.Waypoint;
 import seng202.group8.Model.Searchers.RouteSearcher;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.awt.*;
@@ -97,7 +99,7 @@ public class MapViewController extends Component {
                 Stage stage = new Stage();
 
                 PopupController cont = loader.getController();
-                cont.setUpNoAirports(stage);
+                cont.setUpEmptyAirports(stage);
                 stage.initModality(Modality.APPLICATION_MODAL);
 
                 stage.setScene(new Scene(root));
@@ -120,7 +122,8 @@ public class MapViewController extends Component {
                 Stage stage = new Stage();
 
                 PopupController cont = loader.getController();
-                cont.setUpYesNo(stage, airportList);
+                String type = "airport";
+                cont.setUpYesNo(stage, airportList, type);
                 stage.initModality(Modality.APPLICATION_MODAL);
 
                 stage.setScene(new Scene(root));
@@ -140,7 +143,7 @@ public class MapViewController extends Component {
      *
      * @param airports: A list of Airports
      */
-    private void showAirportMarkers(List airports) {
+    public void showAirportMarkers(List airports) {
         Iterator i = airports.iterator();
         while (i.hasNext()) {
             Airport airport = (Airport) i.next();
@@ -183,9 +186,26 @@ public class MapViewController extends Component {
         if (routes.size() < 1000 && routes.size() != 0) {
             createMapRoutes(routes);
         } else if (routes.isEmpty()) {
-            JOptionPane jp = new JOptionPane();
-            jp.setSize(600, 600);
-            jp.showMessageDialog(null, "No Routes to display.", "Error Message", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/popup.fxml"));
+
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+
+                PopupController cont = loader.getController();
+                cont.setUpEmptyRoutes(stage);
+                stage.initModality(Modality.APPLICATION_MODAL);
+
+                stage.setScene(new Scene(root));
+
+                stage.show();
+
+
+            }catch(IOException io){
+                io.printStackTrace();
+            }
+
             displayAllRoutes.setSelected(false);
 //            int result = jp.showOptionDialog(this, "No Routes to display. \nAdd Route Data?", "Error Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Add", "Cancel" }, JOptionPane.NO_OPTION);
 //            if (result == JOptionPane.YES_OPTION) {
@@ -195,15 +215,27 @@ public class MapViewController extends Component {
 //                displayAllRoutes.setSelected(false);
 //            }
         } else {
-            JOptionPane jp = new JOptionPane();
-            jp.setSize(600, 600);
-            JLabel msgLabel = new JLabel("Are you sure you want to display " +  routes.size() + " routes? \nThis may take a while...", JLabel.CENTER);
-            int reply = jp.showConfirmDialog(null, msgLabel, "Error Message", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-                createMapRoutes(routes);
-            } else {
-                displayAllRoutes.setSelected(false);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/popup.fxml"));
+
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+
+                PopupController cont = loader.getController();
+                String type = "route";
+                cont.setUpYesNo(stage, routes, type);
+                stage.initModality(Modality.APPLICATION_MODAL);
+
+                stage.setScene(new Scene(root));
+
+                stage.show();
+
+
+            }catch(IOException io){
+                io.printStackTrace();
             }
+
         }
     }
 
@@ -211,7 +243,7 @@ public class MapViewController extends Component {
      *
      * @param routes: a list of Routes
      */
-    private void createMapRoutes(List routes) {
+    public void createMapRoutes(List routes) {
         Iterator i = routes.iterator();
         while (i.hasNext()) {
             Route route = (Route) i.next();
@@ -363,29 +395,54 @@ public class MapViewController extends Component {
         if (waypoints.size() < 1000 && waypoints.size() != 0) {
             createFlightPath();
         } else if (waypoints.isEmpty()) {
-            JOptionPane jp = new JOptionPane();
-            jp.setSize(600, 600);
-            int result = jp.showOptionDialog(this, "No Flight Path to display. \nAdd Flight Data?", "Error Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Add", "Cancel" }, JOptionPane.NO_OPTION);
-            if (result == JOptionPane.YES_OPTION) {
-                mainController.addFlightData(new ActionEvent());
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/popup.fxml"));
+
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+
+                PopupController cont = loader.getController();
+                cont.setUpEmptyFlights(stage);
+                stage.initModality(Modality.APPLICATION_MODAL);
+
+                stage.setScene(new Scene(root));
+
+                stage.show();
+
+
+            }catch(IOException io){
+                io.printStackTrace();
             }
-            addFlightPath.setSelected(false);
+
         } else {
-            JOptionPane jp = new JOptionPane();
-            jp.setSize(600, 600);
-            JLabel msgLabel = new JLabel("Are you sure you want to display a Flight Path with " +  waypoints.size() + " stops? \nThis may take a while...", JLabel.CENTER);
-            int reply = jp.showConfirmDialog(null, msgLabel, "Error Message", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-                createFlightPath();
-            } else {
-                addFlightPath.setSelected(false);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/popup.fxml"));
+
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+
+                PopupController cont = loader.getController();
+                String type = "flight";
+                cont.setUpYesNo(stage, waypoints, type);
+                stage.initModality(Modality.APPLICATION_MODAL);
+
+                stage.setScene(new Scene(root));
+
+                stage.show();
+
+
+            }catch(IOException io){
+                io.printStackTrace();
             }
+
         }
     }
 
     /** Method to display the flightpath waypoints on the map
      */
-    private void createFlightPath() {
+    public void createFlightPath() {
         String scriptToExecute = "displayFlight(" + ToJSONArray.toJSONFlightPath() + ");";
         webEngine.executeScript(scriptToExecute);
     }

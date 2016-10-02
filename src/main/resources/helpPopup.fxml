@@ -7,7 +7,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="helpPopupPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" stylesheets="@mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.HelpPopupController">
+<GridPane id="helpPopup" fx:id="helpPopupPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" stylesheets="@mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.HelpPopupController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="650.0" minWidth="10.0" prefWidth="445.0" />
   </columnConstraints>
@@ -17,11 +17,11 @@
     <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="133.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Text fx:id="helpPopupTextTwo" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="576.7294921875" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Text fx:id="helpPopupTextTwo" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="576.7294921875" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets bottom="60.0" top="20.0" />
          </GridPane.margin></Text>
-      <Text fx:id="helpPopupTextOne" layoutX="132.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="587.7294921875" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+      <Text fx:id="helpPopupTextOne" layoutX="132.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="587.7294921875" GridPane.halignment="CENTER" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="20.0" />
          </GridPane.margin></Text>
