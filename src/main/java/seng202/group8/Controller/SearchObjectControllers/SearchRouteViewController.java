@@ -52,7 +52,7 @@ public class SearchRouteViewController {
         this.mainController = mainController;
     }
 
-    /*
+    /**
     Clears all search fields and reset tables from returned results to all records
      */
     @FXML
@@ -71,7 +71,7 @@ public class SearchRouteViewController {
         mainController.routeTable.setItems(mainController.getCurrentlyLoadedRoutes());
     }
 
-    /*
+    /**
     Changes view to allow adding a record
      */
     @FXML
@@ -80,7 +80,7 @@ public class SearchRouteViewController {
         mainController.switchToDataTab();
     }
 
-    /*
+    /**
     Executes a search for a record based on multiple criteria
      */
     @FXML
@@ -88,6 +88,7 @@ public class SearchRouteViewController {
         mainController.resetView();
         mainController.tableView.setVisible(true);
         mainController.routeTable.setVisible(true);
+        mainController.backToTableView(e);
         mainController.switchToDataTab();
 
 
@@ -169,7 +170,7 @@ public class SearchRouteViewController {
         mainController.routeTable.setItems(matchingRoutes);
     }
 
-    /*
+    /**
     Switches to advanced search mode with more fields available
      */
     @FXML
@@ -186,7 +187,7 @@ public class SearchRouteViewController {
         routeAddButton.setVisible(false);
     }
 
-    /*
+    /**
     Returns to streamlined search
      */
     @FXML
@@ -209,7 +210,7 @@ public class SearchRouteViewController {
         destinationIDSearch.clear();
     }
 
-    /*
+    /**
     Sets the combo box for searching by codeshare status
     */
     public void setCodeshareCombobox(ArrayList<String> codeshareStatuses) {
@@ -217,7 +218,7 @@ public class SearchRouteViewController {
         codeshareSearch.getItems().setAll(codeshareStatuses);
     }
 
-    /*
+    /**
     Sets the combo box for searching by source airport
     */
     public void setSourceCombobox(List sortedSources) {
@@ -225,7 +226,7 @@ public class SearchRouteViewController {
         sourceSearch.getItems().setAll(sortedSources);
     }
 
-    /*
+    /**
     Sets the combo box for searching by destination airport
     */
     public void setDestinationCombobox(List sortedDestinations) {
@@ -241,7 +242,7 @@ public class SearchRouteViewController {
         equipmentSearch.getItems().setAll(sortedEquipment);
     }
 
-    /*
+    /**
     Sets the combo box for searching by number of stopovers
     */
     public void setStopoverCombobox(List stopsList) {

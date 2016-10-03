@@ -97,7 +97,7 @@ public class DatabaseSearcherTest {
     @Test
     public void testUnionStatement() {
         String sqlStatement = dbs.buildRouteSearch("sourceairport", "ASF");
-        String newStatement = dbs.addAdditionalLikeOption(sqlStatement, "route", "sourceairport", "DME");
+        String newStatement = dbs.addAdditionalLikeOption(sqlStatement, "sourceairport", "DME");
         //There are currently four distinct entities in database which match this query
         ObservableList<Route> routes = dbs.searchRouteByOption(conn, newStatement);
         assertTrue(4 == routes.size());

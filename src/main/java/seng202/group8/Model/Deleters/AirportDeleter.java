@@ -37,13 +37,15 @@ public class AirportDeleter {
 
         //Get all routes associated with this airport
         String sql = dbs.buildRouteSearch("sourceid", Integer.toString(airport.getAirportID()));
-        sql = dbs.addAdditionalLikeOption(sql, "route", "destinationid", Integer.toString(airport.getAirportID()));
+        sql = dbs.addAdditionalLikeOption(sql, "destinationid", Integer.toString(airport.getAirportID()));
         ObservableList<Route> routesFromDatabase = dbs.searchRouteByOption(connSearch, sql);
         Database.disconnect(connSearch);
         ObservableList<Route> routesToDelete = FXCollections.observableArrayList();
 
         for (int i = 0; i < routesFromDatabase.size(); i++) {
-            routesToDelete.add(MainController.getRouteHashMap().get(routesFromDatabase.get(i).getRouteID()));
+            if (routeHashMap.get(routesFromDatabase.get(i).getRouteID()) != null) {
+                routesToDelete.add(MainController.getRouteHashMap().get(routesFromDatabase.get(i).getRouteID()));
+            }
         }
 
         //Delete the routes from the app

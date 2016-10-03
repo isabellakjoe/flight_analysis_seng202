@@ -1304,10 +1304,10 @@ public class MainController implements Initializable {
                             } else {
                                 setStyle(null);
                             }
-                            super.updateItem(item, empty);
                         } else {
                             setStyle(null);
                         }
+                        super.updateItem(item, empty);
                     }
                 };
             }
@@ -1847,9 +1847,11 @@ public class MainController implements Initializable {
             Airport singleAirport = airports.get(i);
             deleter.deleteSingleAirport(singleAirport, routeHashMap, currentlyLoadedRoutes, airportHashMap, currentlyLoadedAirports);
         }
-        resetTables();
         airportTable.setItems(currentlyLoadedAirports);
         routeTable.setItems(currentlyLoadedRoutes);
+        setAirportsWithoutRoutes(airportTable);
+        setAirportComboBoxes();
+        resetTables();
     }
 
     /**
@@ -1867,9 +1869,11 @@ public class MainController implements Initializable {
             Airline singleAirline = airlines.get(i);
             deleter.deleteSingleAirline(singleAirline, routeHashMap, currentlyLoadedRoutes, airlineHashMap, currentlyLoadedAirlines);
         }
-        resetTables();
         airlineTable.setItems(currentlyLoadedAirlines);
         routeTable.setItems(currentlyLoadedRoutes);
+        setAirportsWithoutRoutes(airportTable);
+        setAirlineComboBoxes();
+        resetTables();
     }
 
     /**
@@ -1887,8 +1891,9 @@ public class MainController implements Initializable {
             Route singleRoute = routes.get(i);
             deleter.deleteSingleRoute(singleRoute, getRouteHashMap(), currentlyLoadedRoutes);
         }
-        resetTables();
         routeTable.setItems(currentlyLoadedRoutes);
+        setAirportsWithoutRoutes(airportTable);
+        resetTables();
     }
 
 }
