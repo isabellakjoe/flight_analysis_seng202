@@ -24,8 +24,16 @@ public class RouteDeleter {
     public void deleteSingleRoute(Route route, HashMap<Integer, Route> routeHashMap, ObservableList<Route> currentlyLoadedRoutes) {
 
         //Remove the route from the airports count of routes
-        route.getSourceAirport().setNumRoutes(route.getSourceAirport().getNumRoutes() - 1);
-        route.getDestinationAirport().setNumRoutes(route.getDestinationAirport().getNumRoutes() - 1);
+        try {
+            route.getSourceAirport().setNumRoutes(route.getSourceAirport().getNumRoutes() - 1);
+        } catch (NullPointerException e) {
+            //Do nothing here as airport no longer exists in the application
+        }
+        try {
+            route.getDestinationAirport().setNumRoutes(route.getDestinationAirport().getNumRoutes() - 1);
+        } catch (NullPointerException e) {
+            //Do nothing here as airport no longer exists in the application
+        }
 
         //Set up the variables
         DatabaseSaver dbs = new DatabaseSaver();
@@ -35,8 +43,12 @@ public class RouteDeleter {
         ArrayList<Integer> id = new ArrayList<Integer>();
         id.add(route.getRouteID());
 
+        System.out.println(currentlyLoadedRoutes.size());
+
         //Remove the route from the Observable GUI Array
-        currentlyLoadedRoutes.remove(currentlyLoadedRoutes.lastIndexOf(route));
+        currentlyLoadedRoutes.remove(currentlyLoadedRoutes.indexOf(route));
+
+        System.out.println(currentlyLoadedRoutes.size());
 
         //Remove the route from the Hashmap
         routeHashMap.remove(route.getRouteID());
@@ -62,6 +74,8 @@ public class RouteDeleter {
 
         //ArrayList of route ids to delete from the database
         ArrayList<Integer> ids = new ArrayList<Integer>();
+
+        System.out.println(routes.size());
 
         if (routes.size() >= 1) {
 

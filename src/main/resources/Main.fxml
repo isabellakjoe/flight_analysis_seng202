@@ -448,12 +448,17 @@
                                     <Insets left="30.0" right="30.0" />
                                  </GridPane.margin>
                               </TableView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Destination:" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a route:" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                                  <GridPane.margin>
                                     <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text fx:id="itinerarySelectRouteErrorMessage" fill="#d30e1b" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a route!" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets bottom="150.0" right="30.0" />
                                  </GridPane.margin>
                               </Text>
                            </children>
@@ -492,13 +497,18 @@
                                     <Insets left="30.0" right="30.0" />
                                  </GridPane.margin>
                               </TableView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Airport to depart from:" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select an airport to depart from:" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="20.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="20.0" />
                                  </font>
+                              </Text>
+                              <Text fx:id="itinerarySelectAirportErrorMessage" fill="#d30e1b" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select an airport!" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets bottom="150.0" right="30.0" />
+                                 </GridPane.margin>
                               </Text>
                            </children>
                         </GridPane>
@@ -516,10 +526,6 @@
                               <Button mnemonicParsing="false" onAction="#saveItinerary" text="Save Changes" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <GridPane.margin>
                                     <Insets bottom="70.0" right="30.0" top="20.0" />
-                                 </GridPane.margin></Button>
-                              <Button mnemonicParsing="false" onAction="#itineraryCancelChanges" text="Cancel Changes" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets bottom="70.0" left="30.0" top="20.0" />
                                  </GridPane.margin></Button>
                               <Button mnemonicParsing="false" onAction="#itineraryAddNextAirport" text="Add another airport" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <GridPane.margin>

@@ -104,7 +104,7 @@ public class DatabaseSearcher {
      */
     public String buildRouteSearch(String option, String name) {
 
-        String sql = "SELECT DISTINCT * FROM route WHERE " + option + " LIKE '%" + name + "%'";
+        String sql = "SELECT DISTINCT * FROM route WHERE " + option + " = '" + name + "'";
         return sql;
 
     }
@@ -113,19 +113,17 @@ public class DatabaseSearcher {
      * Method to add additional like statements to an sql statement
      *
      * @param sql    an sql statement which needs additional parameters
-     * @param table  the table of the database
      * @param option the column of the table
      * @param name   the string parameter for which the tables column must match
      * @return
      */
-    public String addAdditionalLikeOption(String sql, String table, String option, String name) {
-        String addQuery = " UNION SELECT * FROM " + table + " WHERE " + option + " LIKE '" + name + "%'";
+    public String addAdditionalLikeOption(String sql, String option, String name) {
+        String addQuery = " or +" + option + " LIKE '" + name + "%'";
         return sql + addQuery;
     }
 
     /**
      * Method to build a sql query for the number of routes a source airport has
-     *
      * @param orderby string parameter to order the list ASC or DESC
      * @return a sql statement containing airport ids and the number of routes
      */

@@ -41,14 +41,14 @@ public class AirlineDeleter {
         ObservableList<Route> routesToDelete = FXCollections.observableArrayList();
 
         for (int i = 0; i < routeFromDatabase.size(); i++) {
-            routesToDelete.add(MainController.getRouteHashMap().get(routeFromDatabase.get(i).getRouteID()));
+            if (routeHashMap.get(routeFromDatabase.get(i).getRouteID()) != null) {
+                routesToDelete.add(MainController.getRouteHashMap().get(routeFromDatabase.get(i).getRouteID()));
+            }
         }
 
         //Delete the associated routes
         RouteDeleter rd = new RouteDeleter();
         rd.deleteListRoutes(routesToDelete, routeHashMap, currentlyLoadedRoutes);
-
-        System.out.println(MainController.getCurrentlyLoadedRoutes().size());
 
         //Get id so database knows which one to delete
         ArrayList<Integer> ids = new ArrayList<Integer>();

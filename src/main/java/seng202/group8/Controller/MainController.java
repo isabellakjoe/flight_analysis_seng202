@@ -25,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -106,7 +107,6 @@ public class MainController implements Initializable {
     @FXML
     public TableView<Airport> itineraryAirportTable;
     private Itinerary currentlyLoadedItinerary;
-    private Itinerary lastSavedItinerary;
     @FXML
     private FlightViewController flightViewController;
     @FXML
@@ -317,7 +317,8 @@ public class MainController implements Initializable {
             objectStream.flush();
             objectStream.close();
             fileStream.close();
-            lastSavedItinerary = currentlyLoadedItinerary;
+
+
             itineraryWelcomePane.setVisible(false);
             itineraryReviewPane.setVisible(false);
             itineraryAirportPane.setVisible(true);
@@ -329,7 +330,16 @@ public class MainController implements Initializable {
                     matchingAirportsWithRoutes.add(currentlyLoadedAirports.get(i));
                 }
             }
-            itineraryAirportTable.setItems(matchingAirportsWithRoutes);
+
+            ObservableList<Airport> finalList = FXCollections.observableArrayList();
+            for (int j = 0; j < matchingAirportsWithRoutes.size(); j++){
+                RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
+                searcher.routesOfSourceID(matchingAirportsWithRoutes.get(j).getAirportID());
+                if (searcher.getLoadedRoutes().size() > 0){
+                    finalList.add(matchingAirportsWithRoutes.get(j));
+                }
+            }
+            itineraryAirportTable.setItems(finalList);
 
             SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
             selectionModel.select(airport);
@@ -357,7 +367,6 @@ public class MainController implements Initializable {
             objectStream.flush();
             objectStream.close();
             fileStream.close();
-            currentlyLoadedItinerary = lastSavedItinerary;
             clearItineraryTables();
             itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
 
@@ -389,7 +398,6 @@ public class MainController implements Initializable {
                 itineraryWelcomePane.setVisible(false);
                 itineraryReviewPane.setVisible(true);
                 currentlyLoadedItinerary = itinerary;
-                lastSavedItinerary = itinerary;
                 clearItineraryTables();
                 itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
             }
@@ -411,6 +419,8 @@ public class MainController implements Initializable {
         itineraryAirportPane.setVisible(false);
         itineraryRoutePane.setVisible(false);
         itineraryReviewPane.setVisible(true);
+        itinerarySelectAirportErrorMessage.setVisible(false);
+        itinerarySelectRouteErrorMessage.setVisible(false);
         clearItineraryTables();
         itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
     }
@@ -432,8 +442,10 @@ public class MainController implements Initializable {
             itineraryRouteTable.setItems(routes);
             itineraryAirportPane.setVisible(false);
             itineraryRoutePane.setVisible(true);
+            itinerarySelectRouteErrorMessage.setVisible(false);
+            itinerarySelectAirportErrorMessage.setVisible(false);
         } else {
-            System.out.println("Must select an airport");
+            itinerarySelectAirportErrorMessage.setVisible(true);
         }
     }
 
@@ -445,6 +457,7 @@ public class MainController implements Initializable {
     public void itineraryAddRoute(ActionEvent e) {
         Route route = itineraryRouteTable.getSelectionModel().getSelectedItem();
         if (route != null) {
+            itinerarySelectRouteErrorMessage.setVisible(false);
             currentlyLoadedItinerary.addToRoutes(route);
             itineraryRoutePane.setVisible(false);
             itineraryReviewPane.setVisible(true);
@@ -452,20 +465,15 @@ public class MainController implements Initializable {
             itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
             initItineraryMap();
         } else {
-            System.out.println("must select a route");
+            itinerarySelectRouteErrorMessage.setVisible(true);
         }
     }
 
-    /**
-     * Cancels all unsaved itinerary changes
-     *
-     * @param e: The ActionEvent
-     */
-    public void itineraryCancelChanges(ActionEvent e) {
-        currentlyLoadedItinerary = lastSavedItinerary;
-        clearItineraryTables();
-        itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
-    }
+    @FXML
+    private Text itinerarySelectRouteErrorMessage;
+
+    @FXML
+    private Text itinerarySelectAirportErrorMessage;
 
     /**
      * Exits the itinerary view and returns to the welcome screen.
@@ -494,7 +502,16 @@ public class MainController implements Initializable {
                 matchingAirportsWithRoutes.add(currentlyLoadedAirports.get(i));
             }
         }
-        itineraryAirportTable.setItems(matchingAirportsWithRoutes);
+        ObservableList<Airport> finalList = FXCollections.observableArrayList();
+        for (int j = 0; j < matchingAirportsWithRoutes.size(); j++){
+            RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
+            searcher.routesOfSourceID(matchingAirportsWithRoutes.get(j).getAirportID());
+            if (searcher.getLoadedRoutes().size() > 0){
+                finalList.add(matchingAirportsWithRoutes.get(j));
+            }
+        }
+
+        itineraryAirportTable.setItems(finalList);
 
         SingleSelectionModel<Tab> selectionModel = search.getSelectionModel();
         selectionModel.select(airport);
@@ -688,6 +705,7 @@ public class MainController implements Initializable {
 
                 for (Route route : loadedRoutes) {
                     route.setRouteID(routeIds);
+                    System.out.print(routeIds);
                     routeIds += 1;
                 }
 
@@ -1303,10 +1321,10 @@ public class MainController implements Initializable {
                             } else {
                                 setStyle(null);
                             }
-                            super.updateItem(item, empty);
                         } else {
                             setStyle(null);
                         }
+                        super.updateItem(item, empty);
                     }
                 };
             }
@@ -1438,7 +1456,10 @@ public class MainController implements Initializable {
                         version += 1;
                     }
                 }
-                name = name + "_" + Integer.toString(version);
+                if (version != 1) {
+                    name = name + "_" + Integer.toString(version);
+                }
+
                 airportNames.add(name + " : " + Integer.toString(routes));
                 series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
             }
@@ -1843,9 +1864,11 @@ public class MainController implements Initializable {
             Airport singleAirport = airports.get(i);
             deleter.deleteSingleAirport(singleAirport, routeHashMap, currentlyLoadedRoutes, airportHashMap, currentlyLoadedAirports);
         }
-        resetTables();
         airportTable.setItems(currentlyLoadedAirports);
         routeTable.setItems(currentlyLoadedRoutes);
+        setAirportsWithoutRoutes(airportTable);
+        setAirportComboBoxes();
+        resetTables();
     }
 
     /**
@@ -1863,9 +1886,11 @@ public class MainController implements Initializable {
             Airline singleAirline = airlines.get(i);
             deleter.deleteSingleAirline(singleAirline, routeHashMap, currentlyLoadedRoutes, airlineHashMap, currentlyLoadedAirlines);
         }
-        resetTables();
         airlineTable.setItems(currentlyLoadedAirlines);
         routeTable.setItems(currentlyLoadedRoutes);
+        setAirportsWithoutRoutes(airportTable);
+        setAirlineComboBoxes();
+        resetTables();
     }
 
     /**
@@ -1883,8 +1908,9 @@ public class MainController implements Initializable {
             Route singleRoute = routes.get(i);
             deleter.deleteSingleRoute(singleRoute, getRouteHashMap(), currentlyLoadedRoutes);
         }
-        resetTables();
         routeTable.setItems(currentlyLoadedRoutes);
+        setAirportsWithoutRoutes(airportTable);
+        resetTables();
     }
 
 
