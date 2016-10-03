@@ -375,7 +375,7 @@
                <content>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <GridPane fx:id="itineraryWelcomePane">
+                        <GridPane fx:id="itineraryWelcomePane" visible="false">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints />
@@ -394,7 +394,7 @@
                                  <GridPane.margin>
                                     <Insets bottom="10.0" top="65.0" />
                                  </GridPane.margin></Button>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to itineraries! " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Itineraries! " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
@@ -417,7 +417,7 @@
                               </Text>
                            </children>
                         </GridPane>
-                        <GridPane fx:id="itineraryRoutePane" visible="false">
+                        <GridPane fx:id="itineraryRoutePane">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="484.0" />
                           </columnConstraints>
