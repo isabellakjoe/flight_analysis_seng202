@@ -151,12 +151,6 @@ public class MapViewController extends Component {
             Airport airport = (Airport) i.next();
             Double latitude = airport.getLatitude();
             Double longitude = airport.getLongitude();
-//            String createInfoScript = "createInfoString(" + airport.getAirportID() + ", " + airport.getName() + ", " +
-//                    airport.getCity() + ", " + airport.getCountry() + ", " + airport.getIATA() + ", " + airport.getFAA() +
-//                    airport.getICAO() + ", " + airport.getLatitude() + ", " + airport.getLongitude() + ", " +
-//                    airport.getAltitude() + ", " + airport.getTimezone() + ", " + airport.getDST() + ", " +
-//                    airport.getOlsonTimezone() + ')';
-//            webEngine.executeScript(createInfoScript);
             String scriptToExecute = "createMarker(" + latitude + ", " + longitude + ")";
             webEngine.executeScript(scriptToExecute);
             webEngine.executeScript("showMarkers()");
@@ -166,7 +160,7 @@ public class MapViewController extends Component {
     /**
      * Method to remove currently displayed airport markers
      */
-    private void clearAirports() {
+    public void clearAirports() {
         webEngine.executeScript("clearMarkers()");
     }
 
@@ -215,13 +209,6 @@ public class MapViewController extends Component {
             }
 
             displayAllRoutes.setSelected(false);
-//            int result = jp.showOptionDialog(this, "No Routes to display. \nAdd Route Data?", "Error Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Add", "Cancel" }, JOptionPane.NO_OPTION);
-//            if (result == JOptionPane.YES_OPTION) {
-//                mainController.addRouteData(new ActionEvent());
-//                createMapRoutes(routes);
-//            } else {
-//                displayAllRoutes.setSelected(false);
-//            }
         } else {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/popup.fxml"));
@@ -274,7 +261,7 @@ public class MapViewController extends Component {
      * @param airportID: A String of the Name of the airport
      * @return The coordinates as a Double
      */
-    private double[] getCoordinates(String airportID) {
+    public double[] getCoordinates(String airportID) {
         double[] coords = {};
         List airports = mainController.getCurrentlyLoadedAirports();
         Iterator i = airports.iterator();
@@ -293,7 +280,7 @@ public class MapViewController extends Component {
     /**
      * Method to remove currently displayed paths
      */
-    private void clearRoutes() {
+    public void clearRoutes() {
         webEngine.executeScript("clearRoutes()");
     }
 
@@ -428,7 +415,7 @@ public class MapViewController extends Component {
                 stage.setScene(new Scene(root));
 
                 stage.show();
-
+                addFlightPath.setSelected(false);
 
             } catch (IOException io) {
                 io.printStackTrace();

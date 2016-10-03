@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Google Map</title>
     <meta name="viewport" content="initial-scale=1.0">
@@ -18,13 +18,13 @@
 </head>
 <body>
 <div id="map"></div>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6fwgIBGdcUE5YlxlfCWK9kxBXBujdM9U&callback=initMap"
+        async defer></script>
 <script>
     var map;
     var markers = new Array();
     var paths = new Array();
-    var flightPath;
-    var flightPaths = new Array();
-    var info;
 
     function initMap() {
         var styledMapType = new google.maps.StyledMapType(
@@ -59,7 +59,6 @@
                             {"lightness": 11.200000000000017},
                             {"gamma": 1}]}],
                 {name: 'Styled Map'});
-
 
         var init = {lat: 29.947130, lng: 23.961692};
 
@@ -109,36 +108,13 @@
     }
 
 
-    //    function createInfoString(AirportId, Name, City, Country, IATA, FAA, ICAO, Lat, Lng, Alt, Time, DST, Tz) {
-    //        info = '<div id="content">'+
-    //                '<div id="siteNotice">'+
-    //                '</div>'+
-    //                'Airport Id: ' + AirportId + '\n Name: ' + Name + '\n City: ' + City + '\n Country: ' + Country +
-    //                '\n IATA: ' + IATA + '\n FAA: ' + FAA + '\n ICAO: ' + ICAO + '\n Latitude: ' + Lat +
-    //                '\n Longitude: ' + Lng + '\n Altitude: ' + Alt + '\n Time: ' + Time + '\n Daylight Savings Time: ' +
-    //                DST + '\n Timezone: ' + Tz +
-    //                '</div>'+
-    //                '</div>';
-    //
-    //    }
-
-    function createMarker(lat, lng) {
+    function createItineraryMarker(lat, lng) {
         var latLng = {lat: lat, lng: lng};
         var marker = new google.maps.Marker({
             position: latLng,
             map: map
         });
         markers.push(marker);
-//        var infowindow = new google.maps.InfoWindow({
-//            content: info
-//        });
-//        marker.addEventListener('click', function() {
-//            infowindow.open(map, marker);
-//        });
-        /*
-         centres screen over marker, DELETE THIS AND ADD FUNCTION
-         THAT CAN BE CALLED WHEN ALL AIRPORTS ADDED FOR SPEED
-         */
         map.panTo(marker.position);
     }
 
@@ -149,7 +125,7 @@
         }
     }
 
-    function showMarkers() {
+    function showItineraryMarkers() {
         setAllMarkers(map);
     }
 
@@ -158,7 +134,7 @@
     }
 
 
-    function drawRouteLine(srclat, srclng, destlat, destlng) {
+    function drawItineraryRouteLine(srclat, srclng, destlat, destlng) {
         var srcLatLng = {lat: srclat, lng: srclng};
         var destLatLng = {lat: destlat, lng: destlng};
         var coords = [srcLatLng, destLatLng];
@@ -194,33 +170,6 @@
     }
 
 
-    function displayFlight(flightPath) {
-        // Draw polyline for Flight Path
-        var flightPath = new google.maps.Polyline({
-            path: flightPath,
-            geodesic: true,
-            strokeColor: "#009999",
-            strokeOpacity: 1.0,
-            strokeWeight: 2
-        });
-        flightPath.setMap(map);
-        flightPaths.push(flightPath);
-    }
-
-
-    function setFlightPaths(map) {
-        for (var i = 0; i < flightPaths.length; i++) {
-            flightPaths[i].setMap(map);
-        }
-    }
-
-    function clearFlightPaths() {
-        setFlightPaths(null);
-    }
-
-
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6fwgIBGdcUE5YlxlfCWK9kxBXBujdM9U&callback=initMap"
-        async defer></script>
 </body>
 </html>

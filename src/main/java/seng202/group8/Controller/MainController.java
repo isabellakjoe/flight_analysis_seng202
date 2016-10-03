@@ -1,7 +1,10 @@
 package seng202.group8.Controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,6 +23,8 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -41,6 +46,16 @@ import seng202.group8.Model.Deleters.RouteDeleter;
 import seng202.group8.Model.Objects.*;
 import seng202.group8.Model.Parsers.FileLoader;
 import seng202.group8.Model.Searchers.RouteSearcher;
+
+
+import javafx.scene.control.TabPane;
+import seng202.group8.Model.Objects.Airport;
+import seng202.group8.Model.Objects.Flight;
+import seng202.group8.Model.Objects.Route;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+
 
 import javax.swing.*;
 import java.io.*;
@@ -435,6 +450,7 @@ public class MainController implements Initializable {
             itineraryReviewPane.setVisible(true);
             clearItineraryTables();
             itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
+            initItineraryMap();
         } else {
             System.out.println("must select a route");
         }
@@ -826,6 +842,7 @@ public class MainController implements Initializable {
 
     @FXML
     private GridPane noFlightPane;
+
     /**
      * Opens a file chooser for the user to select the Flight Data file, then loads the data and switches views
      *
@@ -1869,5 +1886,101 @@ public class MainController implements Initializable {
         resetTables();
         routeTable.setItems(currentlyLoadedRoutes);
     }
+
+
+    private WebEngine itineraryWebEngine;
+    @FXML
+    private WebView itineraryWebView;
+
+
+    /**
+     * Method to intialize the itinerary map html
+     */
+    public void initItineraryMap() {
+        itineraryWebEngine = itineraryWebView.getEngine();
+        itineraryWebEngine.load(getClass().getClassLoader().getResource("itineraryMaps.html").toExternalForm());
+        ObservableList<Route> routes = currentlyLoadedItinerary.getObservableRoutes();
+        List<Airport> airports = getAirports(routes);
+        itineraryWebEngine.
+                getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == Worker.State.SUCCEEDED) {
+                showAirportMarkers(airports);
+                createMapRoutes(routes);
+            }
+        });
+    }
+    /**
+     * Method that returns a list of source and destination airports
+     *
+     * @param routes : List of routes
+     * @return airports : list of airports
+     */
+
+    private List<Airport> getAirports(List routes) {
+        List<Airport> airports = new ArrayList<Airport>();
+        Iterator i = routes.iterator();
+        while (i.hasNext()) {
+            Route route = (Route) i.next();
+            Airport source = route.getSourceAirport();
+            Airport dest = route.getDestinationAirport();
+            airports.add(source);
+            airports.add(dest);
+        }
+        return airports;
+    }
+
+
+    /**
+     * Method to remove currently displayed airport markers
+     */
+    private void clearAirports() {
+        itineraryWebEngine.executeScript("clearMarkers()");
+    }
+
+    /**
+     * Method that clears, creates and displays airport markers
+     *
+     * @param airports: A list of Airports
+     */
+    public void showAirportMarkers(List airports) {
+        Iterator i = airports.iterator();
+        while (i.hasNext()) {
+            Airport airport = (Airport) i.next();
+            Double latitude = airport.getLatitude();
+            Double longitude = airport.getLongitude();
+            String scriptToExecute = "createItineraryMarker(" + latitude + ", " + longitude + ")";
+            itineraryWebEngine.executeScript(scriptToExecute);
+            itineraryWebEngine.executeScript("showItineraryMarkers()");
+        }
+    }
+
+    /**
+     * Method to remove currently displayed paths
+     */
+    public void clearRoutes() {
+        itineraryWebEngine.executeScript("clearRoutes()");
+    }
+
+    /**
+     * Method that clears, creates and displays airport markers
+     *
+     * @param routes: a list of Routes
+     */
+    public void createMapRoutes(List routes) {
+        Iterator i = routes.iterator();
+        while (i.hasNext()) {
+            Route route = (Route) i.next();
+            // get ids of source and destination airport
+            String source = route.getSourceAirportName();
+            String dest = route.getDestinationAirportName();
+            // find airport in currentlyLoadedAirports to get coords
+            double[] sourceCoords = mapViewController.getCoordinates(source);
+            double[] destCoords = mapViewController.getCoordinates(dest);
+            String scriptToExecute = "drawItineraryRouteLine(" + sourceCoords[0] + ", " + sourceCoords[1] + ", " + destCoords[0]
+                    + ", " + destCoords[1] + ")";
+            itineraryWebEngine.executeScript(scriptToExecute);
+        }
+    }
+
 
 }
