@@ -20,6 +20,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -403,6 +404,8 @@ public class MainController implements Initializable {
         itineraryAirportPane.setVisible(false);
         itineraryRoutePane.setVisible(false);
         itineraryReviewPane.setVisible(true);
+        itinerarySelectAirportErrorMessage.setVisible(false);
+        itinerarySelectRouteErrorMessage.setVisible(false);
         clearItineraryTables();
         itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
     }
@@ -424,8 +427,10 @@ public class MainController implements Initializable {
             itineraryRouteTable.setItems(routes);
             itineraryAirportPane.setVisible(false);
             itineraryRoutePane.setVisible(true);
+            itinerarySelectRouteErrorMessage.setVisible(false);
+            itinerarySelectAirportErrorMessage.setVisible(false);
         } else {
-            System.out.println("Must select an airport");
+            itinerarySelectAirportErrorMessage.setVisible(true);
         }
     }
 
@@ -437,16 +442,22 @@ public class MainController implements Initializable {
     public void itineraryAddRoute(ActionEvent e) {
         Route route = itineraryRouteTable.getSelectionModel().getSelectedItem();
         if (route != null) {
+            itinerarySelectRouteErrorMessage.setVisible(false);
             currentlyLoadedItinerary.addToRoutes(route);
             itineraryRoutePane.setVisible(false);
             itineraryReviewPane.setVisible(true);
             clearItineraryTables();
             itineraryReviewTable.setItems(currentlyLoadedItinerary.getObservableRoutes());
         } else {
-            System.out.println("must select a route");
+            itinerarySelectRouteErrorMessage.setVisible(true);
         }
     }
 
+    @FXML
+    private Text itinerarySelectRouteErrorMessage;
+
+    @FXML
+    private Text itinerarySelectAirportErrorMessage;
 
     /**
      * Exits the itinerary view and returns to the welcome screen.
@@ -678,6 +689,7 @@ public class MainController implements Initializable {
 
                 for (Route route : loadedRoutes) {
                     route.setRouteID(routeIds);
+                    System.out.print(routeIds);
                     routeIds += 1;
                 }
 
