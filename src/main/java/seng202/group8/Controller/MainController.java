@@ -1439,7 +1439,10 @@ public class MainController implements Initializable {
                         version += 1;
                     }
                 }
-                name = name + "_" + Integer.toString(version);
+                if (version != 1) {
+                    name = name + "_" + Integer.toString(version);
+                }
+
                 airportNames.add(name + " : " + Integer.toString(routes));
                 series.getData().add(new XYChart.Data<String, Integer>(name + " : " + Integer.toString(routes), routes));
             }
