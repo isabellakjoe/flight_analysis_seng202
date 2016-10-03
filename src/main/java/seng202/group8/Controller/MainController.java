@@ -53,6 +53,7 @@ import javafx.scene.control.TabPane;
 import seng202.group8.Model.Objects.Airport;
 import seng202.group8.Model.Objects.Flight;
 import seng202.group8.Model.Objects.Route;
+
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -332,10 +333,10 @@ public class MainController implements Initializable {
             }
 
             ObservableList<Airport> finalList = FXCollections.observableArrayList();
-            for (int j = 0; j < matchingAirportsWithRoutes.size(); j++){
+            for (int j = 0; j < matchingAirportsWithRoutes.size(); j++) {
                 RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
                 searcher.routesOfSourceID(matchingAirportsWithRoutes.get(j).getAirportID());
-                if (searcher.getLoadedRoutes().size() > 0){
+                if (searcher.getLoadedRoutes().size() > 0) {
                     finalList.add(matchingAirportsWithRoutes.get(j));
                 }
             }
@@ -503,10 +504,10 @@ public class MainController implements Initializable {
             }
         }
         ObservableList<Airport> finalList = FXCollections.observableArrayList();
-        for (int j = 0; j < matchingAirportsWithRoutes.size(); j++){
+        for (int j = 0; j < matchingAirportsWithRoutes.size(); j++) {
             RouteSearcher searcher = new RouteSearcher(currentlyLoadedRoutes);
             searcher.routesOfSourceID(matchingAirportsWithRoutes.get(j).getAirportID());
-            if (searcher.getLoadedRoutes().size() > 0){
+            if (searcher.getLoadedRoutes().size() > 0) {
                 finalList.add(matchingAirportsWithRoutes.get(j));
             }
         }
@@ -1935,6 +1936,7 @@ public class MainController implements Initializable {
             }
         });
     }
+
     /**
      * Method that returns a list of source and destination airports
      *

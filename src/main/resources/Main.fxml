@@ -375,7 +375,7 @@
                <content>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <GridPane fx:id="itineraryWelcomePane" visible="false">
+                        <GridPane fx:id="itineraryWelcomePane">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints />
@@ -415,9 +415,14 @@
                                     <Font size="20.0" />
                                  </font>
                               </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please note if you have a large amount of data loaded processing may be slow." GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </GridPane>
-                        <GridPane fx:id="itineraryRoutePane">
+                        <GridPane fx:id="itineraryRoutePane" visible="false">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="484.0" />
                           </columnConstraints>
@@ -518,9 +523,9 @@
                               <ColumnConstraints />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints maxHeight="383.0" minHeight="10.0" prefHeight="383.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="183.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="316.0" minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="383.0" minHeight="10.0" prefHeight="383.0" vgrow="ALWAYS" />
+                            <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="183.0" />
+                              <RowConstraints maxHeight="316.0" minHeight="10.0" prefHeight="114.0" vgrow="NEVER" />
                           </rowConstraints>
                            <children>
                               <Button mnemonicParsing="false" onAction="#saveItinerary" text="Save Changes" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">

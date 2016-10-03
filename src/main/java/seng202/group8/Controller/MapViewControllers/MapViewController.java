@@ -90,6 +90,7 @@ public class MapViewController extends Component {
     private void displayAirports(List airportList) {
         if (airportList.size() < 1000 && airportList.size() != 0) {
             showAirportMarkers(airportList);
+            displayAllAirports.setSelected(true);
         } else if (airportList.isEmpty()) {
 
             try {
@@ -130,6 +131,7 @@ public class MapViewController extends Component {
                 stage.setScene(new Scene(root));
 
                 stage.show();
+                displayAllAirports.setSelected(false);
 
 
             } catch (IOException io) {
@@ -187,6 +189,7 @@ public class MapViewController extends Component {
     private void displayRoutes(List routes) {
         if (routes.size() < 1000 && routes.size() != 0) {
             createMapRoutes(routes);
+            displayAllRoutes.setSelected(true);
         } else if (routes.isEmpty()) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/popup.fxml"));
@@ -202,6 +205,7 @@ public class MapViewController extends Component {
                 stage.setScene(new Scene(root));
 
                 stage.show();
+                displayAllRoutes.setSelected(false);
 
 
             } catch (IOException io) {
@@ -225,6 +229,7 @@ public class MapViewController extends Component {
                 stage.setScene(new Scene(root));
 
                 stage.show();
+                displayAllRoutes.setSelected(false);
 
 
             } catch (IOException io) {
