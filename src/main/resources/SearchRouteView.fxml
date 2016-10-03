@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="searchRoutePane" xmlns="http://javafx.com/javafx/8" fx:controller="seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<AnchorPane fx:id="searchRoutePane" minHeight="0.0" minWidth="0.0" prefHeight="509.0" prefWidth="276.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.SearchObjectControllers.SearchRouteViewController">
     <children>
-        <Button fx:id="routeSearch" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" id="searchButton"/>
+        <Button id="searchButton" fx:id="routeSearch" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#routeSearch" text="Search" />
         <Button fx:id="resetRouteSearch" layoutX="29.0" layoutY="250.0" mnemonicParsing="false" onAction="#resetRouteSearch" text="Reset" />
         <Button fx:id="routeAddButton" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToAddRoute" text="Add New Route" />
         <TextField fx:id="airlineSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="airline name" />
@@ -16,12 +17,17 @@
         <TextField fx:id="destinationIDSearch" layoutX="29.0" layoutY="413.0" prefHeight="25.0" prefWidth="220.0" promptText="to (airport ID)" visible="false" />
         <TextField fx:id="sourceIDSearch" layoutX="29.0" layoutY="369.0" prefHeight="25.0" prefWidth="220.0" promptText="from (airport ID)" visible="false" />
         <ComboBox fx:id="sourceSearch" layoutX="29.0" layoutY="115.0" prefHeight="26.0" prefWidth="220.0" promptText="Source " />
-        <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " id="header"/>
+        <Text id="header" layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Route search " />
         <ComboBox fx:id="destinationSearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Destination" />
         <ComboBox fx:id="stopoverSearch" layoutX="29.0" layoutY="205.0" prefWidth="220.0" promptText="Stops" />
         <ComboBox fx:id="equipmentSearch" layoutX="29.0" layoutY="244.0" prefHeight="26.0" prefWidth="220.0" promptText="Equipment" visible="false" />
         <ComboBox fx:id="codeshareSearch" layoutX="29.0" layoutY="287.0" prefHeight="26.0" prefWidth="220.0" promptText="Codeshare" visible="false" />
         <Button fx:id="routeAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showRouteSearch" text="Advanced" />
         <Button fx:id="routeBackButton" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#routeSearchBack" text="Back" visible="false" />
+      <ImageView layoutX="-17.0" layoutY="399.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

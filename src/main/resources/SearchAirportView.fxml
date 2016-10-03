@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="searchAirportPane" xmlns="http://javafx.com/javafx/8" fx:controller="seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<AnchorPane fx:id="searchAirportPane" minHeight="0.0" minWidth="0.0" prefHeight="509.0" prefWidth="276.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group8.Controller.SearchObjectControllers.SearchAirportViewController">
     <children>
         <TextField fx:id="airportIDSearch" layoutX="29.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" promptText="ID" />
         <Button fx:id="airportSearchButton" layoutX="183.0" layoutY="250.0" mnemonicParsing="false" onAction="#airportSearch" text="Search" />
-        <Text layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " id="header"/>
+        <Text id="header" layoutX="29.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport search " />
         <TextField fx:id="airportNameSearch" layoutX="29.0" layoutY="115.0" prefHeight="25.0" prefWidth="220.0" promptText="name" />
         <TextField fx:id="airportCitySearch" layoutX="29.0" layoutY="202.0" prefHeight="25.0" prefWidth="220.0" promptText="city" visible="false" />
         <TextField fx:id="airportFAASearch" layoutX="29.0" layoutY="243.0" prefHeight="25.0" prefWidth="220.0" promptText="FAA" visible="false" />
@@ -25,5 +27,14 @@
         <Button fx:id="airportAdvancedButton" layoutX="178.0" layoutY="16.0" mnemonicParsing="false" onAction="#showAirportSearch" text="Advanced" />
         <Button fx:id="airportBackButton" layoutX="187.0" layoutY="16.0" mnemonicParsing="false" onAction="#airportSearchBack" text="Back" visible="false" />
         <ComboBox fx:id="airportCountrySearch" layoutX="29.0" layoutY="160.0" prefWidth="220.0" promptText="Country" />
+      <Pane id="airportLogo" layoutX="-5.0" layoutY="446.0" prefHeight="60.0" prefWidth="276.0" stylesheets="@mainStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+         <children>
+            <ImageView>
+               <image>
+                  <Image url="@logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
     </children>
 </AnchorPane>
