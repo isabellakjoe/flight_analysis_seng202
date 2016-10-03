@@ -11,8 +11,14 @@ Erika Savell, Isabella Joe, Sophie Walton-Smith, Callum Sinclair, Angus Schuler
 ------------------------
 ------------------------
 Open terminal and navigate to the directory the executable Jar is located.
-Use the command 'java -jar "JAR"', replacing "JAR" with the name of the
-downloaded Jar.
+Use the command 'java -jar seng202_2016_team8_phase3.jar‘'. 
+
+*How to import the program:*
+------------------------------------
+------------------------------------
+To import the program open your choice of Java IDE (We recommend
+intelliJ IDEA) and import the folder containing the src and pom.xml files
+as maven project.
 
 *How to use the Program:*
 -----------------------
@@ -64,3 +70,4 @@ The graph view tab contains graphical information for the data. If no graphs hav
 Clicking on the 'Itineraries' tab will bring you to a welcome screen allowing the creation or loading of an itinerary. Whichever you choose, the process will be similar. If you create a new itinerary, you will be prompted to choose your first source airport. To aid in finding your desired starting point, the airport search bars on the left can be used. Once an airport has been selected an confirmed, routes originating from this airport will be displayed. Choose a route to add it to your itinerary. 
 At any stage during airport and route selection, changes can be cancelled and you will be returned to a page allowing you to review your itinerary. 
 This page is also displayed after each route is added, and it the screen you will be shown after loading an itinerary. It features a table displaying all routes in your itinerary, and a map for a visual depiction of the paths travelled. From here, more route can be added, routes can be deleted, and changes can be saved permanently. 
+
